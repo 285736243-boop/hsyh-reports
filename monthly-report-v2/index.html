@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>煌上煌5门店双平台外卖经营月报（2026年5-7月）｜运营诊断×促销复盘 合并分析总结</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+:root{
+  --brand:#C41E3A; --brand-dark:#8B0000; --brand-light:#fef5f5;
+  --mt:#FFD100; --tb:#FF5000; --green:#27ae60; --red:#e74c3c; --blue:#3498db;
+  --warn:#f9a825; --bg:#f5f6fa; --card:#fff; --text:#2c3e50; --sub:#7f8c8d;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:PingFang SC,Microsoft YaHei,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.header{background:linear-gradient(135deg,#C41E3A 0%,#8B0000 100%);color:#fff;padding:38px 24px 30px;text-align:center;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,215,0,0.14) 0%,transparent 70%);animation:pulse 6s infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
+.header h1{font-size:2.1em;text-shadow:0 2px 12px rgba(0,0,0,.3);position:relative}
+.header .sub{font-size:1.02em;opacity:.92;margin-top:6px;position:relative}
+.header .meta{margin-top:10px;font-size:.82em;opacity:.72;position:relative}
+.header .badges{position:relative;margin-top:14px}
+.header .badge{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:3px 14px;font-size:.78em;margin:0 4px}
+nav.toc{position:sticky;top:0;z-index:100;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:8px 0;overflow-x:auto;white-space:nowrap;text-align:center}
+nav.toc a{display:inline-block;color:#555;text-decoration:none;font-size:.8em;padding:6px 12px;border-radius:16px;margin:0 2px;transition:.2s}
+nav.toc a:hover{background:var(--brand-light);color:var(--brand)}
+.container{max-width:1420px;margin:0 auto;padding:20px}
+.section{margin-bottom:30px;scroll-margin-top:60px}
+.section-title{font-size:1.38em;font-weight:700;color:var(--brand);border-left:5px solid var(--brand);padding-left:14px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.section-title .num{background:var(--brand);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72em;flex-shrink:0}
+.section-title .tag{font-size:.62em;background:#eee;color:#666;padding:2px 10px;border-radius:12px;font-weight:400}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:14px;margin-bottom:16px}
+.card{background:var(--card);border-radius:10px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.05);border-top:3px solid var(--brand)}
+.card .label{font-size:.76em;color:var(--sub)}
+.card .value{font-size:1.42em;font-weight:700;color:var(--text);margin-top:2px}
+.card .sub{font-size:.7em;color:#95a5a6;margin-top:2px}
+.card .value.green{color:var(--green)}.card .value.red{color:var(--red)}.card .value.mt{color:#B8860B}.card .value.tb{color:var(--tb)}
+.card.mt-card{border-top-color:var(--mt)}.card.tb-card{border-top-color:var(--tb)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:16px}
+.chart-box{background:var(--card);border-radius:10px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.chart-box h3{font-size:.95em;margin-bottom:10px;color:#34495e;display:flex;justify-content:space-between;align-items:center}
+.chart-box .hint{font-size:.7em;color:#aaa;font-weight:400}
+.chart-box canvas{max-height:330px}
+.table-wrap{overflow-x:auto;background:var(--card);border-radius:10px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:.82em}
+th{background:#f8f9fa;padding:10px 8px;text-align:left;font-weight:600;border-bottom:3px solid var(--brand);white-space:nowrap}
+td{padding:8px;border-bottom:1px solid #eee;white-space:nowrap}
+tr:hover td{background:#fef5f5}
+td.num,th.num{text-align:right}
+.badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:.76em;font-weight:600}
+.b-red{background:#fde8e8;color:var(--brand)}.b-green{background:#def7ec;color:#046c4e}
+.b-blue{background:#e1effe;color:#1e429f}.b-orange{background:#fef3c7;color:#92400f}.b-gray{background:#eef;color:#555}
+.insight{background:linear-gradient(135deg,#fef5f5,#fff8f0);border:1px solid #f5d0d0;border-radius:10px;padding:14px 18px;margin-bottom:12px}
+.insight h4{color:var(--brand);margin-bottom:6px;font-size:.98em}
+.insight ul{margin-left:18px}.insight li{margin-bottom:3px;color:#555;font-size:.9em}
+.warn-box{background:#fff8e1;border-left:4px solid var(--warn);border-radius:8px;padding:14px 18px;margin:12px 0}
+.warn-box h4{color:#f57f17;margin-bottom:6px}
+.ok-box{background:#f0faf4;border-left:4px solid var(--green);border-radius:8px;padding:14px 18px;margin:12px 0}
+.ok-box h4{color:#046c4e;margin-bottom:6px}
+.diag-box{background:#fff;border-left:4px solid var(--brand);border-radius:8px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.diag-box h4{color:var(--brand);margin-bottom:8px}
+.profit-tag{display:inline-block;background:var(--green);color:#fff;padding:2px 8px;border-radius:4px;font-size:.75em;font-weight:600;margin-left:6px}
+.trend-up{color:var(--green)}.trend-down{color:var(--red)}
+/* 热力矩阵 */
+.heat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:8px}
+.heat .cell{background:#fff;border-radius:8px;padding:10px 12px;box-shadow:0 2px 6px rgba(0,0,0,.04);text-align:center}
+.heat .cell .act{font-size:.8em;color:#666}
+.heat .cell .roi{font-size:1.35em;font-weight:700;margin-top:2px}
+.heat .h-mt{border-top:3px solid var(--mt)}.heat .h-tb{border-top:3px solid var(--tb)}
+.roi-good{color:var(--green)}.roi-mid{color:#f39c12}.roi-bad{color:var(--red)}
+.legend{font-size:.75em;color:#888;margin:6px 2px}
+/* 门店卡片 */
+.store-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;margin-bottom:14px}
+.store-card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.06);border-left:4px solid var(--brand);position:relative}
+.store-card .rank{position:absolute;top:10px;right:12px;background:var(--brand);color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:700}
+.store-card h4{font-size:1em;margin-bottom:2px}
+.store-card .city{font-size:.72em;color:#999;margin-bottom:8px}
+.store-card .kv{display:flex;justify-content:space-between;font-size:.8em;padding:3px 0;border-bottom:1px dashed #eee}
+.store-card .kv:last-child{border-bottom:none}
+.store-card .kv .k{color:#888}
+.store-card .issue{font-size:.76em;margin-top:8px;padding:6px 8px;border-radius:6px;background:#fef5f5;color:var(--brand)}
+/* 执行摘要 */
+.exec{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px}
+.exec .panel{background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.exec .panel h3{font-size:1.02em;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #f0f0f0}
+.exec .panel h3.r{color:var(--red)}.exec .panel h3.g{color:var(--green)}.exec .panel h3.b{color:var(--blue)}
+.exec .panel ol,.exec .panel ul{margin-left:20px;font-size:.88em}
+.exec .panel li{margin-bottom:6px}
+.exec .panel li b{color:var(--brand)}
+.exec .panel .kpi-line{font-size:.86em;margin-bottom:6px;padding:6px 10px;background:#fafbfc;border-radius:6px}
+/* 进度条 */
+.bar{background:#f0f0f0;border-radius:6px;height:14px;overflow:hidden;margin-top:4px}
+.bar i{display:block;height:100%;border-radius:6px}
+/* footer */
+.footer{text-align:center;padding:28px;color:#888;font-size:.78em;line-height:1.9}
+.note{font-size:.78em;color:#999;margin-top:6px}
+/* 打印按钮 */
+#printBtn{position:fixed;right:22px;bottom:22px;z-index:200;background:var(--brand);color:#fff;border:none;border-radius:30px;padding:12px 20px;font-size:.85em;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(196,30,58,.4);transition:.2s}
+#printBtn:hover{background:var(--brand-dark);transform:translateY(-2px)}
+@media print{#printBtn{display:none}}
+/* 信号灯 */
+.signal{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.signal .sig{background:#fff;border-radius:10px;padding:10px 14px;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;align-items:center;gap:8px;font-size:.82em;flex:1;min-width:180px}
+.sig .dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.dot-g{background:#27ae60}.dot-y{background:#f39c12}.dot-r{background:#e74c3c}
+/* 行业基准条 */
+.bench{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:12px 0}
+.bench .b{background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.bench .b .t{font-size:.76em;color:#888}
+.bench .b .v{font-size:1.12em;font-weight:700;margin-top:2px}
+.bench .b .r{font-size:.72em;margin-top:2px}
+.bench .vs{font-size:.7em;color:#aaa;margin-top:2px}
+@media(max-width:768px){.grid2{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}.exec{grid-template-columns:1fr}.heat{grid-template-columns:1fr 1fr}.header h1{font-size:1.5em}}
+@media print{.nav,.toc{display:none}body{background:#fff}.card,.chart-box,.table-wrap{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>煌上煌 5 门店双平台外卖经营月报 <span style="color:var(--brand);font-size:.55em;vertical-align:middle">V2</span></h1>
+<div class="sub">运营深度诊断 × 促销活动复盘 ｜ 合并分析总结报告（2026年5-7月）｜ V2：利润口径更新（零售价=原价÷1.35，收入=营业收入）</div>
+<div class="meta">数据源：外卖数据5-7月 + 订单明细17,826单(有效17,368) + 活动明细62,320条 + 广告2,137条 ｜ 生成 2026-08-14 ｜ 口径：GMV=有效订单实付；利润=营业收入−成本，成本=零售价×45%、零售价=原价÷1.35（v2）；活动ROI=分摊GMV÷实际补贴</div>
+<div class="badges">
+<span class="badge">5 门店直营</span><span class="badge">双平台</span><span class="badge">GMV ¥51.5万</span><span class="badge">整体ROI 1.28</span><span class="badge">毛利率 28.6%</span><span class="badge">P0 止损 ≥¥1.39万/月</span>
+</div>
+</div>
+
+<nav class="toc">
+<a href="#s0">执行摘要</a><a href="#s1">经营全景</a><a href="#s2">增长归因</a><a href="#s3">双平台对比</a><a href="#s4">促销活动深度</a><a href="#s5">广告投放</a><a href="#s6">门店诊断</a><a href="#s7">时段规律</a><a href="#s8">利润模型</a><a href="#s9">矛盾与机会</a><a href="#s10">行动方案</a><a href="#s11">监控指标</a><a href="#s12">口径附录</a>
+</nav>
+
+<div class="container">
+
+<!-- ============ 0 执行摘要 ============ -->
+<div class="section" id="s0">
+<div class="section-title"><span class="num">0</span>执行摘要 <span class="tag">5 分钟读懂全报告</span></div>
+
+<div class="exec">
+<div class="panel">
+<h3 class="r">🔴 三大核心矛盾</h3>
+<ul>
+<li><b>渠道分化</b>：美团活动ROI 1.50 远优于淘宝 1.08（差 0.42），补贴相近、效率差 4 成。淘宝是最大优化空间。</li>
+<li><b>客单结构失血</b>：&lt;20 元订单占 30.2%、耗 25.3% 补贴、ROI 仅 0.79（净亏 21%），是最大出血点。</li>
+<li><b>商家成本过重</b>：商家承担 77% 补贴（¥31.0万/3个月），商品折扣/新客立减 100% 由商家买单。</li>
+</ul>
+</div>
+<div class="panel">
+<h3 class="g">🟢 三大增长机会</h3>
+<ul>
+<li><b>美团高效活动加投</b>：满减(2.38)/新客立减(2.01)/减配送费(1.91) 美团口径 ROI 1.9-2.4 → 增收约 ¥1.2万/月。</li>
+<li><b>高客单金矿</b>：≥40 元档 ROI 2.03 占 GMV 34.7% → 引导低客单凑单至 30 元+，客单价 29.67 → 31+。</li>
+<li><b>平台共担谈判</b>：与平台谈判提高补贴共担比例 → 释放商家每月约 ¥2.3 万成本。</li>
+</ul>
+</div>
+<div class="panel">
+<h3 class="b">📋 核心行动</h3>
+<ul>
+<li><b>P0 五项（8月底前止损 ≥¥1.39万/月）</b>：淘宝低效活动停发、&lt;20元档调门槛、C15019 补贴排查、活动叠加 ≤2 个、深夜(0-5点) 投放降级。</li>
+<li><b>P1 四项（9月落地增收 ¥1.2万/月）</b>：美团加投、凑单引导、共担谈判、广告预算重配（淘宝广告ROI 6.46 加码）。</li>
+<li><b>下月 6 项监控指标</b>闭环追踪（详见 §11）。</li>
+</ul>
+</div>
+</div>
+
+<div class="signal">
+<div class="sig"><span class="dot dot-g"></span><b>GMV +44.3%</b><span style="color:#999">（含新店水分，老店+19%）</span></div>
+<div class="sig"><span class="dot dot-y"></span><b>整体ROI 1.28</b><span style="color:#999">（健康线1.5未达，差距收窄）</span></div>
+<div class="sig"><span class="dot dot-y"></span><b>毛利率 28.6%</b><span style="color:#999">（v2到手收入口径，补贴侵蚀后仍正）</span></div>
+<div class="sig"><span class="dot dot-r"></span><b>淘宝活动ROI 1.08</b><span style="color:#999">（持续亏损，最大失血口）</span></div>
+<div class="sig"><span class="dot dot-r"></span><b>&lt;20元档占30.2%</b><span style="color:#999">（ROI 0.79 卖一单亏一单）</span></div>
+<div class="sig"><span class="dot dot-y"></span><b>广告ROI 3.95</b><span style="color:#999">（正常区间，淘宝6.46可加码）</span></div>
+</div>
+
+<div class="cards">
+<div class="card"><div class="label">总GMV（有效订单）</div><div class="value">¥515,335</div><div class="sub">5-7月 双平台 5门店</div></div>
+<div class="card"><div class="label">有效订单</div><div class="value">17,368</div><div class="sub">月均 5,789 单</div></div>
+<div class="card"><div class="label">平均客单价</div><div class="value">¥29.67</div><div class="sub">¥28.72→30.48（+6.1%）</div></div>
+<div class="card"><div class="label">总利润</div><div class="value green">¥109,721</div><div class="sub">毛利率 28.6%（v2口径见§12）</div></div>
+<div class="card"><div class="label">实际补贴</div><div class="value red">¥401,178</div><div class="sub">平台 91,029 + 商家 310,149</div></div>
+<div class="card"><div class="label">整体活动ROI</div><div class="value" style="color:#f39c12">1.28</div><div class="sub">健康线 1.5，差距逐月收窄</div></div>
+<div class="card"><div class="label">广告消耗</div><div class="value">¥60,562</div><div class="sub">广告ROI 3.95</div></div>
+</div>
+
+<div class="warn-box"><h4>⚠️ 一句话结论</h4>
+<p style="font-size:.92em">三个月 GMV 表面 +44.3%（其中科兴新店贡献 58%）；5→6月表面 +33.6% 中 <b>82% 来自科兴新店爬坡</b>，老店真实增速仅 +6.3%；补贴增速(+35.7%)仍高于老店 GMV 增速，<b>增长靠「量」不靠「价」、靠「新店」不靠「老店」</b>。当下最值钱的动作：淘宝止血、低客单纠偏、美团加投、商家减负。</p></div>
+</div>
+
+<!-- ============ 1 经营全景 ============ -->
+<div class="section" id="s1">
+<div class="section-title"><span class="num">1</span>经营全景：三个月核心走势</div>
+<div class="grid2">
+<div class="chart-box"><h3>月度 GMV × 实际补贴 × ROI<span class="hint">ROI=GMV/实际补贴</span></h3><canvas id="trendChart"></canvas></div>
+<div class="chart-box"><h3>月度订单 × 客单价<span class="hint">量价拆解</span></h3><canvas id="orderChart"></canvas></div>
+</div>
+<div class="table-wrap">
+<table>
+<tr><th>月份</th><th class="num">GMV</th><th class="num">环比</th><th class="num">有效订单</th><th class="num">客单价</th><th class="num">实际补贴</th><th class="num">平台/商家</th><th class="num">ROI</th><th>点评</th></tr>
+<tr><td>5月</td><td class="num">¥136,369</td><td class="num">—</td><td class="num">4,749</td><td class="num">¥28.72</td><td class="num">¥109,345</td><td class="num">25,124/83,900</td><td class="num">1.25</td><td><span class="badge b-blue">起步月</span></td></tr>
+<tr><td>6月</td><td class="num">¥182,212</td><td class="num trend-up">+33.6%</td><td class="num">6,164</td><td class="num">¥29.56</td><td class="num">¥143,431</td><td class="num">33,636/108,065</td><td class="num">1.27</td><td><span class="badge b-orange">科兴爬坡</span></td></tr>
+<tr><td>7月</td><td class="num">¥196,754</td><td class="num trend-up">+8.0%</td><td class="num">6,455</td><td class="num">¥30.48</td><td class="num">¥148,402</td><td class="num">33,610/115,385</td><td class="num">1.33</td><td><span class="badge b-green">老店拉动</span></td></tr>
+<tr><td><b>合计</b></td><td class="num"><b>¥515,335</b></td><td class="num"><b>+44.3%</b></td><td class="num"><b>17,368</b></td><td class="num"><b>¥29.67</b></td><td class="num"><b>¥401,178</b></td><td class="num"><b>91,029/310,149</b></td><td class="num"><b>1.28</b></td><td><span class="badge b-red">ROI&lt;1.5</span></td></tr>
+</table>
+<div class="note">月度「平台/商家」为订单明细口径（5-7月有效订单17,826笔拆分），与主补贴口径合计差0.36%（取数时点差异）；平台承担率淘宝≈22% vs 美团≈10.5%（见§4.6谈判论据）。</div>
+<div class="note">注：5月ROI按 GMV/实际补贴 重算为 1.25（原V13表格1.35为旧口径）；6→7月整体+8.0%，剔除科兴后老店+12%（见§2）。</div>
+</div>
+<div class="diag-box"><h4>诊断结论</h4>
+<ul style="font-size:.9em">
+<li><b>趋势健康但效率偏低</b>：GMV 逐月爬升、客单价 28.72→30.48 稳步上行（+6.1%），说明补贴效率在改善；但整体 ROI 1.28 始终低于健康线 1.5。</li>
+<li><b>补贴增速快于老店增速</b>：补贴 5→7月 +35.7%，与表面 GMV +44.3% 基本同步，但剔除新店后老店仅 +19%（5→7月口径），补贴边际产出在稀释。</li>
+<li><b>商家让利 77%</b>：¥31.0 万补贴由商家自掏，是 3 个月最大的隐性成本项（≈ 总利润的 2.8 倍）。</li>
+</ul></div>
+</div>
+<!-- ============ 2 增长归因 ============ -->
+<div class="section" id="s2">
+<div class="section-title"><span class="num">2</span>增长归因：+44.3% 背后的真相 <span class="tag">新店 vs 老店 × 量 vs 价</span></div>
+
+<div class="grid2">
+<div class="chart-box"><h3>5 门店月度 GMV 轨迹（万元）<span class="hint">科兴=新店爬坡</span></h3><canvas id="storeTrendChart"></canvas></div>
+<div class="chart-box"><h3>增长拆解：新店贡献 vs 老店增速<span class="hint">5→7月</span></h3><canvas id="growthChart"></canvas></div>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>门店</th><th class="num">5月GMV</th><th class="num">6月GMV</th><th class="num">7月GMV</th><th class="num">5→6增量</th><th class="num">6→7增量</th><th>归因判断</th></tr>
+<tr><td>南山科兴（新店5/27开业）</td><td class="num">¥4,742</td><td class="num">¥42,283</td><td class="num">¥40,086</td><td class="num trend-up">+37,540</td><td class="num trend-down">−2,197</td><td><span class="badge b-orange">新店爬坡（190→1,415单）</span></td></tr>
+<tr><td>南山益田</td><td class="num">¥21,337</td><td class="num">¥34,119</td><td class="num">¥36,263</td><td class="num trend-up">+12,782</td><td class="num trend-up">+2,144</td><td><span class="badge b-green">真实增长</span></td></tr>
+<tr><td>南昌印象城</td><td class="num">¥42,923</td><td class="num">¥49,990</td><td class="num">¥53,005</td><td class="num trend-up">+7,067</td><td class="num trend-up">+3,015</td><td><span class="badge b-green">稳健增长</span></td></tr>
+<tr><td>地铁万科</td><td class="num">¥39,081</td><td class="num">¥31,099</td><td class="num">¥38,427</td><td class="num trend-down">−7,982</td><td class="num trend-up">+7,329</td><td><span class="badge b-blue">6月回落 7月回补</span></td></tr>
+<tr><td>万寿宫子固路</td><td class="num">¥28,287</td><td class="num">¥24,722</td><td class="num">¥28,972</td><td class="num trend-down">−3,565</td><td class="num trend-up">+4,250</td><td><span class="badge b-blue">6月回落 7月回补</span></td></tr>
+<tr><td><b>合计</b></td><td class="num"><b>¥136,369</b></td><td class="num"><b>¥182,212</b></td><td class="num"><b>¥196,754</b></td><td class="num trend-up"><b>+45,842</b></td><td class="num trend-up"><b>+14,541</b></td><td><span class="badge b-red">表面+44.3%</span></td></tr>
+</table>
+</div>
+
+<div class="insight"><h4>🧭 归因结论（含金量最高的一页）</h4>
+<ul>
+<li><b>表面 vs 真实</b>：5→7月表面 +44.3%（¥6.04万增量），其中 <b>科兴新店贡献 ¥3.53万（占58%）</b>；5→6月表面 +34% 中 <b>82% 来自科兴爬坡</b>（5/27开业，190单→1,415单）。</li>
+<li><b>剔除新店后，老店 5→6月真实增速仅 +6.3%</b>；6→7月老店 +12%（科兴已回落 −5.2%）。增长成色：<b>靠新店、不靠老店</b>。</li>
+<li><b>量价拆解</b>：5→6月增量 ¥45,842 中，<b>订单量贡献 88%、客单价仅 12%</b> —— 增长靠「量」不靠「价」，且量的增长主要来自新店。</li>
+<li><b>结构性隐忧</b>：若剔除新店，老店增长高度依赖补贴投入（ROI 1.28 &lt; 1.5），一旦补贴收紧，增长将失速。</li>
+</ul></div>
+</div>
+
+<!-- ============ 3 双平台对比 ============ -->
+<div class="section" id="s3">
+<div class="section-title"><span class="num">3</span>双平台对比：运营漏斗 × 活动效率</div>
+
+<div class="grid2">
+<div class="chart-box"><h3>平台转化漏斗（曝光→入店→有效订单）<span class="hint">淘宝入店率优、下单率差</span></h3><canvas id="convChart"></canvas></div>
+<div class="chart-box"><h3>平台活动补贴 × ROI<span class="hint">美团效率碾压淘宝</span></h3><canvas id="platRoiChart"></canvas></div>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>指标</th><th>美团外卖</th><th>淘宝闪购</th><th>差距解读</th></tr>
+<tr><td>GMV（有效订单）</td><td class="num">¥296,459（57.5%）</td><td class="num">¥218,876（42.5%）</td><td>美团略占优</td></tr>
+<tr><td>有效订单</td><td class="num">8,741</td><td class="num">8,627</td><td>基本持平</td></tr>
+<tr><td>客单价</td><td class="num">¥33.92</td><td class="num">¥25.37</td><td class="trend-up">美团 +34%（高价值用户）</td></tr>
+<tr><td>曝光次数</td><td class="num">1,036,004</td><td class="num">1,443,913</td><td>淘宝曝光多 39%</td></tr>
+<tr><td>入店次数</td><td class="num">61,363</td><td class="num">130,681</td><td>—</td></tr>
+<tr><td>入店率</td><td class="num">5.92%</td><td class="num">9.05%</td><td class="trend-down">美团曝光→进店弱</td></tr>
+<tr><td>下单率（有效订单/入店）</td><td class="num">14.24%</td><td class="num">6.60%</td><td class="trend-down">淘宝末端流失严重</td></tr>
+<tr><td>活动补贴（实际）</td><td class="num">¥198,135</td><td class="num">¥203,043</td><td>补贴相近</td></tr>
+<tr><td><b>活动ROI</b></td><td class="num"><b>1.50</b></td><td class="num"><b>1.08</b></td><td class="trend-down"><b>美团效率高 39%</b></td></tr>
+</table>
+<div class="note">注：下单率按「有效订单/入店次数」计算，与GMV口径自洽；原报告淘宝下单率7.73%为平台「下单人数」口径。活动ROI=平台GMV/平台实际补贴，美团口径与V13一致；促销报告美团1.56为另一补贴口径（见§12）。</div>
+</div>
+
+<div class="grid2">
+<div class="chart-box"><h3>新老客结构（入店→下单）<span class="hint">淘宝新客池更大</span></h3><canvas id="newoldChart"></canvas></div>
+<div class="table-wrap" style="margin-bottom:0">
+<table>
+<tr><th>新老客指标</th><th class="num">美团</th><th class="num">淘宝</th></tr>
+<tr><td>曝光新客</td><td class="num">528,068</td><td class="num">781,245</td></tr>
+<tr><td>入店新客</td><td class="num">33,488</td><td class="num">68,761</td></tr>
+<tr><td>下单新客</td><td class="num">5,597</td><td class="num">6,813</td></tr>
+<tr><td>新客入店转化率</td><td class="num">6.34%</td><td class="num">8.80%</td></tr>
+<tr><td>新客下单转化率</td><td class="num">16.71%</td><td class="num">9.91%</td></tr>
+</table>
+<div class="note" style="margin-top:6px">淘宝新客入店多 1 倍但下单转化率仅美团 6 成 → 新客承接能力（套餐/起送/首单礼）是淘宝最大短板。</div>
+</div>
+</div>
+
+<div class="diag-box"><h4>诊断结论</h4>
+<ul style="font-size:.9em">
+<li><b>美团</b>：客单价 ¥33.92 显著更高、下单率 14.24% 近乎淘宝 2.2 倍，用户质量与转化链路健康；短板在<b>入店率 5.92%</b>（低于 7% 基准）→ 头图/评分/活动标签/配送时长需优化，是曝光到进店的漏斗瓶颈。</li>
+<li><b>淘宝</b>：入店率 9.05% 优秀（88VIP 生态 + 曝光量大），但<b>下单率 6.60% 不足美团一半</b>，补贴 ¥20.3万 ROI 仅 1.08 持续亏损 → 末端转化承接是首要止血点（详见 §4.1/§4.2）。</li>
+<li><b>广告效率倒挂</b>：淘宝广告 ROI 6.46 远高于美团 3.23（见§5），但活动补贴效率却相反 → 淘宝适合「广告拉新 + 控补贴」，美团适合「活动促单」。</li>
+</ul></div>
+
+<div class="bench">
+<div class="b"><div class="t">进店率（基准 ≥7%）</div><div class="v">美团 5.92% <span style="color:#e74c3c">✗</span> ｜ 淘宝 9.05% <span style="color:#27ae60">✓</span></div><div class="r">美团未达标 → 头图/评分/标签优化</div></div>
+<div class="b"><div class="t">下单率（基准 ≥17%，2026新标）</div><div class="v">美团 14.24% <span style="color:#f39c12">△</span> ｜ 淘宝 6.60% <span style="color:#e74c3c">✗✗</span></div><div class="r">淘宝严重不达标 → 末端承接重建</div></div>
+<div class="b"><div class="t">客单价（基准 ≥30元）</div><div class="v">美团 ¥33.92 <span style="color:#27ae60">✓</span> ｜ 淘宝 ¥25.37 <span style="color:#e74c3c">✗</span></div><div class="r">淘宝缺高毛利品/凑单品</div></div>
+<div class="b"><div class="t">广告ROI（基准 ≥6）</div><div class="v">美团 3.23 <span style="color:#e74c3c">✗</span> ｜ 淘宝 6.46 <span style="color:#27ae60">✓</span></div><div class="r">美团优化定向后再加码</div></div>
+<div class="legend" style="grid-column:1/-1">基准来源：waimai-diagnose 行业知识库（2026 更新标准）；美团下单率按有效订单口径计算。</div>
+</div>
+</div>
+<!-- ============ 4 促销活动深度 ============ -->
+<div class="section" id="s4">
+<div class="section-title"><span class="num">4</span>促销活动深度分析 <span class="tag">实际补贴口径 · 覆盖62,320条活动明细</span></div>
+
+<h3 style="font-size:1.05em;margin:14px 0 8px">4.1 活动类型效率评级（按实际补贴=平台承担+商家承担）</h3>
+<div class="table-wrap">
+<table>
+<tr><th>活动方案</th><th class="num">ROI</th><th class="num">活动补贴</th><th class="num">补贴占比</th><th class="num">分摊GMV</th><th class="num">覆盖订单</th><th class="num">单均补贴</th><th class="num">商家承担</th><th>评级</th><th>建议</th></tr>
+<tr><td>支付红包</td><td class="num">1.24</td><td class="num">¥254,185</td><td class="num">64.6%</td><td class="num">¥316,156</td><td class="num">16,653</td><td class="num">¥15.26</td><td class="num">66%</td><td><span class="badge b-orange">良好</span></td><td>保持优化（体量大、单均补贴高）</td></tr>
+<tr><td>店铺满减</td><td class="num">1.95</td><td class="num">¥20,313</td><td class="num">5.2%</td><td class="num">¥39,682</td><td class="num">4,211</td><td class="num">¥4.82</td><td class="num">97%</td><td><span class="badge b-green">高效</span></td><td><b>加投扩大</b></td></tr>
+<tr><td>门店新客立减</td><td class="num">1.67</td><td class="num">¥4,969</td><td class="num">1.3%</td><td class="num">¥8,302</td><td class="num">4,969</td><td class="num">¥1.00</td><td class="num">100%</td><td><span class="badge b-green">高效</span></td><td><b>加投扩大</b></td></tr>
+<tr><td>减配送费</td><td class="num">1.53</td><td class="num">¥56,855</td><td class="num">14.4%</td><td class="num">¥87,206</td><td class="num">17,333</td><td class="num">¥3.28</td><td class="num">94%</td><td><span class="badge b-green">高效</span></td><td><b>加投扩大</b>（单均成本低）</td></tr>
+<tr><td>商品折扣/特价</td><td class="num">1.13</td><td class="num">¥53,652</td><td class="num">13.6%</td><td class="num">¥60,508</td><td class="num">10,592</td><td class="num">¥5.07</td><td class="num">100%</td><td><span class="badge b-gray">一般</span></td><td>精准优化（折扣力度分层）</td></tr>
+<tr><td>商家代金券</td><td class="num">0.97</td><td class="num">¥2,176</td><td class="num">0.6%</td><td class="num">¥2,114</td><td class="num">878</td><td class="num">¥2.48</td><td class="num">91%</td><td><span class="badge b-red">低效</span></td><td><b>削减停发</b></td></tr>
+<tr><td>平台津贴</td><td class="num">0.82</td><td class="num">¥1,380</td><td class="num">0.4%</td><td class="num">¥1,128</td><td class="num">387</td><td class="num">¥3.56</td><td class="num">0%</td><td><span class="badge b-red">低效</span></td><td><b>削减停发</b></td></tr>
+</table>
+<div class="note">注：本表为「可分摊覆盖活动」口径（合计¥393,530），全口径实际补贴 ¥401,178（含未覆盖/其他活动 ¥7,648）；分摊GMV=订单GMV×活动补贴/订单总补贴，避免一单多活动重复计算。</div>
+</div>
+<div class="diag-box"><h4>平台承担率对比（谈判论据）</h4>
+<p style="font-size:.9em">订单明细口径（17,826 笔）：<b>淘宝平台承担率 ≈22.3%</b>（平台承担 ¥44,928 / 活动总额 ¥201,133）vs <b>美团 ≈10.5%</b>（¥47,442 / ¥451,961）——淘宝平台补贴力度约为美团的两倍。商家自掏 77% 的补贴结构中，<b>美团侧存在更大谈判空间</b>（争取平台提高承担比例），谈判话术可直接引用淘宝数据作对标。</p></div>
+
+<div class="grid2">
+<div class="chart-box"><h3>活动补贴构成（平台 vs 商家承担）<span class="hint">红色=商家自掏</span></h3><canvas id="actStackChart"></canvas></div>
+<div class="chart-box"><h3>补贴承担总结构<span class="hint">商家 77%</span></h3><canvas id="shareDonutChart"></canvas></div>
+</div>
+
+<h3 style="font-size:1.05em;margin:14px 0 8px">4.2 活动 × 平台 ROI 热力矩阵（同活动两平台效率对比）</h3>
+<div class="heat">
+<div class="cell h-mt"><div class="act">店铺满减</div><div class="roi roi-good">美团 2.38</div><div class="legend">淘宝 1.34 · 高效</div></div>
+<div class="cell h-mt"><div class="act">门店新客立减</div><div class="roi roi-good">美团 2.01</div><div class="legend">淘宝 1.16 · 高效</div></div>
+<div class="cell h-mt"><div class="act">减配送费</div><div class="roi roi-good">美团 1.91</div><div class="legend">淘宝 1.15 · 高效</div></div>
+<div class="cell h-mt"><div class="act">商品折扣/特价</div><div class="roi roi-mid">美团 1.59</div><div class="legend">淘宝 0.91 · 分化</div></div>
+<div class="cell h-mt"><div class="act">支付红包</div><div class="roi roi-mid">美团 1.40</div><div class="legend">淘宝 1.09 · 分化</div></div>
+<div class="cell h-tb"><div class="act">商家代金券</div><div class="roi roi-bad">美团 0.97</div><div class="legend">淘宝 1.01 · 双低效</div></div>
+<div class="cell h-tb"><div class="act">平台津贴</div><div class="roi roi-bad">美团 0.82</div><div class="legend">淘宝 — · 停发</div></div>
+</div>
+<div class="legend">🟢 ROI≥1.5 高效 ｜ 🟡 1.0-1.5 一般 ｜ 🔴 &lt;1.0 亏损。美团 5/7 类活动效率显著高于淘宝，满减/新客立减/减配送费是「美团双高、淘宝可救」的加投组合。</div>
+
+<h3 style="font-size:1.05em;margin:14px 0 8px">4.3 实付客单价分层：低客单在流血</h3>
+<div class="grid2">
+<div class="chart-box"><h3>客单价分层 ROI × 补贴占比<span class="hint">&lt;20元 补贴最多 ROI最低</span></h3><canvas id="tierChart"></canvas></div>
+<div class="table-wrap" style="margin-bottom:0">
+<table>
+<tr><th>客单价档</th><th class="num">订单占比</th><th class="num">GMV</th><th class="num">补贴</th><th class="num">补贴占比</th><th class="num">ROI</th><th>诊断</th></tr>
+<tr><td>&lt;20元</td><td class="num">30.2%</td><td class="num">¥78,242</td><td class="num">¥99,519</td><td class="num">25.3%</td><td class="num" style="color:var(--red);font-weight:700">0.79</td><td><span class="badge b-red">净亏21% 最大出血点</span></td></tr>
+<tr><td>20-25元</td><td class="num">20.3%</td><td class="num">¥79,240</td><td class="num">¥68,812</td><td class="num">17.5%</td><td class="num" style="color:#f39c12">1.15</td><td><span class="badge b-orange">接近盈亏线</span></td></tr>
+<tr><td>25-30元</td><td class="num">15.3%</td><td class="num">¥72,677</td><td class="num">¥55,943</td><td class="num">14.2%</td><td class="num" style="color:var(--green)">1.30</td><td><span class="badge b-green">健康</span></td></tr>
+<tr><td>30-40元</td><td class="num">17.9%</td><td class="num">¥106,101</td><td class="num">¥81,179</td><td class="num">20.6%</td><td class="num" style="color:var(--green)">1.31</td><td><span class="badge b-green">健康</span></td></tr>
+<tr><td>≥40元</td><td class="num">16.3%</td><td class="num">¥179,074</td><td class="num">¥88,076</td><td class="num">22.4%</td><td class="num" style="color:var(--green);font-weight:700">2.03</td><td><span class="badge b-green">高效金矿</span></td></tr>
+</table>
+<div class="note" style="margin-top:6px">分层GMV合计=¥515,335 与总GMV完全自洽 ✓；补贴占比=分层补贴÷覆盖活动补贴合计(¥393,530)，与促销报告口径一致。</div>
+</div>
+</div>
+<div class="warn-box"><h4>⚠️ 关键洞察</h4>
+<p style="font-size:.9em"><b>&lt;20 元档 = 卖一单亏一单</b>：占订单 30.2%、却消耗 25.3% 补贴、ROI 0.79（每投入 1 元补贴只回 0.79 元 GMV，净亏 21%）。≥40 元档贡献 GMV 的 34.7%、ROI 2.03。真实盈利结构是<b>「高客单补贴利润 − 低客单补贴亏损」</b>——把 10% 的 &lt;20 元订单拉到 30 元+，即可把整体 ROI 从 1.28 推向 1.4+。</p></div>
+
+<h3 style="font-size:1.05em;margin:14px 0 8px">4.4 活动叠加效应：堆得越多效率越低</h3>
+<div class="grid2">
+<div class="chart-box"><h3>订单活动叠加数 × ROI<span class="hint">2个最优</span></h3><canvas id="stackChart"></canvas></div>
+<div class="table-wrap" style="margin-bottom:0">
+<table>
+<tr><th>叠加数</th><th class="num">订单占比</th><th class="num">ROI</th><th>判断</th></tr>
+<tr><td>2 个活动</td><td class="num">37.7%（主流）</td><td class="num" style="color:var(--green)">1.31</td><td><span class="badge b-green">健康</span></td></tr>
+<tr><td>3 个活动以上</td><td class="num">—</td><td class="num" style="color:#f39c12">1.05</td><td><span class="badge b-orange">边际递减</span></td></tr>
+<tr><td>4 个活动以上</td><td class="num">—</td><td class="num" style="color:var(--red)">0.96</td><td><span class="badge b-red">跌破盈亏线</span></td></tr>
+</table>
+<div class="note" style="margin-top:6px">一单叠 2 个活动效率最优（1.31）；3 个以上跌至 1.05、4 个以上 0.96 亏损。补贴「买量」变「贴钱」。</div>
+</div>
+</div>
+
+<h3 style="font-size:1.05em;margin:14px 0 8px">4.5 时段效应：深夜亏损</h3>
+<div class="table-wrap">
+<table>
+<tr><th>时段</th><th class="num">ROI</th><th>判断</th><th>策略</th></tr>
+<tr><td>早餐（早市）</td><td class="num" style="color:var(--green);font-weight:700">1.57</td><td><span class="badge b-green">全场最高</span></td><td>保留并适当加投早餐场景</td></tr>
+<tr><td>晚餐/夜宵时段</td><td class="num">1.37</td><td><span class="badge b-green">健康</span></td><td>维持，高峰时段出价加价 20-30%</td></tr>
+<tr><td>深夜（0-5点）</td><td class="num" style="color:var(--red)">0.87</td><td><span class="badge b-red">亏损</span></td><td>关闭/降级深夜活动与投放（订单也极少）</td></tr>
+</table>
+</div>
+
+<h3 style="font-size:1.05em;margin:14px 0 8px">4.6 商家承担率：77% 过重</h3>
+<div class="diag-box"><h4>商家让利结构</h4>
+<ul style="font-size:.9em">
+<li>3 个月实际补贴 ¥401,178 中，<b>商家自掏 ¥310,149（77.3%）</b>，平台仅承担 ¥91,029（22.7%）。</li>
+<li>极端项：<b>商品折扣/特价、门店新客立减 100% 由商家买单</b>；减配送费 94%、店铺满减 97% 也基本是商家出。</li>
+<li>商家净收入 = 分摊GMV − 商家承担补贴 = ¥515,335 − ¥310,149 = <b>¥205,186</b>（3个月）；按 v2 毛利率 28.6% 测算，扣补贴后毛利 ≈ <b>¥58,683</b>，补贴 ¥310,149 ≈ 毛利空间的 2.8 倍 → <b>补贴侵蚀严重，平台共担谈判是当务之急</b>。</li>
+</ul></div>
+</div>
+<!-- ============ 5 广告投放 ============ -->
+<div class="section" id="s5">
+<div class="section-title"><span class="num">5</span>广告投放分析 <span class="tag">消耗 ¥60,562 · ROI 3.95</span></div>
+
+<div class="grid2">
+<div class="chart-box"><h3>平台广告消耗 × ROI<span class="hint">淘宝广告性价比更高</span></h3><canvas id="adRoiChart"></canvas></div>
+<div class="chart-box"><h3>自然 vs 付费流量结构（曝光/订单）<span class="hint">自然流量仍是主力</span></h3><canvas id="adSpendChart"></canvas></div>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>平台</th><th class="num">消耗</th><th class="num">广告交易额</th><th class="num">ROI</th><th class="num">曝光提升</th><th class="num">进店提升</th><th class="num">订单提升</th><th>判断</th></tr>
+<tr><td>美团</td><td class="num">¥47,139（78%）</td><td class="num">¥152,464</td><td class="num">3.23</td><td class="num">407,221</td><td class="num">21,770</td><td class="num">4,116</td><td><span class="badge b-orange">正常偏低</span></td></tr>
+<tr><td>淘宝</td><td class="num">¥13,422（22%）</td><td class="num">¥86,753</td><td class="num" style="color:var(--green);font-weight:700">6.46</td><td class="num">339,287</td><td class="num">20,885</td><td class="num">2,709</td><td><span class="badge b-green">高效</span></td></tr>
+<tr><td><b>合计</b></td><td class="num"><b>¥60,562</b></td><td class="num"><b>¥239,217</b></td><td class="num"><b>3.95</b></td><td class="num"><b>746,508</b></td><td class="num"><b>42,655</b></td><td class="num"><b>6,825</b></td><td><span class="badge b-blue">行业正常区间</span></td></tr>
+</table>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>自然流量</th><th class="num">自然曝光</th><th class="num">自然入店</th><th class="num">自然订单</th><th class="num">自然实付</th><th>占订单比重</th></tr>
+<tr><td>美团</td><td class="num">628,783</td><td class="num">39,593</td><td class="num">4,625</td><td class="num">¥143,995</td><td><span class="badge b-blue">53%</span></td></tr>
+<tr><td>淘宝</td><td class="num">1,104,626</td><td class="num">109,796</td><td class="num">5,918</td><td class="num">¥132,123</td><td><span class="badge b-blue">69%</span></td></tr>
+</table>
+<div class="note">自然vs付费四公式：自然曝光=曝光−曝光提升；自然订单=有效订单−订单提升（统一口径，与GMV自洽；V13原报告按平台「下单数」口径为美团4,620/淘宝7,398，因订单统计口径差异略有出入）；自然实付=平台GMV−广告交易额。</div>
+</div>
+
+<div class="diag-box"><h4>诊断结论</h4>
+<ul style="font-size:.9em">
+<li><b>淘宝广告 ROI 6.46 是美团 3.23 的两倍</b>，但消耗仅占 22% → 预算向淘宝倾斜（预计可承接 8-15% 增量预算），美团优化定向/素材后再加码。</li>
+<li>美团广告 ROI 3.23 处于「正常偏低」（行业基准 4-8 为正常、&lt;3 需优化）；点金推广建议按 waimai-diagnose 出价五步法：阶梯测试→分时调价（午+30%/晚+20%）→定向优化。</li>
+<li><b>自然流量仍是基本盘</b>（美团 53%、淘宝 69%），广告的定位是「增量放大器」而非「流量替代」→ 广告订单 ROAS 达标（&gt;3）即可继续，重点是别让广告吃掉自然流量（关注曝光提升 vs 自然曝光变化）。</li>
+</ul></div>
+</div>
+
+<!-- ============ 6 门店诊断 ============ -->
+<div class="section" id="s6">
+<div class="section-title"><span class="num">6</span>门店诊断与排名 <span class="tag">GMV / ROI / 利润贡献</span></div>
+
+<div class="grid2">
+<div class="chart-box"><h3>门店 GMV 排名（元）</h3><canvas id="storeGmvChart"></canvas></div>
+<div class="chart-box"><h3>门店活动 ROI 对比<span class="hint">健康线 1.5</span></h3><canvas id="storeRoiChart"></canvas></div>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>排名</th><th>门店</th><th class="num">GMV</th><th class="num">有效订单</th><th class="num">实际补贴</th><th class="num">ROI</th><th class="num">利润(v2)</th><th>核心问题</th></tr>
+<tr><td>1</td><td>南昌印象城 (C15002)</td><td class="num">¥145,918</td><td class="num">4,751</td><td class="num">¥110,761</td><td class="num">1.32</td><td class="num">¥38,874</td><td><span class="badge b-blue">规模冠军，ROI 中上</span></td></tr>
+<tr><td>2</td><td>地铁万科广场 (C14793)</td><td class="num">¥108,607</td><td class="num">3,733</td><td class="num">¥83,639</td><td class="num">1.30</td><td class="num">¥31,393</td><td><span class="badge b-blue">6月回落7月回补</span></td></tr>
+<tr><td>3</td><td>南山益田假日 (C15019)</td><td class="num">¥91,719</td><td class="num">3,227</td><td class="num">¥76,697</td><td class="num" style="color:var(--red);font-weight:700">1.20</td><td class="num" style="color:var(--red);font-weight:700">¥4,221</td><td><span class="badge b-red">ROI+毛利率双垫底</span></td></tr>
+<tr><td>4</td><td>南山科兴科学园 (C15009)</td><td class="num">¥87,111</td><td class="num">2,878</td><td class="num">¥63,215</td><td class="num" style="color:var(--green);font-weight:700">1.38</td><td class="num">¥12,387</td><td><span class="badge b-green">ROI 最高，新店成长中</span></td></tr>
+<tr><td>5</td><td>万寿宫子固路 (C14906)</td><td class="num">¥81,980</td><td class="num">2,779</td><td class="num">¥66,866</td><td class="num">1.23</td><td class="num">¥22,846</td><td><span class="badge b-orange">GMV 垫底，曝光待提升</span></td></tr>
+</table>
+<div class="note">*利润为 2026-08-14 v2 口径实测（利润=营业收入−成本，成本=零售价×0.45、零售价=原价÷1.35，见§8/§12）；补贴合计/订单合计/GMV合计与总口径完全自洽 ✓。促销报告另有「分摊口径」门店ROI（万科1.31/益田1.25/科兴1.44），与本表 GMV/补贴 口径略有差异，排名结论一致（见§12）。5 店均为直营门店（创新专项部），南昌 3 店 + 深圳 2 店。</div>
+</div>
+
+<h3 style="font-size:1.05em;margin:16px 0 8px">6.1 评分健康度诊断（新增维度 · 来自店铺分快照）</h3>
+<div class="table-wrap">
+<table>
+<tr><th>门店</th><th class="num">美团评分（5分制）</th><th class="num">淘宝店铺分（100分制）</th><th>诊断</th></tr>
+<tr><td>南山科兴</td><td class="num" style="color:var(--green);font-weight:700">4.8（96分）</td><td class="num">93.1（待优化4项）</td><td><span class="badge b-green">美团口碑最佳</span> 淘宝待优化</td></tr>
+<tr><td>南山益田</td><td class="num">4.7（94分）</td><td class="num" style="color:var(--red);font-weight:700">92.4（待优化4项）</td><td><span class="badge b-red">淘宝评分垫底</span> 与 ROI 1.20 垫底呼应</td></tr>
+<tr><td>地铁万科</td><td class="num">4.6（92分）</td><td class="num">95.8（待优化2项）</td><td><span class="badge b-blue">双平台均衡</span></td></tr>
+<tr><td>万寿宫子固路</td><td class="num">4.6（92分）</td><td class="num" style="color:var(--green)">99.8（待优化1项）</td><td><span class="badge b-green">淘宝口碑最佳</span> 但未转化为销量</td></tr>
+<tr><td>南昌印象城</td><td class="num" style="color:var(--red);font-weight:700">4.5（90分）</td><td class="num">98.8（待优化3项）</td><td><span class="badge b-red">美团评分最低</span> 接近限流预警线，规模冠军的隐患</td></tr>
+</table>
+<div class="note">数据源：美团7月门店数据「近30日日均商家评分」/「商家评分得分」；淘宝店铺分最新快照（2026-08-04）。美团限流参考线：新店&lt;4.8、老店&lt;4.7（行业知识库），印象城 4.5 已接近预警。</div>
+</div>
+<div class="diag-box"><h4>评分 × 经营联动洞察</h4>
+<ul style="font-size:.9em">
+<li><b>益田 ROI 垫底的根因补全</b>：淘宝店铺分 92.4 全场最低 + 4 项待优化 → 评分拖累转化，补贴只能硬买量 → P0③ 排查时应同步整改淘宝店铺分（头图/出餐/评价）。</li>
+<li><b>印象城的隐患</b>：GMV 冠军但美团评分 4.5 最低，若继续下滑触发限流将直接冲击流量基本盘 → 优先邀好评、处理差评，守住 4.7+。</li>
+<li><b>子固路的机会</b>：淘宝店铺分 99.8 全场最高，GMV 却垫底 → 证明瓶颈在「曝光不足」而非口碑 → P1 曝光专项可直接复用高分优势。</li>
+<li><b>科兴新店健康</b>：美团 4.8 开局即巅峰，爬坡期口碑与销量双优 → 新店打法验证有效，可复制。</li>
+</ul></div>
+
+<div class="store-grid">
+<div class="store-card"><span class="rank">1</span><h4>南昌印象城</h4><div class="city">南昌 · C15002</div>
+<div class="kv"><span class="k">GMV</span><b>¥145,918</b></div><div class="kv"><span class="k">ROI</span><b style="color:#27ae60">1.32</b></div><div class="kv"><span class="k">订单</span><b>4,751</b></div><div class="kv"><span class="k">利润(v2)</span><b>¥38,874</b></div>
+<div class="issue">规模第一但补贴绝对值最高（¥11.1万）→ 用满减/减配送费替代红包类大额补贴，守住 ROI 1.3+</div></div>
+<div class="store-card"><span class="rank">2</span><h4>地铁万科广场</h4><div class="city">南昌 · C14793</div>
+<div class="kv"><span class="k">GMV</span><b>¥108,607</b></div><div class="kv"><span class="k">ROI</span><b style="color:#27ae60">1.30</b></div><div class="kv"><span class="k">订单</span><b>3,733</b></div><div class="kv"><span class="k">利润(v2)</span><b>¥31,393</b></div>
+<div class="issue">6月 GMV 回落 20%（¥31,099），7月回补 → 排查 6月活动断档/竞对动作，稳定复购客群</div></div>
+<div class="store-card"><span class="rank">3</span><h4>南山益田假日</h4><div class="city">深圳 · C15019</div>
+<div class="kv"><span class="k">GMV</span><b>¥91,719</b></div><div class="kv"><span class="k">ROI</span><b style="color:#e74c3c">1.20</b></div><div class="kv"><span class="k">订单</span><b>3,227</b></div><div class="kv"><span class="k">利润(v2)</span><b style="color:#e74c3c">¥4,221</b></div>
+<div class="issue">ROI 垫底 1.20 + 毛利率仅 8.0% 全场最低 → 补贴排查 + 淘宝店铺分整改双管齐下（P0）</div></div>
+<div class="store-card"><span class="rank">4</span><h4>南山科兴科学园</h4><div class="city">深圳 · C15009</div>
+<div class="kv"><span class="k">GMV</span><b>¥87,111</b></div><div class="kv"><span class="k">ROI</span><b style="color:#27ae60">1.38</b></div><div class="kv"><span class="k">订单</span><b>2,878</b></div><div class="kv"><span class="k">利润(v2)</span><b>¥12,387</b></div>
+<div class="issue">ROI 全场最高，新店爬坡期（5/27开业 190→1,415单）→ 保持投放节奏，7月回落需防热度退坡</div></div>
+<div class="store-card"><span class="rank">5</span><h4>万寿宫子固路</h4><div class="city">南昌 · C14906</div>
+<div class="kv"><span class="k">GMV</span><b>¥81,980</b></div><div class="kv"><span class="k">ROI</span><b style="color:#f39c12">1.23</b></div><div class="kv"><span class="k">订单</span><b>2,779</b></div><div class="kv"><span class="k">利润(v2)</span><b>¥22,846</b></div>
+<div class="issue">GMV 垫底、ROI 偏低 → 曝光提升 + 新客引流专项（美团入店率优化 + 淘宝新客承接）</div></div>
+</div>
+</div>
+
+<!-- ============ 7 时段规律 ============ -->
+<div class="section" id="s7">
+<div class="section-title"><span class="num">7</span>时段经营规律 <span class="tag">峰谷 · 出餐 · 运力</span></div>
+<div class="chart-box"><h3>小时订单分布（24小时）<span class="hint">双峰结构：午餐 + 晚餐</span></h3><canvas id="hourChart"></canvas></div>
+<div class="table-wrap">
+<table>
+<tr><th>时段</th><th class="num">订单数</th><th class="num">GMV</th><th class="num">ROI参考</th><th>特征</th></tr>
+<tr><td>11:00-13:00（午市）</td><td class="num">1,420</td><td class="num">¥42,439</td><td class="num">—</td><td><span class="badge b-green">高峰</span></td></tr>
+<tr><td>17:00-21:00（晚市）</td><td class="num">3,793</td><td class="num">¥124,387</td><td class="num">—</td><td><span class="badge b-green">最高峰</span></td></tr>
+<tr><td>14:00-17:00（下午茶）</td><td class="num">1,560</td><td class="num">¥57,125</td><td class="num">—</td><td><span class="badge b-blue">平峰</span></td></tr>
+<tr><td>21:00-24:00（夜宵）</td><td class="num">895</td><td class="num">¥33,976</td><td class="num">1.37</td><td><span class="badge b-blue">平峰</span></td></tr>
+<tr><td>0:00-5:00（深夜）</td><td class="num">23</td><td class="num">¥539</td><td class="num" style="color:var(--red)">0.87</td><td><span class="badge b-red">亏损</span></td></tr>
+<tr><td>6:00-10:00（早餐）</td><td class="num">656</td><td class="num">¥23,676</td><td class="num" style="color:var(--green)">1.57</td><td><span class="badge b-green">效率最高</span></td></tr>
+</table>
+<div class="note">高峰时段判断来自 V13 小时级分析（18:00-19:00 单日峰值 973 单）；小时分布为订单明细样本口径（合计约8,740单，主要为美团），用于峰谷规律判断，非全量统计；ROI参考为活动明细时段效应口径。</div>
+</div>
+<div class="diag-box"><h4>诊断结论</h4>
+<ul style="font-size:.9em">
+<li>订单呈<b>「午餐 + 晚餐」双峰</b>，晚市 17-21 点四小时贡献 21.8% 订单、GMV 占比 24.1%；18:00-19:00 单小时峰值 973 单 → 出餐备货与运力按峰值配置。</li>
+<li><b>早餐时段 ROI 1.57 全场最高</b> → 卤味早餐场景（粥粉/卤蛋套餐）值得加投；<b>深夜 0-5 点 ROI 0.87 且订单极少</b>（3个月仅23单）→ 直接关闭深夜活动与广告。</li>
+<li>低谷时段（14-17点、21点后）可做<b>下午茶/夜宵专属券</b>，用时段差异化补贴提升坪效，而非全天一刀切。</li>
+</ul></div>
+</div>
+
+<!-- ============ 8 利润模型 ============ -->
+<div class="section" id="s8">
+<div class="section-title"><span class="num">8</span>利润模型与敏感性 <span class="tag">全链路 · 商家净收入</span></div>
+
+<div class="table-wrap">
+<table>
+<tr><th>链路</th><th class="num">金额</th><th>说明</th></tr>
+<tr><td>菜品原价</td><td class="num">¥822,001</td><td>外卖商品原价合计（5-7月，源数据实算）</td></tr>
+<tr><td>门店零售价</td><td class="num">¥608,889</td><td>原价 ÷ 1.35（v2 口径）</td></tr>
+<tr><td>成本价</td><td class="num">¥274,000</td><td>零售价 × 45%（成本率 45%）</td></tr>
+<tr><td>平台收入</td><td class="num">¥383,721</td><td>营业收入（美团「营业收入」/淘宝「收入」，扣除平台抽成后的到手收入）</td></tr>
+<tr><td><b>利润</b></td><td class="num" style="color:var(--green);font-weight:700">¥109,721</td><td>收入 − 成本，<b>毛利率 28.6%</b>（利润/收入）</td></tr>
+</table>
+<div class="note">口径：2026-08-14 老大哥下发 v2（零售价=原价÷1.35，成本=零售价×45%，收入=营业收入）；月报初版的 ÷1.25 + 顾客实付+平台补贴 旧口径已全面替换，见§12。</div>
+</div>
+
+<div class="grid2">
+<div class="chart-box"><h3>商家净收入 × 扣补贴后毛利（毛利率敏感性）<span class="hint">商家承担补贴 ¥310,149 已扣除</span></h3><canvas id="marginChart"></canvas></div>
+<div class="table-wrap" style="margin-bottom:0">
+<table>
+<tr><th>毛利率假设</th><th class="num">商家净收入</th><th class="num">扣补贴后毛利</th><th>结论</th></tr>
+<tr><td>28.6%（实际）</td><td class="num">¥205,186</td><td class="num" style="color:#e67e22;font-weight:700">¥58,683</td><td><span class="badge b-orange">补贴侵蚀严重，需共担</span></td></tr>
+<tr><td>30%</td><td class="num">¥205,186</td><td class="num">¥61,556</td><td><span class="badge b-blue">覆盖补贴后仍正</span></td></tr>
+<tr><td>35%</td><td class="num">¥205,186</td><td class="num">¥71,815</td><td><span class="badge b-green">健康</span></td></tr>
+<tr><td>40%</td><td class="num">¥205,186</td><td class="num">¥82,074</td><td><span class="badge b-green">良好</span></td></tr>
+</table>
+<div class="note" style="margin-top:6px">商家净收入 = 分摊GMV − 商家承担补贴；v2 实际毛利率 28.6% 下扣补贴后毛利仅 ¥58,683，补贴 ¥310,149 ≈ 毛利空间的 2.8 倍 → 谈判共担是释放利润的最直接杠杆。</div>
+</div>
+</div>
+</div>
+<!-- ============ 9 矛盾与机会 ============ -->
+<div class="section" id="s9">
+<div class="section-title"><span class="num">9</span>三大核心矛盾 × 三大增长机会</div>
+
+<div class="grid2">
+<div class="diag-box" style="border-left-color:var(--red)"><h4 style="color:var(--red)">矛盾①：渠道分化 —— 补贴相近，效率差 4 成</h4>
+<p style="font-size:.88em">美团活动 ROI 1.50 vs 淘宝 1.08；补贴金额相近（¥19.8万 vs ¥20.3万），效率差 0.42。淘宝客单价 ¥25.37 比美团低 34%，下单率 6.60% 不到美团一半。<b>淘宝 = 双倍补贴 + 半价效率</b>，是最大失血口。</p></div>
+<div class="diag-box" style="border-left-color:var(--red)"><h4 style="color:var(--red)">矛盾②：客单结构失衡 —— 三成订单在流血</h4>
+<p style="font-size:.88em">&lt;20 元档占订单 30.2%、耗 25.3% 补贴、ROI 0.79（净亏 21%）；≥40 元档仅 16.3% 订单却贡献 34.7% GMV、ROI 2.03。补贴资源被<b>反向配置</b>：亏钱的最多、赚钱的最少。</p></div>
+<div class="diag-box" style="border-left-color:var(--red)"><h4 style="color:var(--red)">矛盾③：商家成本过重 —— 77% 补贴自掏腰包</h4>
+<p style="font-size:.88em">¥31.0 万补贴由商家承担（77.3%），商品折扣/新客立减 100% 商家买单，叠加后单笔补贴成本 ¥15+ 的支付红包占比 64.6%。商家净收入 ¥20.5万 中约 60% 被补贴侵蚀 → <b>补贴在给平台打工</b>。</p></div>
+<div class="ok-box" style="margin-top:0"><h4>机会①：美团高效活动加投 → 增收 ¥1.2万/月</h4>
+<p style="font-size:.88em">满减(2.38)/新客立减(2.01)/减配送费(1.91) 在美团 ROI 1.9-2.4，把低效活动预算（代金券/津贴/深夜）转移过来，按 7 月补贴规模测算可增收约 ¥1.2万/月。</p></div>
+<div class="ok-box" style="margin-top:0"><h4>机会②：高客单金矿 → 客单价 29.67 → 31+</h4>
+<p style="font-size:.88em">≥40 元档 ROI 2.03、30-40 元档 1.31。通过<b>满减阶梯（满30减X / 满40减Y）</b>把 &lt;20 元档向上引导：每迁移 5% 订单，整体 ROI 预估 +0.05~0.08。</p></div>
+<div class="ok-box" style="margin-top:0"><h4>机会③：平台共担谈判 → 释放 ¥2.3万/月</h4>
+<p style="font-size:.88em">美团/淘宝大促期间平台补贴力度大（饿了么「超百亿」、美团神券节 18 日），以「年框返点 + 活动共建」谈更高共担比例（行业商家承担 50-80%，我们是 77% 偏上沿）→ 每提升 10 个百分点共担 ≈ 释放 ¥1.0万/月。</p></div>
+</div>
+</div>
+
+<!-- ============ 10 行动方案 ============ -->
+<div class="section" id="s10">
+<div class="section-title"><span class="num">10</span>行动方案 <span class="tag">P0 紧急止损 · P1 增收 · P2 持续</span></div>
+
+<div class="table-wrap">
+<table>
+<tr><th>行动项</th><th class="num">影响</th><th class="num">可执行</th><th class="num">置信</th><th class="num">时效</th><th class="num">优先级分*</th><th>优先级</th></tr>
+<tr><td><b>P0①</b> 淘宝低效活动停发</td><td class="num">0.7</td><td class="num">0.9</td><td class="num">0.9</td><td class="num">0.9</td><td class="num" style="font-weight:700;color:var(--red)">0.82</td><td><span class="badge b-red">P0</span></td></tr>
+<tr><td><b>P0②</b> &lt;20元档纠偏</td><td class="num">0.8</td><td class="num">0.6</td><td class="num">0.8</td><td class="num">0.7</td><td class="num" style="font-weight:700">0.73</td><td><span class="badge b-red">P0</span></td></tr>
+<tr><td><b>P1④</b> 广告预算重配</td><td class="num">0.6</td><td class="num">0.8</td><td class="num">0.8</td><td class="num">0.7</td><td class="num" style="font-weight:700">0.71</td><td><span class="badge b-blue">P1</span></td></tr>
+<tr><td><b>P1①</b> 美团高效活动加投</td><td class="num">0.7</td><td class="num">0.7</td><td class="num">0.8</td><td class="num">0.6</td><td class="num" style="font-weight:700">0.71</td><td><span class="badge b-blue">P1</span></td></tr>
+<tr><td><b>P0③</b> C15019 补贴排查</td><td class="num">0.6</td><td class="num">0.8</td><td class="num">0.7</td><td class="num">0.8</td><td class="num">0.70</td><td><span class="badge b-red">P0</span></td></tr>
+<tr><td><b>P0⑤</b> 深夜时段关闭</td><td class="num">0.4</td><td class="num">0.9</td><td class="num">0.9</td><td class="num">0.9</td><td class="num">0.70</td><td><span class="badge b-red">P0</span></td></tr>
+<tr><td><b>P1②</b> 高客单引导</td><td class="num">0.8</td><td class="num">0.6</td><td class="num">0.7</td><td class="num">0.6</td><td class="num">0.70</td><td><span class="badge b-blue">P1</span></td></tr>
+<tr><td><b>P1③</b> 平台共担谈判</td><td class="num">0.8</td><td class="num">0.5</td><td class="num">0.7</td><td class="num">0.7</td><td class="num">0.68</td><td><span class="badge b-blue">P1</span></td></tr>
+<tr><td><b>P0④</b> 活动叠加控制</td><td class="num">0.6</td><td class="num">0.7</td><td class="num">0.8</td><td class="num">0.6</td><td class="num">0.67</td><td><span class="badge b-red">P0</span></td></tr>
+</table>
+<div class="note">*优先级分 = 业务影响×0.4 + 可执行性×0.3 + 置信度×0.2 + 时效性×0.1（analysis-framework 洞察优先级评分模型）；P0 五项合计止损 ≥¥1.39万/月，P1 四项增收 ≥¥1.2万/月。</div>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr><th>优先级</th><th>行动项</th><th>做什么</th><th>预期收益</th><th>落地时间</th><th>责任维度</th></tr>
+<tr><td rowspan="5" style="background:#fde8e8;color:var(--brand);font-weight:700;text-align:center">P0<br>紧急止损</td>
+<td>① 淘宝低效活动停发</td><td>停发商家代金券(0.97)、平台津贴(0.82)，淘宝商品折扣精准化</td><td style="color:var(--green)">止损 ¥3,556（3个月）</td><td rowspan="5">8月底前</td><td>平台运营</td></tr>
+<tr><td>② &lt;20元档纠偏</td><td>满减门槛上移、加凑单品（+10元档）、首单礼改赠品</td><td style="color:var(--green)">止损 ¥7,000+/月</td><td>菜单/定价</td></tr>
+<tr><td>③ C15019 补贴排查</td><td>排查高补贴低转化活动，暂停无效让利，ROI 1.20→1.30</td><td style="color:var(--green)">止损 ¥4,000+/月</td><td>门店专项</td></tr>
+<tr><td>④ 活动叠加控制</td><td>系统设置单笔订单活动叠加 ≤2 个（4个+ ROI 0.96 亏损）</td><td style="color:var(--green)">消除亏损单</td><td>系统/规则</td></tr>
+<tr><td>⑤ 深夜时段关闭</td><td>0-5 点活动与广告全关（ROI 0.87、3个月仅23单）</td><td style="color:var(--green)">止损+提效</td><td>分时投放</td></tr>
+<tr><td rowspan="4" style="background:#e1effe;color:#1e429f;font-weight:700;text-align:center">P1<br>增收</td>
+<td>① 美团高效活动加投</td><td>满减/新客立减/减配送费加预算（美团ROI 1.9-2.4）</td><td style="color:var(--green)">增收 ¥1.2万/月</td><td rowspan="4">9月落地</td><td>活动运营</td></tr>
+<tr><td>② 高客单引导</td><td>满30/满40 阶梯券 + 套餐升级（≥40档 ROI 2.03）</td><td style="color:var(--green)">客单价 +1.5元</td><td>定价/商品</td></tr>
+<tr><td>③ 平台共担谈判</td><td>年框返点 + 活动共建换更高补贴共担</td><td style="color:var(--green)">释放 ¥2.3万/月成本</td><td>总对总</td></tr>
+<tr><td>④ 广告预算重配</td><td>淘宝广告加码（ROI 6.46）、美团优化定向后再投</td><td style="color:var(--green)">广告ROI 3.95→4.5</td><td>广告投放</td></tr>
+<tr><td rowspan="4" style="background:#eef;color:#555;font-weight:700;text-align:center">P2<br>持续</td>
+<td>① 时段运营</td><td>下午茶/夜宵专属券（14-17点、21-24点）</td><td>坪效提升</td><td rowspan="4">持续</td><td>运营</td></tr>
+<tr><td>② 老客复购</td><td>下单返券、会员日、积分体系（老客占比偏低）</td><td>复购率+5%</td><td>会员运营</td></tr>
+<tr><td>③ 美团入店率优化</td><td>头图/评分/活动标签 A/B 测试（5.92%→7%）</td><td>入店率+1pp</td><td>门店运营</td></tr>
+<tr><td>④ 新店经验复制</td><td>科兴爬坡打法（新客立减+满减组合）复制到子固路</td><td>子固路 GMV +10%</td><td>区域经理</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ============ 11 监控指标 ============ -->
+<div class="section" id="s11">
+<div class="section-title"><span class="num">11</span>下月监控指标（闭环追踪）</div>
+<div class="table-wrap">
+<table>
+<tr><th>#</th><th>指标</th><th class="num">现状（统一口径）</th><th class="num">下月目标</th><th>监控方式</th></tr>
+<tr><td>1</td><td>整体活动 ROI</td><td class="num">1.28</td><td class="num" style="color:var(--green)">≥1.35</td><td>活动ROI周报</td></tr>
+<tr><td>2</td><td>季度利润（v2口径）</td><td class="num">¥109,721</td><td class="num" style="color:var(--green)">≥¥11万</td><td>利润日报</td></tr>
+<tr><td>3</td><td>广告 ROI</td><td class="num">3.95</td><td class="num" style="color:var(--green)">≥4.5</td><td>广告周报</td></tr>
+<tr><td>4</td><td>淘宝活动 ROI</td><td class="num">1.08</td><td class="num" style="color:var(--green)">≥1.20</td><td>平台专项周报</td></tr>
+<tr><td>5</td><td>&lt;20元档订单占比</td><td class="num">30.2%</td><td class="num" style="color:var(--green)">≤25%</td><td>客单分层周报</td></tr>
+<tr><td>6</td><td>C15019 门店 ROI</td><td class="num">1.20</td><td class="num" style="color:var(--green)">≥1.30</td><td>门店专项</td></tr>
+</table>
+<div class="note">监控节奏：周报看 ROI/占比，日报看利润；8月底对照 P0 五项逐项验收，9月底对照 P1 四项复盘增收兑现。</div>
+</div>
+
+<div class="ok-box"><h4>📌 下阶段展望（8-10月路线）</h4>
+<ul style="font-size:.9em;margin-left:18px">
+<li><b>8月</b>：完成 P0 五项整改；配置 <b>8/18 神券节</b> + 暑期档活动（平台营销月历节点）；8月底整体 ROI ≥1.32。</li>
+<li><b>9月</b>：P1 四项落地（美团加投/凑单/共担谈判/广告重配）；借势<b>开学季</b>拉新；9月底 ROI ≥1.35。</li>
+<li><b>10月</b>：复盘<b>中秋·国庆</b>双节旺季投放，验证老店增速是否摆脱补贴依赖。</li>
+<li><b>资源与风险</b>：需平台谈判小组（共担）+ 门店运营支持（C15019/子固路专项）；风险=平台补贴政策收紧、竞对价格战、科兴新店热度退坡。</li>
+</ul></div>
+</div>
+
+<!-- ============ 12 附录 ============ -->
+<div class="section" id="s12">
+<div class="section-title"><span class="num">12</span>数据口径与来源附录</div>
+<div class="table-wrap">
+<table>
+<tr><th>#</th><th>口径项</th><th>本报告取值</th><th>说明</th></tr>
+<tr><td>1</td><td>GMV</td><td>¥515,334.75</td><td>有效订单实付合计；门店/平台/客单分层四口径完全自洽</td></tr>
+<tr><td>2</td><td>利润</td><td>¥109,721 / 毛利率28.6%</td><td>收入(营业收入)−成本(零售价×0.45)，零售价=原价÷1.35；2026-08-14 老大哥下发 v2 口径（初版 ÷1.25 + 顾客实付+平台补贴 已废弃）</td></tr>
+<tr><td>3</td><td>实际补贴</td><td>¥401,178.03（平台91,029+商家310,149）</td><td>=平台承担+商家承担；月度合计自洽；整体ROI=1.28</td></tr>
+<tr><td>4</td><td>活动类型补贴</td><td>7类合计¥393,530</td><td>促销表3「可分摊覆盖活动」口径；差额¥7,648为未覆盖活动</td></tr>
+<tr><td>5</td><td>平台活动ROI</td><td>美团1.50 / 淘宝1.08</td><td>=平台GMV/平台实际补贴；促销报告美团1.56为另一补贴口径(¥190,486)</td></tr>
+<tr><td>6</td><td>门店ROI</td><td>GMV/补贴口径</td><td>促销报告分摊口径(万科1.31/益田1.25/科兴1.44)排名结论一致</td></tr>
+<tr><td>7</td><td>下单率</td><td>有效订单/入店次数</td><td>淘宝6.60%（平台「下单人数」口径为7.73%）</td></tr>
+<tr><td>8</td><td>月度ROI</td><td>5月1.25/6月1.27/7月1.33</td><td>统一按 GMV/实际补贴 重算（V13原5月1.35为旧口径）</td></tr>
+</table>
+</div>
+<div class="table-wrap">
+<table>
+<tr><th>行业对标（外部资料）</th><th>数值</th><th>来源</th></tr>
+<tr><td>卤味市场规模（2025）</td><td>¥3,620亿，+5.7%，门店24万家</td><td>行业知识库（42份平台资料沉淀）</td></tr>
+<tr><td>外卖市场格局（2025）</td><td>美团67% / 淘宝闪购30% / 抖音内容 / 京东品质</td><td>行业知识库</td></tr>
+<tr><td>美团单量增速（2025E）</td><td>外卖+12%、闪购+35%</td><td>搜狐财经机构预测 2025-05</td></tr>
+<tr><td>平台佣金率</td><td>美团6-8% / 淘宝闪购5-8%</td><td>行业知识库</td></tr>
+<tr><td>漏斗基准</td><td>进店率≥7% / 下单率≥17% / 客单价≥30元 / 复购≥30%</td><td>waimai-diagnose 知识库（2026标准）</td></tr>
+<tr><td>广告ROI基准</td><td>≥6及格 / ≥8优秀 / &lt;3需优化</td><td>waimai-diagnose 知识库</td></tr>
+</table>
+</div>
+<div class="note">数据源：外卖数据5-7月（门店级943行）+ 外卖订单明细（17,826单，有效17,368）+ 活动明细（62,320条）+ 广告数据（2,137条）。本报告为《煌上煌5门店外卖运营深度诊断与提升方案_V13》与《促销活动方案报告_定稿版》的合并分析总结，全指标按统一口径重算校验。外部联网受网络限制，行业数据以本地知识库沉淀为主、时效性请以最新发布为准。</div>
+</div>
+
+<button id="printBtn" onclick="window.print()">🖨 打印 / 导出 PDF</button>
+
+<div class="footer">
+煌上煌 5 门店双平台外卖经营月报（2026年5-7月）｜运营诊断 × 促销复盘 合并分析总结<br>
+数据源：外卖数据 / 订单明细 / 活动明细 / 广告数据（5-7月）｜统一口径重算校验｜生成时间 2026-08-14 04:50<br>
+OpenClaw 自动生成 · Chart.js 可视化 · 建议 Edge 浏览器打开
+</div>
+</div>
+<script>
+Chart.register(ChartDataLabels);
+const fmt = v => '¥' + Number(v).toLocaleString('zh-CN', {maximumFractionDigits: 0});
+const f2 = v => Number(v).toFixed(2);
+const COL = {brand:'#C41E3A', brandL:'#f5c6cb', mt:'#FFD100', tb:'#FF5000', green:'#27ae60', red:'#e74c3c', blue:'#3498db', orange:'#f39c12', gray:'#95a5a6'};
+const baseOpt = {responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{boxWidth:12,font:{size:10}}}, datalabels:{font:{size:10}}}};
+
+// 1. 月度趋势
+new Chart(document.getElementById('trendChart'), {type:'bar', data:{labels:['5月','6月','7月'], datasets:[
+ {label:'GMV', data:[136369.42,182211.65,196753.68], backgroundColor:COL.brand, yAxisID:'y', borderRadius:6},
+ {label:'实际补贴', data:[109344.97,143430.9,148402.16], backgroundColor:COL.brandL, yAxisID:'y', borderRadius:6},
+ {label:'ROI', data:[1.25,1.27,1.33], type:'line', borderColor:COL.green, backgroundColor:COL.green, yAxisID:'y1', tension:.3, pointRadius:5}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>v>1000?fmt(v):v.toFixed(2)}}, scales:{y:{position:'left',title:{display:true,text:'金额(元)'}}, y1:{position:'right',min:0,max:1.8,title:{display:true,text:'ROI'}}}}});
+
+// 2. 订单×客单价
+new Chart(document.getElementById('orderChart'), {type:'bar', data:{labels:['5月','6月','7月'], datasets:[
+ {label:'有效订单', data:[4749,6164,6455], backgroundColor:COL.blue, yAxisID:'y', borderRadius:6},
+ {label:'客单价(元)', data:[28.72,29.56,30.48], type:'line', borderColor:COL.orange, backgroundColor:COL.orange, yAxisID:'y1', tension:.3, pointRadius:5}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>v>100?v:'¥'+v.toFixed(2)}}, scales:{y:{position:'left',title:{display:true,text:'订单'}}, y1:{position:'right',min:20,max:35,title:{display:true,text:'客单价(元)'}}}}});
+
+// 3. 门店月度轨迹
+new Chart(document.getElementById('storeTrendChart'), {type:'line', data:{labels:['5月','6月','7月'], datasets:[
+ {label:'印象城', data:[42.9,50.0,53.0], borderColor:COL.brand, backgroundColor:COL.brand, tension:.3, pointRadius:4},
+ {label:'地铁万科', data:[39.1,31.1,38.4], borderColor:COL.blue, backgroundColor:COL.blue, tension:.3, pointRadius:4},
+ {label:'南山益田', data:[21.3,34.1,36.3], borderColor:COL.orange, backgroundColor:COL.orange, tension:.3, pointRadius:4},
+ {label:'南山科兴(新)', data:[4.7,42.3,40.1], borderColor:COL.green, backgroundColor:COL.green, borderDash:[6,4], tension:.3, pointRadius:4},
+ {label:'子固路', data:[28.3,24.7,29.0], borderColor:COL.gray, backgroundColor:COL.gray, tension:.3, pointRadius:4}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{display:false}}, scales:{y:{beginAtZero:true,title:{display:true,text:'GMV(万元)'}}}}});
+
+// 4. 增长拆解
+new Chart(document.getElementById('growthChart'), {type:'bar', data:{labels:['新店贡献(科兴)','老店增量','补贴增量'], datasets:[
+ {label:'金额(元)', data:[35344,25040,39057], backgroundColor:[COL.green,COL.brand,COL.brandL], borderRadius:6}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>fmt(v)}}, scales:{y:{beginAtZero:true,title:{display:true,text:'金额(元)'}}}}});
+
+// 5. 平台漏斗
+new Chart(document.getElementById('convChart'), {type:'bar', data:{labels:['曝光(万)','入店(万)','有效订单(千)'], datasets:[
+ {label:'美团', data:[103.6,6.14,8.74], backgroundColor:COL.mt, borderRadius:6},
+ {label:'淘宝', data:[144.4,13.07,8.63], backgroundColor:COL.tb, borderRadius:6}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>v.toFixed(1)}}, scales:{y:{beginAtZero:true,title:{display:true,text:'次数'}}}}});
+
+// 6. 平台活动补贴×ROI
+new Chart(document.getElementById('platRoiChart'), {type:'bar', data:{labels:['美团','淘宝'], datasets:[
+ {label:'实际补贴(元)', data:[198135.07,203042.96], backgroundColor:[COL.mt,COL.tb], yAxisID:'y', borderRadius:6},
+ {label:'ROI', data:[1.50,1.08], type:'line', borderColor:COL.green, backgroundColor:COL.green, yAxisID:'y1', pointRadius:6}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>v>100?fmt(v):v.toFixed(2)}}, scales:{y:{position:'left',title:{display:true,text:'补贴(元)'}}, y1:{position:'right',min:0,max:2,title:{display:true,text:'ROI'}}}}});
+
+// 7. 新老客
+new Chart(document.getElementById('newoldChart'), {type:'bar', data:{labels:['入店新客(万)','下单新客(万)','新客下单转化率(%)'], datasets:[
+ {label:'美团', data:[3.35,0.56,16.7], backgroundColor:COL.mt, borderRadius:6},
+ {label:'淘宝', data:[6.88,0.68,9.9], backgroundColor:COL.tb, borderRadius:6}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>v.toFixed(1)}}, scales:{y:{beginAtZero:true}}}});
+
+// 8. 活动补贴堆叠
+const actN = ['支付红包','减配送费','商品折扣/特价','店铺满减','门店新客立减','商家代金券','平台津贴'];
+new Chart(document.getElementById('actStackChart'), {type:'bar', data:{labels:actN, datasets:[
+ {label:'平台承担', data:[86798.44,3167.28,97,642,0,220,1444.9], backgroundColor:COL.blue, stack:'s', borderRadius:3},
+ {label:'商家承担', data:[171371.36,54617.9,54188.04,20027.2,5053,2092.2,0], backgroundColor:COL.red, stack:'s', borderRadius:3}
+]}, options:{...baseOpt, indexAxis:'y', plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', formatter:v=>v>5000?fmt(v):''}}, scales:{x:{stacked:true,title:{display:true,text:'补贴(元)'}}, y:{stacked:true}}}});
+
+// 9. 补贴承担环形
+new Chart(document.getElementById('shareDonutChart'), {type:'doughnut', data:{labels:['平台承担','商家承担'], datasets:[{data:[91028.79,310149.24], backgroundColor:[COL.blue,COL.red], borderWidth:2}]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, color:'#fff', font:{size:12,weight:'bold'}, formatter:(v,ctx)=>fmt(v)+'\n('+(v/401178.03*100).toFixed(0)+'%)'}}}});
+
+// 10. 客单分层
+new Chart(document.getElementById('tierChart'), {type:'bar', data:{labels:['<20元','20-25元','25-30元','30-40元','≥40元'], datasets:[
+ {label:'ROI', data:[0.79,1.15,1.30,1.31,2.03], backgroundColor:['#e74c3c','#f39c12','#27ae60','#27ae60','#1e8449'], yAxisID:'y', borderRadius:6},
+ {label:'补贴占比(%)', data:[25.3,17.5,14.2,20.6,22.4], type:'line', borderColor:COL.blue, backgroundColor:COL.blue, yAxisID:'y1', tension:.3, pointRadius:5}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>v.toFixed(2)}}, scales:{y:{position:'left',min:0,max:2.5,title:{display:true,text:'ROI'}}, y1:{position:'right',min:0,max:35,title:{display:true,text:'补贴占比(%)'}}}}});
+
+// 11. 活动叠加
+new Chart(document.getElementById('stackChart'), {type:'bar', data:{labels:['叠加2个','叠加3个+','叠加4个+'], datasets:[
+ {label:'ROI', data:[1.31,1.05,0.96], backgroundColor:['#27ae60','#f39c12','#e74c3c'], borderRadius:6}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>v.toFixed(2)}}, scales:{y:{beginAtZero:true,min:0.7,max:1.5,title:{display:true,text:'ROI'}}}}});
+
+// 12. 广告ROI
+new Chart(document.getElementById('adRoiChart'), {type:'bar', data:{labels:['美团','淘宝'], datasets:[
+ {label:'消耗(元)', data:[47139.3,13422.3], backgroundColor:[COL.mt,COL.tb], yAxisID:'y', borderRadius:6},
+ {label:'ROI', data:[3.23,6.46], type:'line', borderColor:COL.green, backgroundColor:COL.green, yAxisID:'y1', pointRadius:6}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>v>100?fmt(v):v.toFixed(2)}}, scales:{y:{position:'left',title:{display:true,text:'消耗(元)'}}, y1:{position:'right',min:0,max:8,title:{display:true,text:'ROI'}}}}});
+
+// 13. 自然vs付费
+new Chart(document.getElementById('adSpendChart'), {type:'bar', data:{labels:['美团自然','美团付费','淘宝自然','淘宝付费'], datasets:[
+ {label:'曝光(万)', data:[62.9,40.7,110.5,33.9], backgroundColor:'#7fb3d5', borderRadius:6},
+ {label:'订单(千)', data:[4.63,4.12,5.92,2.71], backgroundColor:'#f5b041', borderRadius:6}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>v.toFixed(1)}}, scales:{y:{beginAtZero:true}}}});
+
+// 14. 门店GMV
+new Chart(document.getElementById('storeGmvChart'), {type:'bar', data:{labels:['南昌印象城','地铁万科','南山益田','南山科兴','子固路'], datasets:[
+ {label:'GMV(元)', data:[145917.57,108606.84,91718.98,87110.99,81980.37], backgroundColor:COL.brand, borderRadius:6}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>fmt(v)}}, scales:{y:{beginAtZero:true,title:{display:true,text:'GMV(元)'}}}}});
+
+// 15. 门店ROI
+new Chart(document.getElementById('storeRoiChart'), {type:'bar', data:{labels:['南昌印象城','地铁万科','南山益田','南山科兴','子固路'], datasets:[
+ {label:'ROI', data:[1.32,1.30,1.20,1.38,1.23], backgroundColor:['#27ae60','#27ae60','#e74c3c','#27ae60','#f39c12'], borderRadius:6}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>v.toFixed(2)}}, scales:{y:{beginAtZero:true,min:1.1,max:1.5,title:{display:true,text:'ROI'}}}}});
+
+// 16. 小时分布
+new Chart(document.getElementById('hourChart'), {type:'line', data:{labels:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'], datasets:[
+ {label:'订单数', data:[9,4,3,2,1,4,2,13,43,127,471,882,538,394,449,480,631,962,973,966,892,631,210,54], borderColor:COL.brand, backgroundColor:'rgba(196,30,58,.1)', fill:true, tension:.3, pointRadius:3}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{display:false}}, scales:{y:{beginAtZero:true,title:{display:true,text:'订单数'}}, x:{title:{display:true,text:'小时'}}}}});
+
+// 17. 利润敏感性
+new Chart(document.getElementById('marginChart'), {type:'bar', data:{labels:['28.6%(实际)','30%','35%','40%'], datasets:[
+ {label:'商家净收入', data:[205186,205186,205186,205186], backgroundColor:'#7fb3d5', borderRadius:6},
+ {label:'扣补贴后毛利', data:[58683,61556,71815,82074], backgroundColor:COL.green, borderRadius:6}
+]}, options:{...baseOpt, plugins:{...baseOpt.plugins, datalabels:{...baseOpt.plugins.datalabels, display:'auto', anchor:'end', align:'top', formatter:v=>fmt(v)}}, scales:{y:{beginAtZero:true,title:{display:true,text:'金额(元)'}}}}});
+</script>
+</body>
+</html>

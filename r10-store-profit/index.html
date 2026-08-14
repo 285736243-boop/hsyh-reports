@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>煌上煌5门店 r10_门店利润贡献排名</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:PingFang SC,Microsoft YaHei,sans-serif;background:#f5f6fa;color:#2c3e50;line-height:1.7}
+.header{background:linear-gradient(135deg,#1a2980 0%,#26d0ce 100%);color:#fff;padding:36px 24px;text-align:center}
+.header h1{font-size:1.9em;text-shadow:0 2px 8px rgba(0,0,0,.3)}
+.header .sub{font-size:1em;opacity:.92;margin-top:6px}
+.header .meta{margin-top:8px;font-size:.8em;opacity:.7}
+.container{max-width:1300px;margin:0 auto;padding:20px}
+.section{margin-bottom:26px}
+.section-title{font-size:1.3em;font-weight:700;color:#1a2980;border-left:5px solid #26d0ce;padding-left:14px;margin-bottom:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:14px}
+.card{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.card .label{font-size:.76em;color:#7f8c8d}
+.card .value{font-size:1.45em;font-weight:700;color:#1a2980}
+.card .sub{font-size:.72em;color:#95a5a6}
+.card .value.green{color:#27ae60}.card .value.red{color:#e74c3c}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(450px,1fr));gap:16px}
+.chart-box{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.chart-box h3{font-size:.95em;margin-bottom:10px;color:#34495e}
+.chart-box canvas{max-height:330px}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:.82em}
+th{background:#f8f9fa;padding:10px 8px;text-align:left;font-weight:600;border-bottom:3px solid #26d0ce;white-space:nowrap}
+td{padding:8px;border-bottom:1px solid #eee}
+tr:hover td{background:#f0fbfb}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.76em;font-weight:600}
+.b-red{background:#fde8e8;color:#c0392b}.b-green{background:#def7ec;color:#046c4e}
+.b-blue{background:#e1effe;color:#1e429f}.b-orange{background:#fef3c7;color:#92400f}
+.insight{background:linear-gradient(135deg,#f0fbfb,#f5f8ff);border:1px solid #c9e8e8;border-radius:10px;padding:14px 18px;margin-bottom:12px}
+.insight h4{color:#1a2980;margin-bottom:6px}
+.insight ul{margin-left:18px}.insight li{margin-bottom:3px;color:#555}
+.footer{text-align:center;padding:26px;color:#888;font-size:.78em}
+@media(max-width:768px){.grid2{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>煌上煌5门店 r10_门店利润贡献排名</h1>
+<div class="sub">r10_门店利润贡献排名 | 新口径(÷1.35)下各门店利润/毛利率</div>
+<div class="meta">路径1 按门店拆分×新利润口径</div>
+</div>
+<div class="container">
+<div class="section"><div class="section-title"><span class="num">10</span>核心指标</div><div class="cards"><div class="card"><div class="label">总利润</div><div class="value green">¥334,623</div><div class="sub">整体毛利率 55.0%</div></div>
+<div class="card"><div class="label">利润之王</div><div class="value">南昌印象城</div><div class="sub">¥94,414</div></div></div></div><div class="section"><div class="section-title"><span class="num">10</span>可视化分析</div><div class="grid2"><div class="chart-box"><h3>图表1</h3><canvas id="c1"></canvas></div><div class="chart-box"><h3>图表2</h3><canvas id="c2"></canvas></div></div></div>
+<div class="footer">煌上煌5门店外卖数据分析系列（10/10）| 数据源：外卖数据/订单明细/活动明细/广告（5-7月）| 生成 2026-08-14 | 全部自我计算</div>
+</div>
+<script>
+Chart.register(ChartDataLabels);
+const fmt = v => '¥' + Number(v).toLocaleString('zh-CN', {maximumFractionDigits: 0});
+
+new Chart(document.getElementById('c1'), {
+  type:'bar',
+  data:{labels:["南昌印象城", "直属地铁万科广场专卖店", "直属南山益田假日广场店", "直属南山科兴科学园店", "万寿宫子固路店"],datasets:[
+    {label:'利润',data:[94413.73, 67431.34, 62350.63, 58146.81, 52280.96],backgroundColor:["#f39c12", "#f39c12", "#27ae60", "#27ae60", "#f39c12"],borderRadius:8},
+    {label:'收入',data:[171985.08, 125541.09, 111119.36, 102793.65, 97184.51],backgroundColor:'rgba(26,41,128,.15)',borderRadius:8}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{datalabels:{display:'auto',color:'#333',anchor:'end',align:'top',formatter:v=>v>1000?fmt(v):''}},scales:{y:{beginAtZero:true}}}
+});
+
+</script>
+</body>
+</html>
