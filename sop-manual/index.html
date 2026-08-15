@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>煌上煌外卖运营诊断 + SOP标准操作流程</title>
+<style>
+:root{--bg:#0d1117;--s:#161b22;--b:#30363d;--t:#c9d1d9;--m:#8b949e;--p:#58a6ff;--g:#3fb950;--w:#d29922;--r:#f85149;--mt:#ffc300;--tb:#ff5000}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:var(--bg);color:var(--t);max-width:1200px;margin:0 auto;padding:20px;line-height:1.7}
+h1{font-size:1.8em;text-align:center;margin:20px 0;color:#fff;border-bottom:2px solid var(--p);padding-bottom:15px}
+h2{font-size:1.3em;color:var(--p);margin:40px 0 15px;border-left:4px solid var(--p);padding-left:12px}
+h3{font-size:1.1em;color:#a5d6ff;margin:25px 0 10px}
+h4{color:var(--p);margin:15px 0 8px}
+p,li{margin:5px 0}ul,ol{margin-left:25px}
+.high{background:rgba(88,166,255,0.08);border-left:3px solid var(--p);padding:15px 20px;margin:15px 0;border-radius:0 8px 8px 0}
+.warn{background:rgba(210,153,34,0.1);border-left:3px solid var(--w);padding:15px 20px;margin:15px 0;border-radius:0 8px 8px 0}
+.suc{background:rgba(63,185,80,0.1);border-left:3px solid var(--g);padding:15px 20px;margin:15px 0;border-radius:0 8px 8px 0}
+.dan{background:rgba(248,81,73,0.1);border-left:3px solid var(--r);padding:15px 20px;margin:15px 0;border-radius:0 8px 8px 0}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:.88em}
+th{background:var(--s);padding:10px;text-align:left;border-bottom:2px solid var(--b);color:var(--p)}
+td{padding:8px 10px;border-bottom:1px solid var(--b)}
+tr:hover{background:rgba(88,166,255,0.04)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:15px 0}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin:15px 0}
+.card{background:var(--s);border:1px solid var(--b);border-radius:10px;padding:18px}
+.card h4{margin-top:0}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:15px 0}
+.kpi{background:var(--s);border:1px solid var(--b);border-radius:8px;padding:12px;text-align:center}
+.kpi .v{font-size:1.4em;font-weight:bold;color:#fff}.kpi .l{font-size:.75em;color:var(--m)}
+.sop-step{background:var(--s);border:1px solid var(--b);border-radius:8px;padding:15px;margin:10px 0;position:relative}
+.sop-num{position:absolute;top:-10px;left:-10px;background:var(--p);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:.9em}
+.sop-step h4{margin-left:20px}
+.f{font-family:'Cascadia Code',monospace;background:var(--s);padding:4px 10px;border-radius:5px;font-size:.85em}
+@media(max-width:768px){.g2,.g3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<h1>🔬 煌上煌外卖运营诊断 + SOP标准操作流程</h1>
+<p style="text-align:center;color:var(--m);margin-bottom:30px;">
+  基于双平台7月门店订单汇总_v2.xlsx 实际数据分析<br>
+  生成日期：2026-08-06 | 数据范围：7,279条门店记录
+</p>
+
+<!-- ===== PART 1: 数据诊断 ===== -->
+<h2>第一部分：数据诊断（基于实际数据）</h2>
+
+<h3>1.1 核心数据总览</h3>
+
+<div class="kpi-row">
+  <div class="kpi"><div class="l">总门店数</div><div class="v">7,273</div><div class="l">美团5,792 + 淘宝1,481</div></div>
+  <div class="kpi"><div class="l">有订单门店</div><div class="v" style="color:var(--w)">1,498</div><div class="l">占比 20.6%</div></div>
+  <div class="kpi"><div class="l">总实付交易额</div><div class="v">¥992万</div><div class="l">美团691万 + 淘宝300万</div></div>
+  <div class="kpi"><div class="l">总订单数</div><div class="v">270,514</div><div class="l">美团176,539 + 淘宝93,975</div></div>
+  <div class="kpi"><div class="l">评分<4.5(限流)</div><div class="v" style="color:var(--r)">253</div><div class="l">评分<4.0: 159家</div></div>
+  <div class="kpi"><div class="l">评分4.8+(优秀)</div><div class="v" style="color:var(--g)">140</div><div class="l">占比仅19%</div></div>
+</div>
+
+<h3>1.2 四大紧急问题诊断</h3>
+
+<div class="dan">
+<h4>🔴 问题一：79.4%的门店零订单——沉睡门店率极高</h4>
+<ul>
+  <li>7,273家门店中仅<strong>1,498家有订单</strong>，<strong>5,775家零订单</strong></li>
+  <li>美团5,792家门店中仅815家有订单（<strong>14.1%</strong>）</li>
+  <li>淘宝1,481家门店中683家有订单（<strong>46.1%</strong>）——淘宝有订单率反而更高</li>
+  <li><strong>根因分析</strong>：大量门店可能未开启外卖/未投放广告/菜单未配置</li>
+</ul>
+</div>
+
+<div class="dan">
+<h4>🔴 问题二：评分<4.5的限流门店达253家（占评分门店的50.2%）</h4>
+<ul>
+  <li>评分<4.0的<strong>159家</strong>——严重限流级别</li>
+  <li>评分<4.5的<strong>253家</strong>——触发老店限流红线</li>
+  <li>典型低分案例：湾里城建广场店(0.48分)/直属系马桩店(0.97分)/惠州乌石店(2.10分)</li>
+  <li><strong>根因分析</strong>：差评未回复、出餐超时、包装漏洒、口味不稳定</li>
+</ul>
+</div>
+
+<div class="warn">
+<h4>🟠 问题三：评分4.8+的优秀门店仅140家（19%）——品质标杆不足</h4>
+<ul>
+  <li>淘宝闪购平均评分仅<strong>3.96分</strong>，远低于美团(88.88分，不同评分体系)</li>
+  <li>美团和淘宝使用不同的评分体系（美团100分制，淘宝5分制），需分开分析</li>
+  <li>淘宝闪购评分<4.5的门店占比更高</li>
+</ul>
+</div>
+
+<div class="warn">
+<h4>🟠 问题四：订单集中度极高——头部效应明显</h4>
+<ul>
+  <li>Top10门店贡献了大量订单（赣州公务员小区店美团2,483单+淘宝2,050单）</li>
+  <li>1,498家有订单门店中，大部分门店日订单量<10单</li>
+  <li><strong>根因分析</strong>：头部门店有专职运营，尾部门店缺乏运营能力</li>
+</ul>
+</div>
+
+<h3>1.3 Top 10标杆门店</h3>
+
+<table>
+<tr><th>门店</th><th>平台</th><th>订单</th><th>实付额</th><th>评分</th><th>值得学习</th></tr>
+<tr><td>赣州公务员小区店</td><td><span class="f" style="background:rgba(255,195,0,.2);color:#ffc300">美团</span></td><td>2,483</td><td>¥76,127</td><td style="color:var(--g)">85.87</td><td>高订单+高评分</td></tr>
+<tr><td>赣州公务员小区店</td><td><span class="f" style="background:rgba(255,80,0,.2);color:#ff5000">淘宝</span></td><td>2,050</td><td>¥55,290</td><td>4.45</td><td>双平台运营标杆</td></tr>
+<tr><td>新建店</td><td><span class="f" style="background:rgba(255,195,0,.2);color:#ffc300">美团</span></td><td>1,948</td><td>¥89,278</td><td>79.94</td><td>高客单价</td></tr>
+<tr><td>新村店</td><td><span class="f" style="background:rgba(255,195,0,.2);color:#ffc300">美团</span></td><td>1,798</td><td>¥73,862</td><td style="color:var(--g)">89.87</td><td>高评分+高订单</td></tr>
+<tr><td>抚生路店</td><td><span class="f" style="background:rgba(255,195,0,.2);color:#ffc300">美团</span></td><td>1,611</td><td>¥81,966</td><td style="color:var(--g)">91.35</td><td>最高评分之一</td></tr>
+</table>
+
+<!-- ===== PART 2: 行动手册 ===== -->
+<h2>第二部分：分优先级行动手册</h2>
+
+<h3>2.1 P0 - 本周紧急（立即执行）</h3>
+
+<table>
+<tr><th>#</th><th>行动项</th><th>目标</th><th>负责人</th><th>验收标准</th></tr>
+<tr>
+  <td>1</td>
+  <td><strong>清理评分<4.0的159家门店</strong><br>逐家检查差评原因（口味/包装/配送），24小时内回复所有未回复差评</td>
+  <td>评分回升至4.0+</td>
+  <td>区域经理</td>
+  <td>一周后评分<4.0门店减少50%</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><strong>盘点5,775家零订单门店</strong><br>检查是否已上线外卖、菜单是否配置、是否开启推广</td>
+  <td>识别可激活门店</td>
+  <td>运营团队</td>
+  <td>输出激活清单和优先级</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><strong>标杆门店经验萃取</strong><br>调研Top10门店（赣州公务员小区/新建/新村/抚生路等）的运营做法</td>
+  <td>形成可复制SOP</td>
+  <td>运营团队</td>
+  <td>输出标杆门店运营手册</td>
+</tr>
+</table>
+
+<h3>2.2 P1 - 本月重点（2-4周）</h3>
+
+<table>
+<tr><th>#</th><th>行动项</th><th>目标</th><th>验收标准</th></tr>
+<tr><td>1</td><td><strong>分批激活沉睡门店</strong>：优先选择评分4.5+、位于高客流区域的门店，配置菜单+开启点金推广</td><td>激活500家门店</td><td>月内新增有订单门店500家</td></tr>
+<tr><td>2</td><td><strong>评分提升专项</strong>：对253家评分<4.5门店制定整改计划（差评回复+出餐优化+包装改进+引导好评）</td><td>评分<4.5门店减少至100家以下</td><td>月内完成所有门店差评回复</td></tr>
+<tr><td>3</td><td><strong>建立每日数据看板</strong>：四率(曝光/进店/下单/复购)+评分+订单+ROI，按分公司/门店维度展示</td><td>数据驱动决策</td><td>看板上线并每日更新</td></tr>
+<tr><td>4</td><td><strong>新客套餐设计</strong>：为所有外卖门店配置新客立减/首单优惠，降低首次尝试门槛</td><td>新客下单率提升至10%+</td><td>新客占比环比提升5%</td></tr>
+</table>
+
+<h3>2.3 P2 - 持续优化（1-3月）</h3>
+
+<table>
+<tr><th>#</th><th>行动项</th><th>目标</th></tr>
+<tr><td>1</td><td><strong>全时段场景拓展</strong>：推出早餐场景(卤蛋+粥)、下午茶(小份鸭脖+饮品)、夜宵(大份量贩装)</td><td>权重+92%</td></tr>
+<tr><td>2</td><td><strong>热卤/小份菜测试</strong>：选择20家门店试点热卤杯(4.9元引流品)+小份菜套餐</td><td>验证新产品模式</td></tr>
+<tr><td>3</td><td><strong>私域社群搭建</strong>：每门店建立企微社群，配置会员券+下单返券+新品推送</td><td>复购率提升至25%+</td></tr>
+<tr><td>4</td><td><strong>抖音内容种草</strong>：选取10家标杆门店拍摄短视频，展示制作工艺+食材溯源</td><td>品牌曝光+线上引流</td></tr>
+</table>
+
+<!-- ===== PART 3: SOP ===== -->
+<h2>第三部分：外卖运营SOP标准操作流程</h2>
+
+<h3>3.1 日常运营SOP（每日）</h3>
+
+<div class="sop-step"><div class="sop-num">1</div>
+<h4>开店检查（9:00-9:30）</h4>
+<ul>
+  <li>确认店铺在线状态正常，无异常关店</li>
+  <li>检查菜单菜品库存，标记售罄菜品</li>
+  <li>确认满减活动/配送费设置正常</li>
+  <li>查看昨日差评并回复（24小时内必须回复）</li>
+  <li>检查今日推广计划是否开启</li>
+</ul>
+</div>
+
+<div class="sop-step"><div class="sop-num">2</div>
+<h4>午高峰运营（10:30-13:00）</h4>
+<ul>
+  <li>10:30确认出餐准备就绪</li>
+  <li>点金推广出价加价30%（午高峰竞争激烈）</li>
+  <li>实时监控接单→出餐→配送流程</li>
+  <li>出餐时间控制在<strong>15分钟内</strong></li>
+  <li>处理异常订单（缺货/超时/取消）</li>
+</ul>
+</div>
+
+<div class="sop-step"><div class="sop-num">3</div>
+<h4>下午茶时段（14:00-16:30）</h4>
+<ul>
+  <li>14:00降低点金出价（平峰竞争少，可低价获量）</li>
+  <li>检查午高峰差评，及时回复</li>
+  <li>更新下午茶推荐菜品（小份/单人份）</li>
+  <li>补充库存，准备晚高峰</li>
+</ul>
+</div>
+
+<div class="sop-step"><div class="sop-num">4</div>
+<h4>晚高峰运营（17:00-19:30）</h4>
+<ul>
+  <li>17:00点金推广出价加价20%</li>
+  <li>出餐时间控制在15分钟内</li>
+  <li>重点关注大单/团餐订单</li>
+</ul>
+</div>
+
+<div class="sop-step"><div class="sop-num">5</div>
+<h4>收尾复盘（20:00-21:00）</h4>
+<ul>
+  <li>查看当日数据：订单量/曝光量/进店率/下单率/推广消耗</li>
+  <li>对比昨日/上周同日数据</li>
+  <li>回复当日所有差评</li>
+  <li>记录异常情况和明日优化点</li>
+  <li>更新库存，标记明日推荐菜品</li>
+</ul>
+</div>
+
+<h3>3.2 周度运营SOP（每周）</h3>
+
+<div class="sop-step"><div class="sop-num">W1</div>
+<h4>周一：数据周报 + 策略调整</h4>
+<ul>
+  <li>输出上周运营周报（四率+订单+消耗+ROI+评分变化）</li>
+  <li>对比商圈同行均值，识别差距</li>
+  <li>调整本周推广预算和出价策略</li>
+  <li>检查菜单是否需要更新（季节/库存变化）</li>
+</ul>
+</div>
+
+<div class="sop-step"><div class="sop-num">W2</div>
+<h4>周三：活动日运营</h4>
+<ul>
+  <li>美团周三外卖节：参与平台活动，增加推广预算20%</li>
+  <li>检查神券节/限时秒杀等平台活动日历</li>
+  <li>A/B测试新菜品图或新套餐（选2-3家门店试点）</li>
+</ul>
+</div>
+
+<div class="sop-step"><div class="sop-num">W3</div>
+<h4>周五：周末准备 + 竞品扫描</h4>
+<ul>
+  <li>检查周末推广预算是否充足（周末订单通常高于平日）</li>
+  <li>扫描竞品动态（价格/活动/新品）</li>
+  <li>准备周末推荐菜品和活动</li>
+</ul>
+</div>
+
+<h3>3.3 月度运营SOP（每月）</h3>
+
+<div class="sop-step"><div class="sop-num">M1</div>
+<h4>月度复盘报告</h4>
+<ul>
+  <li>输出月度运营复盘报告（五段式：摘要→洞察→根因→建议→展望）</li>
+  <li>分析维度：分公司/平台/门店等级/新老客</li>
+  <li>四率趋势+ROI变化+评分分布</li>
+  <li>标杆门店vs末位门店对比</li>
+</ul>
+</div>
+
+<div class="sop-step"><div class="sop-num">M2</div>
+<h4>预算调整 + 活动规划</h4>
+<ul>
+  <li>根据上月ROI调整各门店/各平台预算分配</li>
+  <li>规划下月营销活动（新客/复购/节日）</li>
+  <li>优化菜单：下架低销量菜品，上线新品</li>
+  <li>更新菜品图片（月度更新保持新鲜感）</li>
+</ul>
+</div>
+
+<div class="sop-step"><div class="sop-num">M3</div>
+<h4>门店评分巡检</h4>
+<ul>
+  <li>逐门店检查评分：<4.0立即整改，4.0-4.5重点关注</li>
+  <li>检查差评回复率（必须100%）</li>
+  <li>检查出餐时间是否达标</li>
+  <li>检查推广效果：暂停低ROI推广，加码高ROI推广</li>
+</ul>
+</div>
+
+<h3>3.4 新店上线SOP（30天）</h3>
+
+<div class="sop-step"><div class="sop-num">D1</div>
+<h4>上线前准备（Day 1-3）</h4>
+<ul>
+  <li>✅ 菜品齐全（分类≥5个，SKU≥20个）</li>
+  <li>✅ 图片精美（专业拍摄，双视角）</li>
+  <li>✅ 配置店铺公告+满减活动+减配送费</li>
+  <li>✅ 设置新客立减/首单优惠</li>
+  <li>✅ 检查评分基础（引导老顾客先给好评）</li>
+</ul>
+</div>
+
+<div class="sop-step"><div class="sop-num">D4</div>
+<h4>开启7天排名加权（Day 4-10）</h4>
+<ul>
+  <li>开启新店特权（第8/12位轮播）</li>
+  <li>点金推广：新客定向加价50%，日出价预算≥100元</li>
+  <li>每天监控：曝光量/进店率/新客下单率</li>
+  <li>前14天<strong>只看新客下单率</strong>，目标≥10%</li>
+</ul>
+</div>
+
+<div class="sop-step"><div class="sop-num">D14</div>
+<h4>冲刺评分4.8+（Day 11-30）</h4>
+<ul>
+  <li>引导好评（包装附感谢卡+好评邀请）</li>
+  <li>差评24小时内回复（道歉+解释+改进）</li>
+  <li>出餐时间严格控制在15分钟内</li>
+  <li>持续优化菜单和价格带</li>
+  <li>月底目标：评分≥4.8 + 日均订单≥20单</li>
+</ul>
+</div>
+
+<h3>3.5 广告投放SOP</h3>
+
+<div class="sop-step"><div class="sop-num">A1</div>
+<h4>出价策略标准流程</h4>
+<ul>
+  <li>① 关闭自动出价助手，改为<strong>手动控制</strong></li>
+  <li>② 初始出价：参考商圈同行CPC中位数</li>
+  <li>③ 阶梯测试：每48小时调整<strong>10-15%</strong>，找到CPC拐点</li>
+  <li>④ 分时调价：午高峰+30% / 晚高峰+20% / 平峰-20%</li>
+  <li>⑤ 定向出价：新客+30-50% / 高客单区域+20%</li>
+  <li>⑥ 止损线：进店率<6%或ROI<3的时段/区域，降低或暂停</li>
+</ul>
+</div>
+
+<div class="sop-step"><div class="sop-num">A2</div>
+<h4>推广效果评估标准</h4>
+<table>
+<tr><th>指标</th><th>优秀</th><th>及格</th><th>需优化</th></tr>
+<tr><td>进店率</td><td style="color:var(--g)">>10%</td><td>≥6%</td><td style="color:var(--r)"><6%</td></tr>
+<tr><td>曝光1min次数</td><td style="color:var(--g)">>20次</td><td>≥10次</td><td style="color:var(--r)"><10次</td></tr>
+<tr><td>排名</td><td style="color:var(--g)">前10名</td><td>前25名</td><td style="color:var(--r)">25名后</td></tr>
+<tr><td>ROI</td><td style="color:var(--g)">>8</td><td>≥5</td><td style="color:var(--r)"><3</td></tr>
+<tr><td>订单成本(CPO)</td><td style="color:var(--g)"><¥1.5</td><td><¥3.5</td><td style="color:var(--r)">>¥3.5</td></tr>
+</table>
+</div>
+
+<!-- ===== PART 4: 检查清单 ===== -->
+<h2>第四部分：运营检查清单（Checklist）</h2>
+
+<h3>4.1 每日检查清单</h3>
+<div class="g2">
+<div class="card">
+<h4>☀️ 开店前（9:00）</h4>
+<ul>
+<li>☐ 店铺在线状态正常</li>
+<li>☐ 菜单菜品库存已更新</li>
+<li>☐ 满减/配送费设置正常</li>
+<li>☐ 昨日差评已回复</li>
+<li>☐ 今日推广计划已开启</li>
+<li>☐ 出餐准备就绪</li>
+</ul>
+</div>
+<div class="card">
+<h4>🌙 关店前（20:00）</h4>
+<ul>
+<li>☐ 当日数据已记录</li>
+<li>☐ 差评已全部回复</li>
+<li>☐ 异常订单已处理</li>
+<li>☐ 明日库存已更新</li>
+<li>☐ 推广预算复盘</li>
+<li>☐ 明日优化点已记录</li>
+</ul>
+</div>
+</div>
+
+<h3>4.2 每周检查清单</h3>
+<div class="g2">
+<div class="card">
+<h4>📊 数据检查</h4>
+<ul>
+<li>☐ 周订单趋势（vs上周/上月）</li>
+<li>☐ 四率变化（曝光/进店/下单/复购）</li>
+<li>☐ 推广消耗+ROI</li>
+<li>☐ 评分变化</li>
+<li>☐ 新老客占比变化</li>
+<li>☐ 商圈同行对比</li>
+</ul>
+</div>
+<div class="card">
+<h4>🔧 优化动作</h4>
+<ul>
+<li>☐ 调整推广出价策略</li>
+<li>☐ 更新/测试菜品图</li>
+<li>☐ 检查平台活动日历</li>
+<li>☐ 竞品动态扫描</li>
+<li>☐ 差评归类分析</li>
+<li>☐ A/B测试结果评估</li>
+</ul>
+</div>
+</div>
+
+<h3>4.3 每月检查清单</h3>
+<div class="g2">
+<div class="card">
+<h4>📈 月度复盘</h4>
+<ul>
+<li>☐ 月度运营复盘报告</li>
+<li>☐ 分公司/平台维度分析</li>
+<li>☐ 标杆vs末位门店对比</li>
+<li>☐ 预算执行率检查</li>
+<li>☐ ROI趋势分析</li>
+<li>☐ 下月目标设定</li>
+</ul>
+</div>
+<div class="card">
+<h4>🔧 月度优化</h4>
+<ul>
+<li>☐ 预算重新分配</li>
+<li>☐ 菜单更新（上下架）</li>
+<li>☐ 菜品图片更新</li>
+<li>☐ 评分巡检（全部门店）</li>
+<li>☐ 推广效果评估</li>
+<li>☐ 下月活动规划</li>
+</ul>
+</div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center;margin-top:50px;padding:30px;border-top:1px solid var(--b);color:var(--m);font-size:.85em">
+<p>🔬 煌上煌外卖运营诊断 + SOP标准操作流程</p>
+<p>数据来源：双平台7月门店订单汇总_v2.xlsx | 7,279条记录 | 2026-08-06</p>
+<p>P0(3项紧急) → P1(4项重点) → P2(4项持续) + 日/周/月/新店/广告 五套SOP</p>
+</div>
+
+</body>
+</html>
