@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>5门店双平台外卖运营分析报告（2026年7月）</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+         background: #F8FAFC; color: #1E293B; margin: 0; padding: 24px; line-height: 1.6; }
+  .container { max-width: 1400px; margin: 0 auto; }
+  h1 { font-size: 28px; color: #0F172A; border-bottom: 4px solid #2563EB;
+        padding-bottom: 12px; margin-bottom: 8px; }
+  h2 { font-size: 22px; color: #0F172A; border-left: 5px solid #2563EB;
+        padding-left: 12px; margin-top: 40px; margin-bottom: 16px; }
+  h3 { font-size: 17px; color: #1E40AF; margin-top: 24px; }
+  .subtitle { color: #64748B; font-size: 14px; margin-bottom: 24px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0; }
+  .kpi { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+          border-top: 4px solid #2563EB; }
+  .kpi.orange { border-top-color: #FF6A00; }
+  .kpi.green { border-top-color: #10B981; }
+  .kpi.purple { border-top-color: #8B5CF6; }
+  .kpi-label { color: #64748B; font-size: 13px; margin-bottom: 6px; }
+  .kpi-value { font-size: 24px; font-weight: 700; color: #0F172A; }
+  .kpi-sub { color: #94A3B8; font-size: 11px; margin-top: 4px; }
+  .chart-frame { background: white; border-radius: 10px; padding: 16px; margin: 16px 0;
+                  box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .chart-frame iframe { width: 100%; border: none; }
+  table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px;
+          overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-size: 12px; }
+  th { background: #1E40AF; color: white; padding: 10px 8px; text-align: center; }
+  td { padding: 8px; border-bottom: 1px solid #E2E8F0; text-align: center; vertical-align: middle; }
+  tr:hover { background: #F1F5F9; }
+  .insight { background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+              border-left: 5px solid #2563EB; padding: 16px 20px; border-radius: 8px;
+              margin: 16px 0; }
+  .insight h4 { color: #1E40AF; margin: 0 0 8px 0; font-size: 15px; }
+  .insight ul { margin: 8px 0; padding-left: 20px; }
+  .insight li { margin: 4px 0; }
+  .warning { background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+              border-left: 5px solid #F59E0B; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+  .success { background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+              border-left: 5px solid #10B981; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+  .bad { background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+          border-left: 5px solid #EF4444; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+  .rank-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 16px 0; }
+  .rank-card { background: white; padding: 16px; border-radius: 10px; text-align: center;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-top: 4px solid #94A3B8; }
+  .rank-card.r1 { border-top-color: #F59E0B; background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); }
+  .rank-card.r2 { border-top-color: #94A3B8; background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%); }
+  .rank-card.r3 { border-top-color: #B45309; background: linear-gradient(135deg, #FEF3C7 0%, #FED7AA 100%); }
+  .rank-num { font-size: 28px; font-weight: 800; color: #2563EB; }
+  .rank-store { font-size: 13px; font-weight: 600; margin-top: 4px; }
+  .rank-pay { font-size: 18px; color: #DC2626; font-weight: 700; margin: 4px 0; }
+  .rank-meta { font-size: 11px; color: #64748B; }
+  .footer { margin-top: 40px; padding: 20px; text-align: center; color: #94A3B8; font-size: 12px;
+             border-top: 1px solid #E2E8F0; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .tag-good { background: #D1FAE5; color: #065F46; }
+  .tag-bad { background: #FEE2E2; color: #991B1B; }
+  .tag-warn { background: #FEF3C7; color: #92400E; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>5门店双平台外卖运营分析报告</h1>
+  <div class="subtitle">数据周期：2026年7月 | 数据源：美团外卖 + 淘宝闪购 | 目标门店：5家（煌上煌热卤系列）</div>
+
+  <h2>核心指标总览</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">双平台实付合计</div>
+      <div class="kpi-value">¥196,717</div>
+      <div class="kpi-sub">美团 ¥111,680 (56.8%) + 淘宝 ¥85,037 (43.2%)</div>
+    </div>
+    <div class="kpi orange">
+      <div class="kpi-label">双平台订单合计</div>
+      <div class="kpi-value">6,454 单</div>
+      <div class="kpi-sub">客单价 ¥30.5</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">双平台曝光合计</div>
+      <div class="kpi-value">476,064 人</div>
+      <div class="kpi-sub">下单转化率 1.36%</div>
+    </div>
+    <div class="kpi purple">
+      <div class="kpi-label">双平台新客</div>
+      <div class="kpi-value">430,778 人</div>
+      <div class="kpi-sub">新客占比 90.5% (老客 45,286人)</div>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">商家活动支出</div>
+      <div class="kpi-value">¥69,566</div>
+      <div class="kpi-sub">美团 ¥51,003 + 淘宝 ¥18,563</div>
+    </div>
+    <div class="kpi orange">
+      <div class="kpi-label">平台补贴</div>
+      <div class="kpi-value">¥61,682</div>
+      <div class="kpi-sub">美团 ¥15,837 + 淘宝 ¥45,844</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">总补贴率</div>
+      <div class="kpi-value">66.7%</div>
+      <div class="kpi-sub">活动+平台补贴/实付</div>
+    </div>
+    <div class="kpi purple">
+      <div class="kpi-label">实付TOP1门店</div>
+      <div class="kpi-value" style="font-size:18px;">C15002</div>
+      <div class="kpi-sub">¥53,032 (煌上煌热卤(印象城店))</div>
+    </div>
+  </div>
+
+  <h2>5门店实付排名</h2>
+  <div class="rank-grid">
+<div class="rank-card r1">
+      <div class="rank-num">1</div>
+      <div class="rank-store">C15002</div>
+      <div style="font-size:11px;color:#64748B;">煌上煌热卤(印象城店)</div>
+      <div class="rank-pay">¥53,032</div>
+      <div class="rank-meta">1,686单 | 转化率1.42%</div>
+      <div class="rank-meta">客单价¥31.4</div>
+      <div class="rank-meta">新客占比90.81%</div>
+    </div>
+<div class="rank-card r2">
+      <div class="rank-num">2</div>
+      <div class="rank-store">C15009</div>
+      <div style="font-size:11px;color:#64748B;">煌上煌热卤(南山科兴科学园店)</div>
+      <div class="rank-pay">¥40,087</div>
+      <div class="rank-meta">1,264单 | 转化率1.32%</div>
+      <div class="rank-meta">客单价¥31.7</div>
+      <div class="rank-meta">新客占比92.66%</div>
+    </div>
+<div class="rank-card r3">
+      <div class="rank-num">3</div>
+      <div class="rank-store">C14793</div>
+      <div style="font-size:11px;color:#64748B;">煌上煌热卤(地铁万科店)</div>
+      <div class="rank-pay">¥38,407</div>
+      <div class="rank-meta">1,243单 | 转化率1.44%</div>
+      <div class="rank-meta">客单价¥30.9</div>
+      <div class="rank-meta">新客占比86.31%</div>
+    </div>
+<div class="rank-card">
+      <div class="rank-num">#4</div>
+      <div class="rank-store">C15019</div>
+      <div style="font-size:11px;color:#64748B;">煌上煌热卤(南山益田假日广场店)</div>
+      <div class="rank-pay">¥36,249</div>
+      <div class="rank-meta">1,320单 | 转化率1.34%</div>
+      <div class="rank-meta">客单价¥27.5</div>
+      <div class="rank-meta">新客占比91.26%</div>
+    </div>
+<div class="rank-card">
+      <div class="rank-num">#5</div>
+      <div class="rank-store">C14906</div>
+      <div style="font-size:11px;color:#64748B;">煌上煌热卤(子固路店)</div>
+      <div class="rank-pay">¥28,942</div>
+      <div class="rank-meta">941单 | 转化率1.23%</div>
+      <div class="rank-meta">客单价¥30.8</div>
+      <div class="rank-meta">新客占比90.98%</div>
+    </div>
+  </div>
+
+  <h2>详细数据矩阵</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>门店</th><th>城市</th>
+        <th>美团实付</th><th>淘宝实付</th><th>双平台合计</th>
+        <th>美团订单</th><th>订单合计</th>
+        <th>美团曝光</th><th>曝光合计</th>
+        <th>入店转化率<br/>(美/淘)</th><th>下单转化率</th>
+        <th>新客占比<br/>(美/淘)</th><th>客单价<br/>(美/淘)</th>
+        <th>活动支出<br/>(美/淘)</th><th>活动率<br/>(美/双)</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr>
+<td><b>C14793</b><br/><small>煌上煌热卤(地铁万科店)</small></td>
+<td>南昌</td>
+<td>¥20,519<br/><small>53.42%</small></td>
+<td>¥17,888<br/><small>46.58%</small></td>
+<td><b>¥38,407</b></td>
+<td>548<br/><small>+695</small></td>
+<td><b>1243</b></td>
+<td>36,870<br/><small>+49,456</small></td>
+<td><b>86,326</b></td>
+<td>7.49%<br/><small>10.41%</small></td>
+<td><b>1.44%</b></td>
+<td>84.67%<br/><small>87.54%</small></td>
+<td>¥37.4<br/><small>¥25.7</small></td>
+<td>¥9,879<br/><small>+¥2,622</small></td>
+<td>58.49%<br/><small>32.55%</small></td>
+</tr>
+<tr>
+<td><b>C14906</b><br/><small>煌上煌热卤(子固路店)</small></td>
+<td>南昌</td>
+<td>¥15,466<br/><small>53.44%</small></td>
+<td>¥13,476<br/><small>46.56%</small></td>
+<td><b>¥28,942</b></td>
+<td>476<br/><small>+465</small></td>
+<td><b>941</b></td>
+<td>34,126<br/><small>+42,441</small></td>
+<td><b>76,567</b></td>
+<td>7.72%<br/><small>8.35%</small></td>
+<td><b>1.23%</b></td>
+<td>90.47%<br/><small>91.39%</small></td>
+<td>¥32.5<br/><small>¥29.0</small></td>
+<td>¥8,546<br/><small>+¥2,257</small></td>
+<td>69.78%<br/><small>37.32%</small></td>
+</tr>
+<tr>
+<td><b>C15002</b><br/><small>煌上煌热卤(印象城店)</small></td>
+<td>南昌</td>
+<td>¥24,425<br/><small>46.06%</small></td>
+<td>¥28,607<br/><small>53.94%</small></td>
+<td><b>¥53,032</b></td>
+<td>640<br/><small>+1046</small></td>
+<td><b>1686</b></td>
+<td>36,958<br/><small>+81,683</small></td>
+<td><b>118,641</b></td>
+<td>7.89%<br/><small>9.43%</small></td>
+<td><b>1.42%</b></td>
+<td>88.84%<br/><small>91.7%</small></td>
+<td>¥38.2<br/><small>¥27.4</small></td>
+<td>¥10,014<br/><small>+¥5,672</small></td>
+<td>53.45%<br/><small>29.58%</small></td>
+</tr>
+<tr>
+<td><b>C15019</b><br/><small>煌上煌热卤(南山益田假日广场店)</small></td>
+<td>深圳</td>
+<td>¥24,697<br/><small>68.13%</small></td>
+<td>¥11,552<br/><small>31.87%</small></td>
+<td><b>¥36,249</b></td>
+<td>696<br/><small>+624</small></td>
+<td><b>1320</b></td>
+<td>52,586<br/><small>+45,933</small></td>
+<td><b>98,519</b></td>
+<td>4.95%<br/><small>7.74%</small></td>
+<td><b>1.34%</b></td>
+<td>90.37%<br/><small>92.27%</small></td>
+<td>¥35.5<br/><small>¥18.5</small></td>
+<td>¥11,963<br/><small>+¥4,431</small></td>
+<td>92.52%<br/><small>45.23%</small></td>
+</tr>
+<tr>
+<td><b>C15009</b><br/><small>煌上煌热卤(南山科兴科学园店)</small></td>
+<td>深圳</td>
+<td>¥26,574<br/><small>66.29%</small></td>
+<td>¥13,513<br/><small>33.71%</small></td>
+<td><b>¥40,087</b></td>
+<td>686<br/><small>+578</small></td>
+<td><b>1264</b></td>
+<td>54,535<br/><small>+41,476</small></td>
+<td><b>96,011</b></td>
+<td>6.32%<br/><small>7.8%</small></td>
+<td><b>1.32%</b></td>
+<td>91.26%<br/><small>94.5%</small></td>
+<td>¥38.7<br/><small>¥23.4</small></td>
+<td>¥10,600<br/><small>+¥3,582</small></td>
+<td>52.54%<br/><small>35.38%</small></td>
+</tr>
+    </tbody>
+  </table>
+
+  <h2>可视化分析</h2>
+
+  <h3>1. 双平台实付 & 订单对比（图1）</h3>
+  <div class="chart-frame">
+    <iframe src="5门店图表集.html" height="520"></iframe>
+  </div>
+  <div class="insight">
+    <h4>解读要点</h4>
+    <ul>
+      <li><b>C15002（煌上煌热卤(印象城店)）</b>双平台实付最高（¥53,032），且<b>淘宝占比反超美团</b>（53.94% vs 46.06%），是少有的"淘宝主导型"门店</li>
+      <li><b>C14906（煌上煌热卤(子固路店)）</b>实付最低（¥28,942），且订单量也最低（941单），为末位门店</li>
+      <li>美团主导门店：C14793、C14906、C15019、C15009（实付占比均&gt;53%）</li>
+      <li>淘宝主导门店：仅C15002一家（淘宝占53.94%）</li>
+    </ul>
+  </div>
+
+  <h3>2. 实付金额堆叠结构（图2）</h3>
+  <div class="chart-frame">
+    <iframe src="5门店图表集.html" height="470"></iframe>
+  </div>
+
+  <h3>3. 流量转化漏斗（图3）</h3>
+  <div class="chart-frame">
+    <iframe src="5门店图表集.html" height="520"></iframe>
+  </div>
+  <div class="insight">
+    <h4>外卖运营逻辑下的漏斗洞察</h4>
+    <ul>
+      <li><b>曝光→入店</b>：美团平均入店率6.7%，淘宝入店率8.9%，淘宝显著高于美团（2.2pp）</li>
+      <li><b>入店→下单</b>：美团下单率21.2%，淘宝下单率14.7%，下单效率美团领先</li>
+      <li><b>整体下单转化</b>：双平台合计 1.36%，符合外卖行业"曝光→下单 1-3%"的正常区间</li>
+    </ul>
+  </div>
+
+  <h3>4. 转化率双平台对比（图4）</h3>
+  <div class="chart-frame">
+    <iframe src="5门店图表集.html" height="520"></iframe>
+  </div>
+  <div class="warning">
+    <h4>转化率异常门店</h4>
+    <ul>
+      <li><b>C15019（深圳益田假日广场）</b>美团入店转化率仅 4.95%，为5店最低；美团下单转化率 1.32%，也是最低。需重点排查<b>门店曝光质量差</b>（曝光人数5.2万但转化低）或<b>店铺分/评分问题</b></li>
+      <li><b>C14906（南昌子固路店）</b>美团新客占比高达 90.47%，老客仅 9.53%，说明<b>几乎无复购</b>，是危险信号</li>
+      <li><b>C15002（南昌印象城）</b>综合表现最优：美团下单转化率 1.73% 最高、淘宝曝光 8.2万最高</li>
+    </ul>
+  </div>
+
+  <h3>5. 新客/老客曝光占比（图5）</h3>
+  <div class="chart-frame">
+    <iframe src="5门店图表集.html" height="470"></iframe>
+  </div>
+  <div class="bad">
+    <h4>重大问题：5家门店老客占比均低于 14%</h4>
+    <ul>
+      <li>5家门店双平台老客占比仅 7.34% - 13.69%，<b>几乎全部为新客流量</b></li>
+      <li>外卖行业健康门店老客占比应达 30-50%，说明<b>复购率严重不足</b></li>
+      <li>可能原因：竞品截流 / 无会员体系 / 产品同质化 / 服务体验不佳</li>
+      <li><b>建议</b>：立即上线<b>会员/积分/储值</b>体系，重点运营复购</li>
+    </ul>
+  </div>
+
+  <h3>6. 活动补贴 vs 平台补贴（图6）</h3>
+  <div class="chart-frame">
+    <iframe src="5门店图表集.html" height="520"></iframe>
+  </div>
+  <div class="insight">
+    <h4>活动支出分析</h4>
+    <ul>
+      <li>商家活动总支出 ¥69,566，平台补贴 ¥61,682，合计 ¥69,566 + ¥61,682（≈¥66.7% 占实付）</li>
+      <li><b>C15019</b>活动补贴率高达 45.23%，远超其他店，<b>高补贴并未带来高产出</b>（实付仅排第4），需评估ROI</li>
+      <li><b>C15002</b>活动补贴率 29.58% 最低，但实付最高、订单最多，<b>效率最高</b></li>
+    </ul>
+  </div>
+
+  <h3>7. 客单价 + 补贴率-实付散点（图7）</h3>
+  <div class="chart-frame">
+    <iframe src="5门店图表集.html" height="520"></iframe>
+  </div>
+  <div class="insight">
+    <h4>客单价双平台对比</h4>
+    <ul>
+      <li>美团客单价 ¥36.5 vs 淘宝客单价 ¥24.8，<b>美团高出 ¥11.7</b>（约47%）</li>
+      <li>所有5家门店均呈现"<b>美团客单价 &gt; 淘宝客单价</b>"的统一规律，说明美团用户<b>消费力/客单更优</b></li>
+      <li>可能原因：美团用户结构更优（白领/家庭为主） / 淘宝闪购仍以引流低价单为主</li>
+    </ul>
+  </div>
+
+  <h2>外卖运营逻辑分析 & 行动建议</h2>
+
+  <h3>平台策略对比</h3>
+  <div class="insight">
+    <h4>美团（占比56.8%，主战场）</h4>
+    <ul>
+      <li><b>优势</b>：客单价高（¥36.5）、订单稳定、平台补贴机制成熟</li>
+      <li><b>劣势</b>：入店转化率较低（6.7%）、新客占比过高（89.1%）</li>
+      <li><b>运营重点</b>：优化门店装修/头图提升入店率 / 老客召回 / 提升店铺分</li>
+    </ul>
+  </div>
+  <div class="success">
+    <h4>淘宝闪购（占比43.2%，增长极）</h4>
+    <ul>
+      <li><b>优势</b>：入店转化率更高（8.9%）、曝光量级大（C15002 8.2万曝光）、活动补贴成本低</li>
+      <li><b>劣势</b>：客单价低（¥24.8，比美团低¥11.7）</li>
+      <li><b>运营重点</b>：推高客单组合（满减+小菜） / 利用高入店率快速起量 / 抢占新平台红利</li>
+    </ul>
+  </div>
+
+  <h3>5大门店分层运营建议</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>门店编码</th><th>层级</th><th>特征</th><th>运营建议</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>C15002</b></td>
+        <td><span class="tag tag-good">明星店</span></td>
+        <td>双平台实付第一、效率最高、淘宝主导</td>
+        <td>保持现有策略 / 重点维持淘宝领先优势 / 复制经验到其他店</td>
+      </tr>
+      <tr>
+        <td><b>C15009</b></td>
+        <td><span class="tag tag-good">现金牛</span></td>
+        <td>实付第二、美团主导、转化稳定</td>
+        <td>美团店铺分提升 / 开发老客复购产品 / 尝试淘宝增长</td>
+      </tr>
+      <tr>
+        <td><b>C14793</b></td>
+        <td><span class="tag tag-warn">潜力店</span></td>
+        <td>实付第三、新客占比高（86.31%）</td>
+        <td>搭建会员体系 / 建立CRM / 推出复购优惠</td>
+      </tr>
+      <tr>
+        <td><b>C15019</b></td>
+        <td><span class="tag tag-bad">问题店</span></td>
+        <td>实付第四、转化率最低、活动补贴率最高（45.23%）</td>
+        <td>诊断入店率低原因 / 降低无效活动 / 提升曝光精准度</td>
+      </tr>
+      <tr>
+        <td><b>C14906</b></td>
+        <td><span class="tag tag-bad">末尾店</span></td>
+        <td>实付最低、老客仅9%、新客90.47%</td>
+        <td>最紧急：复购体系 / 曝光量提升 / 商圈/选址再评估</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>总结与下一步</h2>
+  <div class="insight">
+    <h4>核心结论（5家店双平台7月数据）</h4>
+    <ul>
+      <li><b>规模</b>：5家店7月双平台合计实付 ¥196,717，订单 6,454单，曝光 476,064人</li>
+      <li><b>冠军门店</b>：C15002（煌上煌热卤印象城店），实付 ¥53,032，南昌</li>
+      <li><b>最严重问题</b>：5家店老客占比均&lt;14%，<b>复购率几乎为0</b>，必须立即建设会员体系</li>
+      <li><b>效率最佳</b>：C15002 活动补贴率仅 29.58%，但实付/订单第一</li>
+      <li><b>资源浪费</b>：C15019 活动补贴率 45.23% 最高，产出却仅第4，<b>补贴效率低</b></li>
+      <li><b>平台差异</b>：美团客单 ¥36.5 &gt; 淘宝 ¥24.8；淘宝入店率8.9% &gt; 美团6.7%</li>
+    </ul>
+  </div>
+
+  <h2>数据文件</h2>
+  <ul>
+    <li>完整聚合表：<code>C:\Users\Oo\Desktop\5门店双平台外卖聚合分析_7月.xlsx</code></li>
+    <li>排名表：<code>C:\Users\Oo\Desktop\5门店实付排名_7月.xlsx</code></li>
+    <li>7张图表：<code>C:\Users\Oo\Desktop\chart1-7_*.html</code></li>
+    <li>本报告：<code>C:\Users\Oo\Desktop\5门店双平台外卖运营分析报告.html</code></li>
+  </ul>
+
+  <div class="footer">
+    报告生成时间：2026-08-05 | 数据源：D:/邓超今/临时数据源/OneDrive/桌面/双平台数据/外卖数据/ | 分析方法：外卖运营漏斗 + 双平台对比 + 单店分层运营
+  </div>
+
+</div>
+</body>
+</html>
