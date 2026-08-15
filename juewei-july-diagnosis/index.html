@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>煌上煌双平台7月外卖数据诊断报告</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.8;padding:40px}
+.container{max-width:1200px;margin:0 auto}
+h1{color:#58a6ff;font-size:32px;border-bottom:2px solid #30363d;padding-bottom:16px;margin-bottom:32px}
+h2{color:#f0f6fc;font-size:22px;margin:40px 0 16px;padding-left:12px;border-left:4px solid #58a6ff}
+h3{color:#8b949e;font-size:16px;margin:20px 0 12px}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin:20px 0}
+.kpi-card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;text-align:center}
+.kpi-value{font-size:28px;font-weight:700;margin:8px 0}
+.kpi-label{font-size:13px;color:#8b949e}
+.green{color:#3fb950}
+.yellow{color:#d29922}
+.red{color:#f85149}
+.blue{color:#58a6ff}
+table{width:100%;border-collapse:collapse;margin:16px 0;background:#161b22;border-radius:8px;overflow:hidden}
+th{background:#21262d;color:#c9d1d9;padding:12px 16px;text-align:left;font-weight:600;font-size:14px}
+td{padding:10px 16px;border-bottom:1px solid #21262d;font-size:14px}
+tr:hover{background:#1c2128}
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:600}
+.badge-green{background:#033a16;color:#3fb950}
+.badge-yellow{background:#3d2800;color:#d29922}
+.badge-red{background:#490202;color:#f85149}
+.diagnosis-box{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:24px;margin:16px 0}
+.diagnosis-box h3{margin-top:0;color:#f0f6fc}
+.issue-item{display:flex;align-items:flex-start;padding:12px 0;border-bottom:1px solid #21262d;gap:12px}
+.issue-icon{font-size:20px;min-width:28px}
+.action-plan{background:#161b22;border:1px solid #3fb950;border-radius:8px;padding:24px;margin:16px 0}
+.action-plan h3{color:#3fb950;margin-top:0}
+.action-step{display:flex;gap:12px;padding:8px 0;align-items:center}
+.step-num{background:#58a6ff;color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card-title{color:#f0f6fc;font-size:18px;font-weight:600;margin-bottom:12px}
+.footer{text-align:center;color:#484f58;font-size:12px;margin-top:60px;padding-top:20px;border-top:1px solid #30363d}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>煌上煌双平台7月外卖数据诊断报告</h1>
+<p style="color:#8b949e;margin-bottom:32px">诊断框架：曝光→进店→下单→复购全链路漏斗 × 四维度交叉分析<br>生成时间：2026-08-06 | 数据周期：2026年7月1-27日</p>
+
+<!-- KPI总览 -->
+<h2>1. 整体概览</h2>
+<div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">总消耗</div><div class="kpi-value yellow">32.5万</div><div class="kpi-label">广告投入</div></div>
+    <div class="kpi-card"><div class="kpi-label">总订单</div><div class="kpi-value blue">270,514</div><div class="kpi-label">双平台合计</div></div>
+    <div class="kpi-card"><div class="kpi-label">总曝光</div><div class="kpi-value blue">5,028万</div><div class="kpi-label">品牌触达</div></div>
+    <div class="kpi-card"><div class="kpi-label">整体ROI</div><div class="kpi-value green">5.85</div><div class="kpi-label">投入产出比</div></div>
+    <div class="kpi-card"><div class="kpi-label">投放门店</div><div class="kpi-value blue">5,726</div><div class="kpi-label">双平台门店</div></div>
+</div>
+
+<!-- 漏斗诊断 -->
+<h2>2. 全链路漏斗诊断</h2>
+<table>
+    <tr><th>环节</th><th>指标</th><th>当前值</th><th>行业基准</th><th>健康度</th><th>诊断</th></tr>
+    <tr>
+        <td>看见</td><td>曝光量</td><td>5,028万</td><td>日均1500+/店</td>
+        <td><span class="badge badge-green">良好</span></td>
+        <td>曝光总量充足，覆盖5726家门店</td>
+    </tr>
+    <tr>
+        <td>进来</td><td>进店率</td><td>估算8-10%</td><td>≥8%</td>
+        <td><span class="badge badge-yellow">边缘</span></td>
+        <td>刚好触及基准线，头图/评分有优化空间</td>
+    </tr>
+    <tr>
+        <td>买了</td><td>下单率</td><td>估算5-6%</td><td>≥25%</td>
+        <td><span class="badge badge-red">严重偏低</span></td>
+        <td>⚠️ 核心瓶颈！进店多下单少，菜单/价格/活动需根本性调整</td>
+    </tr>
+    <tr>
+        <td>花了</td><td>客单价</td><td>估算35-40元</td><td>≥30元</td>
+        <td><span class="badge badge-green">良好</span></td>
+        <td>客单价合理，略高于行业均值</td>
+    </tr>
+    <tr>
+        <td>再来</td><td>复购率</td><td>数据缺失</td><td>≥30%</td>
+        <td><span class="badge badge-yellow">待确认</span></td>
+        <td>缺少复购数据，建议补充会员/复购追踪</td>
+    </tr>
+</table>
+
+<!-- ROI分级诊断 -->
+<h2>3. ROI分级诊断</h2>
+
+<h3>3.1 分公司排名</h3>
+<table>
+    <tr><th>排名</th><th>分公司</th><th>消耗占比</th><th>ROI</th><th>ROI分级</th><th>诊断</th></tr>
+    <tr>
+        <td>🥇</td><td>江西公司</td><td>52%</td><td class="green">6.06</td>
+        <td><span class="badge badge-green">正常</span></td>
+        <td>ROI最高但未达优秀线(8)，仍可优化</td>
+    </tr>
+    <tr>
+        <td>🥈</td><td>广东公司</td><td>36%</td><td class="green">5.78</td>
+        <td><span class="badge badge-green">正常</span></td>
+        <td>消耗第二，ROI接近江西</td>
+    </tr>
+    <tr>
+        <td>🥉</td><td>陕西公司</td><td>5%</td><td class="yellow">4.50</td>
+        <td><span class="badge badge-yellow">正常</span></td>
+        <td>规模小但ROI尚可</td>
+    </tr>
+    <tr>
+        <td>4</td><td>浙江公司</td><td>4%</td><td class="yellow">4.20</td>
+        <td><span class="badge badge-yellow">正常</span></td>
+        <td>消耗低，可测试加投</td>
+    </tr>
+    <tr>
+        <td>5</td><td>重庆公司</td><td>3%</td><td class="yellow">3.80</td>
+        <td><span class="badge badge-yellow">低效边缘</span></td>
+        <td>ROI最低，需重点关注优化</td>
+    </tr>
+</table>
+
+<p style="color:#8b949e;font-size:13px;margin-top:8px">ROI分级标准：≥8优秀 / 4-8正常 / 1-4低效 / <1亏损</p>
+
+<h3>3.2 平台对比</h3>
+<table>
+    <tr><th>平台</th><th>门店数</th><th>ROI估算</th><th>优势</th><th>短板</th></tr>
+    <tr>
+        <td>美团外卖</td><td>4,304</td><td class="green">6.20</td>
+        <td>门店多、ROI高、用户高频</td><td>竞争激烈、出价成本上升</td>
+    </tr>
+    <tr>
+        <td>淘宝闪购</td><td>1,422</td><td class="yellow">4.50</td>
+        <td>88VIP高价值用户、补贴多</td><td>门店少、无店铺分字段</td>
+    </tr>
+</table>
+
+<h3>3.3 投放层级分析</h3>
+<table>
+    <tr><th>层级</th><th>消耗占比</th><th>ROI</th><th>ROI分级</th><th>诊断</th></tr>
+    <tr>
+        <td>总部投放</td><td>23%</td><td class="green">7.16</td>
+        <td><span class="badge badge-green">正常</span></td>
+        <td>ROI高但仅占23%，应加大总部投放</td>
+    </tr>
+    <tr>
+        <td>门店投放</td><td>77%</td><td class="yellow">5.31</td>
+        <td><span class="badge badge-yellow">正常</span></td>
+        <td>占消耗大头但ROI低于总部，需优化门店投放效率</td>
+    </tr>
+</table>
+
+<h3>3.4 加盟/直营对比</h3>
+<table>
+    <tr><th>类型</th><th>门店数</th><th>估算ROI</th><th>诊断</th></tr>
+    <tr>
+        <td>加盟</td><td>4,132</td><td class="yellow">4.80</td>
+        <td>门店多但单店效率参差不齐，需标准化运营</td>
+    </tr>
+    <tr>
+        <td>直营</td><td>412</td><td class="green">6.50</td>
+        <td>ROI更高，运营更规范，可作为标杆</td>
+    </tr>
+</table>
+
+<!-- 交叉分析 -->
+<h2>4. 平台×分公司 交叉排名</h2>
+<table>
+    <tr><th>排名</th><th>分公司</th><th>平台</th><th>ROI</th><th>分级</th></tr>
+    <tr><td>🥇</td><td>江西</td><td>美团</td><td class="green">8.11</td><td><span class="badge badge-green">优秀</span></td></tr>
+    <tr><td>🥈</td><td>广东</td><td>美团</td><td class="green">6.50</td><td><span class="badge badge-green">正常</span></td></tr>
+    <tr><td>🥉</td><td>江西</td><td>淘宝</td><td class="green">4.80</td><td><span class="badge badge-green">正常</span></td></tr>
+    <tr><td>4</td><td>广东</td><td>淘宝</td><td class="yellow">4.20</td><td><span class="badge badge-yellow">正常</span></td></tr>
+    <tr><td>5</td><td>陕西</td><td>美团</td><td class="yellow">4.00</td><td><span class="badge badge-yellow">正常</span></td></tr>
+</table>
+
+<!-- 核心问题 -->
+<h2>5. 核心问题定位</h2>
+
+<div class="diagnosis-box">
+    <h3>🔴 严重：下单转化率极低</h3>
+    <p><strong>数据证据</strong>：5,028万曝光 → 估算进店500万 → 仅27万订单，下单率约5.4%，远低于行业基准25%</p>
+    <p><strong>根本原因</strong>：</p>
+    <ul style="margin-left:20px;color:#8b949e">
+        <li>菜单结构缺乏梯度设计（引流款→利润款→凑单品）</li>
+        <li>满减活动设计不够吸引（门槛过高或优惠力度不足）</li>
+        <li>新客福利缺失（无有效的新客立减机制）</li>
+        <li>评价管理薄弱（差评未及时回复处理）</li>
+    </ul>
+    <p><strong>影响</strong>：每提升1%下单率，预估可增加约5万订单</p>
+</div>
+
+<div class="diagnosis-box">
+    <h3>🟠 中等：总部投放占比过低</h3>
+    <p><strong>数据证据</strong>：总部投放ROI=7.16但仅占消耗23%，门店投放ROI=5.31占77%</p>
+    <p><strong>根本原因</strong>：预算分配偏向门店端，总部品牌投放不足</p>
+    <p><strong>影响</strong>：若总部占比提升至40%，整体ROI预估可提升0.3-0.5</p>
+</div>
+
+<div class="diagnosis-box">
+    <h3>🟡 关注：分公司ROI差距2.1倍</h3>
+    <p><strong>数据证据</strong>：江西ROI=6.06 vs 重庆ROI=3.80，差距2.1倍</p>
+    <p><strong>根本原因</strong>：区域运营能力不均衡，缺乏标准化运营体系</p>
+    <p><strong>建议</strong>：将江西经验沉淀为SOP推广到其他分公司</p>
+</div>
+
+<div class="diagnosis-box">
+    <h3>🟡 关注：淘宝闪购数据维度缺失</h3>
+    <p><strong>数据证据</strong>：淘宝闪购无店铺分字段，无法做服务质量诊断</p>
+    <p><strong>根本原因</strong>：淘宝闪购后台数据维度少于美团</p>
+    <p><strong>影响</strong>：无法完整评估淘宝闪购侧的服务质量</p>
+</div>
+
+<div class="diagnosis-box">
+    <h3>🟡 关注：缺少复购数据</h3>
+    <p><strong>数据证据</strong>：当前数据无新老客标识、无复购率统计</p>
+    <p><strong>建议</strong>：补充用户维度的复购数据，建立RFM分析模型</p>
+</div>
+
+<!-- 提升方案 -->
+<h2>6. 提升方案（按优先级）</h2>
+
+<div class="action-plan">
+    <h3>优先级P0：提升下单转化率（预期提升20-50%订单）</h3>
+    <div class="action-step"><span class="step-num">1</span><span>重构菜单结构：前3位放9.9元引流品，中段放利润品，末尾放凑单品</span></div>
+    <div class="action-step"><span class="step-num">2</span><span>优化满减设计：设置满30减5/满50减10两档，门槛略高于客单价20%</span></div>
+    <div class="action-step"><span class="step-num">3</span><span>新客立减：首单立减8元，配合新客专享套餐</span></div>
+    <div class="action-step"><span class="step-num">4</span><span>评价管理：差评24小时内回复+补偿，好评有礼激励</span></div>
+</div>
+
+<div class="action-plan">
+    <h3>优先级P1：调整投放预算分配（预期ROI提升0.3-0.5）</h3>
+    <div class="action-step"><span class="step-num">1</span><span>总部投放占比从23%提升至40%，优先加投江西总部（ROI=8.11最高效渠道）</span></div>
+    <div class="action-step"><span class="step-num">2</span><span>美团保持主投地位，淘宝闪购作为增量补充</span></div>
+    <div class="action-step"><span class="step-num">3</span><span>午晚高峰（11:00-13:00、17:00-19:00）加投30%</span></div>
+</div>
+
+<div class="action-plan">
+    <h3>优先级P2：分公司标准化运营（缩小ROI差距）</h3>
+    <div class="action-step"><span class="step-num">1</span><span>将江西经验沉淀为SOP（菜单模板+满减策略+投放参数）</span></div>
+    <div class="action-step"><span class="step-num">2</span><span>重庆/浙江作为重点帮扶对象，派驻运营支持</span></div>
+    <div class="action-step"><span class="step-num">3</span><span>月度分公司ROI排名，纳入考核激励</span></div>
+</div>
+
+<div class="action-plan">
+    <h3>优先级P3：数据基建完善</h3>
+    <div class="action-step"><span class="step-num">1</span><span>补充复购率追踪（新老客标识+RFM分层）</span></div>
+    <div class="action-step"><span class="step-num">2</span><span>补充进店率数据（需从平台后台导出）</span></div>
+    <div class="action-step"><span class="step-num">3</span><span>建立双平台统一数据看板（Power BI 实时监控）</span></div>
+</div>
+
+<!-- 预期效果 -->
+<h2>7. 预期效果</h2>
+<table>
+    <tr><th>方案</th><th>预期指标变化</th><th>预估影响</th></tr>
+    <tr>
+        <td>P0 下单率提升</td>
+        <td>下单率 5.4%→12%</td>
+        <td>订单增加约13万，收入增长约500万</td>
+    </tr>
+    <tr>
+        <td>P1 预算重分配</td>
+        <td>整体ROI 5.85→6.30</td>
+        <td>同等消耗多产出约15万</td>
+    </tr>
+    <tr>
+        <td>P2 分公司标准化</td>
+        <td>重庆ROI 3.80→4.50</td>
+        <td>缩小分公司差距</td>
+    </tr>
+    <tr>
+        <td>P3 数据基建</td>
+        <td>复购率可追踪</td>
+        <td>精准运营，长期复购提升</td>
+    </tr>
+</table>
+
+<div class="footer">
+    煌上煌双平台外卖数据诊断报告 | 基于外卖数据分析诊断框架生成 | 2026-08-06<br>
+    数据来源：双平台7月门店订单汇总_v2.xlsx + 全国门店信息汇总表_v3.xlsx<br>
+    诊断框架：曝光→进店→下单→客单价→复购 五级漏斗 × 四维度交叉分析
+</div>
+
+</div>
+</body>
+</html>
