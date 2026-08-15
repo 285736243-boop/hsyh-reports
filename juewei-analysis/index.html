@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绝味鸭脖经营数据分析报告</title>
+<style>
+  @page { size: A4; margin: 20mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    color: #2c3e50;
+    background: #f0f2f5;
+    line-height: 1.8;
+  }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 20px auto;
+    background: #fff;
+    padding: 25mm 20mm;
+    box-shadow: 0 2px 12px rgba(0,0,0,.1);
+    page-break-after: always;
+  }
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 80vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #e94560 100%);
+    color: #fff;
+  }
+  .cover h1 { font-size: 36px; margin-bottom: 20px; letter-spacing: 4px; }
+  .cover .subtitle { font-size: 18px; opacity: .85; margin-bottom: 40px; }
+  .cover .meta { font-size: 14px; opacity: .6; }
+  .cover .divider { width: 60px; height: 3px; background: #e94560; margin: 20px auto; }
+  h2 {
+    font-size: 22px;
+    color: #1a1a2e;
+    border-left: 4px solid #e94560;
+    padding-left: 12px;
+    margin: 30px 0 16px;
+  }
+  h3 { font-size: 17px; color: #16213e; margin: 20px 0 10px; }
+  p { margin: 8px 0; text-align: justify; }
+  .highlight-box {
+    background: #fff5f5;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .highlight-box.red { background: #fef2f2; border-color: #fca5a5; }
+  .highlight-box.green { background: #f0fdf4; border-color: #86efac; }
+  .highlight-box.blue { background: #eff6ff; border-color: #93c5fd; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  tr:nth-child(even) td { background: #f9fafb; }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .tag-red { background: #fee2e2; color: #dc2626; }
+  .tag-green { background: #dcfce7; color: #16a34a; }
+  .tag-yellow { background: #fef3c7; color: #d97706; }
+  .tag-blue { background: #dbeafe; color: #2563eb; }
+  .kpi-row { display: flex; gap: 16px; margin: 16px 0; }
+  .kpi-card {
+    flex: 1;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .kpi-card .value { font-size: 28px; font-weight: 700; margin: 8px 0; }
+  .kpi-card .label { font-size: 13px; opacity: .75; }
+  .kpi-card .change { font-size: 13px; margin-top: 4px; }
+  .kpi-card.red { background: linear-gradient(135deg, #7f1d1d, #991b1b); }
+  .kpi-card.green { background: linear-gradient(135deg, #14532d, #166534); }
+  ul { padding-left: 20px; margin: 8px 0; }
+  li { margin: 4px 0; }
+  .footer {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 12px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+  }
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; padding: 15mm 12mm; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 封面 ===== -->
+<div class="page" style="padding:0;">
+  <div class="cover" style="min-height:100vh;">
+    <div style="font-size:14px;opacity:.7;letter-spacing:2px;">绝味食品 (603517.SH) · 深度研究</div>
+    <div class="divider"></div>
+    <h1>绝味鸭脖经营数据分析报告</h1>
+    <div class="subtitle">2025年度财务回顾 · 行业竞争格局 · 战略转型评估</div>
+    <div class="divider"></div>
+    <div class="meta">
+      报告日期：2026年8月4日<br>
+      数据来源：公司年报、Wind、窄门餐眼、公开报道<br>
+      声明：本报告仅供参考，不构成投资建议
+    </div>
+  </div>
+</div>
+
+<!-- ===== 第2页：核心摘要 ===== -->
+<div class="page">
+  <h2>一、核心摘要</h2>
+
+  <div class="highlight-box red">
+    <strong>⚠️ 关键警示：</strong>绝味食品2025年上市9年来首次年度亏损，归母净利润-1.91亿元，同比暴跌184.11%。补税3.42亿元直接击穿全年利润。门店从2023年底峰值15,950家锐减至约10,272家（-35.6%），两年净减少超5,600家。
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card red">
+      <div class="label">2025年营收</div>
+      <div class="value">54.67亿</div>
+      <div class="change"><span class="tag tag-red">▼ 12.62%</span></div>
+    </div>
+    <div class="kpi-card red">
+      <div class="label">归母净利润</div>
+      <div class="value">-1.91亿</div>
+      <div class="change"><span class="tag tag-red">▼ 184.11%</span></div>
+    </div>
+    <div class="kpi-card red">
+      <div class="label">门店数量</div>
+      <div class="value">~10,272</div>
+      <div class="change"><span class="tag tag-red">▼ 5,600+家</span></div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="label">毛利率</div>
+      <div class="value">29.70%</div>
+      <div class="change"><span class="tag tag-yellow">▼ 0.83pct</span></div>
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card red">
+      <div class="label">净利率</div>
+      <div class="value">-3.79%</div>
+      <div class="change"><span class="tag tag-red">▼ 7.05pct</span></div>
+    </div>
+    <div class="kpi-card red">
+      <div class="label">Q1 2026营收</div>
+      <div class="value">12.65亿</div>
+      <div class="change"><span class="tag tag-red">▼ 15.71%</span></div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="label">Q1净利</div>
+      <div class="value">0.71亿</div>
+      <div class="change"><span class="tag tag-red">▼ 40.53%</span></div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="label">当前市值</div>
+      <div class="value">&lt;80亿</div>
+      <div class="change"><span class="tag tag-blue">低位</span></div>
+    </div>
+  </div>
+
+  <h3>一句话总结</h3>
+  <p>绝味食品正经历"财务爆雷 + 门店收缩 + 主业下滑"的三重打击，但核心卤味业务仍具盈利能力和品牌壁垒。2025年是"出清之年"——合规风险一次性释放，战略收缩后聚焦主业创新，2026年关键在于"卤味+"新业态能否跑通并贡献第二增长曲线。</p>
+</div>
+
+<!-- ===== 第3页：财务分析 ===== -->
+<div class="page">
+  <h2>二、财务数据深度分析</h2>
+
+  <h3>2.1 营收与利润趋势</h3>
+  <table>
+    <tr><th>指标</th><th>2023年</th><th>2024年</th><th>2025年</th><th>同比变化</th></tr>
+    <tr><td>营业收入（亿元）</td><td>72.39</td><td>62.57</td><td>54.67</td><td><span class="tag tag-red">-12.62%</span></td></tr>
+    <tr><td>归母净利润（亿元）</td><td>3.44</td><td>2.27</td><td>-1.91</td><td><span class="tag tag-red">-184.11%</span></td></tr>
+    <tr><td>扣非净利润（亿元）</td><td>4.01</td><td>2.03</td><td>0.75</td><td><span class="tag tag-red">-62.82%</span></td></tr>
+    <tr><td>毛利率</td><td>24.77%</td><td>30.53%</td><td>29.70%</td><td><span class="tag tag-yellow">-0.83pct</span></td></tr>
+    <tr><td>净利率</td><td>4.75%</td><td>3.63%</td><td>-3.79%</td><td><span class="tag tag-red">-7.05pct</span></td></tr>
+    <tr><td>门店数（家）</td><td>15,950</td><td>~14,969</td><td>~10,272</td><td><span class="tag tag-red">-31.4%</span></td></tr>
+  </table>
+
+  <div class="highlight-box blue">
+    <strong>📌 关键发现：</strong>营收已连续两年下滑（2023→2025累计降幅约24.5%），扣非净利润从4.01亿降至0.75亿（降幅81.3%），说明主业盈利能力正在实质性恶化，而非仅因补税一次性冲击。
+  </div>
+
+  <h3>2.2 亏损原因拆解</h3>
+  <table>
+    <tr><th>因素</th><th>影响金额</th><th>性质</th></tr>
+    <tr><td>补税及滞纳金</td><td>3.42亿元</td><td><span class="tag tag-red">一次性</span></td></tr>
+    <tr><td>卤制食品收入下滑</td><td>营收-12.62%（约-7.9亿）</td><td><span class="tag tag-red">持续性</span></td></tr>
+    <tr><td>产能利用率不足</td><td>毛利率-0.83pct</td><td><span class="tag tag-yellow">结构性</span></td></tr>
+    <tr><td>门店关闭减值</td><td>未单独披露</td><td><span class="tag tag-yellow">阶段性</span></td></tr>
+  </table>
+
+  <h3>2.3 2026年Q1持续恶化</h3>
+  <ul>
+    <li>营收12.65亿元，同比 <span class="tag tag-red">-15.71%</span>，降幅大于2025全年</li>
+    <li>归母净利润0.71亿元，同比 <span class="tag tag-red">-40.53%</span></li>
+    <li>经营性现金流净额 <span class="tag tag-red">-1.37亿元</span>（同比-139.73%），造血能力萎缩</li>
+    <li>卤制食品销售占比80.97%，加盟管理收入仅1.06%</li>
+  </ul>
+</div>
+
+<!-- ===== 第4页：门店与竞争 ===== -->
+<div class="page">
+  <h2>三、门店网络与竞争格局</h2>
+
+  <h3>3.1 门店收缩轨迹</h3>
+  <table>
+    <tr><th>时间节点</th><th>门店数</th><th>变化</th></tr>
+    <tr><td>2023年底（峰值）</td><td>15,950</td><td>—</td></tr>
+    <tr><td>2024年6月底</td><td>14,969</td><td><span class="tag tag-yellow">-981</span></td></tr>
+    <tr><td>2024年（全年）</td><td>新开866 / 关闭2,980</td><td><span class="tag tag-red">净-2,114</span></td></tr>
+    <tr><td>2025年（全年）</td><td>新开645 / 关闭2,908</td><td><span class="tag tag-red">净-2,263</span></td></tr>
+    <tr><td>2026年4月</td><td>~10,272</td><td><span class="tag tag-red">较峰值-35.6%</span></td></tr>
+  </table>
+
+  <div class="highlight-box red">
+    <strong>⚠️ 注意：</strong>自2024年中报起，绝味已不再在财报中披露具体门店数据。董事长戴文军在2026年6月业绩会上仅模糊回应"逾万家"，回避具体数字。加盟商流失率从2020年5%升至2025年12%，部分区域出现加盟商联合维权。
+  </div>
+
+  <h3>3.2 卤味三巨头对比</h3>
+  <table>
+    <tr><th>指标</th><th>绝味食品</th><th>周黑鸭</th><th>煌上煌</th></tr>
+    <tr><td>2025营收</td><td>54.67亿 <span class="tag tag-red">▼12.6%</span></td><td>~26亿</td><td>16.84亿</td></tr>
+    <tr><td>门店数</td><td>~10,272家</td><td>~3,019家</td><td>~2,300家</td></tr>
+    <tr><td>2025利润</td><td><span class="tag tag-red">亏损-1.91亿</span></td><td>盈利</td><td>盈利</td></tr>
+    <tr><td>模式</td><td>加盟为主</td><td>直营+加盟</td><td>酱卤工艺</td></tr>
+    <tr><td>行业地位</td><td>门店最多</td><td>高端定位</td><td>区域深耕</td></tr>
+  </table>
+
+  <div class="highlight-box red">
+    <strong>绝味是三巨头中唯一亏损的企业。</strong>同行周黑鸭、煌上煌均保持盈利，行业"增收不增利"背景下绝味表现最差。
+  </div>
+
+  <h3>3.3 行业挑战</h3>
+  <ul>
+    <li>休闲食品行业2025年归母净利润同比下滑14%</li>
+    <li>卤味熟食板块2025年营收同比下滑10.9%</li>
+    <li>消费疲软、新零售渠道分流、价格战加剧</li>
+    <li>原材料价格波动、包装成本上升挤压利润</li>
+    <li>加盟商流失率创新高，模式从"共赢"滑向"品牌方赚供应链、加盟商扛风险"</li>
+  </ul>
+</div>
+
+<!-- ===== 第5页：战略转型 ===== -->
+<div class="page">
+  <h2>四、战略转型与创新举措</h2>
+
+  <h3>4.1 门店业态创新</h3>
+  <table>
+    <tr><th>业态</th><th>定位</th><th>关键数据</th></tr>
+    <tr>
+      <td><strong>"绝味鲜卤"超市</strong></td>
+      <td>社区全时段鲜食超市</td>
+      <td>长沙首店，SKU 90+款，覆盖卤味/零食/烘焙等5大品类，取消称重改"一口价"</td>
+    </tr>
+    <tr>
+      <td><strong>"绝味煲煲"</strong></td>
+      <td>白领午餐热煲快餐</td>
+      <td>深圳首店，100秒出餐，26.9元起，首日营业额破万，午市翻台率2.5次</td>
+    </tr>
+    <tr>
+      <td><strong>"绝味plus"</strong></td>
+      <td>炸卤+烤串复合店</td>
+      <td>测试中</td>
+    </tr>
+    <tr>
+      <td><strong>"鲜卤拌菜""热卤拌饭"</strong></td>
+      <td>快餐价格带</td>
+      <td>武汉/重庆测试，价格锚定20元左右</td>
+    </tr>
+  </table>
+
+  <h3>4.2 产品创新突破</h3>
+  <div class="highlight-box green">
+    <strong>🔥 爆款：4.9元"热卤杯"</strong><br>
+    · 上线半个月全网销量突破 <strong>70万单</strong><br>
+    · 门店客单价提升近 <strong>20%</strong><br>
+    · 成功将消费场景从"路过顺手买"拓展至办公室下午茶、夜宵<br>
+    · 大众点评超17万单，抖音超70万单
+  </div>
+  <ul>
+    <li>打破鸭脖依赖：2026年上线猪牛副产品卤味拼盘</li>
+    <li>横向拓展：零食、烘焙、海鲜、素食等健康新品类</li>
+    <li>2026年健康卤味市场预计快速增长</li>
+  </ul>
+
+  <h3>4.3 渠道与战略合作</h3>
+  <ul>
+    <li><strong>B端代工</strong>：前三大客户为王小卤、鸣鸣很忙、沃尔玛</li>
+    <li><strong>量贩零食渠道</strong>：入驻鸣鸣很忙等</li>
+    <li><strong>可口可乐战略合作</strong>（2026.4.3）：品牌联合营销、渠道协同、数据共享、"卤味+饮品"场景落地</li>
+    <li><strong>新鲜零食赛道</strong>：2026年7月启动全国扩张，自有工厂+自营冷链构筑壁垒</li>
+    <li>2026年计划申请银行综合授信 <strong>50亿元</strong></li>
+  </ul>
+</div>
+
+<!-- ===== 第6页：风险与展望 ===== -->
+<div class="page">
+  <h2>五、风险因素</h2>
+
+  <table>
+    <tr><th>风险类别</th><th>风险等级</th><th>说明</th></tr>
+    <tr>
+      <td>信披违规余波</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>连续5年隐匿营收（2017-2021），被ST处理，投资者信任严重受损，可能面临进一步监管处罚或集体诉讼</td>
+    </tr>
+    <tr>
+      <td>门店持续萎缩</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>两年净关超5,600家，日均关店约7.4家，2026年Q1继续净减65家。公司不再披露门店数据，透明度堪忧</td>
+    </tr>
+    <tr>
+      <td>主业收入下滑</td>
+      <td><span class="tag tag-yellow">中高</span></td>
+      <td>卤制食品销售连续下滑，Q1 2026降幅（-15.71%）大于2025全年（-12.62%），未见止跌迹象</td>
+    </tr>
+    <tr>
+      <td>现金流恶化</td>
+      <td><span class="tag tag-yellow">中高</span></td>
+      <td>Q1 2026经营性现金流-1.37亿，造血能力萎缩可能影响新业务投入</td>
+    </tr>
+    <tr>
+      <td>新业态不确定性</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>超市、快餐等新业态尚在试水阶段，盈利模型未验证，规模化复制风险大</td>
+    </tr>
+    <tr>
+      <td>加盟商关系恶化</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>流失率12%，维权事件频发，加盟体系稳定性受威胁</td>
+    </tr>
+    <tr>
+      <td>竞争加剧</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>周黑鸭、煌上煌保持盈利，新品牌不断涌入，价格战持续</td>
+    </tr>
+    <tr>
+      <td>市值低迷</td>
+      <td><span class="tag tag-blue">已反映</span></td>
+      <td>市值不足80亿，较峰值大幅缩水，鲜有机构关注</td>
+    </tr>
+  </table>
+
+  <h2>六、展望与判断</h2>
+
+  <h3>积极信号</h3>
+  <ul>
+    <li>核心卤味主业仍保持盈利能力（扣非净利润0.75亿），品牌壁垒深厚</li>
+    <li>合规风险通过补税一次性出清，2026年轻装上阵</li>
+    <li>"热卤杯"爆款验证了产品创新能力，小份装/健康化方向正确</li>
+    <li>可口可乐战略合作打开"卤味+饮品"新场景</li>
+    <li>B端代工（王小卤、沃尔玛）拓展收入来源多元化</li>
+    <li>新鲜零食赛道布局，探索第二增长曲线</li>
+  </ul>
+
+  <h3>核心观察</h3>
+  <div class="highlight-box blue">
+    <strong>2025年是绝味的"出清之年"</strong>——财务洗澡、门店收缩、战略聚焦。2026年进入"验证之年"：新业态能否跑通单店模型？热卤杯能否持续放量？可口可乐合作能否产生实质增量？<br><br>
+    <strong>关键观察指标：</strong>① 单店营收是否企稳回升 ② 新业态UE模型验证 ③ 现金流是否改善 ④ 门店净关趋势是否逆转
+  </div>
+
+  <div class="footer">
+    绝味食品 (603517.SH) 经营数据分析报告 | 2026年8月4日<br>
+    数据来源：公司年报、Wind、窄门餐眼、澎湃新闻、中国证券报、新浪财经、蓝鲸新闻<br>
+    声明：本报告基于公开信息整理，仅供参考，不构成投资建议
+  </div>
+</div>
+
+</body>
+</html>
