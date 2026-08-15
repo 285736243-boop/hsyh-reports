@@ -1,0 +1,106 @@
+# 煌上煌全量可用能力清单（2026-08-15 整合版）
+
+> 汇总：已用核心 + 未用高价值 SKILL + 工具层 + 自动化云数据库规划
+> 来源：tool-skill-inventory.md + more-skills-round2.md + cloud-automation-plan.md
+
+## 一、✅ 已在使用的核心能力
+
+| 能力 | 用途 |
+|---|---|
+| waimai-diagnose | 外卖诊断（5级漏斗+ROI分级），煌上煌专用 |
+| analysis-framework / analysis-models | 分析框架（五层金字塔/OSM/RFM/人货场） |
+| powerbi-dashboard / code-xiaobai | Power BI 全链路（度量值/看板/驾驶舱） |
+| officecli-pptx | PPT 程序化生成 |
+| 数学建模链 1-6 | 竞赛/建模/论文 |
+| GitHub Pages 部署链路 | 所有报告网页版发布（106份在线） |
+| ChromaDB 语义检索 | 知识库混合搜索（今天启用） |
+
+## 二、🎯 未用但可直接上的 SKILL（零依赖）
+
+### 数据分析强化
+| 技能 | 用途 |
+|---|---|
+| pandas-pro / plotly / seaborn / statsmodels / matplotlib | Python 数据分析+高级图表 |
+| 03-data-analysis-stats | 通用统计分析流程 |
+| ab-testing / ab-test-setup | 活动 A/B 测试验证 |
+| ad-campaign-analyzer | 广告活动深化分析 |
+| attribution-setup | 多渠道归因模型 |
+| batch-cohort | 群组分析（老客复购追踪） |
+| metrics-framework / kpi-dashboard-design | 指标体系/KPI 看板标准 |
+| distribution-analysis | 分布分析 |
+
+### 报告/Excel/PPT 升级
+| 技能 | 用途 |
+|---|---|
+| officecli-xlsx / docx / word-form | Excel/Word 程序化生成底座 |
+| excel-pivot-wizard | 透视表向导（月报对比） |
+| excel-variance-analyzer | 差异分析（自动算环比） |
+| officecli-data-dashboard | Excel 多元素 KPI 看板 |
+| officecli-financial-model | 财务建模/三表 |
+| sci-ppt / check-deck / pptx-deck-creation | 商务 PPT 制作+检查 |
+| html-report-design / visual-report | 报告排版 |
+| financial-report | 财务深度报告 |
+| md-to-ppt / glmv-pdf-to-ppt | PPT 生成路线 |
+
+### 外卖/营销/运营
+| 技能 | 用途 |
+|---|---|
+| marketing-plan / marketing-psychology | 营销方案设计 |
+| pricing-strategy | 定价策略（促销设计） |
+| customer-research / user-segmentation-profiler | 用户调研/客群分层 |
+| competitor-analysis / competitive-landscape | 竞品分析（绝味/周黑鸭） |
+| review-management | 评价管理（配合口碑客诉库） |
+| xiaohongshu-content-strategist | 小红书内容 |
+| content-marketer / copywriting | 文案/内容营销 |
+
+### 采集/效率
+| 技能 | 用途 |
+|---|---|
+| web-scraper / firecrawl-scraper / yao-deepseek-crawler | 网页爬虫（竞品/行业） |
+| cron-doctor | cron 任务诊断（修报错） |
+| daily-news-report | 每日行业资讯 |
+| glmocr-table | 表格 OCR |
+| summarize-document / md-report-summary | 文档摘要 |
+| skill-installer / skill-creator | 装/建新技能 |
+
+## 三、🔑 需配置才能用的
+
+| 能力 | 需要什么 | 状态 |
+|---|---|---|
+| Stata 20 件套（.agents） | 已装 StataMP+mcp-stata，只差连通测试 | 待测（10分钟） |
+| tavilysearch / deepseek-websearch | Tavily API key | 待注册 |
+| composio-skills 833 个 | 各平台 API key | 按需 |
+| ifind-finance-data | 同花顺账号 | 按需 |
+
+## 四、🔧 工具层
+
+| 工具 | 状态 | 用途 |
+|---|---|---|
+| web_search | 未配 provider | 网络搜索（需 key） |
+| gh CLI | 未登录 | GitHub 命令行 |
+| Power BI Desktop | 未找到 exe | 待确认 |
+| powerbi MCP 全套 | 已就绪 | 表/列/关系/DAX/刷新 |
+| ChromaDB 语义检索 | ✅ 已启用 | 知识库搜索 |
+| sessions_spawn / skill_workshop | 已就绪 | 并行任务/技能沉淀 |
+| cron 11 个 | 4 个报错待修 | 学习令/同步/巡检 |
+
+## 五、🚀 自动化 + 云数据库规划（方向）
+
+**蓝图**：手动 → 全自动（定时采集→云数据库→自动分析→自动发布→告警）
+
+| 层 | 方案 | 技能 |
+|---|---|---|
+| 数据库 | Neon Postgres（首选）/ Supabase | neon-postgres / supabase / postgres-pro |
+| 自动化 | n8n 可视化工作流 | n8n 20+ 子技能 |
+| 管道 | 复用现有 Python | data-engineering / version-dataset |
+| 看板 | 云库直连 Power BI | powerbi-dashboard |
+
+**三阶段**：P1 建库入库(1-2天) → P2 n8n 自动管道(3-5天) → P3 看板在线化
+
+**需协助**：①选型确认 ②云账号注册 ③美团/淘宝无 API，下载需手动
+
+## 六、完整文档索引
+- knowledge/engineering/tool-skill-inventory.md（第一轮盘点）
+- knowledge/engineering/more-skills-round2.md（第二轮深挖）
+- knowledge/engineering/cloud-automation-plan.md（云自动化规划）
+- knowledge/skills/skill-map.md（5900 技能全景地图）
