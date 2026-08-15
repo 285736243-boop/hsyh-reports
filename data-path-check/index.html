@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>数据路径体检报告 V1 · 2026-08-15</title>
+<title>数据路径体检报告 V2 · 2026-08-15</title>
 <style>
   body { font-family: "Microsoft YaHei", sans-serif; margin: 0; padding: 32px 16px; background: #f5f7fa; color: #222; }
   .wrap { max-width: 960px; margin: 0 auto; }
@@ -18,15 +18,16 @@
   th { background: #1f2328; color: #fff; }
   tr:hover td { background: #f0f7ff; }
   .note { margin-top: 14px; font-size: 12px; color: #888; }
+  .vlink { margin-left: 8px; font-size: 12px; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>🩺 双平台数据路径体检报告 <span style="font-size:13px;color:#0969da;background:#ddf4ff;padding:2px 10px;border-radius:10px">V1</span></h1>
-  <div class="sub">数据根目录：D:\邓超今\临时数据源\OneDrive\桌面\双平台数据 · 体检时间 2026-08-15 14:15 · 覆盖 美团/淘宝/京东到家 门店·订单·评价·广告</div>
+  <h1>🩺 双平台数据路径体检报告 <span style="font-size:13px;color:#0969da;background:#ddf4ff;padding:2px 10px;border-radius:10px">V2</span><a class="vlink" href="v1.html">查看 V1（不含京东评价）</a></h1>
+  <div class="sub">数据根目录：D:\邓超今\临时数据源\OneDrive\桌面\双平台数据 · 体检时间 2026-08-15 16:43 · 覆盖 美团/淘宝/京东到家 门店·订单·评价·广告</div>
   <div class="kpis">
-    <div class="kpi"><div class="v">8/9</div><div class="l">路径可读</div></div>
-    <div class="kpi"><div class="v">252,405</div><div class="l">可读总行数（8月最新档）</div></div>
+    <div class="kpi"><div class="v">10/11</div><div class="l">路径可读</div></div>
+    <div class="kpi"><div class="v">253,439</div><div class="l">可读总行数（8月最新档）</div></div>
     <div class="kpi"><div class="v">GB18030</div><div class="l">美团 CSV 编码验证</div></div>
   </div>
   <table>
@@ -104,9 +105,25 @@
       <td>29</td>
       <td>京东到家门店07-01~08-14</td>
     </tr>
+<tr>
+      <td>10</td>
+      <td>jd_review_0714</td>
+      <td><span style="color:#1a7f37;font-weight:700">✓ 可读</span></td>
+      <td>198</td>
+      <td>12</td>
+      <td>file=2026-07-01-08-14.xls | sheet=导出京东商品评价记录 | 关键列:门店名称/商品名/评价时间/商品评分/评价内容/商家回复</td>
+    </tr>
+<tr>
+      <td>11</td>
+      <td>jd_shop_score</td>
+      <td><span style="color:#1a7f37;font-weight:700">✓ 可读</span></td>
+      <td>836</td>
+      <td>7</td>
+      <td>file=20260815.xls | sheet=导出商品评价记录</td>
+    </tr>
     </tbody>
   </table>
-  <div class="note">说明：唯一未匹配项为脚本前缀笔误（723920→实际文件723921），对应数据已成功读取（美团广告08-01~13，12,233行）。所有关键路径验证通过，可直连 pyecharts/Power BI 数据链路。</div>
+  <div class="note">V2 新增：京东到家评价（20260701-0814.xls，老 OLE2 格式 xlrd 读取，表头第2行，sheet=导出京东商品评价记录）。所有关键路径验证通过，可直连 pyecharts/Power BI 数据链路。</div>
 </div>
 </body>
 </html>
