@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>活动全局效果看板 V2</title>
+<script src="https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://unpkg.com/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script>
+if(typeof Chart==='undefined'){
+  var s=document.createElement('script');
+  s.src='https://unpkg.com/chart.js@4.4.1/dist/chart.umd.js';
+  document.head.appendChild(s);
+}
+if(typeof ChartDataLabels==='undefined'){
+  var s2=document.createElement('script');
+  s2.src='https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js';
+  document.head.appendChild(s2);
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:PingFang SC,Microsoft YaHei,sans-serif;background:#f5f6fa;color:#2c3e50;line-height:1.7}
+.header{background:linear-gradient(135deg,#C41E3A 0%,#8B0000 100%);color:#fff;padding:30px 24px;text-align:center}
+.header h1{font-size:2em}
+.header .sub{font-size:.95em;opacity:.9;margin-top:4px}
+.container{max-width:1500px;margin:0 auto;padding:16px}
+.section{margin-bottom:24px}
+.section-title{font-size:1.3em;font-weight:700;color:#C41E3A;border-left:4px solid #C41E3A;padding-left:12px;margin-bottom:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.card{background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.05);text-align:center}
+.card .label{font-size:.75em;color:#7f8c8d}
+.card .value{font-size:1.3em;font-weight:700}
+.card .sub{font-size:.7em;color:#95a5a6}
+.card .value.green{color:#27ae60}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:14px}
+.chart-box{background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.chart-box h4{font-size:.9em;margin-bottom:8px;color:#34495e}
+.chart-box canvas{max-height:320px}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:10px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:.8em}
+th{background:#f8f9fa;padding:8px;text-align:left;font-weight:600;border-bottom:2px solid #C41E3A}
+td{padding:7px;border-bottom:1px solid #eee}
+tr:hover td{background:#fef5f5}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.75em;font-weight:600}
+.b-red{background:#fde8e8;color:#C41E3A}.b-green{background:#def7ec;color:#046c4e}
+.b-blue{background:#e1effe;color:#1e429f}.b-orange{background:#fef3c7;color:#92400f}
+.insight{background:linear-gradient(135deg,#fef5f5,#fff8f0);border:1px solid #f5d0d0;border-radius:8px;padding:12px;margin-bottom:12px}
+.insight h4{color:#C41E3A;margin-bottom:6px}
+.trend-up{color:#27ae60}.trend-down{color:#e74c3c}
+.footer{text-align:center;padding:20px;color:#888;font-size:.75em}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>活动全局效果总览与效率对比 V2</h1>
+<div class="sub">5-7月双平台 | 月度+日度全维度展示</div>
+</div>
+<div class="container">
+
+<div class="section"><div class="section-title">核心KPI卡片（5-7月）</div>
+<div class="cards">
+<div class="card"><div class="label">活动总GMV</div><div class="value">¥529,650</div><div class="sub">5-7月累计</div></div>
+<div class="card"><div class="label">活动总补贴成本</div><div class="value">¥414,041</div><div class="sub">平台+商家</div></div>
+<div class="card"><div class="label">活动整体ROI</div><div class="value green">1.28</div><div class="sub">GMV÷补贴</div></div>
+<div class="card"><div class="label">活动订单数</div><div class="value">17,816</div><div class="sub">5-7月合计</div></div>
+</div></div>
+<div class="section"><div class="section-title">月度活动数据明细</div>
+<div class="table-wrap"><table>
+<thead><tr><th>月份</th><th>活动GMV(¥)</th><th>活动补贴(¥)</th><th>活动订单数</th><th>ROI</th></tr></thead><tbody>
+<tr><td><strong>5月</strong></td><td>140,674</td><td>113,194</td><td>4,881</td><td><strong>1.24</strong></td></tr><tr><td><strong>6月</strong></td><td>186,970</td><td>147,901</td><td>6,326</td><td><strong>1.26</strong></td></tr><tr><td><strong>7月</strong></td><td>202,006</td><td>152,946</td><td>6,609</td><td><strong>1.32</strong></td></tr></tbody></table></div></div><div class="section"><div class="section-title">活动效率对比</div>
+<div class="grid2">
+<div class="chart-box"><h4>活动ROI对比条形图</h4><canvas id="roiChart"></canvas></div>
+<div class="chart-box"><h4>活动类型对比表 + 帕累托</h4><canvas id="paretoChart"></canvas></div>
+</div></div><div class="section"><div class="section-title">活动类型详细对比表</div>
+<div class="table-wrap"><table>
+<thead><tr><th>活动类型</th><th>总金额(¥)</th><th>占比</th><th>累计%</th><th>ROI</th><th>次数</th><th>评级</th></tr></thead><tbody>
+<tr><td><strong>支付红包</strong></td><td>256,058</td><td>39.2%</td><td>99.2%</td><td><strong>2.19</strong></td><td>19,590</td><td><span class="badge b-orange">C</span></td></tr><tr><td><strong>商品折扣/特价</strong></td><td>167,919</td><td>25.7%</td><td>34.9%</td><td><strong>2.65</strong></td><td>14,394</td><td><span class="badge b-orange">C</span></td></tr><tr><td><strong>店铺满减</strong></td><td>160,541</td><td>24.6%</td><td>60.0%</td><td><strong>1.29</strong></td><td>4,284</td><td><span class="badge b-red">D</span></td></tr><tr><td><strong>减配送费</strong></td><td>59,765</td><td>9.2%</td><td>9.2%</td><td><strong>8.81</strong></td><td>17,666</td><td><span class="badge b-blue">B</span></td></tr><tr><td><strong>门店新客立减</strong></td><td>5,053</td><td>0.8%</td><td>100.0%</td><td><strong>32.03</strong></td><td>5,053</td><td><span class="badge b-green">A</span></td></tr><tr><td><strong>商家代金券</strong></td><td>2,312</td><td>0.4%</td><td>35.2%</td><td><strong>12.01</strong></td><td>928</td><td><span class="badge b-green">A</span></td></tr><tr><td><strong>平台津贴</strong></td><td>1,445</td><td>0.2%</td><td>35.4%</td><td><strong>7.67</strong></td><td>405</td><td><span class="badge b-blue">B</span></td></tr></tbody></table></div></div><div class="section"><div class="section-title">月度活动趋势（5-6-7月）</div>
+<div class="grid2">
+<div class="chart-box"><h4>月度活动GMV与补贴</h4><canvas id="monthlyChart"></canvas></div>
+<div class="chart-box"><h4>月度ROI变化</h4><canvas id="roiTrendChart"></canvas></div>
+</div></div><div class="section"><div class="section-title">日度活动趋势（5-7月全维度）</div>
+<div class="chart-box"><h4>每日实付与活动支出</h4><canvas id="dailyChart" style="max-height:400px"></canvas></div>
+<div class="insight"><h4>活动日 vs 非活动日对比</h4>
+</div><div class="footer">V2.0 | 2026-08-11</div></div><script>
+window.onload=function(){
+var ctx1=document.getElementById('roiChart').getContext('2d');
+new Chart(ctx1,{type:'bar',data:{labels:["\u652f\u4ed8\u7ea2\u5305", "\u5546\u54c1\u6298\u6263/\u7279\u4ef7", "\u5e97\u94fa\u6ee1\u51cf", "\u51cf\u914d\u9001\u8d39", "\u95e8\u5e97\u65b0\u5ba2\u7acb\u51cf", "\u5546\u5bb6\u4ee3\u91d1\u5238", "\u5e73\u53f0\u6d25\u8d34"],datasets:[{label:'ROI',data:[2.19, 2.65, 1.29, 8.81, 32.03, 12.01, 7.67],backgroundColor:["#C41E3A","#e74c3c","#D4A754","#27ae60","#e67e22","#3498db","#8e44ad"],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',scales:{x:{title:{display:true,text:'ROI'}}},plugins:{legend:{display:false}}}});
+var ctx2=document.getElementById('paretoChart').getContext('2d');
+new Chart(ctx2,{type:'bar',data:{labels:["\u652f\u4ed8\u7ea2\u5305", "\u5546\u54c1\u6298\u6263/\u7279\u4ef7", "\u5e97\u94fa\u6ee1\u51cf", "\u51cf\u914d\u9001\u8d39", "\u95e8\u5e97\u65b0\u5ba2\u7acb\u51cf", "\u5546\u5bb6\u4ee3\u91d1\u5238", "\u5e73\u53f0\u6d25\u8d34"],datasets:[
+{label:'占比(%)',data:[39.2, 25.7, 24.6, 9.2, 0.8, 0.4, 0.2],backgroundColor:'#3498db',yAxisID:'y',borderRadius:6},
+{label:'累计(%)',data:[99.22629801561136, 34.86246631877587, 60.01935648328883, 9.151113720503014, 100.0, 35.21650426223589, 35.43774352549398],borderColor:'#C41E3A',type:'line',yAxisID:'y1',borderWidth:3,pointRadius:6,pointBackgroundColor:'#C41E3A',fill:false,tension:.3}
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{type:'linear',display:true,position:'left',title:{display:true,text:'占比(%)'},max:100},y1:{type:'linear',display:true,position:'right',title:{display:true,text:'累计(%)'},max:100,grid:{drawOnChartArea:false}}},plugins:{legend:{position:'bottom'}}}});
+var ctx3=document.getElementById('monthlyChart').getContext('2d');
+new Chart(ctx3,{type:'bar',data:{labels:['5月','6月','7月'],datasets:[
+{label:'活动GMV(¥)',data:[140674.36, 186970.14, 202005.56],backgroundColor:'#3498db',borderRadius:6},
+{label:'活动补贴(¥)',data:[113193.91, 147900.94, 152946.29],backgroundColor:'#e67e22',borderRadius:6}
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'金额(¥)'}}},plugins:{legend:{position:'bottom'}}}});
+var ctx4=document.getElementById('roiTrendChart').getContext('2d');
+new Chart(ctx4,{type:'line',data:{labels:['5月','6月','7月'],datasets:[
+{label:'ROI',data:[1.24, 1.26, 1.32],borderColor:'#27ae60',backgroundColor:'rgba(39,174,96,0.1)',fill:true,tension:.4,borderWidth:4,pointRadius:8,pointBackgroundColor:'#27ae60'}
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'ROI'}}},plugins:{legend:{display:false}}}});
+var ctx5=document.getElementById('dailyChart').getContext('2d');
+new Chart(ctx5,{type:'line',data:{labels:["01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "01/01", "05/01", "05/02", "05/03", "05/04", "05/05", "05/06", "05/07", "05/08", "05/09", "05/10", "05/11", "05/12", "05/13", "05/14", "05/15", "05/16", "05/17", "05/18", "05/19", "05/20", "05/21", "05/22", "05/23", "05/24", "05/25", "05/26", "05/27", "05/28", "05/29", "05/30", "05/31", "06/01", "06/02", "06/03", "06/04", "06/05", "06/06", "06/07", "06/08", "06/09", "06/10", "06/11", "06/12", "06/13", "06/14", "06/15", "06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22", "06/23", "06/24", "06/25", "06/26", "06/27", "06/28", "06/29", "06/30", "07/01", "07/02", "07/03", "07/04", "07/05", "07/06", "07/07", "07/08", "07/09", "07/10", "07/11", "07/12", "07/13", "07/14", "07/15", "07/16", "07/17", "07/18", "07/19", "07/20", "07/21", "07/22", "07/23", "07/24", "07/25", "07/26", "07/27", "07/28", "07/29", "07/30", "07/31"],datasets:[
+{label:'实付(¥)',data:[1561.3, 1322.38, 1370.35, 1578.57, 1999.66, 1308.33, 1105.35, 1213.43, 1718.28, 1874.65, 1623.74, 1905.65, 1976.69, 2473.71, 2462.09, 1882.98, 2323.88, 2054.06, 2563.02, 2299.01, 2643.58, 2572.69, 3974.1, 3911.41, 2498.5, 2290.7, 2505.13, 2706.25, 3799.99, 5734.17, 5007.68, 3436.95, 3479.51, 3140.27, 3459.86, 3179.32, 4660.71, 3611.86, 2757.43, 3112.69, 3300.03, 3135.11, 4225.01, 4237.75, 3838.74, 3049.96, 4301.33, 3624.87, 5608.46, 4558.12, 4228.59, 4444.77, 2495.84, 3010.94, 3633.37, 3772.38, 3580.99, 3960.84, 3435.24, 4141.27, 2921.27, 4308.14, 3183.47, 3355.18, 3801.54, 3920.65, 3126.23, 3525.94, 3431.73, 2731.07, 4477.26, 4549.9, 3839.75, 3646.26, 3038.58, 3827.02, 3451.54, 3657.54, 4322.22, 4823.47, 2995.3, 3663.48, 3029.92, 3568.71, 3624.64, 4329.84, 3788.4, 2660.93, 2816.75, 3164.05, 2861.88, 4158.72, 1709.11, 1489.48, 2419.98, 2116.21, 1712.23, 1340.24, 1198.86, 1230.97, 1268.83, 2160.38, 1242.51, 1289.73, 1611.82, 1417.93, 1306.69, 2744.89, 2396.78, 1650.3, 1810.47, 2296.3, 2034.2, 2367.08, 3105.67, 3984.82, 2339.6, 2257.78, 1957.57, 1771.78, 1899.49, 2702.42, 2878.97, 1729.78, 1965.39, 2797.69, 2858.68, 2876.04, 3051.37, 2872.97, 2294.17, 2031.22, 1910.57, 2004.58, 1992.77, 3219.58, 2701.61, 1751.6, 2434.06, 2155.03, 2818.57, 3172.41, 2722.97, 2767.08, 1843.16, 1854.24, 2545.89, 1795.57, 2616.91, 2380.46, 2617.99, 2074.64, 2268.63, 2351.69, 2313.53, 2393.56, 2464.78, 2635.39, 2635.45, 2217.08, 2393.44, 2331.96, 2493.53, 2910.07, 3233.55, 2393.59, 2380.41, 2218.18, 2674.21, 2658.93, 2881.64, 3628.35, 3236.76, 2799.97, 2744.56, 2498.37, 2668.75, 3603.79, 3554.01, 2907.83, 2759.06, 2793.46, 3056.35, 3204.72],borderColor:'#3498db',backgroundColor:'rgba(52,152,219,0.05)',fill:true,tension:.3,borderWidth:1.5,pointRadius:0},
+{label:'活动支出(¥)',data:[752.05, 713.37, 593.4, 838.18, 878.94, 651.22, 581.4, 615.91, 1005.67, 848.0, 828.36, 1005.6, 1156.46, 1414.49, 1419.52, 1104.7, 1490.17, 1248.19, 1513.98, 1282.76, 1391.92, 1336.97, 2479.91, 2469.24, 1234.77, 1231.32, 1277.38, 1294.69, 2161.53, 3309.95, 3498.8, 2024.21, 2278.41, 1898.79, 2023.95, 1721.74, 2629.76, 2170.72, 1503.99, 1650.89, 1797.15, 1667.81, 2310.34, 2354.98, 2301.78, 1692.7, 2096.02, 1851.66, 2188.31, 2675.93, 2263.44, 2297.7, 1284.03, 1571.65, 1711.16, 1648.94, 1930.42, 2078.83, 1967.33, 1881.08, 1592.82, 2009.37, 1628.48, 1652.01, 2211.7, 2156.37, 1515.52, 1658.21, 1659.55, 1323.22, 1812.14, 2195.42, 2019.48, 1600.12, 1389.26, 1662.03, 1568.04, 1544.7, 2098.09, 2363.2, 1413.96, 1533.02, 1281.04, 1268.38, 1391.71, 1951.63, 1696.33, 1095.77, 1230.5, 1230.71, 1091.5, 1751.12, 1250.47, 1061.98, 1522.3, 1391.49, 1180.14, 862.45, 807.62, 859.38, 870.02, 1339.55, 895.6, 910.98, 1166.96, 995.74, 1026.28, 1984.99, 1812.92, 1124.47, 1258.17, 1659.13, 1509.07, 1591.32, 1879.69, 2487.95, 1377.51, 1605.01, 1488.76, 1505.14, 1377.68, 1933.51, 1891.09, 1249.99, 1381.41, 2292.46, 2159.93, 2369.08, 2345.25, 2165.92, 1463.74, 1404.43, 1222.36, 1476.27, 1428.06, 2234.57, 1877.26, 1282.48, 1688.26, 1545.41, 1909.33, 2141.3, 1821.7, 1871.37, 1294.27, 1324.62, 1832.44, 1198.78, 1795.99, 1627.59, 1870.66, 1510.56, 1580.56, 1741.01, 1833.69, 1827.13, 1716.46, 1878.72, 1863.78, 1748.06, 1700.62, 1769.7, 1934.72, 2009.28, 2497.0, 1909.77, 1745.02, 1837.98, 2300.73, 2013.87, 2211.03, 3029.44, 2550.65, 2205.87, 2145.51, 1834.96, 1988.77, 2701.89, 2651.43, 2116.47, 2033.77, 1995.34, 2353.37, 2214.41],borderColor:'#C41E3A',backgroundColor:'rgba(196,30,58,0.05)',fill:true,tension:.3,borderWidth:1.5,pointRadius:0}
+]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},scales:{x:{ticks:{font:{size:7},maxTicksLimit:30}},y:{title:{display:true,text:'金额(¥)'}}},plugins:{legend:{position:'bottom'}}}});
+};</script></body></html>
