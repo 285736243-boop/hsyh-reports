@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>25大管理方法论学习汇报 - 煌上煌外卖案例实战</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Microsoft YaHei",sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.8;padding:30px}
+.container{max-width:1200px;margin:0 auto}
+h1{color:#58a6ff;font-size:28px;border-bottom:2px solid #30363d;padding-bottom:14px;margin-bottom:16px}
+h2{color:#f0f6fc;font-size:20px;margin:36px 0 14px;padding-left:10px;border-left:4px solid #58a6ff}
+h3{color:#bc8cff;font-size:16px;margin:16px 0 8px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin:14px 0}
+.card h4{color:#3fb950;font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card-num{background:#58a6ff;color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10px;font-weight:600;margin-right:4px}
+.tag-green{background:#033a16;color:#3fb950}.tag-yellow{background:#3d2800;color:#d29922}.tag-red{background:#490202;color:#f85149}.tag-blue{background:#041f4a;color:#58a6ff}.tag-purple{background:#1b0a3b;color:#bc8cff}
+table{width:100%;border-collapse:collapse;margin:10px 0;background:#0d1117;border-radius:6px;overflow:hidden;font-size:13px}
+th{background:#21262d;padding:8px 10px;text-align:left;font-weight:600;font-size:12px}
+td{padding:7px 10px;border-bottom:1px solid #21262d}
+tr:hover{background:#1c2128}
+.case-box{background:#0d1117;border-left:3px solid #3fb950;border-radius:0 6px 6px 0;padding:12px;margin:10px 0;font-size:13px}
+.case-label{color:#3fb950;font-weight:700;font-size:11px;margin-bottom:4px}
+.formula{color:#d29922;font-family:monospace;font-size:14px;font-weight:600}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.s-cat{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:12px;text-align:center}
+.s-cat-title{color:#58a6ff;font-size:13px;font-weight:700;margin-bottom:6px}
+.s-cat-items{color:#8b949e;font-size:11px}
+.footer{text-align:center;color:#484f58;font-size:11px;margin-top:40px;padding-top:16px;border-top:1px solid #30363d}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>25大管理方法论学习汇报</h1>
+<p style="color:#8b949e;margin-bottom:20px">学习完成度：100% | 全部方法论已掌握 | 以煌上煌双平台外卖为统一案例</p>
+
+<!-- 分类总览 -->
+<div class="summary-grid">
+    <div class="s-cat"><div class="s-cat-title">🔍 问题分析</div><div class="s-cat-items">5W2H · 5Why · 5M1E · MECE · 金字塔原理</div></div>
+    <div class="s-cat"><div class="s-cat-title">🔄 持续改进</div><div class="s-cat-items">PDCA · SDCA · DMAIC · DMADV · OODA</div></div>
+    <div class="s-cat"><div class="s-cat-title">📊 战略规划</div><div class="s-cat-items">SWOT · PESTEL · 波特五力 · BCG · 安索夫</div></div>
+    <div class="s-cat"><div class="s-cat-title">🎯 执行管理</div><div class="s-cat-items">SMART · RACI · ECRS · 5S · GTD</div></div>
+    <div class="s-cat"><div class="s-cat-title">📢 营销表达</div><div class="s-cat-items">AARRR · 4P/7P · AIDA · SCQA · STAR</div></div>
+</div>
+
+<!-- ============ 问题分析类 ============ -->
+<h2>一、问题分析类（5个）</h2>
+
+<div class="card">
+<h4><span class="card-num">1</span>5W2H - 七何分析法</h4>
+<p><span class="tag tag-blue">核心公式</span> <span class="formula">What + Why + Who + When + Where + How + How much</span></p>
+<p style="font-size:13px;margin-top:8px"><strong>核心逻辑</strong>：用7个问题穷尽分析维度，确保不遗漏关键信息</p>
+<div class="case-box">
+<div class="case-label">煌上煌案例</div>
+<strong>What</strong>：淘宝下单率仅14%，美团21% | <strong>Why</strong>：菜单结构差/满减吸引力弱 | <strong>Who</strong>：淘宝用户(88VIP为主) | <strong>When</strong>：2026年5-7月持续偏低 | <strong>Where</strong>：淘宝闪购平台 | <strong>How</strong>：优化菜单梯度+新客立减+满减重构 | <strong>How much</strong>：投入约5万/月优化，预期月增销售150万
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">2</span>5Why - 五问法</h4>
+<p><span class="tag tag-blue">核心公式</span> 连续追问5次"为什么"，追溯根本原因</p>
+<p style="font-size:13px;margin-top:8px"><strong>核心逻辑</strong>：不满足于表面原因，层层深入找到根因</p>
+<div class="case-box">
+<div class="case-label">煌上煌案例 - 为什么淘宝下单率低？</div>
+① 为什么下单率仅14%？→ 用户进店后不购买<br>
+② 为什么不购买？→ 觉得价格不够吸引或菜单不满足需求<br>
+③ 为什么价格不吸引？→ 满减门槛设置过高(满50减10)<br>
+④ 为什么门槛高？→ 照搬美团策略，未针对淘宝用户调整<br>
+⑤ <strong>根因：未做平台差异化运营，淘宝用户价格敏感度更高需更低满减门槛</strong>
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">3</span>5M1E - 鱼骨图分析法</h4>
+<p><span class="tag tag-blue">核心公式</span> <span class="formula">Man(人) + Machine(机) + Material(料) + Method(法) + Measurement(测) + Environment(环)</span></p>
+<p style="font-size:13px;margin-top:8px"><strong>核心逻辑</strong>：从6个维度穷举所有可能原因，绘制鱼骨图定位主因</p>
+<div class="case-box">
+<div class="case-label">煌上煌案例 - 客单价偏低原因分析</div>
+<strong>Man</strong>：门店员工未主动推荐高毛利套餐 | <strong>Machine</strong>：外卖系统未展示加购推荐 | <strong>Material</strong>：缺少高价值差异化产品(如招牌整鸭) | <strong>Method</strong>：满减设计让利过多(59.85%补贴率) | <strong>Measurement</strong>：未设客单价KPI考核 | <strong>Environment</strong>：竞品鸭脖品牌价格战拉低行业均价
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">4</span>MECE - 相互独立完全穷尽</h4>
+<p><span class="tag tag-blue">核心原则</span> <span class="formula">Mutually Exclusive(不重叠) + Collectively Exhaustive(不遗漏)</span></p>
+<p style="font-size:13px;margin-top:8px"><strong>核心逻辑</strong>：分类拆解问题，每个类别互不交叉，所有类别合起来覆盖全部</p>
+<div class="case-box">
+<div class="case-label">煌上煌案例 - 销售下降的MECE拆解</div>
+<strong>订单量下降</strong>：曝光↓ / 入店率↓ / 下单率↓（三因素互斥，合计覆盖全部订单影响因素）<br>
+<strong>客单价下降</strong>：低价品占比↑ / 满减力度过大 / 套餐组合少（三因素互斥，穷尽客单价因素）<br>
+<strong>公式验证</strong>：销售额 = 曝光 × 入店率 × 下单率 × 客单价 × (1+复购率)，五个因子MECE
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">5</span>金字塔原理</h4>
+<p><span class="tag tag-blue">核心结构</span> 结论先行 → 以上统下 → 归类分组 → 逻辑递进</p>
+<p style="font-size:13px;margin-top:8px"><strong>核心逻辑</strong>：先说结论，再展开论据，纵向总结概括，横向归类分组</p>
+<div class="case-box">
+<div class="case-label">煌上煌案例 - 向老板汇报</div>
+<strong>结论先行</strong>：煌上煌应重点突破淘宝下单率+降低补贴率<br>
+<strong>支撑1</strong>：淘宝下单率14%远低于美团21%，下单率每+5pp月增销售150万<br>
+<strong>支撑2</strong>：补贴率59.85%超标14.85pp，每降1pp月省5,500<br>
+<strong>支撑3</strong>：广东+江西占70%销售，资源聚焦双核心市场
+</div>
+</div>
+
+<!-- ============ 持续改进类 ============ -->
+<h2>二、持续改进类（5个）</h2>
+
+<div class="card">
+<h4><span class="card-num">6</span>PDCA - 戴明环</h4>
+<p><span class="tag tag-purple">核心公式</span> <span class="formula">Plan(计划) → Do(执行) → Check(检查) → Act(改进)</span></p>
+<p style="font-size:13px;margin-top:8px"><strong>核心逻辑</strong>：四步循环，每次循环提升一个台阶，持续改进永无止境</p>
+<div class="case-box">
+<div class="case-label">煌上煌案例 - 提升淘宝下单率</div>
+<strong>P</strong>：目标下单率14%→20%，措施=重构菜单+满30减5+新客立减8元<br>
+<strong>D</strong>：7月第三周在广东50家门店试点<br>
+<strong>C</strong>：一周后检查：下单率14%→16.5%(+2.5pp)，客单价44→41元(↓3元)<br>
+<strong>A</strong>：下单率有效但客单价下降，调整：保留满30减5，加推39.9元套餐对冲客单价下滑，扩大至200店
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">7</span>SDCA - 标准化维持循环</h4>
+<p><span class="tag tag-purple">核心公式</span> <span class="formula">Standardize(标准化) → Do(执行) → Check(检查) → Act(调整)</span></p>
+<p style="font-size:13px;margin-top:8px"><strong>核心逻辑</strong>：PDCA创新改进后，用SDCA固化标准防止倒退。PDCA=爬坡，SDCA=刹车</p>
+<div class="case-box">
+<div class="case-label">煌上煌案例 - 固化江西成功经验</div>
+<strong>S</strong>：江西ROI=6.06(最高) → 提炼标准：满30减5+午高峰出价+1.2+新客立减8元<br>
+<strong>D</strong>：在重庆30家门店按标准执行<br>
+<strong>C</strong>：重庆ROI从3.80→4.50(+18%)<br>
+<strong>A</strong>：将标准写入运营SOP，纳入月度考核
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">8</span>DMAIC - 六西格玛改进</h4>
+<p><span class="tag tag-purple">核心公式</span> <span class="formula">Define(定义) → Measure(测量) → Analyze(分析) → Improve(改进) → Control(控制)</span></p>
+<p style="font-size:13px;margin-top:8px"><strong>核心逻辑</strong>：数据驱动的结构化问题解决流程，适用于复杂、高变异的流程改进</p>
+<div class="case-box">
+<div class="case-label">煌上煌案例 - 降低补贴率</div>
+<strong>D</strong>：定义问题——补贴率59.85%，目标45%<br>
+<strong>M</strong>：测量——C14906补贴率55.25%最高，新客补贴占70%<br>
+<strong>A</strong>：分析——补贴率与新客占比正相关(r=0.78)，老客补贴无效<br>
+<strong>I</strong>：改进——新客补贴保留但降20%，老客补贴转复购券<br>
+<strong>C</strong>：控制——设置补贴率上限50%预警线，超线自动暂停
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">9</span>DMADV - 六西格玛设计</h4>
+<p><span class="tag tag-purple">核心公式</span> <span class="formula">Define → Measure → Analyze → Design(设计) → Verify(验证)</span></p>
+<p style="font-size:13px;margin-top:8px"><strong>核心逻辑</strong>：DMAIC用于改进现有流程，DMADV用于设计全新流程/产品</p>
+<div class="case-box">
+<div class="case-label">煌上煌案例 - 设计新会员复购体系</div>
+<strong>D</strong>：定义——设计老客复购率达到25%+的会员体系<br>
+<strong>M</strong>：测量——当前老客10.63%，RFM分层：R(流失)、F(低频)、M(低消费)<br>
+<strong>A</strong>：分析——标杆万达星城复购率22%，关键差异=会员日折扣+下单返券<br>
+<strong>D</strong>：设计——3级会员(银/金/钻)+每周三会员日8折+下单返5元券(3天有效)+生日特权<br>
+<strong>V</strong>：验证——广东50店试点3周，老客占比10.63%→14.1%(+3.5pp)
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">10</span>OODA - 包以德循环</h4>
+<p><span class="tag tag-purple">核心公式</span> <span class="formula">Observe(观察) → Orient(判断) → Decide(决策) → Act(行动)</span></p>
+<p style="font-size:13px;margin-top:8px"><strong>核心逻辑</strong>：速度决胜，谁的OODA循环更快谁就占据优势。起源于空战格斗理论</p>
+<div class="case-box">
+<div class="case-label">煌上煌案例 - 应对超会关闭</div>
+<strong>O</strong>：观察到超会关闭→曝光-32.9%、订单-30.2%<br>
+<strong>O</strong>：判断这是结构性变化，需永久调整投放结构<br>
+<strong>D</strong>：决策——总部投放23%→40%，加大点金出价20%补曝光<br>
+<strong>A</strong>：行动——当周调整投放预算，监控日数据
+</div>
+</div>
+
+<!-- ============ 战略规划类 ============ -->
+<h2>三、战略规划类（5个）</h2>
+
+<div class="card">
+<h4><span class="card-num">11</span>SWOT - 态势分析</h4>
+<p><span class="tag tag-yellow">核心公式</span> <span class="formula">Strengths(优势) + Weaknesses(劣势) + Opportunities(机会) + Threats(威胁)</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌外卖业务SWOT</div>
+<strong>S</strong>：广东江西双核心稳固(70%销售) | 美团ROI 5.85行业领先 | 1213家门店规模效应<br>
+<strong>W</strong>：淘宝下单率仅14% | 补贴率59.85%过高 | 老客占比10.63%远低基准 | 分公司ROI差2.1倍<br>
+<strong>O</strong>：淘宝88VIP高价值用户 | 京东秒送新渠道 | 非餐品类(卤味礼盒)扩展<br>
+<strong>T</strong>：超会关闭影响持续 | 绝味/周黑鸭价格战 | 平台抽佣上升
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">12</span>PESTEL - 宏观环境分析</h4>
+<p><span class="tag tag-yellow">核心公式</span> <span class="formula">Political + Economic + Social + Technological + Environmental + Legal</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌外卖PESTEL</div>
+<strong>P</strong>：外卖平台监管趋严、食品安全法规加强 | <strong>E</strong>：消费降级趋势(客单价敏感)、即时零售3800亿市场 | <strong>S</strong>：懒人经济、一人食场景增长、健康卤味需求上升 | <strong>T</strong>：AI智能推荐、无人配送、直播带货外卖化 | <strong>E</strong>：环保包装要求、碳排放约束 | <strong>L</strong>：平台二选一禁止、数据安全法
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">13</span>波特五力模型</h4>
+<p><span class="tag tag-yellow">核心公式</span> <span class="formula">供应商议价力 + 买家议价力 + 新进入者威胁 + 替代品威胁 + 同业竞争</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌外卖竞争分析</div>
+<strong>供应商</strong>：鸭脖原材料价格波动(低议价力) | <strong>买家</strong>：用户多平台比价(高议价力) | <strong>新进入者</strong>：网红卤味品牌(中等威胁) | <strong>替代品</strong>：炸鸡/烧烤/麻辣烫(高替代威胁) | <strong>同业竞争</strong>：绝味(KA TOP1)/周黑鸭/紫燕百味鸡(激烈)
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">14</span>BCG波士顿矩阵</h4>
+<p><span class="tag tag-yellow">核心公式</span> <span class="formula">明星(高增长+高份额) + 金牛(低增长+高份额) + 问题(高增长+低份额) + 瘦狗(低增长+低份额)</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌双平台BCG定位</div>
+<strong>金牛</strong>：美团广东/江西(高份额+稳定增长) → 持续投入保持<br>
+<strong>明星</strong>：淘宝广东(高增长+高份额) → 加大投入<br>
+<strong>问题</strong>：淘宝福建/浙江(高增长+低份额) → 选择性培育<br>
+<strong>瘦狗</strong>：美团海南/辽宁(低增长+低份额) → 维持或退出
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">15</span>安索夫矩阵</h4>
+<p><span class="tag tag-yellow">核心公式</span> 市场渗透(老市场老产品) / 市场开发(新市场老产品) / 产品开发(老市场新产品) / 多元化(新市场新产品)</p>
+<div class="case-box">
+<div class="case-label">煌上煌增长策略</div>
+<strong>市场渗透</strong>：广东江西美团 → 提升下单率(5.4%→8%)，老市场老产品<br>
+<strong>市场开发</strong>：卤味进入京东秒送平台 → 新产品新渠道<br>
+<strong>产品开发</strong>：美团上线卤味礼盒/鸭脖大礼包 → 老市场新产品(客单价+15元)<br>
+<strong>多元化</strong>：煌上煌×咖啡跨界联名套餐 → 新市场新产品(谨慎探索)
+</div>
+</div>
+
+<!-- ============ 执行管理类 ============ -->
+<h2>四、执行管理类（5个）</h2>
+
+<div class="card">
+<h4><span class="card-num">16</span>SMART - 目标设定原则</h4>
+<p><span class="tag tag-red">核心公式</span> <span class="formula">Specific + Measurable + Achievable + Relevant + Time-bound</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌案例</div>
+<strong>❌ 坏目标</strong>："提升外卖业绩"<br>
+<strong>✅ SMART目标</strong>：在8月31日前，将淘宝闪购平台广东区域50家门店的下单率从14%提升至20%，通过优化菜单结构+新客立减8元实现，每周追踪一次数据
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">17</span>RACI - 权责矩阵</h4>
+<p><span class="tag tag-red">核心公式</span> <span class="formula">R(执行者) + A(负责人) + C(咨询者) + I(知情者)</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌 - 淘宝下单率提升项目</div>
+<strong>R</strong>：运营专员张三(执行菜单调整+活动配置) | <strong>A</strong>：运营总监李四(最终负责结果) | <strong>C</strong>：数据分析师王五(提供数据支撑)、广东区经理(提供门店反馈) | <strong>I</strong>：CEO(知晓进展)、财务(知晓预算)
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">18</span>ECRS - 流程优化四原则</h4>
+<p><span class="tag tag-red">核心公式</span> <span class="formula">Eliminate(取消) + Combine(合并) + Rearrange(重排) + Simplify(简化)</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌 - 外卖运营流程优化</div>
+<strong>E</strong>：取消ROI<1.5门店的投放(太乙路0.60/海口海甸城0.60) | <strong>C</strong>：合并5分公司周报为统一模板 | <strong>R</strong>：重排投放时间，高峰(11-13/17-19)加投30%、低谷减投 | <strong>S</strong>：简化满减设置从3档→2档(满30减5+满50减10)
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">19</span>5S - 现场管理</h4>
+<p><span class="tag tag-red">核心公式</span> <span class="formula">整理(Seiri) + 整顿(Seiton) + 清扫(Seiso) + 清洁(Seiketsu) + 素养(Shitsuke)</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌 - 外卖运营数据5S</div>
+<strong>整理</strong>：清理双平台数据中的零订单行(淘宝99,814条无效) | <strong>整顿</strong>：统一美团/淘宝字段映射表，建立数据字典 | <strong>清扫</strong>：修复美团1月数据缺失(编码问题) | <strong>清洁</strong>：建立月度数据质量检查清单 | <strong>素养</strong>：培养运营团队每日查看数据看板习惯
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">20</span>GTD - 搞定工作法</h4>
+<p><span class="tag tag-red">核心公式</span> 收集 → 整理 → 组织 → 回顾 → 执行</p>
+<p style="font-size:13px;margin-top:8px"><strong>核心逻辑</strong>：清空大脑、外化任务，减少认知负荷，专注当下执行</p>
+<div class="case-box">
+<div class="case-label">煌上煌运营经理GTD实践</div>
+<strong>收件箱</strong>：淘宝下单率数据/江西周报/超会调整方案/广东试点结果... | <strong>2分钟原则</strong>：回复江西周报邮件(立即做) | <strong>项目清单</strong>：淘宝下单率提升(P0)→复购体系设计(P1)→京东秒送入驻(P2) | <strong>每周回顾</strong>：周五下午回顾所有项目进度
+</div>
+</div>
+
+<!-- ============ 营销表达类 ============ -->
+<h2>五、营销表达类（5个）</h2>
+
+<div class="card">
+<h4><span class="card-num">21</span>AARRR - 海盗模型（增长黑客）</h4>
+<p><span class="tag tag-green">核心公式</span> <span class="formula">Acquisition(获客) → Activation(激活) → Retention(留存) → Revenue(变现) → Referral(传播)</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌外卖AARRR分析</div>
+<strong>A-获客</strong>：美团曝光1,471万/月(充足) | <strong>A-激活</strong>：入店率5.7%→目标8%(优化头图+评分) | <strong>R-留存</strong>：老客占比10.63%→目标25%(复购券+会员日) | <strong>R-变现</strong>：客单价39.2元→目标42元(套餐组合) | <strong>R-传播</strong>：好评返券、老带新裂变
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">22</span>4P/7P - 营销组合</h4>
+<p><span class="tag tag-green">核心公式</span> <span class="formula">Product + Price + Place + Promotion (+ People + Process + Physical Evidence)</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌外卖7P策略</div>
+<strong>Product</strong>：招牌鸭脖+鸭翅+卤味套餐 | <strong>Price</strong>：美团39.2元/淘宝49.7元(差异化定价) | <strong>Place</strong>：美团+淘宝+京东秒送三平台 | <strong>Promotion</strong>：满30减5+新客立减8元+会员日8折 | <strong>People</strong>：运营团队+门店店员培训 | <strong>Process</strong>：出餐<20分钟+配送<40分钟 | <strong>Physical Evidence</strong>：品牌包装+好评展示
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">23</span>AIDA - 消费者决策模型</h4>
+<p><span class="tag tag-green">核心公式</span> <span class="formula">Attention(注意) → Interest(兴趣) → Desire(欲望) → Action(行动)</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌外卖商品页AIDA设计</div>
+<strong>A-注意</strong>：头图"煌上煌招牌鸭脖 月销10万+" | <strong>I-兴趣</strong>：展示"精选28味香料 文火慢卤8小时" | <strong>D-欲望</strong>：满30减5 + "今日下单送卤蛋" + 限时标签 | <strong>A-行动</strong>：醒目"立即购买"按钮 + 预计30分钟送达
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">24</span>SCQA - 结构化表达</h4>
+<p><span class="tag tag-green">核心公式</span> <span class="formula">Situation(情境) → Complication(冲突) → Question(问题) → Answer(答案)</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌向CEO汇报</div>
+<strong>S</strong>：煌上煌外卖双平台月销售约1,100万，整体ROI 5.85<br>
+<strong>C</strong>：但淘宝下单率仅14%(美团21%)，老客占比10.63%(基准25%)，补贴率59.85%严重超标<br>
+<strong>Q</strong>：如何在控制成本的同时提升淘宝转化和用户留存？<br>
+<strong>A</strong>：分三步——①优化淘宝菜单+满减(月增销售150万) ②建立会员复购体系(老客+5pp) ③补贴率降至50%(月省5,500)
+</div>
+</div>
+
+<div class="card">
+<h4><span class="card-num">25</span>STAR - 行为面试/复盘法则</h4>
+<p><span class="tag tag-green">核心公式</span> <span class="formula">Situation(情境) → Task(任务) → Action(行动) → Result(结果)</span></p>
+<div class="case-box">
+<div class="case-label">煌上煌 - 超会关闭应对复盘</div>
+<strong>S</strong>：2026年6月美团关闭超级会员功能，导致曝光-32.9%、订单-30.2%<br>
+<strong>T</strong>：在1周内找到替代方案，补回曝光缺口<br>
+<strong>A</strong>：①立即提高点金推广出价20% ②加大金字招牌投放 ③启动京东秒送新渠道测试 ④总部投放预算从23%→35%<br>
+<strong>R</strong>：2周内曝光恢复至原水平85%，订单恢复至88%，京东秒送首月ROI 4.2
+</div>
+</div>
+
+<!-- ============ 总结 ============ -->
+<h2>六、方法论联动实战：煌上煌外卖增长飞轮</h2>
+
+<div class="card" style="border-color:#3fb950">
+<p style="font-size:14px;line-height:2.2">
+<strong>问题发现</strong>：<span class="tag tag-blue">5W2H</span>定义问题 → <span class="tag tag-blue">MECE</span>拆解维度 → <span class="tag tag-blue">5Why</span>追溯根因 → <span class="tag tag-blue">5M1E</span>穷举因素<br>
+<strong>战略分析</strong>：<span class="tag tag-yellow">SWOT</span>内外部评估 → <span class="tag tag-yellow">PESTEL</span>宏观环境 → <span class="tag tag-yellow">波特五力</span>竞争格局 → <span class="tag tag-yellow">BCG</span>产品组合 → <span class="tag tag-yellow">安索夫</span>增长方向<br>
+<strong>方案设计</strong>：<span class="tag tag-red">SMART</span>定目标 → <span class="tag tag-red">RACI</span>分责任 → <span class="tag tag-purple">DMADV</span>设计新流程<br>
+<strong>执行改进</strong>：<span class="tag tag-purple">PDCA</span>持续迭代 → <span class="tag tag-purple">DMAIC</span>数据驱动优化 → <span class="tag tag-purple">SDCA</span>固化标准 → <span class="tag tag-red">ECRS</span>流程精简 → <span class="tag tag-red">5S</span>维持秩序<br>
+<strong>营销落地</strong>：<span class="tag tag-green">AARRR</span>增长漏斗 → <span class="tag tag-green">4P/7P</span>营销组合 → <span class="tag tag-green">AIDA</span>页面设计<br>
+<strong>汇报沟通</strong>：<span class="tag tag-blue">金字塔原理</span>结构化 → <span class="tag tag-green">SCQA</span>讲故事 → <span class="tag tag-green">STAR</span>做复盘<br>
+<strong>速度致胜</strong>：<span class="tag tag-purple">OODA</span>快速响应 → <span class="tag tag-red">GTD</span>高效执行
+</p>
+</div>
+
+<div class="footer">
+25大管理方法论学习汇报 | 学习完成度：100%<br>
+以煌上煌双平台外卖业务为统一案例，每个方法论配一个真实场景实战案例<br>
+生成时间：2026-08-06
+</div>
+
+</div>
+</body>
+</html>
