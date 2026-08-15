@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>煌上煌双平台外卖数据全面分析报告</title>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Microsoft YaHei",sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.7;padding:30px}
+.container{max-width:1400px;margin:0 auto}
+h1{color:#58a6ff;font-size:28px;border-bottom:2px solid #30363d;padding-bottom:14px;margin-bottom:20px}
+h2{color:#f0f6fc;font-size:20px;margin:36px 0 14px;padding-left:10px;border-left:4px solid #58a6ff}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.kpi-card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;text-align:center}
+.kpi-val{font-size:24px;font-weight:700}
+.kpi-lbl{font-size:11px;color:#8b949e;margin-top:4px}
+.green{color:#3fb950}.yellow{color:#d29922}.red{color:#f85149}.blue{color:#58a6ff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.chart-box{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px}
+table{width:100%;border-collapse:collapse;margin:12px 0;background:#161b22;border-radius:8px;overflow:hidden;font-size:13px}
+th{background:#21262d;padding:10px 12px;text-align:left;font-weight:600}
+td{padding:8px 12px;border-bottom:1px solid #21262d}
+tr:hover{background:#1c2128}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.bg{background:#033a16;color:#3fb950}.by{background:#3d2800;color:#d29922}.br{background:#490202;color:#f85149}.bb{background:#041f4a;color:#58a6ff}
+.finding{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;margin:10px 0}
+.finding h4{margin-bottom:8px}
+.footer{text-align:center;color:#484f58;font-size:11px;margin-top:40px;padding-top:16px;border-top:1px solid #30363d}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>煌上煌双平台外卖数据全面分析报告</h1>
+<p style="color:#8b949e;margin-bottom:20px">数据周期：2025年11月 ~ 2026年7月 | 美团+淘宝闪购 | 自动生成</p>
+
+<!-- 概览 -->
+<h2>1. 数据概览</h2>
+<div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-lbl">美团门店数</div><div class="kpi-val blue">1,213</div><div class="kpi-lbl">有效门店</div></div>
+    <div class="kpi-card"><div class="kpi-lbl">淘宝门店数</div><div class="kpi-val blue">986</div><div class="kpi-lbl">有效门店</div></div>
+    <div class="kpi-card"><div class="kpi-lbl">美团总订单</div><div class="kpi-val blue">2,001,348</div><div class="kpi-lbl">9个月累计</div></div>
+    <div class="kpi-card"><div class="kpi-lbl">淘宝总订单</div><div class="kpi-val blue">975,624</div><div class="kpi-lbl">9个月累计</div></div>
+    <div class="kpi-card"><div class="kpi-lbl">美团总销售</div><div class="kpi-val green">6,949万</div><div class="kpi-lbl">顾客实付</div></div>
+    <div class="kpi-card"><div class="kpi-lbl">淘宝总销售</div><div class="kpi-val green">4,347万</div><div class="kpi-lbl">营业额</div></div>
+    <div class="kpi-card"><div class="kpi-lbl">美团客单价</div><div class="kpi-val yellow">34.7元</div><div class="kpi-lbl">9个月均值</div></div>
+    <div class="kpi-card"><div class="kpi-lbl">淘宝客单价</div><div class="kpi-val yellow">44.6元</div><div class="kpi-lbl">9个月均值</div></div>
+</div>
+
+<div class="finding">
+<h4>字段结构</h4>
+<p style="color:#8b949e;font-size:13px">
+<strong>美团</strong>：91列，含日期/门店/省份/城市/营业收入/补贴/顾客实付/曝光/入店/转化率/新老客等<br>
+<strong>淘宝闪购</strong>：123列，含日期/门店/省份/营业额/活动补贴/曝光/进店/转化率/复购率/店铺评分/评价/出餐等
+</p>
+</div>
+
+<!-- 月度趋势 -->
+<h2>2. 月度核心指标对比</h2>
+<div class="chart-box" id="chart_monthly_order" style="height:380px"></div>
+<div class="chart-box" id="chart_monthly_price" style="height:380px"></div>
+
+<!-- 季度 -->
+<h2>3. 季度对比分析</h2>
+<div class="chart-box" id="chart_quarterly" style="height:400px"></div>
+
+<table>
+<tr><th>季度</th><th>平台</th><th>订单</th><th>销售额</th><th>客单价</th><th>ROI</th><th>趋势</th></tr>
+<tr><td>2025Q4</td><td>美团</td><td>969,924</td><td>2,999万</td><td>30.9元</td><td>2.28</td><td><span class="badge by">基准</span></td></tr>
+<tr><td>2025Q4</td><td>淘宝</td><td>252,398</td><td>1,060万</td><td>42.0元</td><td>14.84</td><td><span class="badge bg">高ROI</span></td></tr>
+<tr><td>2026Q1</td><td>美团</td><td>339,215</td><td>1,316万</td><td>38.8元</td><td>2.74</td><td><span class="badge bg">↑</span></td></tr>
+<tr><td>2026Q1</td><td>淘宝</td><td>351,053</td><td>1,519万</td><td>43.3元</td><td>17.07</td><td><span class="badge bg">↑</span></td></tr>
+<tr><td>2026Q2</td><td>美团</td><td>515,868</td><td>1,944万</td><td>37.7元</td><td>2.16</td><td><span class="badge by">↓ROI</span></td></tr>
+<tr><td>2026Q2</td><td>淘宝</td><td>278,316</td><td>1,301万</td><td>46.8元</td><td>15.56</td><td><span class="badge by">↓</span></td></tr>
+</table>
+
+<!-- 转化率 -->
+<h2>4. 转化漏斗分析</h2>
+<div class="chart-box" id="chart_funnel" style="height:400px"></div>
+
+<table>
+<tr><th>平台</th><th>月份</th><th>曝光量</th><th>入店率</th><th>下单率</th><th>诊断</th></tr>
+<tr><td>美团</td><td>2026-05</td><td>1,387万</td><td>5.8%</td><td>22.2%</td><td><span class="badge bg">正常</span></td></tr>
+<tr><td>美团</td><td>2026-06</td><td>1,301万</td><td>5.9%</td><td>22.6%</td><td><span class="badge bg">正常</span></td></tr>
+<tr><td>美团</td><td>2026-07</td><td>1,471万</td><td>5.7%</td><td>21.0%</td><td><span class="badge bg">正常</span></td></tr>
+<tr><td>淘宝</td><td>2026-05</td><td>1,134万</td><td>5.6%</td><td>14.4%</td><td><span class="badge by">下单偏低</span></td></tr>
+<tr><td>淘宝</td><td>2026-06</td><td>1,063万</td><td>5.6%</td><td>15.5%</td><td><span class="badge by">下单偏低</span></td></tr>
+<tr><td>淘宝</td><td>2026-07</td><td>1,144万</td><td>5.5%</td><td>15.0%</td><td><span class="badge by">下单偏低</span></td></tr>
+</table>
+
+<!-- 区域 -->
+<h2>5. 区域分布</h2>
+<div class="grid2">
+<div class="chart-box" id="chart_region_mt" style="height:380px"></div>
+<div class="chart-box" id="chart_region_tb" style="height:380px"></div>
+</div>
+
+<!-- 异常检测 -->
+<h2>6. 异常值与缺失值</h2>
+<div class="grid2">
+<div class="finding">
+<h4>数据完整性</h4>
+<p style="color:#8b949e;font-size:13px">
+<strong>美团</strong>：总行1,748,335 → 有效241,065(13.8%)<br>
+原因：2025年11-12月数据完整，2026年2-7月仅部分字段有效<br>
+<strong>淘宝</strong>：总行266,422 → 有效166,827(62.6%)<br>
+原因：零订单行99,595条被过滤<br>
+<strong>缺失</strong>：美团顾客实付/补贴/营业收入86.6%缺失(2-7月)
+</p>
+</div>
+<div class="finding">
+<h4>异常检测</h4>
+<p style="color:#8b949e;font-size:13px">
+美团零订单行：14条<br>
+淘宝零订单行：354条(原始数据99,814条)<br>
+美团1月数据缺失(文件编码问题)<br>
+<strong>注意</strong>：美团2-7月仅15%行有销售额数据<br>
+淘宝数据完整度高，字段最全(含复购率/评分/出餐)
+</p>
+</div>
+</div>
+
+<!-- 建议 -->
+<h2>7. 运营优化建议</h2>
+<div class="finding" style="border-color:#3fb950">
+<h4 style="color:#3fb950">P0：淘宝下单率提升（14-15% → 20%）</h4>
+<p style="color:#8b949e;font-size:13px">
+淘宝入店率5.5-5.6%正常，但下单率仅14-15%远低于美团21-22%<br>
+建议：优化菜单结构、增加新客立减、提升满减吸引力<br>
+预期：下单率+5pp = 月增订单约3万，月增销售约150万
+</p>
+</div>
+<div class="finding" style="border-color:#d29922">
+<h4 style="color:#d29922">P1：美团入店率提升（5.7% → 8%）</h4>
+<p style="color:#8b949e;font-size:13px">
+美团入店率低于行业基准8%，曝光充足但进店不足<br>
+建议：优化头图、提升评分至4.5+、缩短配送时长<br>
+预期：入店率+2.3pp = 月增入店34万，月增订单约7万
+</p>
+</div>
+<div class="finding" style="border-color:#d29922">
+<h4 style="color:#d29922">P1：客单价差距拉大趋势</h4>
+<p style="color:#8b949e;font-size:13px">
+淘宝客单价从41.8→49.7元(↑19%)，美团从30.2→39.2元(↑30%)<br>
+差距从11.6元扩大到10.5元，淘宝持续溢价<br>
+建议：美团增加高毛利套餐组合，提升客单价至42元+
+</p>
+</div>
+<div class="finding" style="border-color:#58a6ff">
+<h4 style="color:#58a6ff">P2：广东/江西双核心稳固</h4>
+<p style="color:#8b949e;font-size:13px">
+双平台广东+江西合计占销售70%+，是绝对核心市场<br>
+福建/浙江/海南为第二梯队，可重点培育<br>
+建议：广东江西保持投入，福建浙江加大投放测试
+</p>
+</div>
+
+<div class="footer">
+煌上煌双平台外卖数据全面分析报告 | 美团1,213店 + 淘宝986店 | 2025.11-2026.07<br>
+分析工具：Python pandas + Plotly | 生成时间：2026-08-06
+</div>
+
+</div>
+
+<script>
+// 月度订单对比
+Plotly.newPlot('chart_monthly_order', [
+    {x:['2025-11','2025-12','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07'], y:[494722,475202,171611,167604,163116,177478,175274,176541], name:'美团订单量', type:'bar', marker:{color:'#58a6ff'}},
+    {x:['2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07'], y:[121796,130602,122756,115981,112316,96198,90651,91467,93955], name:'淘宝订单量', type:'bar', marker:{color:'#3fb950'}},
+    {x:['2025-11','2025-12','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07'], y:[1495.7,1503.1,704.3,611.3,602.5,668.0,673.1,691.4], name:'美团销售额(万)', yaxis:'y2', type:'scatter', mode:'lines+markers', marker:{color:'#d29922'}, line:{width:3}},
+    {x:['2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07'], y:[509.0,551.2,529.8,511.6,477.8,435.7,423.1,442.4,466.8], name:'淘宝销售额(万)', yaxis:'y2', type:'scatter', mode:'lines+markers', marker:{color:'#f85149'}, line:{width:3}}
+], {
+    template:'plotly_dark', paper_bgcolor:'#161b22', plot_bgcolor:'#161b22',
+    title:{text:'月度订单量与销售额趋势', font:{color:'#f0f6fc'}},
+    xaxis:{title:'月份', color:'#8b949e'},
+    yaxis:{title:'订单量', color:'#8b949e'},
+    yaxis2:{title:'销售额(万元)', overlaying:'y', side:'right', color:'#8b949e'},
+    legend:{font:{color:'#8b949e'}},
+    barmode:'group'
+}, {responsive:true});
+
+// 客单价对比
+Plotly.newPlot('chart_monthly_price', [
+    {x:['2025-11','2025-12','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07'], y:[30.2,31.6,41.0,36.5,36.9,37.6,38.4,39.2], name:'美团客单价', type:'scatter', mode:'lines+markers', marker:{color:'#58a6ff'}, line:{width:3}},
+    {x:['2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07'], y:[41.8,42.2,43.2,44.1,42.5,45.3,46.7,48.4,49.7], name:'淘宝客单价', type:'scatter', mode:'lines+markers', marker:{color:'#3fb950'}, line:{width:3}}
+], {
+    template:'plotly_dark', paper_bgcolor:'#161b22', plot_bgcolor:'#161b22',
+    title:{text:'客单价趋势对比', font:{color:'#f0f6fc'}},
+    xaxis:{title:'月份', color:'#8b949e'},
+    yaxis:{title:'客单价(元)', color:'#8b949e'},
+    legend:{font:{color:'#8b949e'}}
+}, {responsive:true});
+
+// 季度对比
+Plotly.newPlot('chart_quarterly', [
+    {x:['2025Q4','2026Q1','2026Q2'], y:[2999,1316,1944], name:'美团销售(万)', type:'bar', marker:{color:'#58a6ff'}, yaxis:'y'},
+    {x:['2025Q4','2026Q1','2026Q2'], y:[1060,1519,1301], name:'淘宝销售(万)', type:'bar', marker:{color:'#3fb950'}, yaxis:'y'},
+    {x:['2025Q4','2026Q1','2026Q2'], y:[2.28,2.74,2.16], name:'美团ROI', type:'scatter', mode:'lines+markers', marker:{color:'#d29922',size:12}, line:{width:3, dash:'dot'}, yaxis:'y2'},
+    {x:['2025Q4','2026Q1','2026Q2'], y:[14.84,17.07,15.56], name:'淘宝ROI', type:'scatter', mode:'lines+markers', marker:{color:'#bc8cff',size:12}, line:{width:3, dash:'dot'}, yaxis:'y2'}
+], {
+    template:'plotly_dark', paper_bgcolor:'#161b22', plot_bgcolor:'#161b22',
+    title:{text:'季度销售与ROI对比', font:{color:'#f0f6fc'}},
+    xaxis:{color:'#8b949e'},
+    yaxis:{title:'销售额(万元)', color:'#8b949e'},
+    yaxis2:{title:'ROI', overlaying:'y', side:'right', color:'#8b949e'},
+    legend:{font:{color:'#8b949e'}}
+}, {responsive:true});
+
+// 漏斗
+var funnelData = [{
+    type:'funnel', name:'美团(2026-07)',
+    y:['曝光','入店','下单'], x:[1471.2, 1471.2*0.057, 17.65],
+    textinfo:'value+percent initial', marker:{color:['#58a6ff','#388bfd','#1f6feb']}
+}];
+Plotly.newPlot('chart_funnel', funnelData, {
+    template:'plotly_dark', paper_bgcolor:'#161b22', plot_bgcolor:'#161b22',
+    title:{text:'美团2026年7月转化漏斗(万人)', font:{color:'#f0f6fc'}}
+}, {responsive:true});
+
+// 区域
+Plotly.newPlot('chart_region_mt', [{
+    x:['广东','江西','福建','浙江','海南','广西','辽宁','湖南','上海','贵州'],
+    y:[2218,2206,279,138,115,93,79,73,52,47],
+    type:'bar', marker:{color:'#58a6ff'}, textposition:'outside'
+}], {
+    template:'plotly_dark', paper_bgcolor:'#161b22', plot_bgcolor:'#161b22',
+    title:{text:'美团省份Top10 销售(万)', font:{color:'#f0f6fc'}},
+    xaxis:{color:'#8b949e', tickangle:-30}, yaxis:{color:'#8b949e'}
+}, {responsive:true});
+
+Plotly.newPlot('chart_region_tb', [{
+    x:['江西','广东','福建','浙江','上海','湖南','海南','辽宁','广西','江苏'],
+    y:[2223,1161,290,205,98,87,74,64,30,18],
+    type:'bar', marker:{color:'#3fb950'}, textposition:'outside'
+}], {
+    template:'plotly_dark', paper_bgcolor:'#161b22', plot_bgcolor:'#161b22',
+    title:{text:'淘宝省份Top10 销售(万)', font:{color:'#f0f6fc'}},
+    xaxis:{color:'#8b949e', tickangle:-30}, yaxis:{color:'#8b949e'}
+}, {responsive:true});
+</script>
+</body>
+</html>
