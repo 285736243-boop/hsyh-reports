@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>煌上煌外卖门店运营培训课件 V3</title>
+<style>
+:root{--bg:#0f1419;--card:#1a2129;--line:#2a343f;--text:#dce3ea;--dim:#8b98a5;--brand:#c41e3a;--brand2:#e74c3c;--blue:#58a6ff;--green:#3fb950;--orange:#f39c12;--purple:#a371f7}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Microsoft YaHei",sans-serif;line-height:1.8;padding:24px 16px 80px}
+.wrap{max-width:1060px;margin:0 auto}
+.header{text-align:center;padding:42px 20px 26px;border-bottom:2px solid var(--line);margin-bottom:28px;background:linear-gradient(160deg,rgba(196,30,58,.14),transparent 55%)}
+.header h1{font-size:2em;letter-spacing:3px}
+.header h1 span{color:var(--brand2);font-size:.5em;vertical-align:middle;margin-left:10px}
+.header .sub{color:var(--dim);margin-top:10px;font-size:.95em}
+.header .badge{display:inline-block;background:rgba(88,166,255,.12);color:var(--blue);border:1px solid rgba(88,166,255,.3);border-radius:20px;padding:3px 16px;font-size:.78em;margin-top:10px}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 22px;margin-bottom:24px}
+.toc .t{color:var(--dim);font-size:.75em;letter-spacing:1px;margin-bottom:6px}
+.toc a{display:inline-block;color:var(--text);text-decoration:none;font-size:.88em;opacity:.75;margin:2px 14px 2px 0}
+.toc a:hover{color:var(--blue);opacity:1}
+h2{font-size:1.4em;margin:44px 0 8px;padding:10px 16px;border-left:5px solid var(--brand);background:linear-gradient(90deg,rgba(196,30,58,.15),transparent);color:#fff;scroll-margin-top:12px}
+h2 .en{font-size:.5em;color:var(--dim);margin-left:10px;letter-spacing:2px}
+h2 .goal{display:block;font-size:.55em;color:var(--orange);font-weight:400;margin-top:4px;letter-spacing:0}
+h3{font-size:1.08em;margin:22px 0 8px;color:var(--blue)}
+h4{font-size:.98em;margin:14px 0 6px;color:var(--orange)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}
+.kpi{background:#0d1117;border:1px solid var(--line);border-radius:10px;padding:13px 15px;text-align:center}
+.kpi .v{font-size:1.4em;font-weight:700;color:var(--blue)}
+.kpi .l{font-size:.76em;color:var(--dim);margin-top:3px}
+table{width:100%;border-collapse:collapse;font-size:.87em;margin:10px 0}
+th{background:#232d38;text-align:left;padding:8px 11px;color:#fff;border:1px solid var(--line)}
+td{padding:7px 11px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+.ok{color:var(--green);font-weight:600}
+.warn{color:var(--orange);font-weight:600}
+.bad{color:var(--brand2);font-weight:600}
+.tip{background:rgba(63,185,80,.07);border-left:3px solid var(--green);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.9em}
+.alert{background:rgba(231,76,60,.08);border-left:3px solid var(--brand2);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.9em}
+.think{background:rgba(163,113,247,.07);border-left:3px solid var(--purple);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.9em}
+.note{color:var(--dim);font-size:.8em;margin-top:8px}
+ul,ol{padding-left:22px;margin:6px 0}
+li{margin:4px 0}
+.footer{text-align:center;color:var(--dim);font-size:.78em;margin-top:46px;border-top:1px solid var(--line);padding-top:16px}
+@media print{
+  body{background:#fff;color:#222;padding:8px}
+  .toc,.footer{display:none}
+  .card,.kpi{background:#fff;border:1px solid #bbb}
+  th{background:#eee;color:#222}
+  h2{color:#000;border-left-color:#c41e3a;background:none}
+  .tip,.alert,.think{background:#f5f5f5}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+<h1>煌上煌外卖门店运营培训<span>V3</span></h1>
+<div class="sub">认知 → 诊断 → 实操 → 管理 ｜ 融合总部七大课件 + 5店实战数据，重新编排</div>
+<div class="badge">📅 2026-08-15 ｜ 授课建议：3 小时（含演练）｜ 适用：店长 / 外卖运营 / 督导</div>
+</div>
+
+<div class="toc">
+<div class="t">📑 培训路线（按这个顺序讲，逻辑递进）</div>
+<a href="#m1">一、认知篇 · 先搞懂外卖这门生意</a>
+<a href="#m2">二、诊断篇 · 先看病，再开药</a>
+<a href="#m3">三、实操篇 · 流量与投流</a>
+<a href="#m4">四、实操篇 · 评分与口碑</a>
+<a href="#m5">五、实操篇 · 菜单与转化</a>
+<a href="#m6">六、管理篇 · 日常运营闭环</a>
+<a href="#app">附录 · 速查卡与考核</a>
+</div>
+
+<!-- ================= 一、认知篇 ================= -->
+<h2 id="m1">一、认知篇 · 先搞懂外卖这门生意<span class="en">COGNITION</span><span class="goal">学习目标：30分钟 · 理解外卖与堂食的本质差异、知道业绩由什么决定、明白平台凭什么给你流量</span></h2>
+
+<div class="card">
+<h3>1.1 一句话搞懂外卖</h3>
+<p>堂食靠<b>位置</b>：选址决定流量，环境决定体验，服务决定复购。</p>
+<p>外卖靠<b>数据</b>：排名决定流量，图片决定进店，活动与基建决定转化。</p>
+<div class="think">🤔 想一想：为什么同一条街、同一个品牌，有的店月售 3000，有的店月售 300？——差距不在产品，在线上运营的每个环节。</div>
+</div>
+
+<div class="card">
+<h3>1.2 业绩公式：外卖的钱是怎么赚的</h3>
+<table>
+<tr><th>公式</th><th>白话解释</th></tr>
+<tr><td>营业额 = 曝光 × 进店率 × 下单率 × 客单价</td><td>四个杠杆，掰哪一个都能多赚钱</td></tr>
+<tr><td>利润 = 营业额÷1.3 − 食材 − 平台扣点 − 包装 − 推广费</td><td>营业额高 ≠ 赚钱，要盯住推广费和补贴</td></tr>
+<tr><td>复购 = 老客数 × 复购率 × 下单频次</td><td>老客是最便宜的流量</td></tr>
+</table>
+<div class="tip">💡 记住这个逻辑：<b>先有曝光（让人看到）→ 再谈进店（让人点进来）→ 再谈下单（让人掏钱）→ 最后谈复购（让人再来）</b>。后面所有模块，都在优化这四个环节。</div>
+</div>
+
+<div class="card">
+<h3>1.3 平台流量规则：排名就是你的生命线</h3>
+<div class="grid">
+<div class="kpi"><div class="v">≈70%</div><div class="l">流量来自首屏/频道列表</div></div>
+<div class="kpi"><div class="v">越靠前</div><div class="l">曝光越多</div></div>
+<div class="kpi"><div class="v">综合打分</div><div class="l">排名=平台算法算出来的</div></div>
+</div>
+<table>
+<tr><th>排名四因素</th><th>关键细则</th><th>咱们门店要做的</th></tr>
+<tr><td><b>经营因素</b></td><td>近3/7/30天销量、营业时长10h+、配送履约、评分4.5+/店铺分85+、活动配置</td><td class="ok">评分和活动是命根子（见模块四）</td></tr>
+<tr><td><b>转化因素</b></td><td>平台给多少曝光，你能转化多少订单</td><td class="ok">头图/菜单/定价（见模块五）</td></tr>
+<tr><td><b>场景因素</b></td><td>品类与时段的匹配度。<b>卤味在下午茶、夜宵时段排名占优</b></td><td class="ok">夜宵时段必须营业！</td></tr>
+<tr><td><b>用户因素</b></td><td>千人千面：评价/口味/距离/价格</td><td>做好评价、守住价格带</td></tr>
+</table>
+<div class="alert">⚠️ 平台逻辑：<b>你帮平台赚钱（转化好），平台就给你更多曝光；你浪费平台流量，平台就慢慢抛弃你。</b>良性循环 vs 恶性循环，只隔一个"转化率"。</div>
+</div>
+
+<!-- ================= 二、诊断篇 ================= -->
+<h2 id="m2">二、诊断篇 · 先看病，再开药<span class="en">DIAGNOSIS</span><span class="goal">学习目标：25分钟 · 会用数据给门店"体检"，能定位问题出在漏斗哪一层，会看竞对在干什么</span></h2>
+
+<div class="card">
+<h3>2.1 五级漏斗：你的店漏在哪一层</h3>
+<div class="grid">
+<div class="kpi"><div class="v">曝光</div><div class="l">让人看到</div></div>
+<div class="kpi"><div class="v">进店率</div><div class="l">让人点进来</div></div>
+<div class="kpi"><div class="v">下单率</div><div class="l">让人掏钱</div></div>
+<div class="kpi"><div class="v">客单价</div><div class="l">让人多买</div></div>
+<div class="kpi"><div class="v">复购</div><div class="l">让人再来</div></div>
+</div>
+<div class="tip">💡 诊断铁律：<b>漏斗哪层漏，先补哪层</b>。曝光低别急着加广告（先查评分和营业时长）；进店低别急着改价（先换头图）；下单低别急着投流（先整菜单）。</div>
+</div>
+
+<div class="card">
+<h3>2.2 四症状归因表（店长必备）</h3>
+<table>
+<tr><th>症状</th><th>常见病因</th><th>对症下药</th></tr>
+<tr><td rowspan="3"><b>曝光量低</b><br><span class="note">根本没人看到你</span></td><td>排名靠后（权重低）</td><td>提店铺分、评分，先冲基础单量</td></tr>
+<tr><td>营业时间太短</td><td class="ok">延到10h+，覆盖午晚高峰+夜宵</td></tr>
+<tr><td>没开推广</td><td class="ok">按预算标准开点金/斗金（模块三）</td></tr>
+<tr><td rowspan="3"><b>进店率低</b><br><span class="note">看到了不点进来</span></td><td>头图没食欲</td><td class="ok">换高清诱人招牌菜图</td></tr>
+<tr><td>列表页没标签</td><td class="ok">挂活动/榜单/品牌标签</td></tr>
+<tr><td>评分太低吓退人</td><td class="ok">评分管理（模块四）</td></tr>
+<tr><td rowspan="3"><b>下单率低</b><br><span class="note">进来了不买</span></td><td>菜单乱、爆款被淹没</td><td class="ok">分类清晰、爆款置顶、精简SKU</td></tr>
+<tr><td>起送高/凑单难</td><td class="ok">降起送、设凑单神器</td></tr>
+<tr><td>差评劝退</td><td class="ok">差评处理四步法（模块四）</td></tr>
+<tr><td rowspan="3"><b>复购率低</b><br><span class="note">买一次就跑了</span></td><td>产品不稳定、性价比低</td><td>品质+合理定价</td></tr>
+<tr><td>没有老客召回动作</td><td class="ok">会员价/优惠券/粉丝群（月售400+建群）</td></tr>
+<tr><td>顾客只认平台不认店</td><td class="ok">私域引流（好评返现加微信→群运营）</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>2.3 竞对侦察：看看隔壁在干嘛</h3>
+<table>
+<tr><th>看什么</th><th>怎么看</th><th>看完怎么办</th></tr>
+<tr><td>商圈体量</td><td>打开顾客端APP，看商圈2-3km内同品类订单量</td><td>判断商圈天花板</td></tr>
+<tr><td>产品与价格</td><td>竞对引流款/利润款、套餐搭配、新品频率</td><td>对标补产品，别被价格战带偏</td></tr>
+<tr><td>营销动作</td><td>有没有上神券/百亿补贴/新店大促标签、换头图、改满减</td><td class="warn">核心竞对动作 → 防御性调整（测算后再跟）</td></tr>
+<tr><td>履约体验</td><td>配送时效、起送价、评价数与评价标签</td><td>差距大就专项补</td></tr>
+</table>
+</div>
+
+<!-- ================= 三、实操·投流 ================= -->
+<h2 id="m3">三、实操篇 · 流量与投流<span class="en">TRAFFIC</span><span class="goal">学习目标：35分钟 · 知道流量从哪来，掌握付费投放全流程（前提→预算→出价→监控→复盘），会算保本线</span></h2>
+
+<div class="card">
+<h3>3.1 流量从哪来：六条管道</h3>
+<table>
+<tr><th>管道</th><th>白话理解</th><th>门店动作</th></tr>
+<tr><td>① 自然流量</td><td>平台免费给你的（搜索/推荐/榜单）</td><td>业绩越好自然流量越多，评分+活动是地基</td></tr>
+<tr><td>② 付费推广</td><td>花钱买曝光（CPC点金/斗金等）</td><td>本模块重点</td></tr>
+<tr><td>③ 平台活动</td><td>神券/拼好饭/特价菜/神枪手/大促</td><td>每月18日神券节必上；设3-4款性价比套餐</td></tr>
+<tr><td>④ 平台消息</td><td>APP推送/短信触达</td><td>配合活动节奏</td></tr>
+<tr><td>⑤ 线下场景</td><td>门店物料/扫码领券</td><td>堂食顾客引到线上</td></tr>
+<tr><td>⑥ 外部公域</td><td>短视频/本地社群/达人</td><td>有条件再上，别贪多</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>3.2 付费投放前：先过"六看"关</h3>
+<table>
+<tr><th>六看</th><th>标准</th><th>不达标怎么办</th></tr>
+<tr><td>① 店铺分/评分</td><td>店铺分 &gt;95、评分 &gt;4.2</td><td class="bad">先整改评分再投，否则钱打水漂</td></tr>
+<tr><td>② 下单转化率</td><td>&gt;20%</td><td>先优化菜单/活动（模块五）</td></tr>
+<tr><td>③ 进店人数</td><td>有基础流量池</td><td>先修头图标签</td></tr>
+<tr><td>④ 新老客占比</td><td>结构健康</td><td>新客占比过高要加老客召回</td></tr>
+<tr><td>⑤ 订单时段集中度</td><td>别只靠一个时段</td><td>错峰运营</td></tr>
+<tr><td>⑥ 菜单排序</td><td>爆款置顶、链路清晰</td><td>重新排菜单</td></tr>
+</table>
+<div class="alert">⚠️ 铁律：<b>基建不达标，不投一分钱</b>。投流是放大镜——好的放大好，差的放大差。</div>
+</div>
+
+<div class="card">
+<h3>3.3 投放预算与出价</h3>
+<table>
+<tr><th>门店类型</th><th>日预算</th><th>月预算</th><th>策略</th></tr>
+<tr><td>低单店（日单&lt;30）</td><td>10-30元</td><td>300-500元</td><td>先把单量基数做起来</td></tr>
+<tr><td>高单店（日单≥30）</td><td>30-70元</td><td>700-1000元</td><td>稳排名、抢晚高峰</td></tr>
+</table>
+<h4>卤味专属定向（把钱花在刀刃上）</h4>
+<ul>
+<li>时段加价：下午茶 +0.2、晚餐 +0.2、夜宵 +0.3（匹配卤味场景优势）</li>
+<li>人群加价：老客 +0.3（复购是最划算的投放）</li>
+<li><b>品类偏好：鸭脖/卤味/熟食 +0.3</b>——只对想吃卤味的人加价</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>3.4 出价调整四象限（投放中的方向盘）</h3>
+<table>
+<tr><th>情况</th><th>动作</th><th>白话</th></tr>
+<tr><td>曝光降、ROI 升</td><td class="ok">0.2基数 + 出价</td><td>出价低了抢不到量，加码</td></tr>
+<tr><td>曝光降、ROI 降</td><td class="bad">查前后端</td><td>不是投放问题，是店铺问题（评分/菜单）</td></tr>
+<tr><td>曝光涨、ROI 升</td><td class="ok">维持出价</td><td>黄金状态，别乱动</td></tr>
+<tr><td>曝光涨、ROI 降</td><td class="warn">0.2基数 − 出价</td><td>花钱买来的流量不转化，降本</td></tr>
+</table>
+<div class="tip">💡 保本线（煌上煌口径）：卤味毛利约30%，<b>广告ROI ≥ 3.3 才保本</b>（每花1元至少带回3.3元交易额）。5店实测：美团3.23要盯紧，淘宝6.46健康。</div>
+</div>
+
+<div class="card">
+<h3>3.5 投放纪律：半小时一查，投前先算</h3>
+<ul>
+<li><b>每半小时</b>：看消耗/曝光/点击/下单/推广费/ROI（对比门店当天 vs 近7天 vs 品牌近7天）</li>
+<li><b>投前计算器</b>：输入预算、出价比例(50%-120%)、双转化(×0.8系数)、客单价/到手率/成本率 → 算出预计订单和利润ROI，值才投</li>
+<li><b>每月复盘</b>：用《投放复盘.xlsx》模板，看消耗/实付/ROI/订单成本趋势</li>
+</ul>
+</div>
+
+<!-- ================= 四、实操·评分 ================= -->
+<h2 id="m4">四、实操篇 · 评分与口碑<span class="en">REPUTATION</span><span class="goal">学习目标：30分钟 · 知道平台怎么给你打分、评分掉到多少会限流、好评怎么来、差评怎么处理</span></h2>
+
+<div class="card">
+<h3>4.1 评分是排名的地基（红线要刻在脑子里）</h3>
+<table>
+<tr><th>指标</th><th>目标</th><th>红线</th></tr>
+<tr><td>美团商家评分（5分制）</td><td class="ok">≥4.5，冲4.8+</td><td class="bad">新店&lt;4.8 / 老店&lt;4.7 → 限流</td></tr>
+<tr><td>美团店铺分（100分制）</td><td class="ok">≥85，冲95+</td><td class="bad">低分→流量减少</td></tr>
+<tr><td>淘宝闪购店铺分</td><td class="ok">≥85</td><td>同口径</td></tr>
+</table>
+<div class="alert">⚠️ 5店血的教训：<b>印象城美团评分4.5（接近限流线）</b>——它是GMV冠军，但评分隐患随时可能把流量打回原形；<b>益田评分垫底+ROI垫底+毛利8%</b>，三重实锤证明：口碑崩了，投再多流都是漏斗漏水。</div>
+</div>
+
+<div class="card">
+<h3>4.2 平台怎么给你打分（双平台权重表）</h3>
+<h4>美团 10 指标（三大模块）</h4>
+<table>
+<tr><th>模块</th><th>指标</th><th>权重</th><th>怎么拿分</th></tr>
+<tr><td rowspan="4">基本信息<br>30%</td><td>装修丰富度</td><td>5%</td><td>门店形象照、头图</td></tr>
+<tr><td>优质商品率</td><td>10%</td><td>所有商品标签/份量/图片补齐</td></tr>
+<tr><td>菜单丰富度</td><td>5%</td><td>分类清晰、招牌菜突出</td></tr>
+<tr><td>服务功能丰富度</td><td>10%</td><td>开通平台5项服务功能</td></tr>
+<tr><td rowspan="4">服务<br>40%</td><td>基础营业时长</td><td>5%</td><td>到点营业别偷懒</td></tr>
+<tr><td>高峰营业时长</td><td>15%</td><td><b>卤味高峰（午/晚/夜宵）必须营业</b></td></tr>
+<tr><td>不接单率</td><td>10%</td><td>别拒单、别超时不接</td></tr>
+<tr><td>出餐完成上报率</td><td>10%</td><td>出餐及时点"完成"</td></tr>
+<tr><td rowspan="2">体验<br>30%</td><td>差评回复率</td><td>10%</td><td>24小时内必回</td></tr>
+<tr><td>商家评分</td><td>20%</td><td><b>权重最高，好评是硬通货</b></td></tr>
+</table>
+<h4>淘宝闪购 13 指标（记住大头）</h4>
+<table>
+<tr><th>模块</th><th>重点指标（权重）</th></tr>
+<tr><td>基本信息 30%</td><td>装修9% / 优质商品5% / 菜品丰富度11% / 服务5%</td></tr>
+<tr><td>服务 50%</td><td>营业5% / 高峰营业15% / 商责取消10% / 出餐上报10% / 营销活动10%</td></tr>
+<tr><td>体验 20%</td><td>差评回复4% / 店铺评分10% / MI回复4% / 起送价2%</td></tr>
+</table>
+<div class="tip">💡 拿分捷径：<b>高峰营业(15%)+活动(10%+)+零商责(10%)+商品齐全(10%)</b>——这四项做到位，店铺分就稳了。</div>
+</div>
+
+<div class="card">
+<h3>4.3 好评经营：五板斧</h3>
+<table>
+<tr><th>动作</th><th>怎么做</th><th>为什么有效</th></tr>
+<tr><td>① 回访引导</td><td>订单完成电话/短信回访，满意就引导5星</td><td>趁热打铁，好评率最高</td></tr>
+<tr><td>② 好评返现卡</td><td>打包袋夹卡片：加微信、好评截图返现</td><td>一鱼两吃：好评+私域</td></tr>
+<tr><td>③ 好评红包</td><td>订单内放小额红包卡</td><td>降低主动评价门槛</td></tr>
+<tr><td>④ 商品信息补齐</td><td>标签/份量/图片全合格</td><td>同时吃店铺分10%权重</td></tr>
+<tr><td>⑤ 新客仪式感</td><td>首单赠品/手写卡</td><td>新客好感度=天然好评</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>4.4 差评处理：四步法</h3>
+<table>
+<tr><th>步骤</th><th>动作</th><th>要点</th></tr>
+<tr><td>1 及时发现</td><td>每天营业前刷一遍新评价</td><td>差评越早处理越好</td></tr>
+<tr><td>2 24h内回复</td><td>致歉+解释+给方案</td><td>回的是给其他顾客看的（差评回复率权重）</td></tr>
+<tr><td>3 平台申诉</td><td>骑手责任/恶意差评/超范围 → 提交证据</td><td>有效期内（一般7天）</td></tr>
+<tr><td>4 联系删除</td><td>解决问题后请顾客删差评</td><td>退款/重做/券，态度诚恳</td></tr>
+</table>
+<div class="alert">⚠️ 记住：<b>1条好评来之不易，1条差评很致命</b>——评价所有人可见，差评直接劝退新客。</div>
+</div>
+
+<!-- ================= 五、实操·菜单转化 ================= -->
+<h2 id="m5">五、实操篇 · 菜单与转化<span class="en">CONVERSION</span><span class="goal">学习目标：25分钟 · 会优化进店和下单两个环节：头图/标签/菜单/定价/活动</span></h2>
+
+<div class="card">
+<h3>5.1 进店优化：让人愿意点进来（0.2秒定生死）</h3>
+<table>
+<tr><th>要素</th><th>标准</th><th>咱们的落法</th></tr>
+<tr><td>店铺头像</td><td>高清有食欲的菜品图+品牌感</td><td>用招牌卤味特写，别用logo糊弄</td></tr>
+<tr><td>店铺名称</td><td>品牌+品类+地标</td><td>"煌上煌热卤（XX店）"</td></tr>
+<tr><td>配送费/起送价</td><td>配送费≥3元内、起送贴合一人食</td><td>别让起送价赶客</td></tr>
+<tr><td>列表标签</td><td>红包/折扣/新客立减清晰露出</td><td>"占到便宜"心理触发点击</td></tr>
+<tr><td>评分与月售</td><td>评分≥4.6、月售商圈中上</td><td>从众效应，评分是地基</td></tr>
+<tr><td>营业状态</td><td>贴合场景营业（下午茶/夜宵）</td><td>别被"休息中"过滤掉</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>5.2 下单优化：让人愿意掏钱</h3>
+<ul>
+<li><b>菜单结构</b>：分类清晰（招牌/热卤/鸭脖/素菜/套餐），爆款置顶，精简SKU（低销低利的下架）</li>
+<li><b>产品命名</b>：口味+卖点+品名（如"香辣鸭锁骨·秘制卤汁"），别写"鸭锁骨1号"</li>
+<li><b>价格带</b>：低（引流9.9-19.9）中（主力25-40）高（大份/礼盒40+）三档齐全，<b>40元+档ROI 2.03是金矿</b>（5店实测）</li>
+<li><b>凑单设计</b>：满减门槛上移+凑单神器，把客单从&lt;20元拉上来（&lt;20元档ROI 0.79是失血口）</li>
+<li><b>套餐化</b>：一人食套餐（鸭脖+饮品+素菜），出餐快、客单稳</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>5.3 活动设计：促销的"三加一减"</h3>
+<table>
+<tr><th>活动</th><th>用途</th><th>备注（5店数据验证）</th></tr>
+<tr><td>满减（阶梯）</td><td>提客单</td><td class="ok">ROI 1.95 高效，加投</td></tr>
+<tr><td>减配送费</td><td>降低下单门槛</td><td class="ok">ROI 1.53 高效，单均成本低</td></tr>
+<tr><td>新客立减</td><td>拉新</td><td class="ok">ROI 1.67 高效</td></tr>
+<tr><td>大额支付红包</td><td>冲单量</td><td class="warn">ROI 1.24，体量大但单均补贴15.3元，要控</td></tr>
+<tr><td>商品折扣</td><td>清库存/引流</td><td class="warn">ROI 1.13 一般，精准化</td></tr>
+<tr><td>商家代金券/平台津贴</td><td>—</td><td class="bad">ROI 0.97/0.82 亏损，停发</td></tr>
+</table>
+<div class="tip">💡 活动节奏：每月<b>18日神券节</b>必上；新店爬坡期多用新客立减；老店靠满减+减配稳复购。</div>
+</div>
+
+<!-- ================= 六、管理篇 ================= -->
+<h2 id="m6">六、管理篇 · 日常运营闭环<span class="en">MANAGEMENT</span><span class="goal">学习目标：20分钟 · 把前面学的变成每天的动作：营业前检查、营业中执行、数据闭环</span></h2>
+
+<div class="card">
+<h3>6.1 营业前 8 项检查（09:30-10:30）</h3>
+<table>
+<tr><th>#</th><th>检查项</th><th>标准</th></tr>
+<tr><td>1</td><td>营业状态</td><td>线上与线下一致，覆盖午晚高峰+夜宵</td></tr>
+<tr><td>2</td><td>设备</td><td>打印机/POS/网络/打印纸</td></tr>
+<tr><td>3</td><td>商品</td><td>缺货下架、到货上架、爆款置顶</td></tr>
+<tr><td>4</td><td>包材</td><td>餐盒/保温袋/封签/餐具/打包袋</td></tr>
+<tr><td>5</td><td>店铺分</td><td>保持95+，有降立即整改</td></tr>
+<tr><td>6</td><td>评价</td><td>回复新评论、中差评申诉、评分≥4.5</td></tr>
+<tr><td>7</td><td>活动</td><td>满减/折扣/神券生效、过期活动关闭</td></tr>
+<tr><td>8</td><td>资质</td><td>证照有效期、堂食照片/一镜到底</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>6.2 营业中 8 项执行（10:30-打烊）</h3>
+<table>
+<tr><th>#</th><th>事项</th><th>标准</th></tr>
+<tr><td>1</td><td>消息回复</td><td>5分钟内必回（店铺分权重）</td></tr>
+<tr><td>2</td><td>及时接单</td><td>缺货先沟通换等价品，别硬取消</td></tr>
+<tr><td>3</td><td>拣货备餐</td><td>核对备注/口味/数量，出餐点"完成"</td></tr>
+<tr><td>4</td><td>配送跟踪</td><td>催迟到骑手、超时电话安抚</td></tr>
+<tr><td>5</td><td>电话回访</td><td>完成订单回访，满意引导5星</td></tr>
+<tr><td>6</td><td>数据监控</td><td>曝光/转化/下单率/毛利，异常上报</td></tr>
+<tr><td>7</td><td>付费推广</td><td>半小时盯ROI，四象限调出价</td></tr>
+<tr><td>8</td><td>竞对巡查</td><td>商圈前10动作 → 防御调整</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>6.3 数据闭环节奏</h3>
+<table>
+<tr><th>周期</th><th>看什么</th><th>做什么</th></tr>
+<tr><td>每日</td><td>曝光/转化/促销/毛利</td><td>异常即整改；盯推广ROI</td></tr>
+<tr><td>每周</td><td>四率趋势、竞对动作</td><td>调活动/头图/菜单</td></tr>
+<tr><td>每月</td><td>ROI复盘、单量/评分趋势、商圈格局</td><td>投放复盘表+下月计划</td></tr>
+</table>
+<div class="note">真实案例（5店2026年5-7月）：GMV+44.3%但58%靠新店，老店真实增速仅6.3%——这就是"数据复盘才能看到的真相"，不复盘就只能被数字骗。</div>
+</div>
+
+<!-- ================= 附录 ================= -->
+<h2 id="app">附录 · 速查卡与考核<span class="en">CHEATSHEET</span></h2>
+
+<div class="card">
+<h3>A. 门店必背速查卡</h3>
+<table>
+<tr><th>指标</th><th>健康线</th><th>指标</th><th>健康线</th></tr>
+<tr><td>进店率 P1</td><td>≥7%</td><td>下单率 P2</td><td>≥17%</td></tr>
+<tr><td>客单价</td><td>≥30元</td><td>商家评分</td><td>≥4.5（4.8/4.7红线）</td></tr>
+<tr><td>店铺分</td><td>≥85（冲95+）</td><td>广告ROI</td><td>≥3.3保本</td></tr>
+<tr><td>差评回复</td><td>24h内</td><td>会话回复</td><td>5分钟内</td></tr>
+</table>
+<h4>投流口诀：投前六看 → 预算分档 → 卤味定向 → 四象限调价 → 半小时一查 → ROI≥3.3</h4>
+<h4>评分口诀：评分4.5打底 → 店铺分95冲刺 → 好评五板斧 → 差评四步法 → 双平台权重表</h4>
+<h4>归因口诀：漏斗哪层漏补哪层 → 曝光查排名时长推广 / 进店查头图标签评分 / 下单查菜单价格差评 / 复购查品质召回私域</h4>
+</div>
+
+<div class="card">
+<h3>B. 训后考核（闭卷，60分及格）</h3>
+<ol>
+<li>外卖营业额公式是什么？四杠杆各举一个提升动作。（20分）</li>
+<li>美团店铺分10指标里权重最高的是哪项？高分捷径的4项是什么？（20分）</li>
+<li>评分红线：新店/老店低于多少会限流？（10分）</li>
+<li>出价四象限口诀是什么？卤味品类偏好加价多少？（20分）</li>
+<li>差评处理四步法？CPC投放六看的前两看是什么？（20分）</li>
+<li>实操题：你的店曝光正常但下单率只有10%，按归因表列出3个可能原因+3个对策。（10分）</li>
+</ol>
+</div>
+
+<div class="footer">
+煌上煌外卖门店运营培训课件 V3 ｜ 融合总部七大课件（运营2.0/基础逻辑/三部曲/下单转化/进店因素/运营提升技巧/操作手册）+ 5店实战数据 ｜ 配套PPT：煌上煌外卖门店运营培训课件_V2.pptx ｜ 网页版 · Edge打开 · 可打印
+</div>
+</div>
+</body>
+</html>
