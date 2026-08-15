@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>技能测试报告（2026-08-15 15:51-16:38 盘点技能）</title>
+<style>
+  body { font-family: "Microsoft YaHei", sans-serif; margin: 0; padding: 24px 16px; background: #f5f7fa; color: #222; }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 28px 0 10px; border-left: 4px solid #0969da; padding-left: 10px; }
+  .sub { color: #666; font-size: 13px; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.08); font-size: 13px; margin-bottom: 10px; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+  th { background: #1f2328; color: #fff; font-weight: 600; }
+  tr:hover td { background: #f0f7ff; }
+  .pass { color: #1a7f37; font-weight: 700; }
+  .fail { color: #cf222e; font-weight: 700; }
+  .warn { color: #bf8700; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>技能测试报告</h1>
+<div class="sub">2026-08-15 · 覆盖 15:51-16:38 盘点技能 · 全部实测</div>
+
+<h2>一、Python 库测试（15/15 项）</h2>
+<table>
+<tr><th>库</th><th>版本</th><th>状态</th></tr>
+<tr><td>pandas</td><td>3.0.5</td><td class="pass">✅ PASS</td></tr>
+<tr><td>numpy</td><td>2.5.1</td><td class="pass">✅ PASS</td></tr>
+<tr><td>plotly</td><td>6.9.0</td><td class="pass">✅ PASS</td></tr>
+<tr><td>seaborn</td><td>0.13.2</td><td class="pass">✅ PASS</td></tr>
+<tr><td>statsmodels</td><td>0.14.6</td><td class="pass">✅ PASS</td></tr>
+<tr><td>matplotlib</td><td>3.11.1</td><td class="pass">✅ PASS</td></tr>
+<tr><td>openpyxl</td><td>3.1.5</td><td class="pass">✅ PASS</td></tr>
+<tr><td>xlsxwriter</td><td>3.2.9</td><td class="pass">✅ PASS</td></tr>
+<tr><td>scipy</td><td>1.18.0</td><td class="pass">✅ PASS</td></tr>
+<tr><td>requests</td><td>2.33.0</td><td class="pass">✅ PASS</td></tr>
+<tr><td>chromadb</td><td>1.5.9</td><td class="pass">✅ PASS</td></tr>
+<tr><td>reportlab</td><td>4.4.9</td><td class="pass">✅ PASS</td></tr>
+<tr><td>xlrd</td><td>2.0.2</td><td class="pass">✅ PASS</td></tr>
+<tr><td>streamlit</td><td>-</td><td class="warn">⚠️ 未装（非必需）</td></tr>
+<tr><td>dash</td><td>-</td><td class="warn">⚠️ 未装（非必需）</td></tr>
+</table>
+
+<h2>二、SKILL.md 存在性（65/65 全过）</h2>
+<table>
+<tr><th>类别</th><th>技能</th><th>状态</th></tr>
+<tr><td>Excel/办公</td><td>officecli-xlsx / docx / data-dashboard / financial-model / word-form / academic-paper</td><td class="pass">✅ 6/6</td></tr>
+<tr><td>PPT</td><td>sci-ppt / check-deck / slide-deck / pptx-deck-creation / md-to-ppt / nanobanana-ppt-skills / 2slides-ppt-generator / academic-slides</td><td class="pass">✅ 8/8</td></tr>
+<tr><td>分析</td><td>pandas-pro / plotly / seaborn / statsmodels / 03-data-analysis-stats / ab-testing / ab-test-setup / distribution-analysis / batch-cohort / ad-campaign-analyzer / attribution-setup / metrics-framework / kpi-dashboard-design</td><td class="pass">✅ 13/13</td></tr>
+<tr><td>营销</td><td>marketing-plan / marketing-psychology / pricing-strategy / customer-research / user-segmentation-profiler / competitor-analysis / competitive-landscape / review-management / review-it / content-marketer / copywriting / xiaohongshu-content-strategist</td><td class="pass">✅ 12/12</td></tr>
+<tr><td>采集</td><td>web-scraper / firecrawl-scraper / yao-deepseek-crawler / glmocr-table / pdf-conversion-router / youtube-summarizer / video-content-extractor</td><td class="pass">✅ 7/7</td></tr>
+<tr><td>效率</td><td>cron-doctor / daily-news-report / summarize-document / md-report-summary / self-media-content-workflow / skill-installer / skill-creator / html-report-design / visual-report / weekly-report-writer / financial-report / excel-pivot-wizard / excel-variance-analyzer</td><td class="pass">✅ 13/13</td></tr>
+<tr><td>其它</td><td>5writing / 3d-web-experience / a16z-crypto / a16z-techno-optimist / interactive-dashboard / chart-visualization / data-engineering / version-dataset</td><td class="pass">✅ 8/8</td></tr>
+</table>
+
+<h2>三、功能实测（5/5 全过）</h2>
+<table>
+<tr><th>测试</th><th>结果</th><th>产出</th></tr>
+<tr><td>plotly 双轴图</td><td class="pass">✅ PASS</td><td>plotly_test.html (4.8MB)</td></tr>
+<tr><td>statsmodels OLS 回归</td><td class="pass">✅ PASS</td><td>R²=0.9957，系数 [2.886, 2.017, -1.482]</td></tr>
+<tr><td>openpyxl Excel 生成</td><td class="pass">✅ PASS</td><td>openpyxl_test.xlsx（含样式）</td></tr>
+<tr><td>seaborn 柱状图</td><td class="pass">✅ PASS</td><td>seaborn_test.png</td></tr>
+<tr><td>ChromaDB 语义检索</td><td class="pass">✅ PASS</td><td>命中 data-architecture.md</td></tr>
+</table>
+
+<h2>四、Stata 测试</h2>
+<table>
+<tr><th>方式</th><th>状态</th><th>说明</th></tr>
+<tr><td>pystata（Python内嵌）</td><td class="fail">❌ 不可用</td><td>缺 stata_plugin 编译模块（Stata 安装不完整）</td></tr>
+<tr><td>批处理模式（-b do）</td><td class="pass">✅ PASS</td><td>回归正常：R²=0.2934，weight 显著 p=0.008</td></tr>
+</table>
+<div class="sub">结论：Stata 统计能力可用（批处理模式），pystata 内嵌待 Stata 重装补组件。已记待办。</div>
+
+<h2>五、cron 修复（cron-doctor 技能应用）</h2>
+<table>
+<tr><th>任务</th><th>原报错</th><th>修复</th></tr>
+<tr><td>周度记忆体检</td><td>投递缺目标（last无路由）</td><td class="pass">✅ 已指向飞书</td></tr>
+<tr><td>CodeBuddy每日同步</td><td>agent run aborted</td><td class="pass">✅ 投递已修复（运行超时另查）</td></tr>
+<tr><td>月度知识体检</td><td>投递缺目标 + ~路径</td><td class="pass">✅ 投递已修复</td></tr>
+</table>
+
+<h2>六、结论</h2>
+<table>
+<tr><th>项</th><th>结果</th></tr>
+<tr><td>Python 库</td><td class="pass">13/15 可用（streamlit/dash 非必需）</td></tr>
+<tr><td>SKILL 文件</td><td class="pass">65/65 全部存在可读</td></tr>
+<tr><td>功能实测</td><td class="pass">5/5 真实跑通</td></tr>
+<tr><td>Stata</td><td class="warn">批处理可用，pystata 待重装</td></tr>
+<tr><td>cron 报错</td><td class="pass">3 个投递类已修复</td></tr>
+</table>
+
+</div>
+</body>
+</html>
