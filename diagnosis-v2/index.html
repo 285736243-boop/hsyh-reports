@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>煌上煌5门店外卖运营深度诊断与提升方案 V2</title>
+<script src="https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>if(typeof Chart==='undefined'){document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js"><\/script>');}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:PingFang SC,Microsoft YaHei,sans-serif;background:#f5f6fa;color:#2c3e50;line-height:1.7}
+.header{background:linear-gradient(135deg,#C41E3A 0%,#8B0000 100%);color:#fff;padding:40px 24px;text-align:center;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,215,0,0.12) 0%,transparent 70%);animation:pulse 6s infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
+.header h1{font-size:2.2em;text-shadow:0 2px 12px rgba(0,0,0,.3)}
+.header .sub{font-size:1.05em;opacity:.9;margin-top:6px}
+.header .meta{margin-top:10px;font-size:.85em;opacity:.7}
+.container{max-width:1400px;margin:0 auto;padding:20px}
+.section{margin-bottom:28px}
+.section-title{font-size:1.4em;font-weight:700;color:#C41E3A;border-left:5px solid #C41E3A;padding-left:14px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section-title .num{background:#C41E3A;color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7em}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:16px}
+.card{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.card .label{font-size:.78em;color:#7f8c8d}
+.card .value{font-size:1.6em;font-weight:700;color:#2c3e50}
+.card .sub{font-size:.72em;color:#95a5a6}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(450px,1fr));gap:16px}
+.chart-box{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.chart-box h3{font-size:.95em;margin-bottom:10px;color:#34495e}
+.chart-box canvas{max-height:340px}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:.82em}
+th{background:#f8f9fa;padding:10px 8px;text-align:left;font-weight:600;border-bottom:3px solid #C41E3A;white-space:nowrap}
+td{padding:8px;border-bottom:1px solid #eee}
+tr:hover td{background:#fef5f5}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.78em;font-weight:600}
+.b-red{background:#fde8e8;color:#C41E3A}
+.b-green{background:#def7ec;color:#046c4e}
+.b-blue{background:#e1effe;color:#1e429f}
+.b-orange{background:#fef3c7;color:#92400f}
+.insight{background:linear-gradient(135deg,#fef5f5,#fff8f0);border:1px solid #f5d0d0;border-radius:10px;padding:14px 18px;margin-bottom:12px}
+.insight h4{color:#C41E3A;margin-bottom:6px}
+.insight ul{margin-left:18px}
+.insight li{margin-bottom:3px;color:#555}
+.strategy{background:#fff;border-radius:10px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:12px;border-top:4px solid #C41E3A}
+.strategy h4{color:#C41E3A;font-size:1.05em;margin-bottom:10px}
+.strategy ul{margin-left:18px;color:#555}
+.strategy li{margin-bottom:5px}
+.trend-up{color:#27ae60}.trend-down{color:#e74c3c}
+.footer{text-align:center;padding:28px;color:#888;font-size:.8em}
+@media(max-width:768px){.grid2{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🦆 煌上煌5门店外卖运营深度诊断与提升方案 V2</h1>
+<div class="sub">外卖数据872行 + 广告数据2,137行 + 订单明细17,826行 全域交叉分析</div>
+<div class="meta">2026-08-07 ｜ 数据周期: 2026.05-07 ｜ 架构: 汇总→月度→环比→活动→广告→方案→执行</div>
+</div>
+<div class="container">
+
+<!-- Section 0: 5-7月汇总数据 -->
+<div class="section">
+<div class="section-title"><span class="num">0</span>5-7月汇总数据</div>
+<div class="cards">
+<div class="card"><div class="label">📦 总订单</div><div class="value">17,826</div><div class="sub">双平台合计</div></div>
+<div class="card"><div class="label">💰 总实付</div><div class="value">¥529,779</div><div class="sub">月均¥176,593</div></div>
+<div class="card"><div class="label">📡 总曝光人数</div><div class="value">746,508</div><div class="sub">美团406,807/淘宝339,701</div></div>
+<div class="card"><div class="label">🚶 总入店人数</div><div class="value">310,528</div><div class="sub">美团162,235/淘宝148,293</div></div>
+<div class="card"><div class="label">🛒 总下单人数</div><div class="value">201,631</div><div class="sub">美团102,810/淘宝98,821</div></div>
+<div class="card"><div class="label">✅ 总有效订单</div><div class="value">17,826</div><div class="sub">美团9,017/淘宝8,809</div></div>
+<div class="card"><div class="label">🆕 总新客</div><div class="value">50,530</div><div class="sub">下单新客占比25.1%</div></div>
+<div class="card"><div class="label">🔄 总老客</div><div class="value">151,101</div><div class="sub">下单老客占比74.9%</div></div>
+<div class="card"><div class="label">📣 广告总消费</div><div class="value">¥60,534</div><div class="sub">GMV¥239,176 | ROI 3.95</div></div>
+<div class="card"><div class="label">🎯 活动总金额</div><div class="value">¥653,094</div><div class="sub">商家承担¥307,350(47%)</div></div>
+</div>
+<div class="insight"><h4>🔍 汇总核心发现</h4>
+<ul>
+<li><strong>曝光→入店转化率</strong>：美团40.0% vs 淘宝43.7%（淘宝进店效率更高）</li>
+<li><strong>入店→下单转化率</strong>：美团63.4% vs 淘宝66.7%（淘宝下单效率更高）</li>
+<li><strong>新客占比仅25.1%</strong>：拉新空间巨大，新客立减应翻倍</li>
+<li><strong>淘宝ROI(6.46)是美团(3.24)的2倍</strong>——广告预算应向淘宝倾斜</li>
+<li><strong>活动商家承担47%</strong>——补贴压力过重，需优化活动结构</li>
+</ul></div>
+</div>
+
+<!-- Section 1: 月度环比 -->
+<div class="section">
+<div class="section-title"><span class="num">1</span>月度环比分析</div>
+<div class="grid2">
+<div class="chart-box"><h3>5门店月度营收趋势（双平台）</h3><canvas id="trendChart"></canvas></div>
+<div class="chart-box"><h3>月度订单量环比变化</h3><canvas id="momChart"></canvas></div>
+</div>
+
+<div class="table-wrap">
+<h3 style="margin-bottom:10px">📊 月度订单量环比对比表</h3>
+<table>
+<thead><tr>
+<th rowspan="2">门店</th>
+<th rowspan="2">平台</th>
+<th colspan="3" style="text-align:center;background:#fef5f5">5月</th>
+<th colspan="3" style="text-align:center;background:#fff8e1">6月</th>
+<th colspan="3" style="text-align:center;background:#def7ec">7月</th>
+<th colspan="2" style="text-align:center;background:#e1effe">环比</th>
+</tr>
+<tr>
+<th>订单</th><th>实付(¥)</th><th>客单(¥)</th>
+<th>订单</th><th>实付(¥)</th><th>客单(¥)</th>
+<th>订单</th><th>实付(¥)</th><th>客单(¥)</th>
+<th style="background:#fef5f5">5→6%</th>
+<th style="background:#def7ec">6→7%</th>
+</tr>
+</thead>
+<tbody>
+<tr><td rowspan="2">南昌印象城</td><td>美团外卖</td><td>493</td><td>19,167</td><td>38.88</td><td>589</td><td>22,191</td><td>37.68</td><td>647</td><td>24,736</td><td>38.23</td><td class="trend-up">+19.5%</td><td class="trend-up">+9.8%</td></tr>
+<tr><td>淘宝闪购</td><td>988</td><td>24,718</td><td>25.02</td><td>1,057</td><td>28,723</td><td>27.17</td><td>1,074</td><td>29,365</td><td>27.34</td><td class="trend-up">+7.0%</td><td class="trend-up">+1.6%</td></tr>
+<tr style="background:#fef5f5"><td rowspan="2">地铁万科</td><td>美团外卖</td><td>639</td><td>20,435</td><td>31.98</td><td>475</td><td>15,469</td><td>32.57</td><td>560</td><td>20,967</td><td>37.44</td><td class="trend-down">-25.7%</td><td class="trend-up">+17.9%</td></tr>
+<tr style="background:#fef5f5"><td>淘宝闪购</td><td>804</td><td>20,230</td><td>25.16</td><td>641</td><td>16,375</td><td>25.55</td><td>718</td><td>18,718</td><td>26.07</td><td class="trend-down">-20.3%</td><td class="trend-up">+12.0%</td></tr>
+<tr><td rowspan="2">南山益田</td><td>美团外卖</td><td>626</td><td>18,974</td><td>30.31</td><td>792</td><td>26,472</td><td>33.42</td><td>723</td><td>25,727</td><td>35.59</td><td class="trend-up">+26.5%</td><td class="trend-down">-8.7%</td></tr>
+<tr><td>淘宝闪购</td><td>114</td><td>3,107</td><td>27.25</td><td>435</td><td>8,527</td><td>19.60</td><td>635</td><td>11,731</td><td>18.47</td><td class="trend-up">+281.6%</td><td class="trend-up">+46.0%</td></tr>
+<tr style="background:#fff8e1"><td rowspan="2">南山科兴</td><td>美团外卖</td><td>196</td><td>4,906</td><td>25.03</td><td>1,151</td><td>35,784</td><td>31.09</td><td>703</td><td>27,373</td><td>38.94</td><td class="trend-up">+487.2%</td><td class="trend-down">-38.9%</td></tr>
+<tr style="background:#fff8e1"><td>淘宝闪购</td><td>0</td><td>0</td><td>0</td><td>324</td><td>8,062</td><td>24.88</td><td>583</td><td>13,583</td><td>23.30</td><td class="trend-up">新增</td><td class="trend-up">+79.9%</td></tr>
+<tr><td rowspan="2">子固路</td><td>美团外卖</td><td>501</td><td>14,182</td><td>28.31</td><td>428</td><td>13,733</td><td>32.09</td><td>494</td><td>16,087</td><td>32.57</td><td class="trend-down">-14.6%</td><td class="trend-up">+15.4%</td></tr>
+<tr><td>淘宝闪购</td><td>523</td><td>15,006</td><td>28.69</td><td>439</td><td>11,692</td><td>26.63</td><td>474</td><td>13,740</td><td>28.99</td><td class="trend-down">-16.1%</td><td class="trend-up">+8.0%</td></tr>
+<tr style="background:#f8f9fa;font-weight:700"><td colspan="2">合计</td>
+<td>4,884</td><td>140,727</td><td>28.81</td><td>6,331</td><td>187,028</td><td>29.54</td><td>6,611</td><td>202,027</td><td>30.56</td>
+<td class="trend-up">+29.6%</td>
+<td class="trend-up">+4.4%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="insight"><h4>📊 环比诊断</h4>
+<ul>
+<li><strong>增长明星</strong>：南山科兴美团(5→7月+258.7%)、南山益田淘宝(+457%)、印象城美团(+31.2%)</li>
+<li><strong>下滑预警</strong>：地铁万科双线下滑(美团-12.4%/淘宝-10.7%)、子固路双线下滑(美团-1.4%/淘宝-9.4%)</li>
+<li><strong>6月高峰</strong>：美团6月广告消费¥22,849最高，7月略降但淘宝继续增长</li>
+<li><strong>季节性判断</strong>：Q2(5-6月)→Q3(7-9月)——南昌店维稳，深圳店增长，需加大深圳投放</li>
+</ul></div>
+</div>
+
+<!-- Section 2: 24小时订单曲线 -->
+<div class="section">
+<div class="section-title"><span class="num">2</span>24小时订单曲线分析</div>
+<div class="grid2">
+<div class="chart-box"><h3>整体24小时订单曲线（双平台）</h3><canvas id="hourChart"></canvas></div>
+<div class="chart-box"><h3>5门店24小时订单曲线</h3><canvas id="storeHourChart"></canvas></div>
+</div>
+<div class="insight"><h4>⏰ 时段策略</h4>
+<ul>
+<li><strong>午餐峰11:00</strong>（1,925单10.8%）→ 10:00-10:30推午餐促销，美团点金+20%出价</li>
+<li><strong>晚餐峰17:00-19:00</strong>（5,547单31%）→ 16:00-16:30推晚餐促销，广告+30%出价</li>
+<li><strong>夜宵峰21:00</strong>（1,268单7.1%）→ 子固路21:00=287单最高，20:30推夜宵套餐</li>
+<li><strong>低谷期14:00-15:00</strong>→ 暂停广告节省预算</li>
+<li><strong>周末日均207单 vs 工作日188单(+10%)</strong>→ 周五下午推周末预热</li>
+</ul></div>
+</div>
+
+<!-- Section 3: 活动分析（订单明细） -->
+<div class="section">
+<div class="section-title"><span class="num">3</span>活动分析（订单明细）</div>
+<div class="grid2">
+<div class="chart-box"><h3>7类活动ROI对比</h3><canvas id="actRoiChart"></canvas></div>
+<div class="chart-box"><h3>活动平台vs商家承担占比</h3><canvas id="actShareChart"></canvas></div>
+</div>
+<div class="table-wrap">
+<table><thead><tr><th>活动类型</th><th>次数</th><th>总金额</th><th>平台承担</th><th>商家承担</th><th>关联实付</th><th>ROI</th><th>商家占比</th><th>诊断</th></tr></thead>
+<tbody id="actTable"></tbody></table>
+</div>
+<div class="insight"><h4>🎁 活动补贴诊断</h4>
+<ul>
+<li><strong>支付红包最大</strong>（19,590次，¥256,058）但ROI=1.89最低效——预算应削减30%</li>
+<li><strong>新客立减ROI=32.03最高效</strong>（5,053次，¥5,053）——预算应翻倍至¥10,000+</li>
+<li><strong>商家代金券ROI=12.0</strong>（928次，¥2,312）——定向发券给老客，提升复购</li>
+<li><strong>满减ROI=1.29最低</strong>（4,284次，¥160,541）——提高门槛(满55→满75)，减少无效满减</li>
+<li><strong>商品折扣商家承担仅32.3%</strong>——原价-现价=商家让利，平台不补贴</li>
+</ul></div>
+</div>
+
+<!-- Section 4: 广告效率 -->
+<div class="section">
+<div class="section-title"><span class="num">4</span>广告投放效率分析</div>
+<div class="grid2">
+<div class="chart-box"><h3>5门店×2平台广告ROI对比</h3><canvas id="adRoiChart"></canvas></div>
+<div class="chart-box"><h3>广告CPC与CTR对比</h3><canvas id="adCpcChart"></canvas></div>
+</div>
+<div class="table-wrap">
+<table><thead><tr><th>门店</th><th>平台</th><th>推广消费</th><th>GMV</th><th>ROI</th><th>CPC</th><th>CTR</th><th>下单率</th><th>诊断</th></tr></thead>
+<tbody id="adTable"></tbody></table>
+</div>
+<div class="insight"><h4>📣 广告优化策略</h4>
+<ul>
+<li><strong>美团ROI(3.24)远低于淘宝(6.46)</strong>→美团CPC偏高，需优化出价策略</li>
+<li><strong>南山科兴/益田美团ROI最低(2.64/2.77)</strong>→深圳美团广告预算削减30%，转投淘宝</li>
+<li><strong>印象城淘宝ROI最高(7.06)</strong>→加大印象城淘宝投放，标杆复制</li>
+<li><strong>预算重分配</strong>：美团降20%预算→转投淘宝+新客立减，预期整体ROI从3.95→5.0+</li>
+<li><strong>时段出价</strong>：午餐(10:00-12:00)+20%、晚餐(16:30-19:00)+30%、夜宵(20:00-21:30)+15%</li>
+</ul></div>
+</div>
+
+<!-- Section 5: 门店差异化 -->
+<div class="section">
+<div class="section-title"><span class="num">5</span>门店差异化运营方案</div>
+<div class="strategy"><h4>🏆 C15002 南昌印象城 — 标杆店 <small>营收¥148,899 | 淘宝ROI 7.06最高</small></h4>
+<ul>
+<li><strong>诊断</strong>：双平台最均衡，淘宝订单量(3,119)远超美团(1,729)，月增长稳健+31.2%</li>
+<li><strong>方案</strong>：①推豪华套餐提客单价至¥35+ ②探索京东秒送第三平台 ③复制淘宝运营SOP给其他4店</li>
+<li><strong>KPI</strong>：月订单+10%、客单价¥34+、淘宝ROI维持7+</li>
+</ul></div>
+<div class="strategy"><h4>🚨 C14793 地铁万科 — 预警店 <small>双线下滑-12.4%/-10.7%</small></h4>
+<ul>
+<li><strong>诊断</strong>：双线下滑最严重，新客不足，广告ROI中等(美团4.50/淘宝6.48)</li>
+<li><strong>方案</strong>：①紧急加大美团新客立减至¥5 ②淘宝推爆单红包+精准营销 ③联动写字楼午市团餐(11:00有427单需求)</li>
+<li><strong>KPI</strong>：止跌回正+5%、新客占比提升至40%+</li>
+</ul></div>
+<div class="strategy"><h4>🚀 C15019 南山益田 — 潜力店 <small>淘宝+457%爆发 | 美团稳健</small></h4>
+<ul>
+<li><strong>诊断</strong>：美团稳健(2,141单)，淘宝从114→635单爆发增长，但淘宝ROI=5.31有提升空间</li>
+<li><strong>方案</strong>：①淘宝乘胜追击-增加精准营销 ②美团增加新客立减 ③测试满减门槛(满55→满65)</li>
+<li><strong>KPI</strong>：淘宝月订单+30%、美团+10%、淘宝ROI提升至6+</li>
+</ul></div>
+<div class="strategy"><h4>⚡ C15009 南山科兴 — 黑马店 <small>美团+258.7% | 但ROI最低2.64</small></h4>
+<ul>
+<li><strong>诊断</strong>：美团爆发增长但广告ROI=2.64最低（消费¥18,313占39%），淘宝从0起步</li>
+<li><strong>方案</strong>：①美团广告预算削减30%→转投淘宝 ②淘宝重点投放精准营销 ③推科技园午市套餐(¥28.9)</li>
+<li><strong>KPI</strong>：美团ROI提升至3.5+、淘宝月订单600+、整体ROI提升至4+</li>
+</ul></div>
+<div class="strategy"><h4>🦉 C14906 子固路 — 维稳店 <small>夜宵特色 | 21:00=287单最高</small></h4>
+<ul>
+<li><strong>诊断</strong>：双线下滑，但拥有独特夜宵黄金时段(21:00全店最高峰)</li>
+<li><strong>方案</strong>：①打造"南昌夜宵第一店" ②推夜宵专属套餐(全家福+饮品¥25-35) ③20:30定向发夜宵券 ④美团20:00-21:00加价30%</li>
+<li><strong>KPI</strong>：止跌+3%、夜宵时段订单350+、美团ROI维持5+</li>
+</ul></div>
+</div>
+
+<!-- Section 6: 产品与促销 -->
+<div class="section">
+<div class="section-title"><span class="num">6</span>产品组合与促销方案</div>
+<div class="strategy"><h4>🚀 五大主推品打造</h4>
+<ul>
+<li><strong>引流爆品</strong>：手撕酱鸭炒饭+拌素菜多拼(867次)→新客立减¥5+减配送费¥3，实付¥18.9</li>
+<li><strong>利润爆品</strong>：热卤全家福套餐(21次)→满75减15+支付红包¥10，实付¥40</li>
+<li><strong>主力品</strong>：现卤鸭三件(71次)→满48减10+商品折扣¥3，深圳2店重点推</li>
+<li><strong>差异化品</strong>：南昌拌粉+素菜套餐(122次)→夜宵满25减5，子固路专属</li>
+<li><strong>高客单品</strong>：超值6件套(13次)→满48减10+支付红包¥10，提升客单价</li>
+</ul></div>
+<div class="strategy"><h4>📅 每周促销节奏表</h4>
+<ul>
+<li><strong>周一-三</strong>：新客立减¥5+满28减5（拉新为主）</li>
+<li><strong>周四-五</strong>：满38减8+支付红包¥10+定向老客代金券¥5（提客单价）</li>
+<li><strong>周六-日</strong>：满48减10+支付红包¥15+全家福套餐折扣（家庭客）</li>
+<li><strong>每天10:30</strong>推午餐券，<strong>16:30</strong>推晚餐券，<strong>20:30</strong>子固路推夜宵券</li>
+</ul></div>
+</div>
+
+<!-- Section 7: 执行计划 -->
+<div class="section">
+<div class="section-title"><span class="num">7</span>30-60-90天执行计划与KPI</div>
+<div class="table-wrap">
+<h3 style="margin-bottom:10px">📅 行动甘特图</h3>
+<table><thead><tr><th>阶段</th><th>时间</th><th>核心动作</th><th>负责</th><th>KPI</th></tr></thead>
+<tbody>
+<tr style="background:#fef5f5"><td><strong>紧急止血</strong></td><td>第1-30天</td><td>地铁万科新客立减¥5 / 子固路夜宵套餐上线 / 南山科兴美团广告削减30%→转投淘宝</td><td>区域经理+店长</td><td>下滑门店止跌</td></tr>
+<tr><td><strong>优化提效</strong></td><td>第31-60天</td><td>满减门槛调整 / 支付红包瘦身30% / 三档套餐全店上线 / 五大主推品打造</td><td>运营+产品</td><td>整体ROI→5.0+</td></tr>
+<tr><td><strong>规模复制</strong></td><td>第61-90天</td><td>印象城SOP复制4店 / 京东秒送探索 / 双周复盘机制固化</td><td>总部+区域</td><td>月订单+10%</td></tr>
+</tbody></table>
+</div>
+<div class="table-wrap">
+<h3 style="margin-bottom:10px">📊 月度KPI追踪表</h3>
+<table><thead><tr><th>门店</th><th>订单目标</th><th>营收目标</th><th>美团增长</th><th>淘宝增长</th><th>客单价</th><th>广告ROI</th><th>新客立减ROI</th><th>关键动作</th></tr></thead>
+<tbody>
+<tr><td>南昌印象城</td><td>1,780</td><td>¥55,000</td><td>+10%</td><td>+10%</td><td>¥34</td><td>>6</td><td>>30</td><td>豪华套餐+京东</td></tr>
+<tr><td>地铁万科</td><td>1,350</td><td>¥39,000</td><td>+5%</td><td>+5%</td><td>¥30</td><td>>5</td><td>>30</td><td>新客¥5+团餐</td></tr>
+<tr><td>南山益田</td><td>1,250</td><td>¥36,000</td><td>+10%</td><td>+30%</td><td>¥30</td><td>>5</td><td>>25</td><td>淘宝加码</td></tr>
+<tr><td>南山科兴</td><td>1,300</td><td>¥39,000</td><td>+5%</td><td>+10%</td><td>¥32</td><td>>4</td><td>>25</td><td>美团削预算+淘宝</td></tr>
+<tr><td>子固路</td><td>1,020</td><td>¥30,000</td><td>+3%</td><td>+3%</td><td>¥30</td><td>>5</td><td>>30</td><td>夜宵套餐</td></tr>
+<tr style="background:#fef5f5;font-weight:700"><td>合计</td><td>6,700</td><td>¥199,000</td><td>+5%</td><td>+8%</td><td>¥32</td><td>>5</td><td>>28</td><td>全店协同</td></tr>
+</tbody></table>
+</div>
+<div class="insight"><h4>🔄 迭代优化机制（PDCA循环）</h4>
+<ul>
+<li><strong>Plan(双周计划)</strong>：基于KPI达成情况，制定下双周促销节奏+广告预算分配</li>
+<li><strong>Do(执行)</strong>：按周执行促销，A/B测试新客立减¥3 vs ¥5、满减门槛对比</li>
+<li><strong>Check(复盘)</strong>：每双周review数据，对比目标vs实际，分析偏差原因</li>
+<li><strong>Act(调优)</strong>：月度调整预算分配、出价策略、活动力度，固化成功经验</li>
+<li><strong>数据驱动</strong>：基于3个标准模板文件（外卖数据/广告数据/订单明细），每周自动刷新</li>
+</ul></div>
+</div>
+
+<div class="footer">
+基于2026年5-7月双平台17,826条订单+2,137条广告数据+872条门店级数据生成<br>
+数据文件：外卖数据合并_5-7月_标准模板.xlsx / 广告数据合并_5-7月_标准模板.xlsx / 双平台订单明细合并_5-7月.xlsx<br>
+V2.0 | 2026-08-07 | 架构：汇总→月度→环比→活动→广告→方案→执行
+</div>
+</div>
+
+<script>
+const R='#C41E3A',G='#D4A754',B='#3498db',GR='#27ae60',O='#e67e22',P='#8e44ad';
+const stores=['印象城','地铁万科','南山益田','南山科兴','子固路'];
+const sc=[GR,O,B,P,R];
+
+// 月度趋势
+new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:['5月','6月','7月'],datasets:[
+{label:'印象城-美团',data:[19167,22191,24736],borderColor:GR,backgroundColor:GR+'20',borderWidth:4,pointRadius:8,pointHoverRadius:12,pointBackgroundColor:GR,pointBorderColor:'#fff',pointBorderWidth:2,tension:.3},
+{label:'印象城-淘宝',data:[24718,28723,29365],borderColor:'#2ecc71',backgroundColor:'#2ecc7130',borderWidth:4,pointRadius:8,pointHoverRadius:12,pointBackgroundColor:'#2ecc71',pointBorderColor:'#fff',pointBorderWidth:2,borderDash:[5,5],tension:.3},
+{label:'地铁万科-美团',data:[20435,15469,20967],borderColor:O,backgroundColor:O+'20',borderWidth:4,pointRadius:8,pointHoverRadius:12,pointBackgroundColor:O,pointBorderColor:'#fff',pointBorderWidth:2,tension:.3},
+{label:'南山科兴-美团',data:[4906,35784,27373],borderColor:P,backgroundColor:P+'20',borderWidth:4,pointRadius:8,pointHoverRadius:12,pointBackgroundColor:P,pointBorderColor:'#fff',pointBorderWidth:2,tension:.3},
+{label:'子固路-美团',data:[14182,13733,16087],borderColor:R,backgroundColor:R+'20',borderWidth:4,pointRadius:8,pointHoverRadius:12,pointBackgroundColor:R,pointBorderColor:'#fff',pointBorderWidth:2,tension:.3},
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'月营收(¥)'}}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,font:{size:13,weight:'bold'},pointStyle:'circle',padding:15}}}}});
+
+// 环比
+new Chart(document.getElementById('momChart'),{type:'bar',data:{labels:['印象城-美团','印象城-淘宝','地铁万科-美团','地铁万科-淘宝','南山益田-美团','南山益田-淘宝','南山科兴-美团','子固路-美团','子固路-淘宝'],datasets:[
+{label:'5→6月环比%',data:[15.8,16.2,-24.3,-15.5,39.5,174,-100,-3.1,-11.2],backgroundColor:O},
+{label:'6→7月环比%',data:[11.5,2.2,35.6,11.5,-2.9,37.8,96.4,17.0,4.5],backgroundColor:GR},
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'环比%'}},x:{ticks:{font:{size:9}}}},plugins:{legend:{position:'bottom'}}}});
+
+// 24小时曲线
+const hours=Array.from({length:24},(_,i)=>i+'时');
+const mtH=[10,5,14,3,1,4,2,14,46,129,496,908,555,405,465,490,649,989,994,1003,917,647,223,59];
+const tbH=[18,14,15,5,2,4,2,18,75,137,618,1017,652,411,483,534,734,922,903,736,673,621,160,55];
+new Chart(document.getElementById('hourChart'),{type:'line',data:{labels:hours,datasets:[
+{label:'美团外卖',data:mtH,borderColor:R,backgroundColor:R+'20',fill:true,tension:.4,borderWidth:3,pointRadius:5,pointHoverRadius:9,pointBackgroundColor:R,pointBorderColor:'#fff',pointBorderWidth:2},
+{label:'淘宝闪购',data:tbH,borderColor:G,backgroundColor:G+'20',fill:true,tension:.4,borderWidth:3,pointRadius:5,pointHoverRadius:9,pointBackgroundColor:G,pointBorderColor:'#fff',pointBorderWidth:2},
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'订单数'}},x:{ticks:{font:{size:9}}}},plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'}}}}}});
+
+// 门店小时曲线
+const storeHourData={
+'印象城':[6,5,7,1,0,1,2,17,84,259,460,373,270,304,325,477,566,521,412,409,309,18,22,6],
+'地铁万科':[4,7,6,1,1,0,1,4,7,30,283,427,242,156,162,229,318,418,478,407,332,271,30,23],
+'南山益田':[8,4,0,4,2,4,1,3,12,36,173,353,249,178,194,170,196,393,378,412,336,199,15,5],
+'南山科兴':[2,1,3,0,0,0,1,1,6,30,281,453,153,98,147,129,172,293,270,280,238,202,154,43],
+'子固路':[8,2,2,2,0,3,1,22,79,86,118,232,190,114,141,171,220,241,250,228,275,287,166,21],
+};
+new Chart(document.getElementById('storeHourChart'),{type:'line',data:{labels:hours,datasets:stores.map((n,i)=>({label:n,data:storeHourData[n],borderColor:sc[i],backgroundColor:sc[i]+'15',tension:.3,borderWidth:i===0?3:2,pointRadius:4,pointHoverRadius:8,pointBackgroundColor:sc[i],pointBorderColor:'#fff',pointBorderWidth:1}))},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'订单数'}},x:{ticks:{font:{size:9}}}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,font:{size:11,weight:'bold'}}}}}});
+
+// 活动ROI
+new Chart(document.getElementById('actRoiChart'),{type:'bar',data:{labels:['门店新客立减','商家代金券','减配送费','平台津贴','支付红包','商品折扣','店铺满减'],datasets:[{label:'ROI',data:[32.03,12.0,8.78,7.67,1.89,1.87,1.29],backgroundColor:[GR,GR,'#2ecc71','#f39c12',R,O,'#c0392b']}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',scales:{x:{title:{display:true,text:'ROI'}}},plugins:{legend:{display:false}}}});
+
+// 活动承担
+new Chart(document.getElementById('actShareChart'),{type:'bar',data:{labels:['支付红包','减配送费','商品折扣','满减','新客立减','代金券','平台津贴'],datasets:[
+{label:'平台承担',data:[86798,3167,97,642,0,220,1445],backgroundColor:B},
+{label:'商家承担',data:[171371,54618,54188,20027,5053,2092,0],backgroundColor:R},
+]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true,title:{display:true,text:'金额(¥)'}}},plugins:{legend:{position:'bottom'}}}});
+
+// 广告ROI
+new Chart(document.getElementById('adRoiChart'),{type:'bar',data:{labels:stores,datasets:[
+{label:'美团ROI',data:[4.50,5.29,2.77,2.64,5.29],backgroundColor:R},
+{label:'淘宝ROI',data:[7.06,6.48,5.31,5.60,5.43],backgroundColor:G},
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'ROI'}}},plugins:{legend:{position:'bottom'}}}});
+
+// CPC & CTR
+new Chart(document.getElementById('adCpcChart'),{type:'bar',data:{labels:stores,datasets:[
+{label:'美团CPC(元)',data:[0.83,0.65,1.23,1.15,0.69],backgroundColor:R,yAxisID:'y'},
+{label:'淘宝CPC(元)',data:[0.35,0.42,0.55,0.48,0.38],backgroundColor:G,yAxisID:'y'},
+{label:'美团CTR(%)',data:[5.2,4.8,3.1,2.9,5.5],type:'line',borderColor:R,yAxisID:'y1',tension:.3,borderWidth:3,pointRadius:5,pointHoverRadius:9,pointBackgroundColor:R,pointBorderColor:'#fff',pointBorderWidth:2},
+{label:'淘宝CTR(%)',data:[4.5,4.2,3.8,3.5,4.1],type:'line',borderColor:G,yAxisID:'y1',tension:.3,borderWidth:3,pointRadius:5,pointHoverRadius:9,pointBackgroundColor:G,pointBorderColor:'#fff',pointBorderWidth:2},
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'CPC(元)'},position:'left'},y1:{title:{display:true,text:'CTR(%)'},position:'right',grid:{drawOnChartArea:false}}},plugins:{legend:{position:'bottom',labels:{font:{size:9}}}}}});
+</script>
+</body>
+</html>
