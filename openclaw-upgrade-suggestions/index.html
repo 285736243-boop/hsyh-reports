@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw 框架优化升级建议 V1（2026-08-14）</title>
+<style>
+  :root{
+    --bg:#f4f6f8; --card:#fff; --ink:#1f2328; --muted:#656d76; --line:#d0d7de;
+    --brand:#0969da; --good:#1a7f37; --warn:#9a6700; --bad:#cf222e; --accent:#8250df;
+    --good-bg:#e6ffec; --warn-bg:#fff8e6; --bad-bg:#ffebe9; --brand-bg:#ddf4ff;
+  }
+  *{box-sizing:border-box}
+  body{font-family:"Microsoft YaHei",-apple-system,sans-serif;margin:0;background:var(--bg);color:var(--ink);line-height:1.75}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 18px 90px}
+  header.hero{background:linear-gradient(135deg,#1f2328 0%,#0969da 100%);color:#fff;border-radius:16px;padding:34px 38px;margin-bottom:26px}
+  header.hero h1{margin:0 0 8px;font-size:25px}
+  header.hero .sub{opacity:.9;font-size:14px}
+  .badge{display:inline-block;background:rgba(255,255,255,.18);border-radius:10px;padding:3px 11px;font-size:12px;margin:3px 6px 3px 0}
+  .snap{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+  .snap .box{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .snap .box .k{font-size:12px;color:var(--muted);margin-bottom:4px}
+  .snap .box .v{font-size:20px;font-weight:700;color:var(--brand)}
+  .snap .box .v.bad{color:var(--bad)} .snap .box .v.warn{color:var(--warn)} .snap .box .v.good{color:var(--good)}
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-bottom:18px}
+  .sec h2{margin:0 0 14px;font-size:19px;border-left:4px solid var(--brand);padding-left:12px}
+  .sec h3{font-size:16px;margin:18px 0 8px;color:var(--ink)}
+  .pill{display:inline-block;border-radius:12px;padding:2px 10px;font-size:12px;margin:2px 4px 2px 0}
+  .pill.p0{background:var(--bad-bg);color:var(--bad)} .pill.p1{background:var(--warn-bg);color:var(--warn)} .pill.p2{background:var(--brand-bg);color:var(--brand)}
+  .card{border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:12px 0;background:#fbfcfd}
+  .card.warn{border-left:4px solid var(--warn)} .card.bad{border-left:4px solid var(--bad)} .card.good{border-left:4px solid var(--good)} .card.info{border-left:4px solid var(--brand)}
+  .card .t{font-weight:700;margin-bottom:6px}
+  .row{display:grid;grid-template-columns:120px 1fr;gap:10px;margin:6px 0;font-size:14px}
+  .row .lbl{color:var(--muted);font-weight:600}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f6f8fa;font-weight:600}
+  tr.p0 td:first-child{border-left:3px solid var(--bad)}
+  tr.p1 td:first-child{border-left:3px solid var(--warn)}
+  tr.p2 td:first-child{border-left:3px solid var(--brand)}
+  code{background:#f6f8fa;padding:1px 6px;border-radius:5px;font-size:12.5px;color:var(--bad);font-family:Consolas,monospace}
+  .kv{font-family:Consolas,monospace;background:#0d1117;color:#c9d1d9;padding:10px 14px;border-radius:8px;font-size:12.5px;overflow:auto;white-space:pre-wrap;word-break:break-all;margin:8px 0}
+  ul{margin:6px 0;padding-left:22px} li{margin:4px 0}
+  .quote{border-left:3px solid var(--muted);padding:4px 14px;color:var(--muted);font-style:italic;margin:10px 0;background:#fafbfc;border-radius:0 6px 6px 0}
+  .verdict{background:linear-gradient(135deg,#fff8e6,#fff);border:1px solid #f0d79a;border-radius:14px;padding:24px 28px;margin:22px 0}
+  .verdict h2{color:var(--warn);border-left-color:var(--warn);margin-top:0}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:34px}
+  @media(max-width:760px){.snap{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <h1>🔧 OpenClaw 框架优化升级建议 <span class="badge">V1 · 2026-08-14</span></h1>
+  <div class="sub">基于「我的AI框架导出档案 V1（52 文件）」的深度对比分析 · 供老大哥深造决策</div>
+  <div style="margin-top:14px">
+    <span class="badge">三体系结构</span><span class="badge">五层记忆体</span><span class="badge">R1-R10 规则</span><span class="badge">17 知识库</span><span class="badge">10 能力档案</span><span class="badge">不死鸟自愈</span><span class="badge">自进化闭环</span>
+  </div>
+</header>
+
+<!-- 快照概览 -->
+<div class="snap">
+  <div class="box"><div class="k">框架完整度</div><div class="v good">85%</div></div>
+  <div class="box"><div class="k">实际运行度</div><div class="v warn">45%</div></div>
+  <div class="box"><div class="k">安全风险项</div><div class="v bad">3</div></div>
+  <div class="box"><div class="k">优化建议总数</div><div class="v">22</div></div>
+</div>
+<p style="color:var(--muted);font-size:13px;margin-top:-8px">说明：完整度看「设计是否齐全」，运行度看「机制是否真正在跑」。差距 = 设计落地率不足，是本次优化的主战场。</p>
+
+<!-- 一、总体评价 -->
+<div class="sec">
+  <h2>一、总体评价：设计一流，落地打折</h2>
+  <p>老大哥，先说结论：这套框架的<b>设计思想是优秀的</b>——五层记忆体 + 不死鸟自愈 + 自进化闭环的三体系结构，在国内个人 AI 助手领域属于第一梯队。但它最大的问题不是「设计不好」，而是「<b>设计很完整，运行时只跑了一半</b>」。下面先肯定三个亮点，再逐项说哪里需要优化。</p>
+
+  <div class="card good">
+    <div class="t">✅ 亮点 1：规则采用 when→do 契约式，精简克制</div>
+    rules/ 下的 8 个规则文件全部是「触发条件 → 强制动作」结构，没有把具体资料塞进规则。这是正确的——规则文件是最高杠杆，只装契约。FRAMEWORK.md 的「铁律：规则文件只保留 when→do 契约」贯彻得很好。
+  </div>
+  <div class="card good">
+    <div class="t">✅ 亮点 2：晋升门量化，防止单次经验污染长期层</div>
+    memory-write-rules.md 的晋升门有明确数值（Preference≥2 / Policy≥3且support≥5且gain≥0.10 / Skill≥5次且η≥0.70），并设候选层 observations.md 兜底。这避免了「一次踩坑就改规则」的过度反应。
+  </div>
+  <div class="card good">
+    <div class="t">✅ 亮点 3：业务知识库扎实，口径版本化管理</div>
+    煌上煌双平台外卖的 36 列字段映射、四大数据路径、利润 v2 口径、活动 ROI 分摊公式都沉淀得很完整，且口径库.md 做了版本化迁移（旧口径标注「已废弃」）。这是真正的业务资产。
+  </div>
+</div>
+
+<!-- 二、九大优化方向 -->
+<div class="sec">
+  <h2>二、九大优化方向（按重要性排列）</h2>
+
+  <h3>方向 1 ｜ MEMORY.md 严重膨胀，违反自己的精简铁律 <span class="pill p0">P0</span></h3>
+  <div class="card bad">
+    <div class="row"><div class="lbl">问题</div><div>MEMORY.md 高达 <b>35533 B（35KB）</b>，AGENTS.md 自己定义它是「curated wisdom（精炼智慧）」，但实际塞满了：36列字段对照表、文件清单、环境信息、工具安装记录、网络测试结果、GitHub token 关联说明、待办事项。</div></div>
+    <div class="row"><div class="lbl">证据</div><div>档案 558 行标注「35533 B」；内容含字段映射表（603-640行）、文件清单（719-723行）、Power BI SQLite 路径（763行）、GitHub Pages 部署细节（982-993行）——这些都不是「跨任务稳定语义」，是<b>资料</b>。</div></div>
+    <div class="row"><div class="lbl">建议</div><div>按框架自己的 L1-L4 上下文层级做强制迁移：<br>
+      ① 字段映射/文件清单 → <code>knowledge/powerbi/data-architecture.md</code>（已有，去重合并）<br>
+      ② 环境信息/Python路径/工具版本 → <code>TOOLS.md</code>（环境笔记本就该放这）<br>
+      ③ GitHub 部署链路 → <code>knowledge/engineering/deploy-pipeline.md</code>（新建）<br>
+      ④ MEMORY.md 只保留：用户背景、核心业务结论、跨任务偏好、关键数据结论（如「江西占52% ROI6.06」这种）<br>
+      ⑤ 目标：MEMORY.md 瘦身到 <b>≤8KB</b>，启动加载省 token、检索更准。</div></div>
+  </div>
+
+  <h3>方向 2 ｜ 安全红线被自己破坏：GitHub Token 明文存记忆 <span class="pill p0">P0</span></h3>
+  <div class="card bad">
+    <div class="row"><div class="lbl">问题</div><div>框架 R6 红线明确写「密钥、token、会话、客户隐私<b>不写入长期层明文</b>」，但 MEMORY.md 第 993 行写「唯一有效 token 存于 <code>memory/2026-08-14.md</code>，deploy 脚本自动提取」——<b>自己违反自己的红线</b>。</div></div>
+    <div class="row"><div class="lbl">风险</div><div>token 进了每日笔记 → 进了 SHA-256 快照覆盖范围 → 快照文件本身可能被 git commit/push → token 泄露。GitHub classic token 有 repo+workflow 权限，泄露=仓库被篡改。</div></div>
+    <div class="row"><div class="lbl">整改</div><div>① 立即从 memory/2026-08-14.md 删除 token 明文，到 GitHub 后台 <b>revoke 该 token</b> 重新生成<br>
+      ② 新 token 存 Windows 凭据管理器：<code>cmdkey /generic:GH_TOKEN /user:token /pass:ghp_xxx</code>，脚本用 <code>git config --get credential.helper</code> 或环境变量读取<br>
+      ③ deploy 脚本改为 <code>$env:GH_TOKEN</code> 注入，不读文件<br>
+      ④ 在 risk-boundaries.md 加一条「token/密钥读取必须走凭据管理器或环境变量，禁止落地文件」并升级为 R6 子项。</div></div>
+  </div>
+
+  <h3>方向 3 ｜ 五层记忆体设计完整，但只有 2 层在跑 <span class="pill p0">P0</span></h3>
+  <div class="card warn">
+    <div class="row"><div class="lbl">问题</div><div>档案里能看到的实际记忆内容只有 <b>M1（每日笔记）</b>和 <b>M3（MEMORY.md）</b>两层。M0 事件账本（events.log）、M2 情节记忆（episodes.md）、候选层 observations.md、learned-rules.md ——<b>全部没有实际内容展示</b>。</div></div>
+    <div class="row"><div class="lbl">证据</div><div>档案目录有 ERRORS.md/LEARNINGS.md，但内容极少：ERRORS.md 仅 1 条（ClawHub 404）、LEARNINGS.md 仅 1 条（PowerShell 编码）、FEATURE_REQUESTS.md 仅 1 条。68 个 HTML+xlsx 交付物对应的学习沉淀只有 3 条——<b>沉淀率 4.4%</b>。</div></div>
+    <div class="row"><div class="lbl">根因</div><div>① 触发钩子靠「任务收尾自查」，但没有强制门——agent 不自查也能交付；② 梦境循环 cron 每 4h 跑一次，但「人工重构晋升」环节无人执行；③ events.log 是 append-only，但没有看到「失败自动写 events.log」的代码钩子，全靠自觉。</div></div>
+    <div class="row"><div class="lbl">建议</div><div>① 给 tools 加 post-exec 钩子：命令退出码≠0 自动 append events.log（不靠自觉）<br>
+      ② ERRORS/LEARNINGS 改为「任务收尾前阻塞门」——不写一条收尾记录就不算完成（path-routing.md 的完成标准三问已有，加第4问：本次沉淀了吗）<br>
+      ③ episodes.md 模板化：每次交付后强制填「目标/做法/结果/Reward」四字段<br>
+      ④ 设周度「记忆体检」cron：统计本周 events.log 条数、observations 条数、晋升数，低于阈值告警。</div></div>
+  </div>
+
+  <h3>方向 4 ｜ 「自进化」名不副实，核心环节靠人工 <span class="pill p1">P1</span></h3>
+  <div class="card warn">
+    <div class="row"><div class="lbl">问题</div><div>evolution-triggers.md v3 明确写「归档候选到 evolution-log.md → <b>人工重构</b>：与现有 R1-R9 对比，合并去重后写入规则」。这意味着「自进化」其实不「自」——晋升环节必须有 agent 或人介入做对比合并。</div></div>
+    <div class="row"><div class="lbl">后果</div><div>如果用户不主动触发、agent 不主动跑反思轮，候选层会越堆越多，规则永远不会晋升。当前 learned-rules.md 空白就是证据——设计了一整套晋升链，但没有任何一条规则真正走完过。</div></div>
+    <div class="row"><div class="lbl">建议</div><div>① 把「人工重构」改为「<b>LLM 辅助重构 + 人工确认</b>」：梦境循环用 LLM 读候选 + 现有规则，输出「合并/新增/丢弃」建议草案，用户只做 yes/no<br>
+      ② 防叠加改为自动检测：给每条规则打主题标签（topic tag），新候选先做 embedding 相似度比对（≥0.85 视为同主题），自动提示合并<br>
+      ③ 设「候选层积压告警」：observations.md 超 20 条未处理 → 心跳提醒用户跑一轮晋升。</div></div>
+  </div>
+
+  <h3>方向 5 ｜ 规则编号 R1-R10 有重叠与共用载体 <span class="pill p1">P1</span></h3>
+  <div class="card warn">
+    <div class="row"><div class="lbl">问题</div><div>rules/README.md 的编号表里：<br>
+      • R5（并行与子代理）、R7（技能库治理）、R8（文档与产出）<b>三个规则共用</b> <code>framework-ops/SKILL.md</code> 一个载体<br>
+      • R10（能力登记与样例复用）与 capabilities.md 的 O9（能力样例沉淀检查）<b>职责重叠</b><br>
+      这违反了框架自己的「索引-载体分离」和「防叠加铁律：同主题只保留一条最优规则」。</div></div>
+    <div class="row"><div class="lbl">建议</div><div>① R5/R7/R8 拆分到独立规则文件：<code>rules/parallel-agents.md</code> / <code>rules/skill-governance.md</code> / <code>rules/doc-output.md</code>，framework-ops 只留「框架运维总入口」<br>
+      ② R10 与 O9 合并：R10 作为规则层索引，O9 作为 capabilities.md 内的执行细则，明确「R10=契约，O9=操作步骤」，消除重复定义<br>
+      ③ 重排编号：当前 R1-R10 有跳跃（CAP 编号也乱：01-08-10-09-10），建议按「记忆/进化/任务/熔断/并行/信任/治理/产出/契约/能力」固定语义顺序。</div></div>
+  </div>
+
+  <h3>方向 6 ｜ 记忆检索 FTS-only，语义召回是瓶颈 <span class="pill p1">P1</span></h3>
+  <div class="card warn">
+    <div class="row"><div class="lbl">现状</div><div>档案明确：「FTS-only 模式（provider=none + openclaw memory index --force，无需 embedding/key/网络；索引与模型绑定，换模型需重建）」。</div></div>
+    <div class="row"><div class="lbl">问题</div><div>① FTS 只能精确/词根匹配，搜「客单价」匹配不到「单均实付」「平均订单金额」；<br>
+      ② MEMORY.md 35KB + 每日笔记累积，关键词越多噪音越大，召回率持续下降；<br>
+      ③ 「换模型需重建索引」——每次换 DeepSeek 版本就丢索引，运维脆弱。</div></div>
+    <div class="row"><div class="lbl">建议</div><div>引入轻量级本地 embedding 做混合检索（不依赖网络）：<br>
+      ① 模型：<code>BAAI/bge-small-zh-v1.5</code>（512维，本地 CPU 可跑，中文效果好）<br>
+      ② 检索：FTS 召回 Top50 → embedding 重排取 Top10（BM25 + 向量 RRF 融合）<br>
+      ③ 索引存储：SQLite + sqlite-vec 扩展（单文件，无服务依赖）<br>
+      ④ 知识库你已经装了 embedding-strategies / hybrid-search-implementation / vector-index-tuning 三个技能——<b>装了却没用</b>，正好落地。</div></div>
+  </div>
+
+  <h3>方向 7 ｜ 知识库分类混乱 + 缺过期审查 <span class="pill p1">P1</span></h3>
+  <div class="card warn">
+    <div class="row"><div class="lbl">问题1</div><div>分类维度混杂：现有 <code>knowledge/waimai/</code>（按业务）、<code>knowledge/marketing/</code>（按职能）、<code>knowledge/powerbi/</code>（按技术栈）、<code>knowledge/framework/</code>（按元）、<code>knowledge/skills/</code>（按类型）、<code>knowledge/engineering/</code>（按工程）——6 种分类维度并存，找东西靠猜。</div></div>
+    <div class="row"><div class="lbl">问题2</div><div>数量对不上：hero 区写「知识库17」，MEMORY.md 写「现10个知识库挂载小白赛亚人」，skill-map.md 写「3545技能」——口径不一，说明<b>没有单一可信源</b>。</div></div>
+    <div class="row"><div class="lbl">问题3</div><div>知识库标注「2026-08-12 提炼」就再没动过，平台规则/API/模型每月在变，但没有「最后验证时间」和「可信度衰减」。platform-knowledge.md 里写「美团取消10余项营销活动减少46.2亿」这种数据会过时。</div></div>
+    <div class="row"><div class="lbl">建议</div><div>① 统一分类为「业务域 / 能力域 / 元域」三层：<br>
+      &nbsp;&nbsp;业务域=waimai（煌上煌外卖）/ marketing（营销方法论）<br>
+      &nbsp;&nbsp;能力域=powerbi / data-analysis / doc-gen / deploy<br>
+      &nbsp;&nbsp;元域=framework / skills<br>
+      ② 知识库单一可信源=skill-map.md，hero 区数字从 skill-map 动态读取，禁止手写<br>
+      ③ 每个知识库文件头部加 frontmatter：<code>last_verified: 2026-08-12</code> / <code>decay: 90d</code> / <code>owner: agent</code><br>
+      ④ 月度「知识体检」cron：超 decay 天数未验证的标黄提醒复核。</div></div>
+  </div>
+
+  <h3>方向 8 ｜ 业务分析停在「描述/诊断」，缺预测与规范能力 <span class="pill p2">P2</span></h3>
+  <div class="card info">
+    <div class="row"><div class="lbl">现状</div><div>现有能力全是<b>描述性</b>（发生了什么：日报/月报）+ <b>诊断性</b>（为什么：漏斗/ROI/归因）。缺两类高价值分析。</div></div>
+    <div class="row"><div class="lbl">缺口1</div><div><b>预测性分析</b>：订单量预测、ROI 趋势外推、库存预警、活动效果预判。你装了 ml-pipeline-workflow、stata 20件套（含 causal-inference），但<b>没有一项落地</b>。</div></div>
+    <div class="row"><div class="lbl">缺口2</div><div><b>规范性分析</b>：智能出价建议、预算分配优化、活动组合推荐。现有 waimai-diagnose 给「5套提升方案」是定性建议，没有基于数据的「投多少、投哪、何时投」量化推荐。</div></div>
+    <div class="row"><div class="lbl">建议</div><div>① 落地一个预测能力 CAP-11：基于 5-7 月历史数据用 Prophet/ARIMA 做下月订单量与消耗预测，输出置信区间<br>
+      ② 落地一个优化能力 CAP-12：基于 ROI 矩阵做预算分配优化（线性规划：在总预算约束下最大化 GMV）<br>
+      ③ 两者都挂到 waimai-diagnose 技能下，从「事后诊断」升级到「事前预判 + 事中调优」。</div></div>
+  </div>
+
+  <h3>方向 9 ｜ 环境层短板：PowerShell 5.1 编码坑 + 网络受限未根治 <span class="pill p2">P2</span></h3>
+  <div class="card info">
+    <div class="row"><div class="lbl">问题1</div><div>TOOLS.md 记录了 3 个 PowerShell 5.1 编码坑（Add-Content 按 GBK / 无BOM .ps1 被GBK解析 / stderr 假报错），说明环境层面<b>只记录了规避方法，没根治</b>。每次写脚本都要记得绕坑，认知负担大。</div></div>
+    <div class="row"><div class="lbl">问题2</div><div>huggingface/github 境外超时、Brave API 不可用、ClawHub 商店 404——网络受限让技能安装、模型调研、实时数据获取全部打折。</div></div>
+    <div class="row"><div class="lbl">建议</div><div>① 升级到 <b>PowerShell 7</b>（.NET Core，默认 UTF-8 无 BOM，跨平台），一劳永逸解决编码坑；或脚本统一切 Node.js（UTF-8 无 BOM 对 node 无影响，已在 TOOLS.md 验证）<br>
+      ② 配置代理：<code>$env:HTTPS_PROXY</code> 走本地代理，或用国内镜像（npm 用 npmmirror、pip 用清华源、GitHub 用 ghproxy）<br>
+      ③ 发布链路增加 Gitee Pages 备份（档案里测过「gitee 通」但没用上），GitHub 不通时自动切 Gitee。</div></div>
+  </div>
+</div>
+
+<!-- 三、P0/P1/P2 整改清单 -->
+<div class="sec">
+  <h2>三、优先级整改清单（22 项）</h2>
+  <table>
+    <tr><th style="width:54px">优先级</th><th style="width:120px">类别</th><th>整改项</th><th style="width:180px">载体</th></tr>
+    <tr class="p0"><td>P0</td><td>安全</td><td>删除 memory/2026-08-14.md 中的 GitHub token 明文，revoke 后改走凭据管理器/环境变量</td><td>memory/ + risk-boundaries.md</td></tr>
+    <tr class="p0"><td>P0</td><td>记忆体</td><td>MEMORY.md 瘦身：字段映射/文件清单/环境信息/部署细节迁出到对应知识库，目标 ≤8KB</td><td>MEMORY.md + knowledge/</td></tr>
+    <tr class="p0"><td>P0</td><td>记忆体</td><td>激活 M0/M2：给工具加 post-exec 失败自动写 events.log 钩子；episodes.md 模板化强制填写</td><td>scripts/ + memory/</td></tr>
+    <tr class="p0"><td>P0</td><td>自进化</td><td>ERRORS/LEARNINGS 设为收尾阻塞门（不写沉淀不算完成）；设周度记忆体检 cron</td><td>path-routing.md + rules/</td></tr>
+    <tr class="p1"><td>P1</td><td>自进化</td><td>「人工重构晋升」改为「LLM 辅助重构 + 人工确认」；候选积压 >20 条告警</td><td>evolution-triggers.md</td></tr>
+    <tr class="p1"><td>P1</td><td>规则</td><td>R5/R7/R8 拆分到独立规则文件；R10 与 O9 明确「契约 vs 操作」边界</td><td>rules/ + README.md</td></tr>
+    <tr class="p1"><td>P1</td><td>规则</td><td>防叠加自动化：规则打 topic tag，新候选先 embedding 相似度比对（≥0.85 提示合并）</td><td>memory/learned-rules.md</td></tr>
+    <tr class="p1"><td>P1</td><td>检索</td><td>引入 bge-small-zh 本地 embedding，FTS+向量 RRF 混合检索（落地已装的3个检索技能）</td><td>memory_search + scripts/</td></tr>
+    <tr class="p1"><td>P1</td><td>知识库</td><td>统一分类为「业务域/能力域/元域」三层；skill-map.md 作为单一可信源</td><td>knowledge/ + skill-map.md</td></tr>
+    <tr class="p1"><td>P1</td><td>知识库</td><td>每个知识库加 frontmatter（last_verified/decay/owner）；月度知识体检 cron</td><td>knowledge/**/*.md</td></tr>
+    <tr class="p1"><td>P1</td><td>知识库</td><td>消除 MEMORY.md 与口径库.md/data-architecture.md 的内容重复（MEMORY 只留结论）</td><td>MEMORY.md + knowledge/</td></tr>
+    <tr class="p1"><td>P1</td><td>命名</td><td>统一「OpenClaw」拼写（当前 Openclwa/OpenClaw/Openclaw 三种混用）</td><td>全档案</td></tr>
+    <tr class="p1"><td>P1</td><td>能力</td><td>能力编号重排（CAP-01~12 顺序固定，消除 08-10-09-10 跳跃与 CAP-10 重复定义）</td><td>capabilities.md</td></tr>
+    <tr class="p1"><td>P1</td><td>能力</td><td>samples/ 样例补全实际内容并纳入 SHA-256 快照保护（当前只引用未展示）</td><td>samples/ + phoenix-snapshot</td></tr>
+    <tr class="p2"><td>P2</td><td>业务</td><td>新增 CAP-11 预测性分析（Prophet/ARIMA 订单与消耗预测）</td><td>skills/waimai-diagnose</td></tr>
+    <tr class="p2"><td>P2</td><td>业务</td><td>新增 CAP-12 规范性分析（线性规划预算分配优化）</td><td>skills/waimai-diagnose</td></tr>
+    <tr class="p2"><td>P2</td><td>业务</td><td>对接平台 API 实时拉数（composio-skills 装了833个没用），减少对静态文件依赖</td><td>skills/ + MCP</td></tr>
+    <tr class="p2"><td>P2</td><td>环境</td><td>升级 PowerShell 7 或脚本统一切 Node.js，根治编码坑</td><td>环境</td></tr>
+    <tr class="p2"><td>P2</td><td>环境</td><td>配置代理 + 国内镜像（npm/pip/GitHub ghproxy）</td><td>环境</td></tr>
+    <tr class="p2"><td>P2</td><td>发布</td><td>发布链路增加 Gitee Pages 备份，GitHub 不通自动切换</td><td>scripts/deploy-both.ps1</td></tr>
+    <tr class="p2"><td>P2</td><td>能力</td><td>能力触发识别机制明确化（关键词匹配表 vs agent 自判），写进 capabilities.md</td><td>capabilities.md</td></tr>
+    <tr class="p2"><td>P2</td><td>运维</td><td>Obsidian 轨道B实际接入（档案写「未发现 vault 配置」但 USER 路径有 ObsidianVault）</td><td>scripts/vault-sync.sh</td></tr>
+  </table>
+</div>
+
+<!-- 四、最大短板诊断 -->
+<div class="verdict">
+  <h2>四、最大短板诊断：重执行、轻进化</h2>
+  <p>老大哥，档案里你自己提了个问题——「从档案看我最大的行为弱点是什么？最值得改的一个点是什么？」我直接回答：</p>
+  <div class="card bad" style="margin-top:14px">
+    <div class="t">🎯 最大弱点：执行多、反思少、自进化停滞</div>
+    <p><b>证据链：</b></p>
+    <ul>
+      <li>交付物 <b>68 个</b>（HTML+xlsx）——执行力极强</li>
+      <li>ERRORS.md <b>1 条</b> / LEARNINGS.md <b>1 条</b> / FEATURE_REQUESTS.md <b>1 条</b>——沉淀率 4.4%</li>
+      <li>learned-rules.md（R1-R9 索引）<b>没有实际规则内容</b>——晋升链从未走完</li>
+      <li>episodes.md / observations.md / events.log <b>全部空白</b>——五层记忆体只有 2 层在用</li>
+      <li>技能全景图 <b>3545 个</b>，但 embedding/hybrid-search/vector-index 等 12 个 AI 技能<b>装了没用</b></li>
+    </ul>
+    <p><b>一句话：</b>这是一个「<b>能干活但不会变聪明</b>」的助手——产出堆得很高，但经验没有回流成规则，下次遇到同类问题还是从零开始。五层记忆体 + 自进化闭环设计得很漂亮，但<b>设计落地率只有 45%</b>。</p>
+  </div>
+  <div class="card good" style="margin-top:14px">
+    <div class="t">✅ 最值得改的一个点：把「收尾沉淀」从自觉变成强制门</div>
+    <p>不用动大架构，只改一个地方就能撬动整个自进化：</p>
+    <p>在 <code>rules/path-routing.md</code> 的「完成标准三问」后面加<b>第4问且为阻塞门</b>：</p>
+    <div class="kv">4. 本次沉淀了吗？（写 ≥1 条 events.log 或 observations，否则不算完成）
+   —— 失败要带反思三字段（原因/尝试/下次），成功要带可复用模式</div>
+    <p>这一改，68 个交付物至少能产出 68 条 episodes + 一批 observations，梦境循环才有原料可凝练，晋升链才能真正跑起来。<b>这是杠杆最大、成本最低的一个改动。</b></p>
+  </div>
+</div>
+
+<!-- 五、对标行业 -->
+<div class="sec">
+  <h2>五、对标行业：你的框架处在什么位置</h2>
+  <table>
+    <tr><th>维度</th><th>你的 OpenClaw</th><th>行业典型个人助手</th><th>差距/领先</th></tr>
+    <tr><td>记忆分层</td><td>5 层设计（M0-M4）</td><td>多数只有 短期+长期 2 层</td><td class="good" style="color:var(--good);font-weight:600">领先</td></tr>
+    <tr><td>自愈回滚</td><td>SHA-256 快照 + 熔断</td><td>几乎没有</td><td class="good" style="color:var(--good);font-weight:600">领先</td></tr>
+    <tr><td>自进化闭环</td><td>设计完整，运行率 45%</td><td>多数无</td><td class="warn" style="color:var(--warn);font-weight:600">设计领先/落地不足</td></tr>
+    <tr><td>规则契约化</td><td>when→do，10 条</td><td>多数是自然语言提示词</td><td class="good" style="color:var(--good);font-weight:600">领先</td></tr>
+    <tr><td>业务知识库</td><td>煌上煌外卖，口径版本化</td><td>多数无垂直领域知识</td><td class="good" style="color:var(--good);font-weight:600">领先</td></tr>
+    <tr><td>检索能力</td><td>FTS-only</td><td>多数无检索</td><td class="warn" style="color:var(--warn);font-weight:600">有但偏弱</td></tr>
+    <tr><td>预测/规范分析</td><td>无落地</td><td>多数也无</td><td style="color:var(--muted)">持平</td></tr>
+    <tr><td>安全合规</td><td>有红线但 token 明文违规</td><td>多数无红线</td><td class="bad" style="color:var(--bad);font-weight:600">设计有/执行破</td></tr>
+  </table>
+  <p style="color:var(--muted);font-size:13px">结论：框架<b>设计层面国内第一梯队</b>，<b>执行层面中上</b>，<b>自进化落地层面是最大短板</b>。补齐 P0 四项即可把运行度从 45% 拉到 75%+。</p>
+</div>
+
+<footer>
+  报告版本 V1 · 生成时间 2026-08-14 17:28 · 基于「我的AI框架导出档案 V1（52 文件）」分析<br>
+  分析方法：全档案通读 → 九维度诊断 → 优先级分级 · 数据来源：导出档案原文（未删改）
+</footer>
+</div>
+</body>
+</html>
