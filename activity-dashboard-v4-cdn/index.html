@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>活动全局效果诊断报告 V4</title>
+<script src="https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js';"></script>
+<script>
+// 等待Chart和ChartDataLabels都可用再渲染
+(function waitForChart(){
+  if(typeof Chart!=='undefined' && typeof ChartDataLabels!=='undefined'){
+    try{Chart.register(ChartDataLabels);}catch(e){console.warn('register err:',e);}
+    window.__chartReady=true;
+    document.dispatchEvent(new Event('chartReady'));
+    return;
+  }
+  setTimeout(waitForChart,80);
+})();
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:PingFang SC,Microsoft YaHei,sans-serif;background:#f5f6fa;color:#2c3e50;line-height:1.7}
+.header{background:linear-gradient(135deg,#C41E3A,#8B0000);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.8em;letter-spacing:1px}
+.header .sub{font-size:.85em;opacity:.85;margin-top:4px}
+.header .rule{font-size:.7em;opacity:.6;margin-top:6px;background:rgba(255,255,255,.12);display:inline-block;padding:2px 10px;border-radius:8px}
+.container{max-width:1500px;margin:0 auto;padding:16px}
+.section{margin-bottom:20px}
+.section-title{font-size:1.2em;font-weight:700;color:#C41E3A;border-left:4px solid #C41E3A;padding-left:10px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-num{background:#C41E3A;color:#fff;font-size:.7em;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+.card{background:#fff;border-radius:8px;padding:12px;box-shadow:0 1px 6px rgba(0,0,0,.04);text-align:center;position:relative}
+.card .label{font-size:.7em;color:#7f8c8d;margin-bottom:4px}
+.card .value{font-size:1.25em;font-weight:700}
+.card .sub{font-size:.65em;color:#95a5a6;margin-top:2px}
+.green{color:#27ae60}.red{color:#e74c3c}.orange{color:#e67e22}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(460px,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.chart-box{background:#fff;border-radius:8px;padding:12px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.chart-box h4{font-size:.85em;margin-bottom:6px;color:#34495e}
+.cv{max-height:320px}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:8px;padding:10px;box-shadow:0 1px 6px rgba(0,0,0,.04);margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:.75em}
+th{background:#f8f9fa;padding:7px;text-align:left;font-weight:600;border-bottom:2px solid #C41E3A;white-space:nowrap}
+td{padding:6px;border-bottom:1px solid #eee}
+tr:hover td{background:#fef5f5}
+.badge{display:inline-block;padding:1px 7px;border-radius:8px;font-size:.7em;font-weight:600}
+.b-red{background:#fde8e8;color:#C41E3A}.b-green{background:#def7ec;color:#046c4e}
+.b-blue{background:#e1effe;color:#1e429f}.b-orange{background:#fef3c7;color:#92400f}
+.diag-box{border-radius:8px;padding:12px;margin-bottom:12px}
+.diag-growth{background:linear-gradient(135deg,#e8f5e9,#f1f8e9);border:1px solid #a5d6a7}
+.diag-weak{background:linear-gradient(135deg,#fef5f5,#fff3e0);border:1px solid #ef9a9a}
+.diag-conc{background:linear-gradient(135deg,#e3f2fd,#e8eaf6);border:1px solid #90caf9}
+.diag-box h4{margin-bottom:6px;font-size:.9em}
+.diag-growth h4{color:#2e7d32}.diag-weak h4{color:#c62828}.diag-conc h4{color:#1565c0}
+.summary-box{background:linear-gradient(135deg,#fff8e1,#fff3e0);border:2px solid #D4A754;border-radius:10px;padding:16px;margin-bottom:16px}
+.summary-box h3{color:#8B6914;margin-bottom:8px;font-size:1.05em}
+.tag{display:inline-block;background:#e8eaf6;color:#3f51b5;padding:1px 6px;border-radius:6px;font-size:.65em;margin:0 2px}
+.footer{text-align:center;padding:16px;color:#888;font-size:.7em}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>活动全局效果诊断报告 V4</h1>
+<div class="sub">5-7月 双平台 | 取数：仅路径2+3 | 已过滤已取消+无效订单</div>
+<div class="rule">V4.0 | 结构：总览→分解→诊断→建议 | 每模块含增长点/劣势点/结论</div>
+</div>
+<div class="container">
+
+<div class="summary-box">
+<h3>一、总体诊断摘要</h3>
+<p style="font-size:.85em;line-height:1.8">
+<b>5-7月活动总计</b>：GMV <b>¥515,205</b>，补贴 <b>¥403,133</b>，ROI <b>1.28</b>，订单 <b>17,358</b>单。
+月度GMV呈<b style="color:#27ae60">持续增长</b>（5月→6月<span class="tag">+33.6%</span>，6月→7月<span class="tag">+8.0%</span>），但ROI从1.24降至1.32，补贴增速快于GMV增长，效率在下降。
+<b style="color:#C41E3A">核心劣势</b>：店铺满减类活动ROI&lt;2消耗了大量预算但产出极低。
+<b style="color:#27ae60">核心增长点</b>：减配送费, 门店新客立减, 商家代金券, 平台津贴ROI&gt;5但投入严重不足，加大预算可撬动高增量。
+</p>
+</div>
+
+<div class="section"><div class="section-title"><span class="section-num">1</span>核心KPI总览</div>
+<div class="cards">
+<div class="card"><div class="label">活动总GMV</div><div class="value">¥515,205</div><div class="sub">路径2·活动订单实付</div></div>
+<div class="card"><div class="label">活动总补贴成本</div><div class="value">¥403,133</div><div class="sub">平台¥92,370+商家¥307,350</div></div>
+<div class="card"><div class="label">活动整体ROI</div><div class="value orange">1.28</div><div class="sub">警戒区间</div></div>
+<div class="card"><div class="label">活动订单数</div><div class="value">17,358</div><div class="sub">已排除已取消+无效</div></div>
+<div class="card"><div class="label">5→7月GMV增速</div><div class="value green">+44.3%</div><div class="sub">持续增长</div></div>
+<div class="card"><div class="label">5→7月补贴增速</div><div class="value red">+35.4%</div><div class="sub">慢于GMV-效率升</div></div>
+</div></div>
+
+<div class="section"><div class="section-title"><span class="section-num">2</span>月度分解与诊断</div>
+<div class="grid2">
+<div class="chart-box"><h4>月度GMV vs 补贴 vs ROI</h4><canvas id="mChart"></canvas></div>
+<div class="chart-box"><h4>月度客单价与订单数</h4><canvas id="aspChart"></canvas></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>月份</th><th>活动GMV(¥)</th><th>补贴(¥)</th><th>订单数</th><th>客单价(¥)</th><th>ROI</th><th>GMV环比</th><th>补贴环比</th></tr></thead><tbody>
+<tr><td><b>5月</b></td><td>136,319</td><td>110,040</td><td>4,746</td><td>28.72</td><td><b class="orange">1.24</b></td><td class="">-</td><td>-</td></tr><tr><td><b>6月</b></td><td>182,154</td><td>144,085</td><td>6,159</td><td>29.58</td><td><b class="orange">1.26</b></td><td class="green">+33.6%</td><td>+30.9%</td></tr><tr><td><b>7月</b></td><td>196,732</td><td>149,008</td><td>6,453</td><td>30.49</td><td><b class="orange">1.32</b></td><td class="green">+8.0%</td><td>+3.4%</td></tr></tbody></table></div>
+<div class="grid2">
+<div class="diag-box diag-growth"><h4>增长点</h4>
+<p style="font-size:.8em">GMV持续增长：5月¥136,319→6月¥182,154(+33.6%)→7月¥196,732(+8.0%)。<br>
+客单价提升：¥28.72→¥30.49(+6.2%)，价增驱动GMV增长。</p></div>
+<div class="diag-box diag-weak"><h4>劣势点</h4>
+<p style="font-size:.8em">补贴增速(35.4%)快于GMV增速(44.3%)，效率递减。<br>
+ROI从1.24降至1.32(--0.08)，每1元补贴能撬动的GMV在下降。</p></div>
+<div class="diag-box diag-conc"><h4>诊断结论</h4>
+<p style="font-size:.8em">GMV增长依赖加大补贴投入，而非效率提升。7月补贴比5月多投入¥38,968，但ROI反而下降。建议控制低效补贴，将预算转向高效活动。</p></div>
+</div>
+</div>
+<div class="section"><div class="section-title"><span class="section-num">3</span>活动效率排行榜与诊断</div>
+<div class="grid2">
+<div class="chart-box"><h4>活动ROI排行榜</h4><canvas id="roiChart" class="cv"></canvas></div>
+<div class="chart-box"><h4>帕累托：预算集中度</h4><canvas id="paretoChart" class="cv"></canvas></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>排名</th><th>活动类型</th><th>总金额(¥)</th><th>占比</th><th>累计%</th><th>ROI</th><th>平台承担(¥)</th><th>商家承担(¥)</th><th>评级</th></tr></thead><tbody>
+<tr><td>1</td><td><b>支付红包</b></td><td>256,058</td><td>39.2%</td><td>39.2%</td><td><b class="">2.16</b></td><td>86,798</td><td>171,371</td><td><span class="badge b-orange">C·警戒</span></td></tr><tr><td>2</td><td><b>商品折扣/特价</b></td><td>167,919</td><td>25.7%</td><td>64.9%</td><td><b class="">2.62</b></td><td>97</td><td>54,188</td><td><span class="badge b-orange">C·警戒</span></td></tr><tr><td>3</td><td><b>店铺满减</b></td><td>160,541</td><td>24.6%</td><td>89.5%</td><td><b class="red">1.27</b></td><td>642</td><td>20,027</td><td><span class="badge b-red">D·低效</span></td></tr><tr><td>4</td><td><b>减配送费</b></td><td>59,765</td><td>9.2%</td><td>98.7%</td><td><b class="green">8.64</b></td><td>3,167</td><td>54,618</td><td><span class="badge b-blue">B·良好</span></td></tr><tr><td>5</td><td><b>门店新客立减</b></td><td>5,053</td><td>0.8%</td><td>99.4%</td><td><b class="green">31.39</b></td><td>0</td><td>5,053</td><td><span class="badge b-green">A·高效</span></td></tr><tr><td>6</td><td><b>商家代金券</b></td><td>2,312</td><td>0.4%</td><td>99.8%</td><td><b class="green">11.37</b></td><td>220</td><td>2,092</td><td><span class="badge b-green">A·高效</span></td></tr><tr><td>7</td><td><b>平台津贴</b></td><td>1,445</td><td>0.2%</td><td>100.0%</td><td><b class="green">7.25</b></td><td>1,445</td><td>0</td><td><span class="badge b-blue">B·良好</span></td></tr></tbody></table></div>
+<div class="grid2">
+<div class="diag-box diag-growth"><h4>增长点：高效活动</h4>
+<p style="font-size:.8em"><b>门店新客立减</b>ROI=<b>31.4</b>最高，但投入仅占<b>0.8%</b>。<br>
+<b>加大投入可撬动更高GMV</b>：若投入翻倍至10,106，按现有ROI 理论上可新增GMV 158,614。<br>
+减配送费, 门店新客立减, 商家代金券 为高效梯队，建议追加预算20-50%。</p></div>
+<div class="diag-box diag-weak"><h4>劣势点：低效活动</h4>
+<p style="font-size:.8em"><b>店铺满减</b>ROI仅<b>1.3</b>最低，却占48,162预算。<br>
+<b>低效活动清理</b>：ROI&lt;2的活动共消耗¥160,541，削减30%可释放¥48,162转投高效活动。<br>
+店铺满减为最需优化的活动。</p></div>
+<div class="diag-box diag-conc"><h4>预算重分配建议</h4>
+<p style="font-size:.8em">前2类活动消耗80%预算。核心策略：<b>削减D级活动30%</b>→释放资金→<b>追加A级活动50%</b>→预计整体ROI可提升0.5~1.0。</p></div>
+</div>
+</div><div class="section"><div class="section-title"><span class="section-num">4</span>月度趋势分析</div>
+<div class="grid2">
+<div class="chart-box"><h4>GMV与补贴月度变化</h4><canvas id="barChart" class="cv"></canvas></div>
+<div class="chart-box"><h4>ROI与客单价趋势</h4><canvas id="lineChart" class="cv"></canvas></div>
+</div></div><div class="section"><div class="section-title"><span class="section-num">5</span>日度深度分析与异常识别</div>
+<div class="chart-box"><h4>5-7月每日活动实付 vs 活动补贴</h4><canvas id="dailyChart" style="max-height:420px"></canvas></div>
+<div class="table-wrap"><table>
+<thead><tr><th>异常类型</th><th>日期</th><th>GMV(¥)</th><th>订单数</th><th>客单价(¥)</th></tr></thead><tbody>
+<tr><td><span class="badge b-green">高峰日</span></td><td>05/30</td><td>8,685</td><td>269</td><td>32.29</td></tr><tr><td><span class="badge b-green">高峰日</span></td><td>07/19</td><td>8,583</td><td>271</td><td>31.67</td></tr><tr><td><span class="badge b-green">高峰日</span></td><td>06/18</td><td>8,537</td><td>218</td><td>39.16</td></tr><tr><td><span class="badge b-red">低谷日</span></td><td>05/07</td><td>2,283</td><td>84</td><td>27.18</td></tr><tr><td><span class="badge b-red">低谷日</span></td><td>05/08</td><td>2,467</td><td>93</td><td>26.53</td></tr><tr><td><span class="badge b-red">低谷日</span></td><td>05/06</td><td>2,670</td><td>91</td><td>29.34</td></tr></tbody></table></div>
+<div class="grid2">
+<div class="diag-box diag-growth"><h4>增长点：波动中抓机会</h4>
+<p style="font-size:.8em">最高单日GMV=<b>¥8,685</b>，是最低日的<b>3.8倍</b>。<br>
+高峰日共5天，合计贡献GMV 41,819占总515,205的8.1%。<br>
+<b>复制高峰策略</b>：分析高峰日的活动组合、天气、平台活动叠加。</p></div>
+<div class="diag-box diag-weak"><h4>劣势点：低谷日消耗</h4>
+<p style="font-size:.8em">最低单日GMV仅¥2,283，低谷日持续投放补贴但转化极低。<br>
+低谷日补贴ROI仅1.3，远低于均值。<br>
+<b>建议低谷日减少投放</b>，将补贴集中在需求高峰日。</p></div>
+<div class="diag-box diag-conc"><h4>诊断结论</h4>
+<p style="font-size:.8em">日度波动大，5%的天数贡献超8%的GMV。<br>
+活动投放应"削峰填谷"调整为"追峰避谷"——<b>高峰日加码、低谷日收缩</b>。</p></div>
+</div>
+</div><div class="section"><div class="section-title"><span class="section-num">6</span>总结与行动建议</div>
+<div class="summary-box">
+<h3>综合诊断结论</h3>
+<table><thead><tr><th>维度</th><th>当前表现</th><th>评级</th><th>关键行动</th></tr></thead><tbody>
+<tr><td><b>GMV增长</b></td><td>5→7月+44.3%，持续上升</td><td><span class="badge b-green">健康</span></td><td>保持增长节奏，关注增速是否放缓</td></tr>
+<tr><td><b>补贴效率</b></td><td>ROI=1.28，呈下降趋势</td><td><span class="badge b-orange">警戒</span></td><td>削减D级活动30%，追加A级50%</td></tr>
+<tr><td><b>活动结构</b></td><td>前3类占90%预算</td><td><span class="badge b-blue">可优化</span></td><td>减少低效支付红包，加大新客立减</td></tr>
+<tr><td><b>客单价</b></td><td>¥28.72→¥30.49(+6.2%)</td><td><span class="badge b-green">健康</span></td><td>通过提高满减门槛进一步推升</td></tr>
+<tr><td><b>日度波动</b></td><td>最高日¥8,685/最低日¥2,283</td><td><span class="badge b-orange">需管控</span></td><td>追峰避谷：高峰加码，低谷收缩</td></tr>
+</tbody></table>
+</div>
+
+<div class="grid2">
+<div class="diag-box diag-growth"><h4>P0·立即执行(本周)</h4>
+<p style="font-size:.8em">1. 削减<b>支付红包</b>预算30%（ROI仅2.2），释放¥76,817<br>
+2. <b>新客立减</b>预算翻倍（ROI=31.4最高）<br>
+3. 低谷日暂停满减投放，集中在高峰日</p></div>
+<div class="diag-box diag-weak"><h4>P1·短期优化(2-4周)</h4>
+<p style="font-size:.8em">1. 满减门槛从¥25提至¥30，降低无效补贴<br>
+2. 代金券定向高客单人群，控制发放量<br>
+3. 分析高峰日活动组合，形成可复制模板</p></div>
+</div>
+</div><div class="footer">V4.0 | 活动诊断报告 | 路径2+3取数 | 已过滤已取消+无效 | 2026-08-11</div></div><script>
+function renderCharts(){
+try{if(typeof Chart==='undefined'){console.error('Chart未加载');return;}}catch(e){return;}
+try{Chart.register(ChartDataLabels);}catch(e){console.warn('register:',e);}
+var fc={display:true,color:'#2c3e50',font:{weight:'bold',size:11}};
+var fcs={display:true,color:'#2c3e50',font:{size:9}};
+//ROI排行榜
+(function(){var c=document.getElementById('roiChart');if(!c)return;c=c.getContext('2d');
+new Chart(c,{type:'bar',data:{labels:["\u652f\u4ed8\u7ea2\u5305", "\u5546\u54c1\u6298\u6263/\u7279\u4ef7", "\u5e97\u94fa\u6ee1\u51cf", "\u51cf\u914d\u9001\u8d39", "\u95e8\u5e97\u65b0\u5ba2\u7acb\u51cf", "\u5546\u5bb6\u4ee3\u91d1\u5238", "\u5e73\u53f0\u6d25\u8d34"],datasets:[{label:'ROI',data:[2.16, 2.62, 1.27, 8.64, 31.39, 11.37, 7.25],backgroundColor:["#C41E3A", "#e74c3c", "#D4A754", "#27ae60", "#e67e22", "#3498db", "#8e44ad"],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',scales:{x:{title:{display:true,text:'ROI'}}},plugins:{legend:{display:false},datalabels:{anchor:'end',align:'end',color:'#2c3e50',font:{weight:'bold',size:12},formatter:function(v){return v.toFixed(2)}}}}});
+})();
+//帕累托
+(function(){var c=document.getElementById('paretoChart');if(!c)return;c=c.getContext('2d');
+new Chart(c,{type:'bar',data:{labels:["\u652f\u4ed8\u7ea2\u5305", "\u5546\u54c1\u6298\u6263/\u7279\u4ef7", "\u5e97\u94fa\u6ee1\u51cf", "\u51cf\u914d\u9001\u8d39", "\u95e8\u5e97\u65b0\u5ba2\u7acb\u51cf", "\u5546\u5bb6\u4ee3\u91d1\u5238", "\u5e73\u53f0\u6d25\u8d34"],datasets:[
+{label:'占比(%)',data:[39.2, 25.7, 24.6, 9.2, 0.8, 0.4, 0.2],backgroundColor:'#3498db',yAxisID:'y',borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#3498db',font:{size:9},formatter:function(v){return v+'%'}}},
+{label:'累计(%)',data:[39.206941532322524, 64.91829413059538, 89.49990708839024, 98.65102080889325, 99.4247227932819, 99.7787607367419, 100.0],borderColor:'#C41E3A',type:'line',yAxisID:'y1',borderWidth:3,pointRadius:5,pointBackgroundColor:'#C41E3A',fill:false,tension:.3,datalabels:{display:false}}
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{position:'left',title:{display:true,text:'占比(%)'},max:110},y1:{position:'right',title:{display:true,text:'累计(%)'},max:110,grid:{drawOnChartArea:false}}},plugins:{legend:{position:'bottom'}}}});
+})();
+//月度综合
+(function(){var c=document.getElementById('mChart');if(!c)return;c=c.getContext('2d');
+new Chart(c,{type:'bar',data:{labels:["5\u6708", "6\u6708", "7\u6708"],datasets:[
+{label:'活动GMV(¥)',data:[136318.62, 182154.35, 196732.48],backgroundColor:'#3498db',borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#3498db',font:{size:9},formatter:function(v){return '¥'+(v/10000).toFixed(1)+'万'}}},
+{label:'活动补贴(¥)',data:[110040.29, 144084.57, 149007.79],backgroundColor:'#e67e22',borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#e67e22',font:{size:9},formatter:function(v){return '¥'+(v/10000).toFixed(1)+'万'}}}
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'金额(¥)'}}},plugins:{legend:{position:'bottom'}}}});
+})();
+//客单价
+(function(){var c=document.getElementById('aspChart');if(!c)return;c=c.getContext('2d');
+new Chart(c,{type:'bar',data:{labels:["5\u6708", "6\u6708", "7\u6708"],datasets:[
+{label:'客单价(¥)',data:[28.72, 29.58, 30.49],backgroundColor:'#27ae60',borderRadius:6,yAxisID:'y',datalabels:{anchor:'end',align:'end',color:'#27ae60',font:{size:10},formatter:function(v){return '¥'+v.toFixed(2)}}},
+{label:'订单数',data:[4746.0, 6159.0, 6453.0],backgroundColor:'#8e44ad',borderRadius:6,yAxisID:'y1',datalabels:{anchor:'end',align:'end',color:'#8e44ad',font:{size:10},formatter:function(v){return v.toLocaleString()}}}
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{position:'left',title:{display:true,text:'客单价(¥)'}},y1:{position:'right',title:{display:true,text:'订单数'},grid:{drawOnChartArea:false}}},plugins:{legend:{position:'bottom'}}}});
+})();
+//月度柱状
+(function(){var c=document.getElementById('barChart');if(!c)return;c=c.getContext('2d');
+new Chart(c,{type:'bar',data:{labels:["5\u6708", "6\u6708", "7\u6708"],datasets:[
+{label:'活动GMV(¥)',data:[136318.62, 182154.35, 196732.48],backgroundColor:'#3498db',borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#3498db',font:{size:10},formatter:function(v){return '¥'+(v/10000).toFixed(1)+'万'}}},
+{label:'活动补贴(¥)',data:[110040.29, 144084.57, 149007.79],backgroundColor:'#e67e22',borderRadius:6,datalabels:{anchor:'end',align:'end',color:'#e67e22',font:{size:10},formatter:function(v){return '¥'+(v/10000).toFixed(1)+'万'}}}
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'金额(¥)'}}},plugins:{legend:{position:'bottom'}}}});
+})();
+//折线
+(function(){var c=document.getElementById('lineChart');if(!c)return;c=c.getContext('2d');
+new Chart(c,{type:'line',data:{labels:["5\u6708", "6\u6708", "7\u6708"],datasets:[
+{label:'ROI',data:[1.24, 1.26, 1.32],borderColor:'#27ae60',backgroundColor:'rgba(39,174,96,0.1)',fill:true,tension:.4,borderWidth:3,pointRadius:7,pointBackgroundColor:'#27ae60',yAxisID:'y',datalabels:{anchor:'end',align:'top',color:'#27ae60',font:{weight:'bold',size:12},formatter:function(v){return v.toFixed(2)},offset:6}},
+{label:'客单价(¥)',data:[28.72, 29.58, 30.49],borderColor:'#8e44ad',backgroundColor:'rgba(142,68,173,0.05)',fill:true,tension:.4,borderWidth:2,borderDash:[5,5],pointRadius:6,pointBackgroundColor:'#8e44ad',yAxisID:'y1',datalabels:{anchor:'end',align:'top',color:'#8e44ad',font:{size:10},formatter:function(v){return '¥'+v.toFixed(2)},offset:4}}
+]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{position:'left',title:{display:true,text:'ROI'}},y1:{position:'right',title:{display:true,text:'客单价(¥)'},grid:{drawOnChartArea:false}}},plugins:{legend:{position:'bottom'}}}});
+})();
+//日度
+(function(){var c=document.getElementById('dailyChart');if(!c)return;c=c.getContext('2d');
+new Chart(c,{type:'line',data:{labels:["05/01", "05/02", "05/03", "05/04", "05/05", "05/06", "05/07", "05/08", "05/09", "05/10", "05/11", "05/12", "05/13", "05/14", "05/15", "05/16", "05/17", "05/18", "05/19", "05/20", "05/21", "05/22", "05/23", "05/24", "05/25", "05/26", "05/27", "05/28", "05/29", "05/30", "05/31", "06/01", "06/02", "06/03", "06/04", "06/05", "06/06", "06/07", "06/08", "06/09", "06/10", "06/11", "06/12", "06/13", "06/14", "06/15", "06/16", "06/17", "06/18", "06/19", "06/20", "06/21", "06/22", "06/23", "06/24", "06/25", "06/26", "06/27", "06/28", "06/29", "06/30", "07/01", "07/02", "07/03", "07/04", "07/05", "07/06", "07/07", "07/08", "07/09", "07/10", "07/11", "07/12", "07/13", "07/14", "07/15", "07/16", "07/17", "07/18", "07/19", "07/20", "07/21", "07/22", "07/23", "07/24", "07/25", "07/26", "07/27", "07/28", "07/29", "07/30", "07/31"],datasets:[
+{label:'活动实付(¥)',data:[3270.41, 2842.06, 3760.13, 3713.78, 3692.89, 2669.57, 2283.21, 2467.4, 2964.11, 4071.43, 2845.75, 3199.98, 3588.51, 3891.64, 3768.78, 4670.57, 4710.46, 3732.67, 4373.49, 4681.97, 4635.02, 4962.57, 7281.74, 7847.56, 4716.15, 4451.33, 4446.8, 4421.63, 5699.48, 8685.48, 7972.05, 5049.63, 5436.4, 5919.46, 6225.9, 6051.86, 7653.62, 6615.36, 4920.4, 5143.99, 5180.87, 5223.02, 6070.33, 7589.98, 6645.65, 4751.16, 6745.49, 5729.15, 8537.31, 7669.78, 7528.91, 6659.54, 4238.61, 4938.53, 6048.61, 5572.89, 6228.5, 6361.01, 6129.68, 6157.51, 5131.2, 6738.74, 5514.86, 5783.77, 6206.53, 6597.38, 5721.03, 5743.02, 5864.93, 4971.47, 6970.79, 7550.47, 7185.24, 5912.8, 5378.55, 6045.2, 6125.75, 6508.47, 7076.87, 8582.67, 6182.0, 6426.15, 5743.78, 6178.48, 6197.9, 8041.32, 7339.71, 5501.61, 5584.36, 5862.06, 5885.13, 7311.44],borderColor:'#3498db',backgroundColor:'rgba(52,152,219,0.04)',fill:true,tension:.3,borderWidth:1.5,pointRadius:0,datalabels:{display:false}},
+{label:'活动补贴(¥)',data:[2687.04, 2415.3, 2814.72, 2980.78, 2791.32, 2062.89, 1722.05, 1952.28, 2371.34, 2813.73, 2128.15, 2406.22, 2864.94, 2969.42, 3117.74, 4060.78, 4192.5, 3078.78, 3580.11, 3820.65, 3686.77, 3811.79, 6252.09, 6552.25, 3310.12, 3502.84, 3543.88, 3542.47, 4497.54, 7251.8, 7258.0, 4124.75, 4753.33, 5551.45, 5393.06, 5298.83, 6499.87, 6018.25, 3808.66, 3918.39, 3796.8, 4013.83, 4850.26, 6218.2, 5620.4, 3740.75, 4897.13, 4331.56, 5341.77, 6378.87, 5710.35, 5220.43, 3205.89, 3933.1, 4430.0, 3695.65, 4902.99, 4911.76, 5105.41, 4323.34, 4089.49, 4904.5, 4433.39, 4482.89, 5172.51, 5300.57, 4266.27, 4282.18, 4265.45, 3793.35, 4644.59, 5449.76, 6108.35, 4333.25, 3946.52, 4487.75, 4807.17, 4635.97, 5827.11, 7374.06, 4963.14, 4726.88, 4428.64, 3939.44, 4293.28, 6261.44, 5797.93, 4024.69, 4289.17, 4106.22, 4572.12, 5089.2],borderColor:'#C41E3A',backgroundColor:'rgba(196,30,58,0.04)',fill:true,tension:.3,borderWidth:1.5,pointRadius:0,datalabels:{display:false}}
+]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},scales:{x:{ticks:{font:{size:6},maxTicksLimit:25}},y:{title:{display:true,text:'金额(¥)'}}},plugins:{legend:{position:'bottom'}}}});
+})();
+}catch(e){console.error('chart render err:',e);}}
+document.addEventListener('chartReady',renderCharts);
+window.addEventListener('load',function(){
+  if(window.__chartReady){renderCharts();}
+  else{setTimeout(function(){if(window.__chartReady){renderCharts();}else{console.error('Chart.js最终未加载');}},1000);}
+});
+</script></body></html>
