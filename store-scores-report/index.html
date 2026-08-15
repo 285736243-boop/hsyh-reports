@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三平台评分分析报告（20260716-0814）</title>
+<style>
+  body { font-family: "Microsoft YaHei", sans-serif; margin: 0; padding: 24px 16px; background: #f5f7fa; color: #222; }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 28px 0 10px; border-left: 4px solid #0969da; padding-left: 10px; }
+  .sub { color: #666; font-size: 13px; margin-bottom: 20px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; margin-bottom: 24px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  .kpi .v { font-size: 22px; font-weight: 700; }
+  .kpi .l { font-size: 12px; color: #666; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.08); font-size: 13px; margin-bottom: 10px; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+  th { background: #1f2328; color: #fff; font-weight: 600; }
+  tr:hover td { background: #f0f7ff; }
+  .stata { background: #0d1117; color: #e6edf3; border-radius: 8px; padding: 16px; font-family: Consolas, monospace; font-size: 12px; white-space: pre-wrap; }
+  .hl { background: #fff8c5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>三平台评分分析报告 <span style="font-size:13px;color:#0969da">（门店聚合 20260716-0814）</span></h1>
+<div class="sub">数据：美团 990 + 淘宝 1,445 + 京东 530 = 2,965 家门店 ｜ 有评分 1,691 家（57%）｜ 含 Stata 统计检验</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="v">2,965</div><div class="l">全量门店</div></div>
+  <div class="kpi"><div class="v">1,691</div><div class="l">有评分门店</div></div>
+  <div class="kpi"><div class="v">4.51</div><div class="l">总体评分均值</div></div>
+  <div class="kpi"><div class="v">21</div><div class="l" style="color:#cf222e">高危门店(&lt;3.5)</div></div>
+  <div class="kpi"><div class="v">143</div><div class="l" style="color:#bf8700">关注门店(3.5-4)</div></div>
+  <div class="kpi"><div class="v">1042</div><div class="l" style="color:#1a7f37">优质门店(≥4.5)</div></div>
+</div>
+
+<h2>① 平台评分对比</h2>
+<table>
+<tr><th>平台</th><th>有评分门店</th><th>均值</th><th>中位数</th><th>最低</th><th>最高</th></tr>
+<tr><td>京东</td><td>530</td><td>4.52</td><td>4.74</td><td>3.0</td><td>5.0</td></tr>
+<tr><td>淘宝</td><td>439</td><td>4.59</td><td>4.80</td><td>2.0</td><td>5.0</td></tr>
+<tr><td>美团</td><td>722</td><td>4.44</td><td>4.50</td><td>2.9</td><td>4.9</td></tr>
+
+</table>
+<div class="sub">💡 美团评分均值最低（4.44），淘宝最高（4.59）。下方 Stata 检验确认差异显著。</div>
+
+<h2>② 评分分层（差评风险）</h2>
+<table>
+<tr><th>平台</th><th>优质(≥4.5)</th><th>关注(3.5-4.0)</th><th>良好(4.0-4.5)</th><th>高危(<3.5)</th></tr>
+<tr><td>京东</td><td>324</td><td>95</td><td>110</td><td>1</td></tr>
+<tr><td>淘宝</td><td>306</td><td>26</td><td>91</td><td>16</td></tr>
+<tr><td>美团</td><td>412</td><td>22</td><td>284</td><td>4</td></tr>
+
+</table>
+<div class="sub">💡 高危 21 家（1.2%）+ 关注 143 家；淘宝高危最多（16家）但优质也多（306家）——两极分化。</div>
+
+<h2>③ 高危门店 Top20（评分 &lt; 3.5，需优先整改）</h2>
+<table>
+<tr><th>平台</th><th>门店名称</th><th>C门店ID</th><th>评分</th></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(泉州晋江新城吾悦店)</td><td>C04502</td><td style='color:#cf222e;font-weight:700'>2.0</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(九里象湖店)</td><td>C00312</td><td style='color:#cf222e;font-weight:700'>2.8</td></tr>
+<tr><td>淘宝</td><td>煌上煌·卤味(大连庄河万达店)</td><td>C12488</td><td style='color:#cf222e;font-weight:700'>2.8</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(兴华中路店)</td><td>C05446</td><td style='color:#cf222e;font-weight:700'>2.8</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(九江十里前进东路店)</td><td>C11662</td><td style='color:#cf222e;font-weight:700'>2.8</td></tr>
+<tr><td>美团</td><td>煌上煌酱鸭（九龙湖青原山路店）</td><td>C11442</td><td style='color:#cf222e;font-weight:700'>2.9</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(抚南广昌解放路店)</td><td>C00892</td><td style='color:#cf222e;font-weight:700'>2.9</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(鹰抚上顿渡诺贝尔国际店)</td><td>C14452</td><td style='color:#cf222e;font-weight:700'>3.0</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(九江德化路中辉店)</td><td>C00711</td><td style='color:#cf222e;font-weight:700'>3.0</td></tr>
+<tr><td>京东</td><td>煌上煌酱鸭(鹰抚东乡东信财富广场店)</td><td>C00470</td><td style='color:#cf222e;font-weight:700'>3.0</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(经开榴云路店)</td><td>C10822</td><td style='color:#cf222e;font-weight:700'>3.0</td></tr>
+<tr><td>美团</td><td>煌上煌酱鸭（兴国五福广场店）</td><td>C09704</td><td style='color:#cf222e;font-weight:700'>3.0</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(万象城金街店)</td><td>C15076</td><td style='color:#cf222e;font-weight:700'>3.2</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(宝安区龙华大润发店)</td><td>C02395</td><td style='color:#cf222e;font-weight:700'>3.2</td></tr>
+<tr><td>美团</td><td>煌上煌酱鸭（惠东大岭店）</td><td>C02536</td><td style='color:#cf222e;font-weight:700'>3.3</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(东莞长盛广场店)</td><td>C02583</td><td style='color:#cf222e;font-weight:700'>3.3</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(朝农店)</td><td>C00189</td><td style='color:#cf222e;font-weight:700'>3.3</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(惠州新圩店)</td><td>C02229</td><td style='color:#cf222e;font-weight:700'>3.3</td></tr>
+<tr><td>淘宝</td><td>煌上煌酱鸭(九江大树下店)</td><td>C04965</td><td style='color:#cf222e;font-weight:700'>3.4</td></tr>
+<tr><td>美团</td><td>煌上煌酱鸭（瑶池公寓店）</td><td>C08735</td><td style='color:#cf222e;font-weight:700'>3.4</td></tr>
+
+</table>
+
+<h2>④ Stata 统计检验（平台差异显著性）</h2>
+<div class="stata">. regress score has_order i.platform
+
+      Source |       SS           df       MS      Number of obs   =     1,691
+-------------+----------------------------------   F(3, 1687)      =     12.46
+       Model |  6.68803889         3   2.2293463   Prob > F        =    0.0000
+    Residual |  301.930123     1,687  .178974584   R-squared       =    0.0217
+-------------+----------------------------------   Adj R-squared   =    0.0199
+       Total |  308.618162     1,690  .182614297   Root MSE        =    .42305
+
+------------------------------------------------------------------------------
+       score | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   has_order |   .1305816   .0710486     1.84   0.066     -.008771    .2699343
+             |
+    platform |
+          2  |   .1426996   .0257359     5.54   0.000     .0922221    .1931772
+          3  |   .2003862   .0719901     2.78   0.005     .0591868    .3415856
+             |
+       _cons |   4.319708   .0696053    62.06   0.000     4.183186   4.45623
+------------------------------------------------------------------------------</div>
+
+<h2>⑤ Stata 结论（统计验证）</h2>
+<table>
+<tr><th style="width:35%">检验项</th><th>结果</th><th>业务解读</th></tr>
+<tr><td>平台整体差异 (F检验)</td><td>F(3,1687)=12.46, <b>p&lt;0.001</b></td><td>三平台评分存在显著差异，非随机波动</td></tr>
+<tr><td>淘宝 vs 美团</td><td>系数 +0.143, <b>p&lt;0.001</b></td><td>淘宝显著高于美团 0.14 分</td></tr>
+<tr><td>京东 vs 美团</td><td>系数 +0.200, <b>p=0.005</b></td><td>京东显著高于美团 0.20 分</td></tr>
+<tr><td>有订单 vs 无订单</td><td>p=0.066（不显著）</td><td>有无订单对评分无统计显著影响</td></tr>
+</table>
+
+<h2>⑥ 核心结论与建议</h2>
+<table>
+<tr><th style="width:30%">发现</th><th>建议</th></tr>
+<tr><td>🔴 <b>美团评分显著垫底</b>（4.44 vs 淘宝4.59）</td><td>美团是整改重点：查差评原因（口味/份量/包装），对照口碑客诉库</td></tr>
+<tr><td>🟡 <b>21 家高危门店</b>（评分&lt;3.5）</td><td>优先逐个整改，列 Top20 清单（见③）</td></tr>
+<tr><td>🟡 淘宝两极分化（高危16家+优质306家）</td><td>优秀门店经验复制到高危门店</td></tr>
+<tr><td>🟢 京东评分健康（4.52，仅1家高危）</td><td>保持，关注530家订单字段待补</td></tr>
+</table>
+
+<div class="sub" style="margin-top:20px">报告生成：一键分析流水线 + Python 全库分析 + Stata 统计检验（2026-08-16）</div>
+</div>
+</body>
+</html>
