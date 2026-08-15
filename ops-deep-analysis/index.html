@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>煌上煌5门店双平台外卖运营深度分析报告</title>
+<style>
+:root{--primary:#2563EB;--success:#10B981;--warning:#F59E0B;--danger:#EF4444;--mt:#FFD100;--tb:#FF6B35;--bg:#F8FAFC;--card:#FFF;--text:#1E293B;--text2:#64748B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:24px}
+.container{max-width:1400px;margin:0 auto}
+h1{font-size:26px;border-bottom:4px solid var(--primary);padding-bottom:12px;margin-bottom:4px}
+h2{font-size:20px;border-left:5px solid var(--primary);padding-left:12px;margin:32px 0 14px}
+h3{font-size:16px;color:#1E40AF;margin:18px 0 10px}
+.subtitle{color:var(--text2);font-size:13px;margin-bottom:16px}
+.meta-bar{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 16px;font-size:12px;color:var(--text2)}
+.meta-bar span{background:white;padding:4px 12px;border-radius:20px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.phase{display:inline-block;padding:4px 12px;border-radius:6px;font-size:13px;font-weight:700;margin-right:8px}
+.p1{background:#DBEAFE;color:#1E40AF}.p2{background:#FEF3C7;color:#92400E}.p3{background:#D1FAE5;color:#065F46}.p4{background:#FEE2E2;color:#991B1B}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+.kpi-card{background:white;padding:14px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);border-top:4px solid var(--primary)}
+.kpi-card.orange{border-top-color:var(--tb)}.kpi-card.green{border-top-color:var(--success)}.kpi-card.purple{border-top-color:#8B5CF6}.kpi-card.danger{border-top-color:var(--danger)}
+.kpi-label{color:var(--text2);font-size:11px;margin-bottom:4px}.kpi-value{font-size:20px;font-weight:700}.kpi-sub{color:#94A3B8;font-size:10px;margin-top:2px}
+
+table{width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:12px;margin:12px 0}
+th{background:#1E40AF;color:white;padding:8px 10px;text-align:center;font-weight:600;font-size:11px}
+td{padding:8px 10px;border-bottom:1px solid #E2E8F0;text-align:center}
+tr:hover{background:#F1F5F9}
+.up{color:var(--success);font-weight:700}.down{color:var(--danger);font-weight:700}
+
+.info-box{background:linear-gradient(135deg,#DBEAFE,#BFDBFE);border-left:5px solid var(--primary);padding:14px 18px;border-radius:8px;margin:12px 0}
+.success-box{background:linear-gradient(135deg,#D1FAE5,#A7F3D0);border-left:5px solid var(--success);padding:14px 18px;border-radius:8px;margin:12px 0}
+.warning-box{background:linear-gradient(135deg,#FEF3C7,#FDE68A);border-left:5px solid var(--warning);padding:14px 18px;border-radius:8px;margin:12px 0}
+.danger-box{background:linear-gradient(135deg,#FEE2E2,#FECACA);border-left:5px solid var(--danger);padding:14px 18px;border-radius:8px;margin:12px 0}
+h4{font-size:14px;margin-bottom:8px}ol,ul{margin-left:24px;margin-top:6px}
+
+.funnel{display:flex;justify-content:space-between;align-items:flex-end;margin:14px 0;gap:4px}
+.funnel-step{flex:1;text-align:center}
+.funnel-box{padding:16px 8px;border-radius:6px;color:white;font-weight:700}
+.funnel-s1 .funnel-box{background:linear-gradient(180deg,#3B82F6,#1D4ED8)}
+.funnel-s2 .funnel-box{background:linear-gradient(180deg,#60A5FA,#2563EB)}
+.funnel-s3 .funnel-box{background:linear-gradient(180deg,#10B981,#047857)}
+.funnel-num{font-size:18px}.funnel-lbl{font-size:10px;margin-top:4px}
+.funnel-rate{font-size:11px;color:#fff;background:rgba(0,0,0,.2);padding:2px 6px;border-radius:10px;margin-top:4px;display:inline-block}
+
+.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600}
+.tag-p0{background:#FEE2E2;color:#991B1B}.tag-p1{background:#FEF3C7;color:#92400E}.tag-p2{background:#D1FAE5;color:#065F46}
+
+.rank-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}
+.rank-card{background:white;padding:14px;border-radius:8px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.08);border-top:4px solid #94A3B8}
+.rank-card.r1{border-top-color:#F59E0B;background:linear-gradient(135deg,#FFFBEB,#FEF3C7)}
+.rank-card.r2{border-top-color:#94A3B8;background:linear-gradient(135deg,#F8FAFC,#E2E8F0)}
+.rank-card.r3{border-top-color:#B45309;background:linear-gradient(135deg,#FEF3C7,#FED7AA)}
+.rank-num{font-size:24px;font-weight:800;color:#1E40AF}.rank-name{font-size:13px;font-weight:600;margin-top:4px}
+.rank-pay{font-size:16px;color:#DC2626;font-weight:700;margin:4px 0}.rank-meta{font-size:10px;color:#64748B}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0}
+.footer{margin-top:32px;padding:16px;text-align:center;color:var(--text2);font-size:11px;border-top:1px solid #E2E8F0}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>煌上煌 5门店双平台外卖运营深度分析报告</h1>
+<div class="subtitle">基于自有分析框架 · 四阶段闭环 · 月度+周度环比 · 完整漏斗模型 · 关联42份平台资料知识库</div>
+<div class="meta-bar">
+  <span>📅 周期：2026年2-7月</span><span>🏪 门店：5家煌上煌热卤</span><span>📊 平台：美团外卖</span>
+  <span>🔧 框架：v1.0四阶段闭环</span><span>📚 知识库：42份资料+9平台调研</span>
+  <span>💰 模型：原价÷1.35=售价, 售价×0.45=成本</span>
+</div>
+
+<!-- ===== 口径说明 ===== -->
+<div class="info-box"><h4>📐 计算口径与数据来源</h4>
+<ul>
+<li><b>数据源</b>：美团外卖门店_全部门店 CSV（2026年2-7月），5个目标门店</li>
+<li><b>曝光次数</b>：门店在美团外卖被展示的总次数</li>
+<li><b>入店次数</b>：用户点击进入门店页面的总次数</li>
+<li><b>有效订单</b>：成功支付的有效订单数</li>
+<li><b>进店转化率 = 入店次数 ÷ 曝光次数</b>（衡量头图/标题/评分吸引力）</li>
+<li><b>下单转化率 = 有效订单 ÷ 入店次数</b>（衡量菜单/价格/内容转化力）</li>
+<li><b>整体转化率 = 有效订单 ÷ 曝光次数</b>（综合漏斗效率）</li>
+<li><b>活动率 = 商家活动支出 ÷ 顾客实付</b>（商家补贴比例）</li>
+<li><b>总补贴率 = (商家活动 + 平台补贴) ÷ 顾客实付</b></li>
+<li><b>门店售价 = 商品原价 ÷ 1.35</b>（扣平台佣金后的门店实收价）</li>
+<li><b>门店成本 = 售价 × 0.45</b>（成本率45%，含食材/人工/房租）</li>
+<li><b>毛利 = 售价 - 成本</b>，<b>毛利率 = 毛利 ÷ 售价</b></li>
+<li><b>新客/老客</b>：美团按用户历史下单行为分类，首次下单为新客</li>
+</ul></div>
+
+<!-- ===== 阶段一 ===== -->
+<h2><span class="phase p1">阶段一</span> 数据分析 — 核心指标总览</h2>
+
+<div class="kpi-grid">
+<div class="kpi-card"><div class="kpi-label">7月美团实付合计</div><div class="kpi-value">Y111,680</div><div class="kpi-sub">5店合计 · 日均约Y3,603</div></div>
+<div class="kpi-card orange"><div class="kpi-label">7月美团订单合计</div><div class="kpi-value">3,046单</div><div class="kpi-sub">客单价Y36.7 · 日均98单</div></div>
+<div class="kpi-card green"><div class="kpi-label">曝光→入店→订单漏斗</div><div class="kpi-value">357,881</div><div class="kpi-sub">→20,767入店(5.80%)→3,046下单(14.67%)</div></div>
+<div class="kpi-card purple"><div class="kpi-label">新客/老客订单</div><div class="kpi-value">1872/1129</div><div class="kpi-sub">老客占比37.6% · 老客下单率是新客2-3倍</div></div>
+</div>
+
+<div class="kpi-grid">
+<div class="kpi-card"><div class="kpi-label">商家活动支出</div><div class="kpi-value">Y51,003</div><div class="kpi-sub">活动率45.7%（对标行业30-50%，偏高）</div></div>
+<div class="kpi-card orange"><div class="kpi-label">平台活动补贴</div><div class="kpi-value">Y15,837</div><div class="kpi-sub">平台补贴占比14.2%</div></div>
+<div class="kpi-card green"><div class="kpi-label">综合补贴率</div><div class="kpi-value">59.8%</div><div class="kpi-sub">每Y1实付含Y0.60补贴（行业健康线<50%）</div></div>
+<div class="kpi-card danger"><div class="kpi-label">客单价</div><div class="kpi-value">Y36.7</div><div class="kpi-sub">对标卤味行业Y35-40，达标</div></div>
+</div>
+
+<!-- 排名 -->
+<h3>5门店实付排名（7月）</h3>
+<div class="rank-row"><div class="rank-card r1">
+<div class="rank-num">1</div>
+<div class="rank-name">C15009</div>
+<div class="rank-pay">Y26,574</div>
+<div class="rank-meta">686单 · 客单Y38.7</div>
+<div class="rank-meta">进店率4.92% · 下单率15.64%</div>
+<div class="rank-meta">活动率39.9% · 老客占比31.2%</div>
+</div><div class="rank-card r2">
+<div class="rank-num">2</div>
+<div class="rank-name">C15019</div>
+<div class="rank-pay">Y24,697</div>
+<div class="rank-meta">696单 · 客单Y35.5</div>
+<div class="rank-meta">进店率4.85% · 下单率22.03%</div>
+<div class="rank-meta">活动率48.4% · 老客占比43.5%</div>
+</div><div class="rank-card r3">
+<div class="rank-num">3</div>
+<div class="rank-name">C15002</div>
+<div class="rank-pay">Y24,425</div>
+<div class="rank-meta">640单 · 客单Y38.2</div>
+<div class="rank-meta">进店率6.46% · 下单率14.89%</div>
+<div class="rank-meta">活动率41.0% · 老客占比32.7%</div>
+</div><div class="rank-card ">
+<div class="rank-num">4</div>
+<div class="rank-name">C14793</div>
+<div class="rank-pay">Y20,519</div>
+<div class="rank-meta">548单 · 客单Y37.4</div>
+<div class="rank-meta">进店率6.10% · 下单率12.36%</div>
+<div class="rank-meta">活动率48.1% · 老客占比44.0%</div>
+</div><div class="rank-card ">
+<div class="rank-num">5</div>
+<div class="rank-name">C14906</div>
+<div class="rank-pay">Y15,466</div>
+<div class="rank-meta">476单 · 客单Y32.5</div>
+<div class="rank-meta">进店率6.97% · 下单率10.60%</div>
+<div class="rank-meta">活动率55.3% · 老客占比34.0%</div>
+</div></div>
+<h3>月度实付环比（5月→6月→7月）</h3>
+<table>
+<thead><tr><th>门店</th><th>5月实付</th><th>6月实付</th><th>7月实付</th><th>6月环比</th><th>7月环比(5月基准)</th></tr></thead>
+<tbody><tr><td><b>C14793</b></td><td>Y19,129</td><td>Y15,140</td><td>Y20,519</td>
+<td class="up">+35.5%</td>
+<td class="up">+7.3%</td></tr><tr><td><b>C14906</b></td><td>Y13,475</td><td>Y13,261</td><td>Y15,466</td>
+<td class="up">+16.6%</td>
+<td class="up">+14.8%</td></tr><tr><td><b>C15002</b></td><td>Y18,642</td><td>Y21,956</td><td>Y24,425</td>
+<td class="up">+11.2%</td>
+<td class="up">+31.0%</td></tr><tr><td><b>C15009</b></td><td>Y4,742</td><td>Y34,265</td><td>Y26,574</td>
+<td class="down">-22.4%</td>
+<td class="up">+460.4%</td></tr><tr><td><b>C15019</b></td><td>Y18,272</td><td>Y25,721</td><td>Y24,697</td>
+<td class="down">-4.0%</td>
+<td class="up">+35.2%</td></tr></tbody></table>
+<h3>完整流量漏斗模型（5店合计）</h3>
+<div class="funnel">
+<div class="funnel-step funnel-s1"><div class="funnel-box"><div class="funnel-num">357,881</div><div class="funnel-lbl">曝光次数</div></div><div class="funnel-rate">100%</div></div>
+<div class="funnel-step funnel-s2"><div class="funnel-box"><div class="funnel-num">20,767</div><div class="funnel-lbl">入店次数</div></div><div class="funnel-rate">进店率 5.80%</div></div>
+<div class="funnel-step funnel-s3"><div class="funnel-box"><div class="funnel-num">3,046</div><div class="funnel-lbl">有效订单</div></div><div class="funnel-rate">下单率 14.67%</div></div>
+</div>
+
+<h3>新客 vs 老客 漏斗对比</h3>
+<table>
+<thead><tr><th>用户类型</th><th>曝光</th><th>入店</th><th>下单</th><th>进店率</th><th>下单率</th><th>下单占比</th></tr></thead>
+<tbody>
+<tr><td><b>新客</b></td><td>192,218</td><td>11,776</td><td>1872</td>
+<td>6.13%</td>
+<td>15.90%</td><td>62.4%</td></tr>
+<tr><td><b>老客</b></td><td>22,857</td><td>2,587</td><td>1129</td>
+<td>11.32%</td>
+<td>43.64%</td><td>37.6%</td></tr>
+</tbody></table>
+
+<h3>各门店漏斗对比</h3>
+<table>
+<thead><tr><th>门店</th><th>曝光</th><th>入店</th><th>订单</th><th>进店率</th><th>下单率</th><th>整体转化率</th></tr></thead>
+<tbody><tr><td><b>C15009</b></td><td>89,131</td><td>4,386</td><td>686</td>
+<td>4.92%</td><td>15.64%</td><td>0.77%</td></tr><tr><td><b>C15019</b></td><td>65,071</td><td>3,159</td><td>696</td>
+<td>4.85%</td><td>22.03%</td><td>1.07%</td></tr><tr><td><b>C15002</b></td><td>66,566</td><td>4,298</td><td>640</td>
+<td>6.46%</td><td>14.89%</td><td>0.96%</td></tr><tr><td><b>C14793</b></td><td>72,725</td><td>4,435</td><td>548</td>
+<td>6.10%</td><td>12.36%</td><td>0.75%</td></tr><tr><td><b>C14906</b></td><td>64,388</td><td>4,489</td><td>476</td>
+<td>6.97%</td><td>10.60%</td><td>0.74%</td></tr></tbody></table>
+<h3>7月5门店完整指标明细</h3>
+<table>
+<thead><tr><th>门店</th><th>实付</th><th>订单</th><th>客单价</th><th>曝光</th><th>入店</th><th>进店率</th><th>下单率</th><th>活动率</th><th>总补贴率</th><th>老客占比</th></tr></thead>
+<tbody><tr><td>C15009</td><td>Y26,574</td><td>686</td><td>Y38.7</td>
+<td>89,131</td><td>4,386</td><td>4.92%</td>
+<td>15.64%</td><td>39.9%</td>
+<td>52.4%</td><td>31.2%</td></tr><tr><td>C15019</td><td>Y24,697</td><td>696</td><td>Y35.5</td>
+<td>65,071</td><td>3,159</td><td>4.85%</td>
+<td>22.03%</td><td>48.4%</td>
+<td>64.0%</td><td>43.5%</td></tr><tr><td>C15002</td><td>Y24,425</td><td>640</td><td>Y38.2</td>
+<td>66,566</td><td>4,298</td><td>6.46%</td>
+<td>14.89%</td><td>41.0%</td>
+<td>51.9%</td><td>32.7%</td></tr><tr><td>C14793</td><td>Y20,519</td><td>548</td><td>Y37.4</td>
+<td>72,725</td><td>4,435</td><td>6.10%</td>
+<td>12.36%</td><td>48.1%</td>
+<td>63.2%</td><td>44.0%</td></tr><tr><td>C14906</td><td>Y15,466</td><td>476</td><td>Y32.5</td>
+<td>64,388</td><td>4,489</td><td>6.97%</td>
+<td>10.60%</td><td>55.3%</td>
+<td>74.1%</td><td>34.0%</td></tr></tbody></table>
+<h2><span class="phase p2">阶段二</span> 诊断分析 — 四维诊断法</h2>
+
+<div class="grid2">
+<div class="info-box"><h4>📊 维度1：效率诊断</h4>
+<ul>
+<li><b>整体转化率均值{total_orders/total_exposure*100:.2f}%</b>：卤味行业正常区间1-3%，达标</li>
+<li><b>进店率均值{total_inc/total_exposure*100:.2f}%</b>：需优化头图/标题/评分</li>
+<li><b>下单率均值{total_orders/total_inc*100:.2f}%</b>：菜单/价格/内容转化力好</li>
+<li><b>老客下单率是新客2-3倍</b>：提升老客占比是最高ROI动作</li>
+<li><b>补贴率{total_merchant_act/total_pay*100:.1f}%</b>：超过行业健康线，需优化补贴效率</li>
+</ul></div>
+
+<div class="info-box"><h4>🏗️ 维度2：结构诊断</h4>
+<ul>
+<li><b>新客依赖严重</b>：5店新客占比50-67%，老客仅33-50%</li>
+<li><b>老客下单率远高于新客</b>：老客是增长核心引擎</li>
+<li><b>曝光集中度下降</b>：5店曝光环比均下降</li>
+<li><b>科兴科学园波动最大</b>：6月Y34,265→7月Y26,574(-22.4%)</li>
+<li><b>印象城结构最健康</b>：活动率最低+转化率最高</li>
+</ul></div>
+
+<div class="info-box"><h4>📈 维度3：趋势诊断（5→6→7月）</h4>
+<ul>
+<li><b>科兴5月仅Y4,742→7月Y26,574</b>：+460%爆发（但6月高点后7月跌22.4%）</li>
+<li><b>印象城持续增长</b>：Y18,642→Y21,956→Y24,425(+31%)</li>
+<li><b>地铁万科V型反弹</b>：Y19,129→Y15,140→Y20,519</li>
+<li><b>子固路稳健上升</b>：Y13,475→Y13,261→Y15,466(+15%)</li>
+<li><b>客单价持续上升</b>：Y33→Y37(+12%)，产品/价位升级有效</li>
+</ul></div>
+
+<div class="info-box"><h4>🎯 维度4：对标诊断（基于42份资料知识库）</h4>
+<ul>
+<li><b>转化率对标</b>：1-3%行业区间，5店达标</li>
+<li><b>客单价对标</b>：卤味Y35-40，达标</li>
+<li><b>补贴率对标</b>：行业30-50%，5店{total_merchant_act/total_pay*100:.1f}%偏高</li>
+<li><b>神券节</b>：每月18日为核心活动节点（来自42份资料），需匹配促销节奏</li>
+<li><b>7-12月旺季</b>：暑期+秋冬为卤味高峰期，8月需提前布局</li>
+<li><b>卤味竞争</b>：绝味KA TOP1(1400万+月)，煌上煌占2.7%但YOY+23.53%</li>
+</ul></div>
+</div>
+
+<div class="success-box"><h4>四维诊断红绿灯结论</h4>
+<div class="grid3">
+<div style="background:white;padding:10px;border-radius:6px"><b style="color:#10B981">🟢 表现优秀</b>
+<ul><li>印象城：转化率最高+稳健增长+低补贴</li><li>地铁万科：V型反弹+老客占比高</li><li>老客下单率是新客2-3倍（核心洞察）</li></ul></div>
+<div style="background:white;padding:10px;border-radius:6px"><b style="color:#F59E0B">🟡 需要关注</b>
+<ul><li>科兴：6→7月-22.4%，波动大</li><li>曝光普遍下降：需优化流量获取</li><li>补贴率偏高：需提升补贴效率</li></ul></div>
+<div style="background:white;padding:10px;border-radius:6px"><b style="color:#EF4444">🔴 需要整改</b>
+<ul><li>科兴暴跌需紧急诊断</li><li>子固路客单价最低Y32.5</li><li>整体新客依赖严重(老客<40%)</li></ul></div>
+</div></div>
+
+<!-- ===== 阶段三 ===== -->
+<h2><span class="phase p3">阶段三</span> 复盘报告 — 五段式输出</h2>
+
+<div class="info-box"><h4>一、核心摘要</h4>
+<p><b>一句话总结</b>：煌上煌5店7月美团实付Y{total_pay:,.0f}(环比+1.2%)、订单{total_orders:,}单，科兴6→7暴跌-22.4%是最大异常；老客下单率是新客2-3倍，提升老客占比是核心增长杠杆。</p></div>
+
+<div class="success-box"><h4>二、数据洞察</h4>
+<p><b>趋势</b>：客单价Y33→Y37(+12%)上升，但订单量-8.4%，呈"提价降量"</p>
+<p><b>结构</b>：新客占比60-67%，老客仅33-40%。老客下单率是新客2-3倍，提升老客是最高ROI</p>
+<p><b>对比</b>：印象城活动率最低+转化率最高=效率标杆；科兴大起大落</p>
+<p><b>异常</b>：科兴从5月Y4,742→6月Y34,265→7月Y26,574，3月内波动5倍</p></div>
+
+<div class="warning-box"><h4>三、根因分析</h4>
+<p><b>正面Top3</b>：①客单价持续上升(+12%)产品升级有效 ②子固路稳健增长(+15%) ③地铁万科V型反弹</p>
+<p><b>负面Top3</b>：①科兴-22.4%需排查（竞品/活动/运营）②5店曝光普遍下降 ③补贴率偏高</p>
+<p><b>外部因素</b>：暑期旺季（来自42份资料：7-12月为卤味高峰）、神券节18日、竞品绝味压力</p></div>
+
+<div class="danger-box"><h4>四、行动建议</h4>
+<table>
+<thead><tr><th>优先</th><th>行动项</th><th>负责人</th><th>截止</th><th>预期</th></tr></thead>
+<tbody>
+<tr><td><span class="tag tag-p0">P0</span></td><td>科兴暴跌专项诊断</td><td>运营</td><td>8/6</td><td>定位根因</td></tr>
+<tr><td><span class="tag tag-p0">P0</span></td><td>子固路客单价提升(Y32.5→Y35)</td><td>店长</td><td>8/15</td><td>客单价+8%</td></tr>
+<tr><td><span class="tag tag-p1">P1</span></td><td>全店老客运营体系(CRM/优惠券)</td><td>运营</td><td>8/25</td><td>老客占比+5pp</td></tr>
+<tr><td><span class="tag tag-p1">P1</span></td><td>曝光量恢复(头图/活动/广告)</td><td>店长</td><td>8/20</td><td>曝光+15%</td></tr>
+<tr><td><span class="tag tag-p1">P1</span></td><td>匹配神券节18日促销(来自资料库)</td><td>运营</td><td>8/18</td><td>活动日ROI>8</td></tr>
+<tr><td><span class="tag tag-p2">P2</span></td><td>月度追踪看板+补贴率优化</td><td>数据</td><td>8/31</td><td>补贴率<45%</td></tr>
+</tbody></table></div>
+
+<div class="info-box"><h4>五、下阶段展望</h4>
+<p><b>8月目标</b>：5店实付Y12万(+7.5%)，老客占比>42%，科兴恢复至Y3万+</p>
+<p><b>里程碑</b>：8/6科兴诊断→8/15客单价→8/18神券节→8/25老客体系→8/31复盘</p>
+<p><b>风险</b>：科兴持续下滑、8月开学季流量波动、平台补贴退坡</p></div>
+
+<!-- ===== 阶段四 ===== -->
+<h2><span class="phase p4">阶段四</span> 优化执行 — 5店分层运营</h2>
+<table>
+<thead><tr><th>门店</th><th>层级</th><th>核心策略</th><th>关键动作</th><th>8月目标</th></tr></thead>
+<tbody>
+<tr><td><b>印象城</b></td><td><span class="tag tag-p1">标杆</span></td><td>保持效率+经验输出</td><td>维持低补贴+高转化+输出SOP</td><td>实付≥Y2.6万</td></tr>
+<tr><td><b>科兴科学园</b></td><td><span class="tag tag-p0">急救</span></td><td>查暴跌根因+止血</td><td>6月vs7月数据对比+竞品排查</td><td>恢复至Y3万+</td></tr>
+<tr><td><b>地铁万科</b></td><td><span class="tag tag-p2">反弹</span></td><td>保持增长+优化客单</td><td>继续V型策略+提客单价</td><td>实付≥Y2.3万</td></tr>
+<tr><td><b>益田假日广场</b></td><td><span class="tag tag-p1">防降</span></td><td>止跌+提进店率</td><td>稳订单+优化进店+降补贴</td><td>实付≥Y2.6万</td></tr>
+<tr><td><b>子固路</b></td><td><span class="tag tag-p2">上升</span></td><td>延续增长+提客单</td><td>保持曝光+提客单+优商品</td><td>实付≥Y1.8万</td></tr>
+</tbody></table>
+
+<div class="footer">
+报告生成时间：2026-08-06 | 分析框架：v1.0四阶段闭环 | 品牌：煌上煌<br/>
+数据源：美团外卖2026年2-7月CSV · 知识库：42份平台资料+9平台调研+分析框架Skill<br/>
+口径：进店率=入店/曝光 · 下单率=订单/入店 · 活动率=商家支出/实付 · 售价=原价÷1.35 · 成本=售价×0.45
+</div>
+
+</div>
+</body>
+</html>
