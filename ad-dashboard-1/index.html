@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>煌上煌 - 7月广告投放数据看板</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>
+<style>
+:root {
+  --bg-primary: #0a1628;
+  --bg-card: #0f1f38;
+  --bg-header: #07101e;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --accent-cyan: #00d4ff;
+  --accent-yellow: #ffd100;
+  --accent-orange: #ff6b35;
+  --positive: #2ecc71;
+  --negative: #e74c3c;
+  --gap: 14px;
+  --radius: 10px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+.dashboard-container { max-width: 1500px; margin: 0 auto; padding: 16px; }
+.dashboard-header {
+  background: var(--bg-header);
+  padding: 16px 24px;
+  border-radius: var(--radius);
+  margin-bottom: var(--gap);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(0,212,255,0.15);
+}
+.dashboard-header h1 { font-size: 20px; font-weight: 700; color: var(--accent-cyan); }
+.dashboard-header .date-badge {
+  background: rgba(0,212,255,0.1);
+  color: var(--accent-cyan);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  border: 1px solid rgba(0,212,255,0.3);
+}
+.kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--gap); margin-bottom: var(--gap); }
+.kpi-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  border: 1px solid rgba(0,212,255,0.08);
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  border-radius: 4px 0 0 4px;
+}
+.kpi-card:nth-child(1)::before { background: var(--accent-cyan); }
+.kpi-card:nth-child(2)::before { background: var(--accent-yellow); }
+.kpi-card:nth-child(3)::before { background: var(--positive); }
+.kpi-card:nth-child(4)::before { background: var(--accent-orange); }
+.kpi-card:nth-child(5)::before { background: #8b5cf6; }
+.kpi-card:nth-child(6)::before { background: #ec4899; }
+.kpi-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi-value { font-size: 26px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.kpi-sub { font-size: 12px; color: var(--text-secondary); }
+.chart-row { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: var(--gap); margin-bottom: var(--gap); }
+.chart-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-bottom: var(--gap); }
+.chart-container {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  border: 1px solid rgba(0,212,255,0.08);
+}
+.chart-container h3 { font-size: 14px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 14px; }
+.chart-container canvas { max-height: 320px; }
+.table-section {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  border: 1px solid rgba(0,212,255,0.08);
+  overflow-x: auto;
+}
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th {
+  text-align: left; padding: 10px 12px;
+  border-bottom: 2px solid rgba(0,212,255,0.2);
+  color: var(--accent-cyan); font-weight: 600; font-size: 12px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.data-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.data-table tr:hover td { background: rgba(0,212,255,0.05); }
+.positive { color: var(--positive); }
+.negative { color: var(--negative); }
+.filters { display: flex; gap: 10px; align-items: center; }
+.filter-group select {
+  padding: 6px 12px; border: 1px solid rgba(0,212,255,0.3);
+  border-radius: 6px; background: rgba(0,212,255,0.1);
+  color: var(--text-primary); font-size: 13px;
+}
+@media (max-width: 1200px) { .kpi-row { grid-template-columns: repeat(3, 1fr); } .chart-row, .chart-row-2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>绝味鸭脖 · 7月广告投放数据看板</h1>
+    <div class="filters">
+      <div class="filter-group">
+        <select id="filter-platform">
+          <option value="all">全部平台</option>
+          <option value="美团">美团</option>
+          <option value="淘宝闪购">淘宝闪购</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <select id="filter-branch">
+          <option value="all">全部分公司</option>
+          <option value="江西公司">江西公司</option>
+          <option value="广东公司">广东公司</option>
+          <option value="陕西公司">陕西公司</option>
+          <option value="浙江公司">浙江公司</option>
+          <option value="重庆公司">重庆公司</option>
+        </select>
+      </div>
+      <span class="date-badge">2026年7月</span>
+    </div>
+  </header>
+
+  <section class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label">广告消耗额</div>
+      <div class="kpi-value" id="kpi-spend">¥32.5万</div>
+      <div class="kpi-sub">预算执行率 78.2%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">广告实付额</div>
+      <div class="kpi-value" id="kpi-revenue">¥992万</div>
+      <div class="kpi-sub">客单价 ¥36.7</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">ROI</div>
+      <div class="kpi-value" id="kpi-roi">5.82</div>
+      <div class="kpi-sub">环比 +2.1%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">订单数</div>
+      <div class="kpi-value" id="kpi-orders">27.1万</div>
+      <div class="kpi-sub">投放店均 62.9单</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">投放店数</div>
+      <div class="kpi-value" id="kpi-stores">4,304</div>
+      <div class="kpi-sub">渗透率 59.2%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">点击率</div>
+      <div class="kpi-value" id="kpi-ctr">4.23%</div>
+      <div class="kpi-sub">下单率 2.86%</div>
+    </div>
+  </section>
+
+  <section class="chart-row">
+    <div class="chart-container">
+      <h3>日消耗额 & ROI 趋势（双轴）</h3>
+      <canvas id="chart-trend"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>门店等级消耗占比</h3>
+      <canvas id="chart-tier"></canvas>
+    </div>
+  </section>
+
+  <section class="chart-row-2">
+    <div class="chart-container">
+      <h3>分公司 × 平台 ROI 对比</h3>
+      <canvas id="chart-branch-roi"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>分公司消耗排名</h3>
+      <canvas id="chart-branch-rank"></canvas>
+    </div>
+  </section>
+
+  <section class="table-section">
+    <h3 style="font-size:14px;font-weight:600;color:var(--accent-cyan);margin-bottom:14px;">分公司投放明细表</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>分公司</th><th>平台</th><th>消耗额</th><th>实付额</th><th>ROI</th><th>订单数</th><th>点击率</th><th>下单率</th><th>订单成本</th></tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </section>
+</div>
+
+<script>
+const COLORS = ['#ffd100','#ff6b35','#00d4ff','#2ecc71','#8b5cf6','#ec4899'];
+
+// 模拟日趋势数据（7月1-27日）
+const dailyData = [];
+const branches = ['江西公司','广东公司','浙江公司','陕西公司','重庆公司'];
+const platforms = ['美团','淘宝闪购'];
+
+for (let d = 1; d <= 27; d++) {
+  const mtSpend = 8000 + Math.random() * 12000;
+  const tbSpend = 3000 + Math.random() * 5000;
+  dailyData.push({
+    day: `7/${d}`,
+    美团消耗: mtSpend,
+    淘宝消耗: tbSpend,
+    美团ROI: 5 + Math.random() * 2.5,
+    淘宝ROI: 4 + Math.random() * 2,
+    总消耗: mtSpend + tbSpend,
+    总ROI: (mtSpend * (5.5 + Math.random()) + tbSpend * (4.5 + Math.random())) / (mtSpend + tbSpend)
+  });
+}
+
+// 门店等级数据
+const tierData = { 'S级': 113750, 'A级': 97500, 'B级': 65000, 'C级': 32500, '直营': 16250 };
+
+// 分公司数据
+const branchData = branches.map((b, i) => ({
+  name: b,
+  美团消耗: [238000, 117000, 32000, 25000, 12000][i] + Math.random() * 5000,
+  淘宝消耗: [65000, 42000, 18000, 11000, 8000][i] + Math.random() * 3000,
+  美团ROI: [6.06, 5.78, 4.5, 4.2, 3.8][i] + Math.random() * 0.5,
+  淘宝ROI: [5.5, 5.1, 4.0, 3.8, 3.2][i] + Math.random() * 0.5,
+  美团订单: [125000, 62000, 18000, 14000, 7000][i],
+  淘宝订单: [68000, 41000, 12000, 8000, 5000][i],
+  美团点击率: [4.5, 4.0, 3.8, 3.5, 3.2][i] + Math.random() * 0.5,
+  淘宝点击率: [3.8, 3.5, 3.2, 3.0, 2.8][i] + Math.random() * 0.5,
+}));
+
+// 图表1：双轴趋势图
+const ctx1 = document.getElementById('chart-trend').getContext('2d');
+new Chart(ctx1, {
+  type: 'bar',
+  data: {
+    labels: dailyData.map(d => d.day),
+    datasets: [
+      {
+        label: '消耗额 (柱)', data: dailyData.map(d => d.总消耗),
+        backgroundColor: 'rgba(0,212,255,0.5)', borderColor: '#00d4ff', borderWidth: 1, order: 1, yAxisID: 'y',
+      },
+      {
+        label: 'ROI (线)', data: dailyData.map(d => d.总ROI),
+        type: 'line', borderColor: '#ffd100', backgroundColor: 'transparent',
+        borderWidth: 2, pointRadius: 2, tension: 0.3, order: 0, yAxisID: 'y1',
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: '#94a3b8', usePointStyle: true, padding: 15 } } },
+    scales: {
+      x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', maxTicksLimit: 7 } },
+      y: { type: 'linear', position: 'left', title: { display: true, text: '消耗额 (元)', color: '#00d4ff' },
+        grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', callback: v => '¥' + (v/10000).toFixed(0) + '万' } },
+      y1: { type: 'linear', position: 'right', title: { display: true, text: 'ROI', color: '#ffd100' },
+        grid: { display: false }, ticks: { color: '#94a3b8' }, min: 0 }
+    },
+    interaction: { mode: 'index', intersect: false }
+  }
+});
+
+// 图表2：门店等级环形图
+const ctx2 = document.getElementById('chart-tier').getContext('2d');
+new Chart(ctx2, {
+  type: 'doughnut',
+  data: {
+    labels: Object.keys(tierData),
+    datasets: [{
+      data: Object.values(tierData),
+      backgroundColor: ['#00d4ff','#2ecc71','#ffd100','#ff6b35','#8b5cf6'],
+      borderColor: '#0f1f38', borderWidth: 3
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '55%',
+    plugins: {
+      legend: { position: 'right', labels: { color: '#94a3b8', usePointStyle: true, padding: 12, font: { size: 12 } } },
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ¥${(ctx.parsed/10000).toFixed(1)}万 (${((ctx.parsed/325000)*100).toFixed(1)}%)` } }
+    }
+  }
+});
+
+// 图表3：分公司×平台ROI对比
+const ctx3 = document.getElementById('chart-branch-roi').getContext('2d');
+new Chart(ctx3, {
+  type: 'bar',
+  data: {
+    labels: branches,
+    datasets: [
+      { label: '美团 ROI', data: branchData.map(b => b.美团ROI), backgroundColor: 'rgba(255,209,0,0.7)', borderColor: '#ffd100', borderWidth: 1, borderRadius: 4 },
+      { label: '淘宝 ROI', data: branchData.map(b => b.淘宝ROI), backgroundColor: 'rgba(255,107,53,0.7)', borderColor: '#ff6b35', borderWidth: 1, borderRadius: 4 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: '#94a3b8', usePointStyle: true, padding: 15 } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
+      y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' }, beginAtZero: true }
+    }
+  }
+});
+
+// 图表4：分公司消耗排名（横向条形）
+const ctx4 = document.getElementById('chart-branch-rank').getContext('2d');
+const branchSorted = [...branchData].sort((a,b) => (b.美团消耗 + b.淘宝消耗) - (a.美团消耗 + a.淘宝消耗));
+new Chart(ctx4, {
+  type: 'bar',
+  data: {
+    labels: branchSorted.map(b => b.name),
+    datasets: [
+      { label: '美团消耗', data: branchSorted.map(b => b.美团消耗), backgroundColor: 'rgba(255,209,0,0.7)', borderColor: '#ffd100', borderWidth: 1, borderRadius: 4 },
+      { label: '淘宝消耗', data: branchSorted.map(b => b.淘宝消耗), backgroundColor: 'rgba(255,107,53,0.7)', borderColor: '#ff6b35', borderWidth: 1, borderRadius: 4 },
+    ]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: '#94a3b8', usePointStyle: true, padding: 15 } } },
+    scales: {
+      x: { stacked: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', callback: v => '¥' + (v/10000).toFixed(0) + '万' } },
+      y: { stacked: true, grid: { display: false }, ticks: { color: '#94a3b8' } }
+    }
+  }
+});
+
+// 表格数据
+const tableBody = document.getElementById('table-body');
+branchData.forEach((b, i) => {
+  platforms.forEach(p => {
+    const isMT = p === '美团';
+    const spend = isMT ? b.美团消耗 : b.淘宝消耗;
+    const roi = isMT ? b.美团ROI : b.淘宝ROI;
+    const orders = isMT ? b.美团订单 : b.淘宝订单;
+    const ctr = isMT ? b.美团点击率 : b.淘宝点击率;
+    const costPerOrder = orders > 0 ? spend / orders : 0;
+    const convRate = ctr * 0.6 + Math.random() * 0.5;
+    tableBody.innerHTML += `<tr>
+      <td>${b.name}</td><td>${p}</td>
+      <td>¥${(spend/10000).toFixed(1)}万</td>
+      <td>¥${(spend * roi / 10000).toFixed(1)}万</td>
+      <td>${roi.toFixed(2)}</td><td>${orders.toLocaleString()}</td>
+      <td>${ctr.toFixed(2)}%</td><td>${convRate.toFixed(2)}%</td>
+      <td>¥${costPerOrder.toFixed(2)}</td>
+    </tr>`;
+  });
+});
+</script>
+</body>
+</html>
