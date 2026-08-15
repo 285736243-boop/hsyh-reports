@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绝味鸭脖 - 平台对比 & 门店等级效率</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>
+<style>
+:root {
+  --bg-primary: #f0f2f5;
+  --bg-card: #ffffff;
+  --bg-header: #1a1a2e;
+  --text-primary: #1a1a2e;
+  --text-secondary: #64748b;
+  --accent: #3b82f6;
+  --mt-color: #ffd100;
+  --tb-color: #ff6b35;
+  --positive: #10b981;
+  --negative: #ef4444;
+  --gap: 14px;
+  --radius: 10px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+.dashboard-container { max-width: 1500px; margin: 0 auto; padding: 16px; }
+.dashboard-header {
+  background: var(--bg-header);
+  padding: 16px 24px;
+  border-radius: var(--radius);
+  margin-bottom: var(--gap);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+.dashboard-header h1 { font-size: 20px; font-weight: 700; }
+.tab-row {
+  display: flex; gap: 4px; margin-bottom: var(--gap);
+  background: var(--bg-card); border-radius: var(--radius); padding: 4px;
+}
+.tab-btn {
+  padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer;
+  font-size: 13px; font-weight: 500; background: transparent; color: var(--text-secondary);
+  transition: all 0.2s;
+}
+.tab-btn.active { background: var(--accent); color: white; }
+.platform-dual { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-bottom: var(--gap); }
+.platform-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border-top: 4px solid transparent;
+}
+.platform-card.meituan { border-top-color: var(--mt-color); }
+.platform-card.taobao { border-top-color: var(--tb-color); }
+.platform-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+.platform-card.meituan h3 { color: #b8860b; }
+.platform-card.taobao h3 { color: #d35400; }
+.platform-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+.platform-metric { text-align: center; padding: 12px 8px; background: #f8fafc; border-radius: 8px; }
+.platform-metric .val { font-size: 22px; font-weight: 700; }
+.platform-metric .lbl { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+.chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-bottom: var(--gap); }
+.chart-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--gap); margin-bottom: var(--gap); }
+.chart-container {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.chart-container h3 { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 14px; }
+.chart-container canvas { max-height: 280px; }
+.table-section {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  overflow-x: auto;
+}
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th {
+  text-align: left; padding: 10px 12px;
+  border-bottom: 2px solid #e2e8f0; color: var(--text-secondary);
+  font-weight: 600; font-size: 12px; text-transform: uppercase;
+}
+.data-table td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; }
+.data-table tr:hover td { background: #f8fafc; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.badge-mt { background: #fef9c3; color: #854d0e; }
+.badge-tb { background: #ffedd5; color: #9a3412; }
+.positive { color: var(--positive); font-weight: 600; }
+.negative { color: var(--negative); font-weight: 600; }
+.filters { display: flex; gap: 8px; align-items: center; }
+.filter-group select {
+  padding: 6px 12px; border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 6px; background: rgba(255,255,255,0.1);
+  color: white; font-size: 13px;
+}
+.filter-group select option { background: var(--bg-header); }
+@media (max-width: 1000px) { .platform-dual, .chart-row, .chart-row-3 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>绝味鸭脖 · 平台对比 & 门店等级效率看板</h1>
+    <div class="filters">
+      <div class="filter-group">
+        <select><option>2026年7月</option></select>
+      </div>
+    </div>
+  </header>
+
+  <div class="tab-row">
+    <button class="tab-btn active">平台对比</button>
+    <button class="tab-btn">门店等级效率</button>
+    <button class="tab-btn">环比趋势</button>
+  </div>
+
+  <!-- 平台对比卡片 -->
+  <section class="platform-dual">
+    <div class="platform-card meituan">
+      <h3>美团外卖</h3>
+      <div class="platform-metrics">
+        <div class="platform-metric"><div class="val">¥23.8万</div><div class="lbl">广告消耗额</div></div>
+        <div class="platform-metric"><div class="val">6.06</div><div class="lbl">ROI</div></div>
+        <div class="platform-metric"><div class="val">4,304</div><div class="lbl">投放店数</div></div>
+      </div>
+      <div class="platform-metrics">
+        <div class="platform-metric"><div class="val">¥144.3万</div><div class="lbl">广告实付额</div></div>
+        <div class="platform-metric"><div class="val">125,000</div><div class="lbl">订单数</div></div>
+        <div class="platform-metric"><div class="val">4.5%</div><div class="lbl">点击率</div></div>
+      </div>
+      <div class="platform-metrics">
+        <div class="platform-metric"><div class="val">¥1.90</div><div class="lbl">单次点击成本</div></div>
+        <div class="platform-metric"><div class="val">82.3%</div><div class="lbl">消耗率</div></div>
+        <div class="platform-metric"><div class="val">2.92%</div><div class="lbl">下单率</div></div>
+      </div>
+    </div>
+    <div class="platform-card taobao">
+      <h3>淘宝闪购</h3>
+      <div class="platform-metrics">
+        <div class="platform-metric"><div class="val">¥8.7万</div><div class="lbl">广告消耗额</div></div>
+        <div class="platform-metric"><div class="val">5.78</div><div class="lbl">ROI</div></div>
+        <div class="platform-metric"><div class="val">1,422</div><div class="lbl">投放店数</div></div>
+      </div>
+      <div class="platform-metrics">
+        <div class="platform-metric"><div class="val">¥50.3万</div><div class="lbl">广告实付额</div></div>
+        <div class="platform-metric"><div class="val">51,539</div><div class="lbl">订单数</div></div>
+        <div class="platform-metric"><div class="val">3.8%</div><div class="lbl">点击率</div></div>
+      </div>
+      <div class="platform-metrics">
+        <div class="platform-metric"><div class="val">¥1.69</div><div class="lbl">单次点击成本</div></div>
+        <div class="platform-metric"><div class="val">65.4%</div><div class="lbl">消耗率</div></div>
+        <div class="platform-metric"><div class="val">2.75%</div><div class="lbl">下单率</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 图表行 -->
+  <section class="chart-row">
+    <div class="chart-container">
+      <h3>日ROI趋势对比（美团 vs 淘宝）</h3>
+      <canvas id="chart-roi-trend"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>分公司消耗对比（分组柱状）</h3>
+      <canvas id="chart-branch-spend"></canvas>
+    </div>
+  </section>
+
+  <!-- 门店等级效率 -->
+  <section class="chart-row-3">
+    <div class="chart-container">
+      <h3>各等级 ROI 对比</h3>
+      <canvas id="chart-tier-roi"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>等级消耗进度（目标达成率）</h3>
+      <canvas id="chart-tier-progress"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>等级订单成本对比</h3>
+      <canvas id="chart-tier-cost"></canvas>
+    </div>
+  </section>
+
+  <!-- 明细表 -->
+  <section class="table-section">
+    <h3 style="font-size:14px;font-weight:600;margin-bottom:14px;">门店等级效率明细表</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>门店等级</th><th>平台</th><th>消耗额</th><th>目标金额</th><th>消耗进度</th><th>ROI</th><th>订单数</th><th>点击率</th><th>订单成本</th></tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </section>
+</div>
+
+<script>
+const COLORS = ['#00d4ff','#2ecc71','#ffd100','#ff6b35','#8b5cf6'];
+
+// 日趋势数据
+const days = Array.from({length:27}, (_,i) => `7/${i+1}`);
+const mtROI = days.map(() => 5 + Math.random() * 2.5);
+const tbROI = days.map(() => 4 + Math.random() * 2);
+const mtSpend = days.map(() => 8000 + Math.random() * 6000);
+const tbSpend = days.map(() => 3000 + Math.random() * 3000);
+
+// 分公司数据
+const branches = ['江西公司','广东公司','浙江公司','陕西公司','重庆公司'];
+const branchSpend = { 美团: [238000,117000,32000,25000,12000], 淘宝: [65000,42000,18000,11000,8000] };
+
+// 等级数据
+const tiers = ['S级','A级','B级','C级','直营'];
+const tierROI = { 美团: [7.2,6.1,4.8,3.5,5.0], 淘宝: [6.5,5.4,4.2,3.0,4.5] };
+const tierProgress = { 美团: [92,85,72,58,78], 淘宝: [78,70,55,40,62] };
+const tierCost = { 美团: [1.2,1.5,2.1,3.0,1.8], 淘宝: [1.4,1.7,2.4,3.5,2.0] };
+
+// 图表1：日ROI趋势
+new Chart(document.getElementById('chart-roi-trend'), {
+  type: 'line',
+  data: {
+    labels: days,
+    datasets: [
+      { label: '美团 ROI', data: mtROI, borderColor: '#ffd100', backgroundColor: 'transparent', borderWidth: 2, tension: 0.3, pointRadius: 1 },
+      { label: '淘宝 ROI', data: tbROI, borderColor: '#ff6b35', backgroundColor: 'transparent', borderWidth: 2, tension: 0.3, pointRadius: 1 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { usePointStyle: true, padding: 15 } } },
+    scales: {
+      x: { ticks: { maxTicksLimit: 7 } },
+      y: { beginAtZero: true }
+    }
+  }
+});
+
+// 图表2：分公司消耗对比
+new Chart(document.getElementById('chart-branch-spend'), {
+  type: 'bar',
+  data: {
+    labels: branches,
+    datasets: [
+      { label: '美团', data: branchSpend['美团'], backgroundColor: 'rgba(255,209,0,0.8)', borderRadius: 4 },
+      { label: '淘宝', data: branchSpend['淘宝'], backgroundColor: 'rgba(255,107,53,0.8)', borderRadius: 4 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { usePointStyle: true, padding: 15 } } },
+    scales: {
+      y: { ticks: { callback: v => '¥' + (v/10000).toFixed(0) + '万' } }
+    }
+  }
+});
+
+// 图表3：等级ROI对比
+new Chart(document.getElementById('chart-tier-roi'), {
+  type: 'bar',
+  data: {
+    labels: tiers,
+    datasets: [
+      { label: '美团', data: tierROI['美团'], backgroundColor: 'rgba(255,209,0,0.8)', borderRadius: 4 },
+      { label: '淘宝', data: tierROI['淘宝'], backgroundColor: 'rgba(255,107,53,0.8)', borderRadius: 4 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { usePointStyle: true, padding: 15 } } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: 'ROI' } } }
+  }
+});
+
+// 图表4：等级消耗进度
+new Chart(document.getElementById('chart-tier-progress'), {
+  type: 'bar',
+  data: {
+    labels: tiers,
+    datasets: [
+      { label: '美团', data: tierProgress['美团'], backgroundColor: 'rgba(255,209,0,0.8)', borderRadius: 4 },
+      { label: '淘宝', data: tierProgress['淘宝'], backgroundColor: 'rgba(255,107,53,0.8)', borderRadius: 4 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { usePointStyle: true, padding: 15 } } },
+    scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } }
+  }
+});
+
+// 图表5：等级订单成本
+new Chart(document.getElementById('chart-tier-cost'), {
+  type: 'bar',
+  data: {
+    labels: tiers,
+    datasets: [
+      { label: '美团', data: tierCost['美团'], backgroundColor: 'rgba(255,209,0,0.8)', borderRadius: 4 },
+      { label: '淘宝', data: tierCost['淘宝'], backgroundColor: 'rgba(255,107,53,0.8)', borderRadius: 4 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { usePointStyle: true, padding: 15 } } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: '订单成本 (元)' } } }
+  }
+});
+
+// 表格
+const tableBody = document.getElementById('table-body');
+tiers.forEach((t, i) => {
+  ['美团','淘宝闪购'].forEach((p, pi) => {
+    const isMT = p === '美团';
+    const spend = isMT ? (120000 - i*22000) : (45000 - i*9000);
+    const target = spend * 1.25;
+    const progress = isMT ? tierProgress['美团'][i] : tierProgress['淘宝'][i];
+    const roi = isMT ? tierROI['美团'][i] : tierROI['淘宝'][i];
+    const orders = Math.round(spend / (isMT ? tierCost['美团'][i] : tierCost['淘宝'][i]));
+    const ctr = (4.5 - i*0.4 - (isMT?0:0.5)).toFixed(1);
+    const cost = isMT ? tierCost['美团'][i] : tierCost['淘宝'][i];
+    const badgeCls = isMT ? 'badge-mt' : 'badge-tb';
+    tableBody.innerHTML += `<tr>
+      <td>${t}</td>
+      <td><span class="badge ${badgeCls}">${p}</span></td>
+      <td>¥${(spend/10000).toFixed(1)}万</td>
+      <td>¥${(target/10000).toFixed(1)}万</td>
+      <td><span class="${progress>=80?'positive':progress>=50?'':'negative'}">${progress}%</span></td>
+      <td>${roi.toFixed(2)}</td>
+      <td>${orders.toLocaleString()}</td>
+      <td>${ctr}%</td>
+      <td>¥${cost.toFixed(2)}</td>
+    </tr>`;
+  });
+});
+
+// Tab切换
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
