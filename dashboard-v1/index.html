@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>5门店外卖数据可视化看板（2026年7月）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: #0F172A; color: #E2E8F0; padding: 20px; }
+.container { max-width: 1600px; margin: 0 auto; }
+h1 { font-size: 26px; color: #fff; text-align: center; margin-bottom: 8px; }
+.subtitle { text-align: center; color: #94A3B8; font-size: 13px; margin-bottom: 24px; }
+.row { display: grid; gap: 16px; margin-bottom: 16px; }
+.kpi-row { grid-template-columns: repeat(6, 1fr); }
+.chart-row { grid-template-columns: 1fr 1fr; }
+.chart-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+.chart-row-full { grid-template-columns: 1fr; }
+@media (max-width: 1200px) { .kpi-row { grid-template-columns: repeat(3,1fr); } .chart-row, .chart-row-3 { grid-template-columns: 1fr; } }
+.kpi-card { background: linear-gradient(135deg, #1E293B 0%, #334155 100%); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid #334155; }
+.kpi-card.highlight { background: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%); }
+.kpi-card.success { background: linear-gradient(135deg, #065F46 0%, #10B981 100%); }
+.kpi-card.warn { background: linear-gradient(135deg, #92400E 0%, #F59E0B 100%); }
+.kpi-card.danger { background: linear-gradient(135deg, #991B1B 0%, #EF4444 100%); }
+.kpi-label { font-size: 12px; color: #94A3B8; margin-bottom: 6px; }
+.kpi-card.highlight .kpi-label, .kpi-card.success .kpi-label, .kpi-card.warn .kpi-label, .kpi-card.danger .kpi-label { color: rgba(255,255,255,0.8); }
+.kpi-value { font-size: 26px; font-weight: 700; color: #fff; }
+.kpi-sub { font-size: 11px; color: #64748B; margin-top: 4px; }
+.kpi-card .kpi-sub { color: rgba(255,255,255,0.6); }
+.chart-box { background: #1E293B; border-radius: 12px; padding: 20px; border: 1px solid #334155; }
+.chart-box h3 { color: #93C5FD; font-size: 15px; margin-bottom: 12px; }
+.chart-box canvas { max-height: 280px; }
+.section-title { font-size: 18px; color: #60A5FA; margin: 24px 0 12px 0; border-left: 4px solid #2563EB; padding-left: 12px; }
+.report-box { background: #1E293B; border-radius: 12px; padding: 24px; border: 1px solid #334155; margin-top: 24px; }
+.report-box h2 { color: #fff; font-size: 20px; margin-bottom: 16px; border-bottom: 2px solid #2563EB; padding-bottom: 8px; }
+.report-box h3 { color: #93C5FD; font-size: 16px; margin: 20px 0 10px 0; }
+.report-box p, .report-box li { color: #CBD5E1; font-size: 14px; line-height: 1.8; }
+.report-box ul { padding-left: 24px; margin: 8px 0; }
+.report-box .insight { background: rgba(37, 99, 235, 0.15); border-left: 4px solid #2563EB; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+.report-box .warning { background: rgba(245, 158, 11, 0.15); border-left: 4px solid #F59E0B; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+.report-box .danger { background: rgba(239, 68, 68, 0.15); border-left: 4px solid #EF4444; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+.report-box .success { background: rgba(16, 185, 129, 0.15); border-left: 4px solid #10B981; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+.report-box table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.report-box th { background: #2563EB; color: #fff; padding: 8px; font-size: 12px; }
+.report-box td { padding: 8px; border-bottom: 1px solid #334155; color: #CBD5E1; font-size: 12px; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-green { background: rgba(16,185,129,0.2); color: #10B981; }
+.tag-red { background: rgba(239,68,68,0.2); color: #EF4444; }
+.tag-yellow { background: rgba(245,158,11,0.2); color: #F59E0B; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>5门店外卖数据可视化看板</h1>
+<div class="subtitle">数据周期：2026年7月 | 平台：美团外卖 | 门店：5家（煌上煌热卤） | 生成日期：2026-08-06</div>
+
+<!-- ===== 模块1: 数据总览 ===== -->
+<div class="section-title">模块一：数据总览（KPI看板）</div>
+<div class="row kpi-row">
+  <div class="kpi-card highlight">
+    <div class="kpi-label">总营业额</div>
+    <div class="kpi-value" id="k1">¥111,680</div>
+    <div class="kpi-sub">31天合计</div>
+  </div>
+  <div class="kpi-card success">
+    <div class="kpi-label">总订单量</div>
+    <div class="kpi-value" id="k2">3,046</div>
+    <div class="kpi-sub">5家门店</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">客单价</div>
+    <div class="kpi-value" id="k3">¥36.66</div>
+    <div class="kpi-sub">总营业额/总订单</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">总曝光人数</div>
+    <div class="kpi-value" id="k4">215,075</div>
+    <div class="kpi-sub">5店合计</div>
+  </div>
+  <div class="kpi-card warn">
+    <div class="kpi-label">下单转化率</div>
+    <div class="kpi-value" id="k5">1.42%</div>
+    <div class="kpi-sub">曝光→下单</div>
+  </div>
+  <div class="kpi-card danger">
+    <div class="kpi-label">老客占比</div>
+    <div class="kpi-value" id="k6">10.63%</div>
+    <div class="kpi-sub">复购率严重不足</div>
+  </div>
+</div>
+
+<div class="row kpi-row">
+  <div class="kpi-card">
+    <div class="kpi-label">入店转化率</div>
+    <div class="kpi-value">6.68%</div>
+    <div class="kpi-sub">曝光→入店</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">入店人数</div>
+    <div class="kpi-value">14,363</div>
+    <div class="kpi-sub">5店合计</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">新客人数</div>
+    <div class="kpi-value">192,218</div>
+    <div class="kpi-sub">占比89.37%</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">老客人数</div>
+    <div class="kpi-value">22,857</div>
+    <div class="kpi-sub">占比10.63%</div>
+  </div>
+  <div class="kpi-card danger">
+    <div class="kpi-label">商家活动支出</div>
+    <div class="kpi-value">¥51,003</div>
+    <div class="kpi-sub">补贴率59.85%</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">平台补贴</div>
+    <div class="kpi-value">¥15,837</div>
+    <div class="kpi-sub">5店合计</div>
+  </div>
+</div>
+
+<!-- ===== 模块2: 订单趋势分析 ===== -->
+<div class="section-title">模块二：订单趋势分析</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>日度订单量&营业额趋势</h3><canvas id="dailyTrend" height="280"></canvas></div>
+  <div class="chart-box"><h3>日度曝光&入店人数趋势</h3><canvas id="dailyExposure" height="280"></canvas></div>
+</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>周度订单量趋势</h3><canvas id="weeklyOrders" height="280"></canvas></div>
+  <div class="chart-box"><h3>周度营业额趋势</h3><canvas id="weeklyRevenue" height="280"></canvas></div>
+</div>
+
+<!-- ===== 模块3: 门店销售分布 ===== -->
+<div class="section-title">模块三：门店销售分布</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>各门店营业额占比（环形图）</h3><canvas id="storePie" height="280"></canvas></div>
+  <div class="chart-box"><h3>各门店订单量对比（柱状图）</h3><canvas id="storeOrders" height="280"></canvas></div>
+</div>
+
+<!-- ===== 模块4: 热门门店排行 ===== -->
+<div class="section-title">模块四：热门门店排行（Top5）</div>
+<div class="row chart-row-full">
+  <div class="chart-box"><h3>门店营业额Top5排行（水平柱状图）</h3><canvas id="topRank" height="200"></canvas></div>
+</div>
+
+<!-- ===== 模块5: 转化时效分析 ===== -->
+<div class="section-title">模块五：转化时效分析</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>流量转化漏斗</h3><canvas id="funnel" height="280"></canvas></div>
+  <div class="chart-box"><h3>各门店入店转化率对比</h3><canvas id="visitRate" height="280"></canvas></div>
+</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>各门店下单转化率对比</h3><canvas id="orderRate" height="280"></canvas></div>
+  <div class="chart-box"><h3>各门店活动补贴率对比</h3><canvas id="actRate" height="280"></canvas></div>
+</div>
+
+<!-- ===== 模块6: 用户评价分析（新老客） ===== -->
+<div class="section-title">模块六：用户评价分析（新老客结构）</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>各门店新客/老客占比（堆叠条形图）</h3><canvas id="newOldStack" height="280"></canvas></div>
+  <div class="chart-box"><h3>新老客人数对比（柱状图）</h3><canvas id="newOldBar" height="280"></canvas></div>
+</div>
+
+<!-- ===== 复盘规划报告 ===== -->
+<div class="section-title">复盘规划报告</div>
+<div class="report-box">
+<h2>5门店外卖运营复盘规划报告（2026年7月）</h2>
+
+<h3>一、数据洞察发现</h3>
+<div class="insight">
+<p><b>1. 规模指标</b>：5家门店7月合计营业额 ¥111,680，订单3,046单，客单价 ¥36.66。日均营业额 ¥3,603，日均订单98单。</p>
+<p><b>2. 流量指标</b>：总曝光215,075人，入店14,363人，下单3,046单。入店转化率6.68%，下单转化率1.42%，符合外卖行业1-3%的正常区间。</p>
+<p><b>3. 用户结构</b>：新客192,218人（89.37%），老客22,857人（10.63%）。<span class="tag tag-red">老客占比仅10.63%，远低于行业健康水平30-50%</span>，复购率严重不足。</p>
+<p><b>4. 活动投入</b>：商家活动支出¥51,003，平台补贴¥15,837，总补贴率59.85%（占总营业额近6成），投入强度过高。</p>
+</div>
+
+<h3>二、问题诊断</h3>
+<div class="danger">
+<p><b>问题1：复购率几乎为零</b> — 5家店老客占比均低于16%</p>
+<ul>
+  <li>C14906子固路店：老客仅9.53%（最低）</li>
+  <li>C15009布吉大芬店：老客8.74%（深圳新店）</li>
+  <li>C15019益田假日店：老客9.63%</li>
+  <li>C15002印象城店：老客11.16%（最高）</li>
+  <li>C14793地铁万科店：老客15.33%</li>
+</ul>
+<p><b>根因</b>：无会员体系 / 无复购激励 / 产品同质化 / 服务体验不稳定</p>
+</div>
+
+<div class="warning">
+<p><b>问题2：C15019益田假日店入店转化率仅4.95%，5店最低</b></p>
+<ul>
+  <li>曝光52,586人但入店仅2,604人，转化率远低于均值6.68%</li>
+  <li>但活动补贴率高达48.44%（仅次于C14906的55.25%）</li>
+  <li>诊断：门店装修/头图/店铺分可能存在问题，曝光质量差</li>
+</ul>
+</div>
+
+<div class="warning">
+<p><b>问题3：活动补贴效率低</b></p>
+<ul>
+  <li>C14906活动补贴率55.25%最高，但营业额最低（¥15,466）</li>
+  <li>C15019活动补贴率48.44%，营业额排第2但转化率最低</li>
+  <li>C15002活动补贴率41%最低，但营业额/订单/转化率综合最佳</li>
+  <li>结论：<b>高补贴并未带来高产出，需优化补贴结构</b></li>
+</ul>
+</div>
+
+<div class="warning">
+<p><b>问题4：日均订单波动大</b></p>
+<ul>
+  <li>7月19日订单峰值130单（¥4,823），7月27日谷值70单（¥2,661）</li>
+  <li>周度看：W29峰值743单，W31仅402单（月末下滑46%）</li>
+  <li>诊断：月末活动断档/库存不足/天气因素</li>
+</ul>
+</div>
+
+<h3>三、改进建议</h3>
+<div class="success">
+<p><b>建议1：立即建设会员体系（第一优先级）</b></p>
+<ul>
+  <li>上线<b>积分/储值/等级</b>三合一会员体系</li>
+  <li>设定目标：3个月内老客占比从10.63%提升至25%</li>
+  <li>推出"周三会员日"（参考学习资料中的"0元吃鸭头"钩子策略）</li>
+  <li>建立CRM老客召回：30天未消费用户自动推送优惠券</li>
+</ul>
+</div>
+
+<div class="success">
+<p><b>建议2：优化C15019门店诊断</b></p>
+<ul>
+  <li>排查门店头图/装修/店铺分（BETTER模型E阶段）</li>
+  <li>优化菜品图片和描述，提升入店吸引力</li>
+  <li>降低无效活动补贴，将补贴率从48.44%降至35%以下</li>
+  <li>目标：入店转化率从4.95%提升至6.5%以上</li>
+</ul>
+</div>
+
+<div class="success">
+<p><b>建议3：优化活动补贴结构</b></p>
+<ul>
+  <li>C14906：补贴率55.25%过高，减少满减力度，转向精准拉新</li>
+  <li>C15019：补贴率48.44%偏高，优化活动类型组合</li>
+  <li>C15002：补贴率41%最优，保持现有策略</li>
+  <li>整体目标：总补贴率从59.85%降至45%以下</li>
+</ul>
+</div>
+
+<div class="success">
+<p><b>建议4：平滑订单波动</b></p>
+<ul>
+  <li>月末W31订单下滑46%，需提前规划月末活动</li>
+  <li>参考营销月历8维模板，每月最后一周设计专属活动</li>
+  <li>库存管理：确保月末库存充足（≥100份/店）</li>
+  <li>目标：周度订单CV（变异系数）从23%降至15%以下</li>
+</ul>
+</div>
+
+<h3>四、下阶段目标规划（8月）</h3>
+<table>
+  <thead><tr><th>指标</th><th>7月实际</th><th>8月目标</th><th>提升幅度</th><th>关键动作</th></tr></thead>
+  <tbody>
+    <tr><td>总营业额</td><td>¥111,680</td><td>¥125,000</td><td><span class="tag tag-green">+12%</span></td><td>门店优化+活动提效</td></tr>
+    <tr><td>总订单量</td><td>3,046</td><td>3,400</td><td><span class="tag tag-green">+12%</span></td><td>曝光提升+转化优化</td></tr>
+    <tr><td>客单价</td><td>¥36.66</td><td>¥37.50</td><td><span class="tag tag-green">+2%</span></td><td>推套餐+满减凑单</td></tr>
+    <tr><td>老客占比</td><td>10.63%</td><td>15%</td><td><span class="tag tag-green">+4.37pp</span></td><td>会员体系上线</td></tr>
+    <tr><td>入店转化率</td><td>6.68%</td><td>7.5%</td><td><span class="tag tag-green">+0.82pp</span></td><td>C15019门店整改</td></tr>
+    <tr><td>下单转化率</td><td>1.42%</td><td>1.60%</td><td><span class="tag tag-green">+0.18pp</span></td><td>菜品/价格优化</td></tr>
+    <tr><td>总补贴率</td><td>59.85%</td><td>45%</td><td><span class="tag tag-green">-14.85pp</span></td><td>补贴结构优化</td></tr>
+  </tbody>
+</table>
+
+<h3>五、门店分层运营策略</h3>
+<table>
+  <thead><tr><th>门店</th><th>层级</th><th>特征</th><th>8月策略</th></tr></thead>
+  <tbody>
+    <tr><td><b>C15002</b></td><td><span class="tag tag-green">明星店</span></td><td>转化率最高、补贴率最低</td><td>保持策略，复制经验到其他店</td></tr>
+    <tr><td><b>C15009</b></td><td><span class="tag tag-green">现金牛</span></td><td>营业额最高、订单最多</td><td>提升老客复购，维持曝光</td></tr>
+    <tr><td><b>C14793</b></td><td><span class="tag tag-yellow">潜力店</span></td><td>老客占比最高(15.33%)</td><td>加大曝光，承接新客</td></tr>
+    <tr><td><b>C15019</b></td><td><span class="tag tag-red">问题店</span></td><td>转化率最低、补贴率偏高</td><td>门店整改，降补贴</td></tr>
+    <tr><td><b>C14906</b></td><td><span class="tag tag-red">末尾店</span></td><td>营业额最低、补贴率最高</td><td>诊断商圈，调整货品</td></tr>
+  </tbody>
+</table>
+
+<div class="insight" style="margin-top:20px;">
+<p><b>总结</b>：5家门店7月外卖运营整体处于"<b>高投入、中产出、低复购</b>"状态。核心矛盾是<b>活动补贴率59.85%过高但老客占比仅10.63%</b>，说明大量补贴被新客消耗但未转化为复购。8月第一优先级是<b>会员体系建设</b>，同时优化C15019和C14906的门店诊断和补贴结构，目标实现营业额+12%、老客占比+4.37pp、补贴率-14.85pp的"一升两降"目标。</p>
+</div>
+</div>
+
+</div>
+
+<script>
+const COLORS = {
+  blue:'#3B82F6', cyan:'#06B6D4', green:'#10B981', yellow:'#F59E0B',
+  orange:'#F97316', red:'#EF4444', purple:'#8B5CF6', pink:'#EC4899',
+  mt:'#FFD100', tb:'#FF6A00'
+};
+const storeColors = ['#3B82F6','#10B981','#F59E0B','#8B5CF6','#EF4444'];
+
+const d = {
+  dates: ["07-01","07-02","07-03","07-04","07-05","07-06","07-07","07-08","07-09","07-10","07-11","07-12","07-13","07-14","07-15","07-16","07-17","07-18","07-19","07-20","07-21","07-22","07-23","07-24","07-25","07-26","07-27","07-28","07-29","07-30","07-31"],
+  orders: [123,98,98,112,115,96,101,102,86,109,116,109,98,94,110,99,99,113,130,89,103,82,81,84,97,100,70,74,80,74,104],
+  revenue: [4308,3183,3355,3802,3921,3126,3526,3432,2731,4477,4550,3840,3646,3039,3827,3452,3658,4322,4823,2995,3663,3030,3569,3625,4330,3788,2661,2817,3164,2862,4159],
+  exposure: [5657,4967,5810,7710,8215,6581,8683,7182,6735,7140,8039,8019,7269,8072,7320,7463,6135,8226,8576,6426,7056,6577,5535,5679,6571,7633,5614,5500,5205,7509,7971],
+  visit: [437,399,401,531,531,436,531,468,414,461,574,580,409,482,488,454,410,534,652,457,430,438,414,395,492,511,369,366,366,456,477],
+  weekly_labels: ["W27","W28","W29","W30","W31"],
+  weekly_orders: [546,719,743,636,402],
+  weekly_revenue: [18569,25682,26767,25000,15662],
+  stores: [
+    {code:"C15009",name:"布吉大芬店",revenue:26574,orders:686},
+    {code:"C15019",name:"益田假日店",revenue:24697,orders:696},
+    {code:"C15002",name:"印象城店",revenue:24425,orders:640},
+    {code:"C14793",name:"地铁万科店",revenue:20519,orders:548},
+    {code:"C14906",name:"子固路店",revenue:15466,orders:476},
+  ],
+  visitRates: [6.32,4.95,7.89,7.49,7.72],
+  orderRates: [1.26,1.32,1.73,1.49,1.39],
+  actRates: [39.89,48.44,41.00,48.15,55.25],
+  newPcts: [91.26,90.37,88.84,84.67,90.47],
+  oldPcts: [8.74,9.63,11.16,15.33,9.53],
+  newCust: [49767,47524,32835,31219,30873],
+  oldCust: [4768,5062,4123,5651,3253],
+  funnel: {exposure:215075,visit:14363,order:3046}
+};
+
+Chart.defaults.color = '#94A3B8';
+Chart.defaults.borderColor = '#334155';
+
+// Chart 1: Daily trend
+new Chart(document.getElementById('dailyTrend'), {
+  type: 'line',
+  data: {
+    labels: d.dates,
+    datasets: [
+      {label:'订单量',data:d.orders,borderColor:COLORS.blue,backgroundColor:'rgba(59,130,246,0.1)',yAxisID:'y',tension:0.3,fill:true},
+      {label:'营业额(元)',data:d.revenue,borderColor:COLORS.green,backgroundColor:'rgba(16,185,129,0.1)',yAxisID:'y1',tension:0.3}
+    ]
+  },
+  options: {
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}}},
+    scales:{
+      x:{ticks:{color:'#64748B',maxTicksLimit:15}},
+      y:{position:'left',title:{display:true,text:'订单量',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'营业额(元)',color:'#94A3B8'},grid:{drawOnChartArea:false},ticks:{color:'#64748B'}}
+    }
+  }
+});
+
+// Chart 2: Exposure trend
+new Chart(document.getElementById('dailyExposure'), {
+  type: 'bar',
+  data: {
+    labels: d.dates,
+    datasets: [
+      {label:'曝光人数',data:d.exposure,backgroundColor:'rgba(59,130,246,0.6)',yAxisID:'y'},
+      {label:'入店人数',data:d.visit,type:'line',borderColor:COLORS.orange,backgroundColor:COLORS.orange,yAxisID:'y1',tension:0.3}
+    ]
+  },
+  options: {
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}}},
+    scales:{
+      x:{ticks:{color:'#64748B',maxTicksLimit:15}},
+      y:{position:'left',title:{display:true,text:'曝光人数',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'入店人数',color:'#94A3B8'},grid:{drawOnChartArea:false},ticks:{color:'#64748B'}}
+    }
+  }
+});
+
+// Chart 3: Weekly orders
+new Chart(document.getElementById('weeklyOrders'), {
+  type: 'bar',
+  data: {labels:d.weekly_labels,datasets:[{label:'周度订单量',data:d.weekly_orders,backgroundColor:storeColors}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#CBD5E1'}}},scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#64748B'}}}}
+});
+
+// Chart 4: Weekly revenue
+new Chart(document.getElementById('weeklyRevenue'), {
+  type: 'bar',
+  data: {labels:d.weekly_labels,datasets:[{label:'周度营业额(元)',data:d.weekly_revenue,backgroundColor:storeColors}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#CBD5E1'}}},scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#64748B'}}}}
+});
+
+// Chart 5: Store pie
+new Chart(document.getElementById('storePie'), {
+  type: 'doughnut',
+  data: {
+    labels: d.stores.map(s=>s.code+' '+s.name),
+    datasets: [{data: d.stores.map(s=>s.revenue), backgroundColor: storeColors}]
+  },
+  options: {
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'right',labels:{color:'#CBD5E1',font:{size:11}}}}
+  }
+});
+
+// Chart 6: Store orders
+new Chart(document.getElementById('storeOrders'), {
+  type: 'bar',
+  data: {labels:d.stores.map(s=>s.code),datasets:[{label:'订单量',data:d.stores.map(s=>s.orders),backgroundColor:storeColors}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#CBD5E1'}}},scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#64748B'}}}}
+});
+
+// Chart 7: Top rank (horizontal)
+new Chart(document.getElementById('topRank'), {
+  type: 'bar',
+  data: {
+    labels: d.stores.map(s=>s.code+' '+s.name),
+    datasets: [{label:'营业额(元)',data:d.stores.map(s=>s.revenue),backgroundColor:storeColors}]
+  },
+  options: {
+    indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#CBD5E1',font:{size:11}}}}
+  }
+});
+
+// Chart 8: Funnel
+new Chart(document.getElementById('funnel'), {
+  type: 'bar',
+  data: {
+    labels: ['曝光人数\n'+d.funnel.exposure.toLocaleString()+'人','入店人数\n'+d.funnel.visit.toLocaleString()+'人','下单人数\n'+d.funnel.order.toLocaleString()+'单'],
+    datasets: [{label:'转化漏斗',data:[d.funnel.exposure,d.funnel.visit,d.funnel.order],backgroundColor:[COLORS.blue,COLORS.cyan,COLORS.green]}]
+  },
+  options: {
+    indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#CBD5E1',font:{size:11}}}}
+  }
+});
+
+// Chart 9: Visit rate
+new Chart(document.getElementById('visitRate'), {
+  type: 'bar',
+  data: {labels:d.stores.map(s=>s.code),datasets:[{label:'入店转化率(%)',data:d.visitRates,backgroundColor:storeColors}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#64748B'}}}}
+});
+
+// Chart 10: Order rate
+new Chart(document.getElementById('orderRate'), {
+  type: 'bar',
+  data: {labels:d.stores.map(s=>s.code),datasets:[{label:'下单转化率(%)',data:d.orderRates,backgroundColor:storeColors}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#64748B'}}}}
+});
+
+// Chart 11: Act rate
+new Chart(document.getElementById('actRate'), {
+  type: 'bar',
+  data: {labels:d.stores.map(s=>s.code),datasets:[{label:'活动补贴率(%)',data:d.actRates,backgroundColor:[COLORS.green,COLORS.yellow,COLORS.blue,COLORS.yellow,COLORS.red]}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#64748B'}}}}
+});
+
+// Chart 12: New/Old stack
+new Chart(document.getElementById('newOldStack'), {
+  type: 'bar',
+  data: {
+    labels: d.stores.map(s=>s.code),
+    datasets: [
+      {label:'新客占比(%)',data:d.newPcts,backgroundColor:COLORS.green},
+      {label:'老客占比(%)',data:d.oldPcts,backgroundColor:COLORS.purple}
+    ]
+  },
+  options: {
+    indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}}},
+    scales:{x:{stacked:true,max:100,ticks:{color:'#64748B'}},y:{stacked:true,ticks:{color:'#64748B'}}}
+  }
+});
+
+// Chart 13: New/Old bar
+new Chart(document.getElementById('newOldBar'), {
+  type: 'bar',
+  data: {
+    labels: d.stores.map(s=>s.code),
+    datasets: [
+      {label:'新客人数',data:d.newCust,backgroundColor:COLORS.green},
+      {label:'老客人数',data:d.oldCust,backgroundColor:COLORS.purple}
+    ]
+  },
+  options: {
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}}},
+    scales:{x:{ticks:{color:'#64748B'}},y:{type:'logarithmic',ticks:{color:'#64748B'}}}
+  }
+});
+</script>
+</body>
+</html>
