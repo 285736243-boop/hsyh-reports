@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>煌上煌双平台外卖综合诊断报告 - 跨会话关联分析</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Microsoft YaHei",sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.8;padding:40px}
+.container{max-width:1200px;margin:0 auto}
+h1{color:#58a6ff;font-size:30px;border-bottom:2px solid #30363d;padding-bottom:16px;margin-bottom:24px}
+h2{color:#f0f6fc;font-size:20px;margin:40px 0 16px;padding-left:12px;border-left:4px solid #58a6ff}
+h3{color:#8b949e;font-size:15px;margin:20px 0 10px}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:20px 0}
+.kpi-card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:18px;text-align:center}
+.kpi-value{font-size:26px;font-weight:700;margin:6px 0}
+.kpi-label{font-size:12px;color:#8b949e}
+.green{color:#3fb950}.yellow{color:#d29922}.red{color:#f85149}.blue{color:#58a6ff}.purple{color:#bc8cff}
+table{width:100%;border-collapse:collapse;margin:14px 0;background:#161b22;border-radius:8px;overflow:hidden}
+th{background:#21262d;color:#c9d1d9;padding:10px 14px;text-align:left;font-weight:600;font-size:13px}
+td{padding:9px 14px;border-bottom:1px solid #21262d;font-size:13px}
+tr:hover{background:#1c2128}
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.badge-red{background:#490202;color:#f85149}
+.badge-yellow{background:#3d2800;color:#d29922}
+.badge-green{background:#033a16;color:#3fb950}
+.badge-blue{background:#041f4a;color:#58a6ff}
+.box{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin:14px 0}
+.box-red{border-color:#f85149}
+.box-yellow{border-color:#d29922}
+.box-green{border-color:#3fb950}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.finding-row{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #21262d}
+.finding-icon{font-size:22px;min-width:30px}
+.source-tag{font-size:10px;padding:1px 8px;border-radius:10px;background:#21262d;color:#8b949e;margin-left:8px}
+.action-step{display:flex;gap:10px;padding:6px 0;align-items:center}
+.step-num{background:#58a6ff;color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.footer{text-align:center;color:#484f58;font-size:11px;margin-top:50px;padding-top:20px;border-top:1px solid #30363d}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>煌上煌双平台外卖综合诊断报告</h1>
+<p style="color:#8b949e;margin-bottom:24px">
+跨会话关联分析：融合7月双平台数据 + 5门店深度复盘 + 15大分析模型 + 行业诊断框架<br>
+生成时间：2026-08-06 | 数据来源：3个会话的完整记忆关联
+</p>
+
+<!-- 数据来源说明 -->
+<div class="box">
+<h3>📚 关联的跨会话数据</h3>
+<table>
+<tr><th>来源</th><th>数据/模型</th><th>关键信息</th></tr>
+<tr><td>会话1 (8/4)</td><td>双平台7月门店订单汇总_v2</td><td>5726门店/32.5万消耗/整体ROI 5.85/江西52%广东36%</td></tr>
+<tr><td>会话2 (8/5)</td><td>5门店深度分析+分析框架</td><td>5店营业额¥111,680/订单3,046/老客10.63%/补贴率59.85%</td></tr>
+<tr><td>会话3 (8/6)</td><td>15大分析模型+行业诊断框架</td><td>GMV拆解/BETTER/四象限/点金5看/流量健康度/TR模型</td></tr>
+<tr><td>会话3 (8/6)</td><td>平台资料深度学习</td><td>煌上煌2023年ROI 3.34/超会关闭影响-32.9%/标杆门店ROI 8.42</td></tr>
+</table>
+</div>
+
+<!-- KPI总览 -->
+<h2>1. 整体概览</h2>
+<div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">7月总消耗</div><div class="kpi-value yellow">32.5万</div><div class="kpi-label">广告投入</div></div>
+    <div class="kpi-card"><div class="kpi-label">5店营业额</div><div class="kpi-value blue">11.2万</div><div class="kpi-label">C14906/07/19等</div></div>
+    <div class="kpi-card"><div class="kpi-label">整体ROI</div><div class="kpi-value green">5.85</div><div class="kpi-label">vs 2023年3.34 ↑75%</div></div>
+    <div class="kpi-card"><div class="kpi-label">5店客单价</div><div class="kpi-value blue">36.66</div><div class="kpi-label">高于行业30元基准</div></div>
+    <div class="kpi-card"><div class="kpi-label">5店老客占比</div><div class="kpi-value red">10.63%</div><div class="kpi-label">基准25% 差14.37pp</div></div>
+</div>
+
+<!-- 漏斗诊断 -->
+<h2>2. 全链路漏斗诊断（融合多源数据）</h2>
+<table>
+<tr><th>环节</th><th>指标</th><th>宏观数据(5726店)</th><th>微观数据(5店)</th><th>行业基准</th><th>健康度</th></tr>
+<tr>
+    <td>看见</td><td>曝光量</td><td>5,028万</td><td>10.3万</td><td>日均1500+/店</td>
+    <td><span class="badge badge-green">充足</span></td>
+</tr>
+<tr>
+    <td>进来</td><td>进店率</td><td>估算8-10%</td><td>8.2%</td><td>≥8%</td>
+    <td><span class="badge badge-yellow">边缘</span></td>
+</tr>
+<tr>
+    <td>买了</td><td>下单率</td><td>估算5.4%<span class="source-tag">🔴核心瓶颈</span></td><td>29.5%</td><td>≥25%</td>
+    <td><span class="badge badge-red">宏观低/微观正常</span></td>
+</tr>
+<tr>
+    <td>花了</td><td>客单价</td><td>估算35-40元</td><td>36.66元</td><td>≥30元</td>
+    <td><span class="badge badge-green">良好</span></td>
+</tr>
+<tr>
+    <td>再来</td><td>复购/老客</td><td>数据缺失</td><td>老客占比10.63%</td><td>老客≥25%</td>
+    <td><span class="badge badge-red">严重不足</span></td>
+</tr>
+</table>
+
+<!-- 融合诊断 -->
+<h2>3. 融合15大模型 + 行业框架的深度诊断</h2>
+
+<div class="box box-red">
+<h3>🔴 P0 致命：老客占比仅10.63% + 补贴率59.85% = 亏损型增长</h3>
+<p><strong>关联数据</strong>：</p>
+<ul style="margin-left:20px;color:#8b949e;font-size:13px">
+    <li>【会话2-5门店】5店老客占比10.63%，目标25%+，差距14.37pp</li>
+    <li>【会话2-5门店】总补贴率59.85%，目标45%以下，超标14.85pp</li>
+    <li>【会话3-15模型】BETTER模型显示：R(Rely)阶段用户严重流失</li>
+    <li>【会话3-行业】复购率基准≥30%，当前≈11%，不到基准1/2</li>
+</ul>
+<p><strong>根因</strong>：高补贴拉新 → 低粘性用户 → 无复购机制 → 持续高补贴 → 恶性循环</p>
+<p><strong>影响</strong>：补贴率每降1pp = 5店月省约¥1,100；老客每升1pp = 月增约¥1,100</p>
+</div>
+
+<div class="box box-red">
+<h3>🔴 P0 致命：宏观下单率5.4% vs 5店下单率29.5% = 门店间巨大差异</h3>
+<p><strong>关联数据</strong>：</p>
+<ul style="margin-left:20px;color:#8b949e;font-size:13px">
+    <li>【会话1-双平台】5726店整体下单率仅5.4%</li>
+    <li>【会话2-5门店】5店下单率29.5%远超行业基准25%</li>
+    <li>【会话3-15模型】四象限诊断：大量门店处于"高曝光低转化"象限</li>
+    <li>【会话3-15模型】GMV拆解：转化率是最低分项</li>
+</ul>
+<p><strong>根因</strong>：标杆门店(5店)表现好，但大量尾部门店拉低均值。万达星城ROI 8.42 vs 太乙路0.60，差14倍</p>
+</div>
+
+<div class="box box-yellow">
+<h3>🟠 P1 严重：超会关闭影响巨大（曝光-32.9%/订单-30.2%）</h3>
+<p><strong>关联数据</strong>：</p>
+<ul style="margin-left:20px;color:#8b949e;font-size:13px">
+    <li>【会话3-15模型】超会关闭 → 曝光-32.9%、订单-30.2%、P2转化-2.2pp</li>
+    <li>【会话3-15模型】超会渗透率模型：当前渗透率17.27%</li>
+    <li>【会话3-行业】总部投放ROI=7.16但仅占23%，总部投放包含超会预算</li>
+</ul>
+<p><strong>根因</strong>：超会是重要的流量来源，关闭后需通过其他渠道补量</p>
+</div>
+
+<div class="box box-yellow">
+<h3>🟠 P1 严重：分公司ROI差距2.1倍 + 门店ROI差距14倍</h3>
+<p><strong>关联数据</strong>：</p>
+<ul style="margin-left:20px;color:#8b949e;font-size:13px">
+    <li>【会话1-双平台】江西ROI=6.06 vs 重庆ROI=3.80，分公司差2.1倍</li>
+    <li>【会话3-15模型】万达星城ROI=8.42 vs 太乙路ROI=0.60，门店差14倍</li>
+    <li>【会话3-15模型】四象限诊断：标杆门店在"高曝光高转化"象限，末位门店在"低曝光低转化"象限</li>
+    <li>【会话2-5门店】C14906补贴率55.25%最高但营业额最低</li>
+</ul>
+</div>
+
+<div class="box box-yellow">
+<h3>🟡 P2 关注：5门店C15019入店转化率4.95%最低 + C14906补贴失控</h3>
+<p><strong>关联数据</strong>：</p>
+<ul style="margin-left:20px;color:#8b949e;font-size:13px">
+    <li>【会话2-5门店】C15019入店转化率4.95%，远低于其他4店</li>
+    <li>【会话2-5门店】C14906补贴率55.25%最高但营业额最低</li>
+    <li>【会话3-15模型】点金5看：需诊断是头图/评分/配送/活动/出价哪一环节出问题</li>
+    <li>【会话3-15模型】5维度红色预警：补贴率59.85%触发红色预警</li>
+</ul>
+</div>
+
+<div class="box box-yellow">
+<h3>🟡 P2 关注：2023年整体ROI 3.34 → 2026年7月ROI 5.85 = 进步明显但仍有空间</h3>
+<p><strong>关联数据</strong>：</p>
+<ul style="margin-left:20px;color:#8b949e;font-size:13px">
+    <li>【会话3-15模型】煌上煌2023年广告消耗166万/ROI 3.34/TR 3.35%</li>
+    <li>【会话1-双平台】2026年7月ROI 5.85，比2023年提升75%</li>
+    <li>【会话3-15模型】广告TR/ROI模型：当前TR数据缺失，需补充</li>
+    <li>【会话3-行业】ROI≥8为优秀线，当前5.85距优秀线还有差距</li>
+</ul>
+</div>
+
+<!-- 8月目标追踪 -->
+<h2>4. 8月目标与当前差距（关联会话2目标）</h2>
+<table>
+<tr><th>指标</th><th>7月实际</th><th>8月目标</th><th>当前进度</th><th>差距</th></tr>
+<tr>
+    <td>营业额</td><td>¥111,680</td><td>+12% → ¥125,082</td><td><span class="badge badge-yellow">待启动</span></td>
+    <td class="red">-</td>
+</tr>
+<tr>
+    <td>老客占比</td><td>10.63%</td><td>+4.37pp → 15%</td><td><span class="badge badge-yellow">待启动</span></td>
+    <td class="red">+4.37pp</td>
+</tr>
+<tr>
+    <td>补贴率</td><td>59.85%</td><td>-14.85pp → 45%</td><td><span class="badge badge-yellow">待启动</span></td>
+    <td class="red">-14.85pp</td>
+</tr>
+<tr>
+    <td>整体ROI</td><td>5.85</td><td>≥6.5（含总部投放调整）</td><td><span class="badge badge-yellow">待启动</span></td>
+    <td class="yellow">+0.65</td>
+</tr>
+</table>
+
+<!-- 提升方案 -->
+<h2>5. 综合提升方案（融合15模型+行业框架）</h2>
+
+<div class="box box-green">
+<h3>P0：打破补贴依赖 → 建立复购飞轮</h3>
+<div class="action-step"><span class="step-num">1</span><strong>补贴率止血</strong>：5店补贴率从59.85%降至50%（首月目标），通过满减替代直接补贴</div>
+<div class="action-step"><span class="step-num">2</span><strong>复购机制</strong>：下单返券（满30返5元券，3天内有效），30天未购定向推送</div>
+<div class="action-step"><span class="step-num">3</span><strong>BETTER模型应用</strong>：重点运营R(Rely)阶段用户，建立会员日折扣（每周三会员日8折）</div>
+<div class="action-step"><span class="step-num">4</span><strong>老客召回</strong>：基于RFM模型，对30-60天未购用户发专属优惠</div>
+<p style="margin-top:10px;font-size:13px;color:#3fb950">预期：老客占比10.63%→15%，补贴率59.85%→50%，月省约¥5,500</p>
+</div>
+
+<div class="box box-green">
+<h3>P0：缩小门店间转化率差距</h3>
+<div class="action-step"><span class="step-num">1</span><strong>标杆复制</strong>：万达星城(ROI 8.42)经验SOP化 → 推广到低ROI门店</div>
+<div class="action-step"><span class="step-num">2</span><strong>末位帮扶</strong>：太乙路(ROI 0.60)/海口海甸城(0.60)/长沙万家丽(1.25)重点诊断</div>
+<div class="action-step"><span class="step-num">3</span><strong>四象限分类运营</strong>：高曝光高转化(加投) / 高曝光低转化(优化菜单) / 低曝光高转化(加曝光) / 低曝光低转化(关停或重建)</div>
+<div class="action-step"><span class="step-num">4</span><strong>C15019专项</strong>：入店转化率4.95%→诊断头图/评分/配送/活动/出价五环节</div>
+<p style="margin-top:10px;font-size:13px;color:#3fb950">预期：整体下单率5.4%→8%，订单+约5万</p>
+</div>
+
+<div class="box box-green">
+<h3>P1：应对超会关闭 + 调整投放结构</h3>
+<div class="action-step"><span class="step-num">1</span><strong>总部投放加码</strong>：总部投放从23%→40%，优先江西总部(ROI=8.11)</div>
+<div class="action-step"><span class="step-num">2</span><strong>超会替代方案</strong>：加大点金推广+金字招牌，弥补超会关闭的32.9%曝光缺口</div>
+<div class="action-step"><span class="step-num">3</span><strong>流量健康度监控</strong>：自然流量:付费流量:活动流量比例监控，目标6:3:1</div>
+<div class="action-step"><span class="step-num">4</span><strong>月度营销日历</strong>：按8维模板制定8月营销节奏（七夕/818/开学季）</div>
+<p style="margin-top:10px;font-size:13px;color:#3fb950">预期：整体ROI 5.85→6.50，总部投放效率维持7.0+</p>
+</div>
+
+<div class="box box-green">
+<h3>P2：分公司标准化 + 数据基建</h3>
+<div class="action-step"><span class="step-num">1</span><strong>江西经验SOP化</strong>：菜单模板+满减策略+投放参数标准化，推广到重庆/浙江</div>
+<div class="action-step"><span class="step-num">2</span><strong>补充进店率数据</strong>：从美团后台导出进店数据，完善漏斗</div>
+<div class="action-step"><span class="step-num">3</span><strong>补充TR数据</strong>：补充广告TR(投放回报率)追踪，对标2023年TR 3.35%</div>
+<div class="action-step"><span class="step-num">4</span><strong>Power BI实时看板</strong>：接入15大模型指标，自动预警(5维度红色预警+颜色编码)</div>
+</div>
+
+<!-- 风险提示 -->
+<h2>6. 风险与关注点</h2>
+<table>
+<tr><th>风险</th><th>严重度</th><th>影响</th><th>应对</th></tr>
+<tr>
+    <td>高补贴惯性难改</td><td><span class="badge badge-red">高</span></td>
+    <td>降低补贴可能导致短期订单下滑</td>
+    <td>分步降补，用满减替代，监控日订单量</td>
+</tr>
+<tr>
+    <td>超会持续关闭</td><td><span class="badge badge-red">高</span></td>
+    <td>曝光-32.9%，需其他渠道补量</td>
+    <td>加大点金+活动曝光，开发京东秒送新渠道</td>
+</tr>
+<tr>
+    <td>末位门店拖累整体</td><td><span class="badge badge-yellow">中</span></td>
+    <td>ROI<1的门店持续亏损</td>
+    <td>ROI<1.5的门店暂停投放，ROI>4的加投</td>
+</tr>
+<tr>
+    <td>数据维度缺失</td><td><span class="badge badge-yellow">中</span></td>
+    <td>进店率/复购率/TR无法追踪</td>
+    <td>尽快补充数据基建</td>
+</tr>
+</table>
+
+<div class="footer">
+    煌上煌双平台外卖综合诊断报告 | 跨会话关联分析<br>
+    融合：双平台5726店数据 + 5门店深度复盘 + 15大分析模型 + 行业诊断框架 + 8月目标追踪<br>
+    生成时间：2026-08-06 | 数据来源：会话1(8/4) + 会话2(8/5) + 会话3(8/6) 完整记忆关联
+</div>
+
+</div>
+</body>
+</html>
