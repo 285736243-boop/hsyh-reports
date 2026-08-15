@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>5门店双平台外卖运营分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+       background: #F8FAFC; color: #1E293B; margin: 0; padding: 24px; line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; }
+h2 { font-size: 20px; color: #0F172A; border-left: 5px solid #2563EB; padding-left: 12px; margin: 32px 0 12px 0; }
+.chart-box { background: white; border-radius: 10px; padding: 20px; margin: 12px 0;
+             box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.chart-box canvas { max-height: 400px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 800px) { .row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+<h1 style="font-size:24px;color:#0F172A;border-bottom:4px solid #2563EB;padding-bottom:12px;">5门店双平台外卖运营分析 - 可视化图表</h1>
+
+<h2>图1：双平台实付金额 & 订单量对比</h2>
+<div class="chart-box"><canvas id="chart1" height="300"></canvas></div>
+
+<h2>图2：双平台实付金额结构（堆叠条形图）</h2>
+<div class="chart-box"><canvas id="chart2" height="300"></canvas></div>
+
+<h2>图3：双平台曝光、入店、下单转化漏斗</h2>
+<div class="chart-box"><canvas id="chart3" height="300"></canvas></div>
+
+<div class="row">
+<div>
+<h2>图4：入店转化率对比</h2>
+<div class="chart-box"><canvas id="chart4a" height="280"></canvas></div>
+</div>
+<div>
+<h2>图5：下单转化率对比</h2>
+<div class="chart-box"><canvas id="chart4b" height="280"></canvas></div>
+</div>
+</div>
+
+<h2>图6：新客/老客曝光占比（双平台合计）</h2>
+<div class="chart-box"><canvas id="chart5" height="280"></canvas></div>
+
+<div class="row">
+<div>
+<h2>图7：商家活动补贴</h2>
+<div class="chart-box"><canvas id="chart6a" height="280"></canvas></div>
+</div>
+<div>
+<h2>图8：平台补贴</h2>
+<div class="chart-box"><canvas id="chart6b" height="280"></canvas></div>
+</div>
+</div>
+
+<h2>图9：实付单均价对比</h2>
+<div class="chart-box"><canvas id="chart7" height="280"></canvas></div>
+
+</div>
+
+<script>
+const d = {"stores": ["C14793", "C14906", "C15002", "C15019", "C15009"], "names": ["煌上煌热卤(地铁万科店)", "煌上煌热卤(子固路店)", "煌上煌热卤(印象城店)", "煌上煌热卤(南山益田假日广场店)", "煌上煌热卤(南山科兴科学园店)"], "mt_pay": [20519, 15466, 24425, 24697, 26574], "tb_pay": [17888, 13476, 28607, 11552, 13513], "dual_pay": [38407, 28942, 53032, 36249, 40087], "mt_orders": [548, 476, 640, 696, 686], "tb_orders": [695, 465, 1046, 624, 578], "dual_orders": [1243, 941, 1686, 1320, 1264], "mt_exp": [36870, 34126, 36958, 52586, 54535], "tb_exp": [49456, 42441, 81683, 45933, 41476], "dual_exp": [86326, 76567, 118641, 98519, 96011], "mt_visit": [2763, 2634, 2916, 2604, 3446], "tb_visit": [5149, 3545, 7706, 3555, 3235], "mt_new": [31219, 30873, 32835, 47524, 49767], "tb_new": [43293, 38788, 74905, 42381, 39193], "dual_new": [74512, 69661, 107740, 89905, 88960], "mt_old": [5651, 3253, 4123, 5062, 4768], "tb_old": [6163, 3653, 6778, 3552, 2283], "dual_old": [11814, 6906, 10901, 8614, 7051], "mt_visit_rate": [7.49, 7.72, 7.89, 4.95, 6.32], "tb_visit_rate": [10.41, 8.35, 9.43, 7.74, 7.8], "mt_order_rate": [1.49, 1.39, 1.73, 1.32, 1.26], "tb_order_rate": [1.41, 1.1, 1.28, 1.36, 1.39], "dual_order_rate": [1.44, 1.23, 1.42, 1.34, 1.32], "mt_new_pct": [84.67, 90.47, 88.84, 90.37, 91.26], "tb_new_pct": [87.54, 91.39, 91.7, 92.27, 94.5], "dual_new_pct": [86.31, 90.98, 90.81, 91.26, 92.66], "dual_old_pct": [13.69, 9.02, 9.19, 8.74, 7.34], "mt_price": [37.44, 32.49, 38.16, 35.48, 38.74], "tb_price": [25.74, 28.98, 27.35, 18.51, 23.38], "dual_price": [30.9, 30.76, 31.45, 27.46, 31.71], "mt_act": [9879, 8546, 10014, 11963, 10600], "tb_act": [2622, 2257, 5672, 4431, 3582], "dual_act": [12501, 10802, 15687, 16394, 14182], "mt_plat": [3098, 2915, 2660, 3834, 3330], "tb_plat": [9513, 6821, 15601, 7087, 6822], "dual_plat": [12611, 9736, 18260, 10921, 10153], "mt_act_rate": [58.49, 69.78, 53.45, 92.52, 52.54], "dual_act_rate": [32.55, 37.32, 29.58, 45.23, 35.38], "mt_share": [53.42, 53.44, 46.06, 68.13, 66.29], "tb_share": [46.58, 46.56, 53.94, 31.87, 33.71]};
+
+const COLORS = {
+  mt: '#FFD100', tb: '#FF6A00', dual: '#2563EB', new: '#10B981', old: '#8B5CF6',
+  warn: '#F59E0B', danger: '#EF4444'
+};
+
+// Chart 1: 实付+订单双轴
+new Chart(document.getElementById('chart1'), {
+  type: 'bar',
+  data: {
+    labels: d.stores,
+    datasets: [
+      { label: '美团实付(元)', data: d.mt_pay, backgroundColor: COLORS.mt, yAxisID: 'y' },
+      { label: '淘宝实付(元)', data: d.tb_pay, backgroundColor: COLORS.tb, yAxisID: 'y' },
+      { label: '双平台订单合计(单)', data: d.dual_orders, type: 'line', borderColor: COLORS.dual,
+        backgroundColor: COLORS.dual, yAxisID: 'y1', tension: 0.3, borderWidth: 3, pointRadius: 6,
+        pointBackgroundColor: COLORS.dual }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: '图1：5门店双平台实付金额 & 订单量对比', font: { size: 16 } } },
+    scales: {
+      y: { type: 'linear', position: 'left', title: { display: true, text: '实付金额(元)' } },
+      y1: { type: 'linear', position: 'right', title: { display: true, text: '订单量(单)' }, grid: { drawOnChartArea: false } }
+    }
+  }
+});
+
+// Chart 2: 堆叠条形图
+let sortedIdx = d.dual_pay.map((v,i)=>[v,i]).sort((a,b)=>a[0]-b[0]);
+let sortedStores = sortedIdx.map(x=>d.stores[x[1]]);
+let sortedMt = sortedIdx.map(x=>d.mt_pay[x[1]]);
+let sortedTb = sortedIdx.map(x=>d.tb_pay[x[1]]);
+new Chart(document.getElementById('chart2'), {
+  type: 'bar',
+  data: {
+    labels: sortedStores,
+    datasets: [
+      { label: '美团实付', data: sortedMt, backgroundColor: COLORS.mt },
+      { label: '淘宝实付', data: sortedTb, backgroundColor: COLORS.tb }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { title: { display: true, text: '图2：双平台实付金额结构（堆叠条形图）', font: { size: 16 } } },
+    scales: { x: { stacked: true, title: { display: true, text: '实付金额(元)' } }, y: { stacked: true } }
+  }
+});
+
+// Chart 3: 漏斗 (horizontal bar as funnel proxy)
+let totalExp = d.dual_exp.reduce((a,b)=>a+b,0);
+let totalVisitMt = d.mt_visit.reduce((a,b)=>a+b,0);
+let totalVisitTb = d.tb_visit.reduce((a,b)=>a+b,0);
+let totalOrders = d.dual_orders.reduce((a,b)=>a+b,0);
+new Chart(document.getElementById('chart3'), {
+  type: 'bar',
+  data: {
+    labels: ['双平台曝光\n('+totalExp.toLocaleString()+'人)', '美团入店\n('+totalVisitMt.toLocaleString()+'人)', '淘宝进店\n('+totalVisitTb.toLocaleString()+'人)', '双平台下单\n('+totalOrders.toLocaleString()+'单)'],
+    datasets: [{
+      label: '人数/单数', data: [totalExp, totalVisitMt, totalVisitTb, totalOrders],
+      backgroundColor: [COLORS.dual, COLORS.mt, COLORS.tb, '#10B981']
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { title: { display: true, text: '图3：双平台流量转化漏斗', font: { size: 16 } },
+               tooltip: { callbacks: { label: ctx => ctx.raw.toLocaleString() } } },
+    scales: { x: { title: { display: true, text: '人数/单数' } } }
+  }
+});
+
+// Chart 4a: 入店转化率
+new Chart(document.getElementById('chart4a'), {
+  type: 'bar',
+  data: {
+    labels: d.stores,
+    datasets: [
+      { label: '美团入店转化率(%)', data: d.mt_visit_rate, backgroundColor: COLORS.mt },
+      { label: '淘宝入店转化率(%)', data: d.tb_visit_rate, backgroundColor: COLORS.tb }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: '入店转化率(%)', font: { size: 14 } } }
+  }
+});
+
+// Chart 4b: 下单转化率
+new Chart(document.getElementById('chart4b'), {
+  type: 'bar',
+  data: {
+    labels: d.stores,
+    datasets: [
+      { label: '美团下单转化率(%)', data: d.mt_order_rate, backgroundColor: COLORS.mt },
+      { label: '淘宝下单转化率(%)', data: d.tb_order_rate, backgroundColor: COLORS.tb }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: '下单转化率(%)', font: { size: 14 } } }
+  }
+});
+
+// Chart 5: 新老客占比堆叠
+let sortedNewIdx = d.dual_new_pct.map((v,i)=>[v,i]).sort((a,b)=>a[0]-b[0]);
+let sortedNewStores = sortedNewIdx.map(x=>d.stores[x[1]]);
+let sortedNewPct = sortedNewIdx.map(x=>d.dual_new_pct[x[1]]);
+let sortedOldPct = sortedNewIdx.map(x=>d.dual_old_pct[x[1]]);
+new Chart(document.getElementById('chart5'), {
+  type: 'bar',
+  data: {
+    labels: sortedNewStores,
+    datasets: [
+      { label: '新客占比(%)', data: sortedNewPct, backgroundColor: COLORS.new },
+      { label: '老客占比(%)', data: sortedOldPct, backgroundColor: COLORS.old }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { title: { display: true, text: '图6：新客/老客曝光占比', font: { size: 14 } } },
+    scales: { x: { stacked: true, max: 100, title: { display: true, text: '占比(%)' } }, y: { stacked: true } }
+  }
+});
+
+// Chart 6a: 商家活动补贴
+new Chart(document.getElementById('chart6a'), {
+  type: 'bar',
+  data: {
+    labels: d.stores,
+    datasets: [
+      { label: '美团商家活动支出(元)', data: d.mt_act, backgroundColor: COLORS.mt },
+      { label: '淘宝活动补贴(元)', data: d.tb_act, backgroundColor: COLORS.tb }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: '商家活动支出', font: { size: 14 } } }
+  }
+});
+
+// Chart 6b: 平台补贴
+new Chart(document.getElementById('chart6b'), {
+  type: 'bar',
+  data: {
+    labels: d.stores,
+    datasets: [
+      { label: '美团平台补贴(元)', data: d.mt_plat, backgroundColor: COLORS.mt },
+      { label: '淘宝平台补贴(元)', data: d.tb_plat, backgroundColor: COLORS.tb }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: '平台补贴', font: { size: 14 } } }
+  }
+});
+
+// Chart 7: 客单价
+new Chart(document.getElementById('chart7'), {
+  type: 'bar',
+  data: {
+    labels: d.stores,
+    datasets: [
+      { label: '美团实付单均价(元)', data: d.mt_price, backgroundColor: COLORS.mt },
+      { label: '淘宝实付单均价(元)', data: d.tb_price, backgroundColor: COLORS.tb }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: '图9：实付单均价对比', font: { size: 14 } } }
+  }
+});
+</script>
+</body>
+</html>
