@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>外卖门店督导检查与提升工具表（2026版）</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: #F8FAFC; color: #1E293B; padding: 20px; line-height: 1.6; }
+.container { max-width: 1600px; margin: 0 auto; }
+h1 { font-size: 26px; color: #0F172A; border-bottom: 5px solid #2563EB; padding-bottom: 12px; margin-bottom: 8px; }
+h2 { font-size: 20px; color: #0F172A; border-left: 5px solid #2563EB; padding-left: 12px; margin-top: 32px; margin-bottom: 12px; background: linear-gradient(90deg, #DBEAFE 0%, transparent 100%); padding-top: 6px; padding-bottom: 6px; }
+h3 { font-size: 16px; color: #1E40AF; margin-top: 20px; margin-bottom: 8px; }
+.subtitle { color: #64748B; font-size: 13px; margin-bottom: 20px; }
+.intro { background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%); border-left: 5px solid #2563EB; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+.intro ul { margin: 8px 0; padding-left: 22px; }
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-size: 12px; margin: 12px 0; }
+th { background: #1E40AF; color: white; padding: 10px 6px; text-align: center; vertical-align: middle; }
+td { padding: 8px 6px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:hover { background: #F1F5F9; }
+.tag { display: inline-block; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; white-space: nowrap; }
+.tag-red { background: #FEE2E2; color: #991B1B; }
+.tag-yellow { background: #FEF3C7; color: #92400E; }
+.tag-green { background: #D1FAE5; color: #065F46; }
+.tag-blue { background: #DBEAFE; color: #1E40AF; }
+.tag-purple { background: #EDE9FE; color: #5B21B6; }
+.tag-orange { background: #FED7AA; color: #9A3412; }
+.section-box { background: white; border-radius: 10px; padding: 16px; margin: 12px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #E2E8F0; }
+.formula { background: #1E293B; color: #E2E8F0; padding: 12px; border-radius: 6px; font-family: Consolas, monospace; font-size: 12px; margin: 8px 0; white-space: pre-wrap; }
+.warning { background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border-left: 5px solid #F59E0B; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+.danger { background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%); border-left: 5px solid #EF4444; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+.success { background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%); border-left: 5px solid #10B981; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+.footer { margin-top: 40px; padding: 20px; text-align: center; color: #94A3B8; font-size: 12px; border-top: 2px solid #E2E8F0; }
+@media print { body { font-size: 10px; } table { font-size: 9px; } .section-box { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>外卖门店督导检查与提升工具表</h1>
+<div class="subtitle">版本：2026 V1 | 适用：美团外卖/淘宝闪购 | 基于15大分析模型 | 生成日期：2026-08-06</div>
+
+<div class="intro">
+<h3>使用说明</h3>
+<ul>
+  <li><b>督导检查流程</b>：按表格7大模块逐项检查 → 对照"标准值"判断是否达标 → 不达标项查"诊断逻辑"找根因 → 按"提升动作"执行整改</li>
+  <li><b>颜色标签</b>：<span class="tag tag-red">红色=不达标需立即整改</span> <span class="tag tag-yellow">黄色=关注项需优化</span> <span class="tag tag-green">绿色=达标维持</span></li>
+  <li><b>数据来源</b>：美团外卖商家版电脑版 → 经营罗盘 → 流量/营业/顾客/评价 各模块</li>
+  <li><b>检查频率</b>：核心指标每日检查，辅助指标每周检查，综合评分每月复盘</li>
+</ul>
+</div>
+
+<h2>模块一：流量与曝光（BETTER模型 B+E阶段）</h2>
+<div class="section-box">
+<table>
+  <thead>
+    <tr>
+      <th style="width:5%">序号</th>
+      <th style="width:12%">检查指标</th>
+      <th style="width:10%">计算公式</th>
+      <th style="width:8%">标准值</th>
+      <th style="width:8%">检查路径</th>
+      <th style="width:15%">诊断逻辑</th>
+      <th style="width:20%">提升动作</th>
+      <th style="width:7%">优先级</th>
+      <th style="width:5%">频次</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1.1</td>
+      <td><b>日均曝光次数</b></td>
+      <td>月总曝光次数/天数</td>
+      <td>≥10,000次/天<br/><span class="tag tag-yellow">（5店均值）</span></td>
+      <td>经营罗盘→流量→曝光趋势</td>
+      <td><b>低于标准</b>：门店装修差/店铺分低/品类排名靠后/未参与平台活动</td>
+      <td>① 检查店铺分是否≥85<br/>② 报名S/A级平台活动（神券节/会员日）<br/>③ 开启点金推广（基础出价0.6-0.8元）<br/>④ 优化头图和Banner（750x320px）</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>1.2</td>
+      <td><b>进店率</b><br/><span class="tag tag-blue">核心</span></td>
+      <td>入店次数/曝光次数</td>
+      <td><b>≥6.0%</b><br/><span class="tag tag-yellow">行业5-10%</span></td>
+      <td>经营罗盘→流量→转化分析</td>
+      <td><b>低于6%</b>：<br/>① 头图不吸引人<br/>② 评分低于4.5<br/>③ 起送价/配送费过高<br/>④ 满减力度不够</td>
+      <td>① 更换高清头图（菜品实拍/品牌logo）<br/>② 提升评分至4.5+（差评24h内回复）<br/>③ 起送价≤20元，配送费≤5元<br/>④ 设置满30-15/满50-20阶梯满减</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>1.3</td>
+      <td><b>下单率</b><br/><span class="tag tag-blue">核心</span></td>
+      <td>订单数/入店次数</td>
+      <td><b>≥15%</b><br/><span class="tag tag-yellow">行业10-25%</span></td>
+      <td>经营罗盘→流量→转化分析</td>
+      <td><b>低于15%</b>：<br/>① 菜品价格偏高<br/>② 菜品图片不清晰<br/>③ 评价差/评价少<br/>④ 无套餐/无满减</td>
+      <td>① 推3款引流套餐（19.9/29.9/39.9）<br/>② 菜品图片600x600px高清实拍<br/>③ 引导好评（评价返券1-2元）<br/>④ 设置满减+折扣菜+配送费减免组合</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>1.4</td>
+      <td><b>整体转化率</b></td>
+      <td>订单数/曝光次数</td>
+      <td>≥0.9%</td>
+      <td>经营罗盘→流量→转化漏斗</td>
+      <td>进店率×下单率，综合判断流量质量</td>
+      <td>对比商圈前10%均值，找差距最大的环节优先优化</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每周</td>
+    </tr>
+    <tr>
+      <td>1.5</td>
+      <td><b>点金推广日均消耗</b></td>
+      <td>月总消耗/天数</td>
+      <td>50-200元/天/店<br/><span class="tag tag-yellow">视门店规模</span></td>
+      <td>点金推广→数据报表</td>
+      <td><b>消耗过快</b>：出价过高/定向加价过多<br/><b>消耗过慢</b>：出价过低/门店质量差</td>
+      <td>① 消耗过快→下调基础出价0.1元<br/>② 消耗过慢→上调基础出价0.1元<br/>③ 目标排序6-15位（不追求靠前）<br/>④ 匀速获量+手动推广+自定义时段</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每日</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>模块二：订单与营业额（GMV拆解模型）</h2>
+<div class="section-box">
+<div class="formula">GMV = 曝光次数 × 进店率 × 下单率 × 客单价 × 人均频次
+    （5因子中任何一个下降，GMV都会下降→逐因子诊断）</div>
+<table>
+  <thead>
+    <tr>
+      <th style="width:5%">序号</th>
+      <th style="width:12%">检查指标</th>
+      <th style="width:10%">计算公式</th>
+      <th style="width:8%">标准值</th>
+      <th style="width:8%">检查路径</th>
+      <th style="width:15%">诊断逻辑</th>
+      <th style="width:20%">提升动作</th>
+      <th style="width:7%">优先级</th>
+      <th style="width:5%">频次</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2.1</td>
+      <td><b>日均订单量</b></td>
+      <td>月总订单/天数</td>
+      <td>≥20单/天/店<br/><span class="tag tag-yellow">卤味品类</span></td>
+      <td>经营罗盘→营业→订单趋势</td>
+      <td><b>低于20单</b>：曝光不足/转化低/商圈萎缩<br/><b>突然下降</b>：缺货/差评/停业/竞对</td>
+      <td>① 排查缺货商品（库存≥100份）<br/>② 检查近7天差评并回复<br/>③ 确认营业时长≥10小时<br/>④ 参与平台活动获取流量</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>2.2</td>
+      <td><b>客单价</b></td>
+      <td>营业额/订单数</td>
+      <td>≥35元<br/><span class="tag tag-yellow">卤味品类</span></td>
+      <td>经营罗盘→营业→客单价</td>
+      <td><b>低于35元</b>：套餐少/满减凑单不够/低价品占比高</td>
+      <td>① 推2-3人套餐（59.9/79.9/99.9）<br/>② 设置满40-8/满60-15阶梯满减<br/>③ 优化菜品结构（引流品+利润品+套餐）<br/>④ 搭配饮料/小吃提升凑单</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每周</td>
+    </tr>
+    <tr>
+      <td>2.3</td>
+      <td><b>日均营业额</b></td>
+      <td>月总营业额/天数</td>
+      <td>≥700元/天/店</td>
+      <td>经营罗盘→营业→交易趋势</td>
+      <td>= 订单量 × 客单价，两因子任一下降即影响</td>
+      <td>按GMV拆解模型逐因子诊断</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>2.4</td>
+      <td><b>订单环比率</b></td>
+      <td>(本月订单-上月订单)/上月订单</td>
+      <td><b>≥0%</b><br/><span class="tag tag-green">正增长</span></td>
+      <td>品牌月报/商服报告</td>
+      <td><b>负增长</b>：供给流失/活动断档/竞对冲击/季节因素</td>
+      <td>① 对比同品类增速（品牌vs品类）<br/>② 排查流失门店并诊断<br/>③ 确保每月有S/A级活动参与<br/>④ 月末提前备货防断档</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每月</td>
+    </tr>
+    <tr>
+      <td>2.5</td>
+      <td><b>营业额环比率</b></td>
+      <td>(本月营业额-上月)/上月</td>
+      <td><b>≥0%</b></td>
+      <td>品牌月报/商服报告</td>
+      <td>订单降但营业额升=客单价提升（好事）<br/>订单升但营业额降=客单价下滑（需警惕）</td>
+      <td>结合客单价变化综合判断</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每月</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>模块三：活动与补贴（商家活动 vs 平台补贴）</h2>
+<div class="section-box">
+<table>
+  <thead>
+    <tr>
+      <th style="width:5%">序号</th>
+      <th style="width:12%">检查指标</th>
+      <th style="width:10%">计算公式</th>
+      <th style="width:8%">标准值</th>
+      <th style="width:8%">检查路径</th>
+      <th style="width:15%">诊断逻辑</th>
+      <th style="width:20%">提升动作</th>
+      <th style="width:7%">优先级</th>
+      <th style="width:5%">频次</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3.1</td>
+      <td><b>商家活动支出率</b><br/><span class="tag tag-blue">商家自掏</span></td>
+      <td>商家活动支出/营业额</td>
+      <td><b>30%-40%</b><br/><span class="tag tag-red">＞45%预警</span></td>
+      <td>经营罗盘→活动→活动分析</td>
+      <td><b>＞45%</b>：满减力度过大/折扣菜过多/无效补贴<br/><b>＜25%</b>：活动不足，流量获取能力弱</td>
+      <td>① ＞45%→降低满减力度（满40-25→满40-20）<br/>② 减少低效折扣菜，保留TOP5爆品<br/>③ ＜25%→增加满减/折扣菜/配送费减免<br/>④ 目标：每单活动补贴3-8元</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每周</td>
+    </tr>
+    <tr>
+      <td>3.2</td>
+      <td><b>平台补贴率</b><br/><span class="tag tag-orange">平台让利</span></td>
+      <td>平台活动补贴/营业额</td>
+      <td><b>10%-15%</b></td>
+      <td>经营罗盘→活动→平台补贴</td>
+      <td><b>＜10%</b>：未充分申请平台资源<br/><b>＞15%</b>：平台政策好，维持</td>
+      <td>① ＜10%→向BD申请更多平台补贴资源<br/>② 报名神券节/会员日等S级活动<br/>③ 开通超级会员红包（超会订单占比≥40%）<br/>④ 申请品类日/品牌日资源位</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每月</td>
+    </tr>
+    <tr>
+      <td>3.3</td>
+      <td><b>活动订单占比</b></td>
+      <td>活动订单数/总订单数</td>
+      <td><b>≥80%</b></td>
+      <td>经营罗盘→活动→活动订单占比</td>
+      <td><b>＜80%</b>：活动覆盖不足，自然订单占比过高<br/>说明活动吸引力不够</td>
+      <td>① 确保满减+折扣菜+配送费减免3项同时在线<br/>② 报名天天神券（覆盖率≥85%）<br/>③ 开通会员红包（覆盖率≥80%）<br/>④ 设置新客立减（拉新）</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每周</td>
+    </tr>
+    <tr>
+      <td>3.4</td>
+      <td><b>满减凑单率</b></td>
+      <td>达到满减门槛订单/总订单</td>
+      <td>≥60%</td>
+      <td>经营罗盘→活动→满减分析</td>
+      <td>＜60%：满减门槛设置不合理/凑单品不够</td>
+      <td>① 满减门槛=客单价×1.2（如客单35→满42-10）<br/>② 增加低价凑单品（饮料/小吃5-8元）<br/>③ 设置3档满减（满20/40/60）</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每月</td>
+    </tr>
+    <tr>
+      <td>3.5</td>
+      <td><b>超会订单占比</b><br/><span class="tag tag-purple">会员</span></td>
+      <td>超会订单/总订单</td>
+      <td><b>≥40%</b></td>
+      <td>经营罗盘→会员→超会数据</td>
+      <td><b>＜40%</b>：超会开通率低/超会权益不够<br/><b>关闭超会</b>→曝光-32.9%/订单-30.2%</td>
+      <td>① 确保超会开通率≥90%<br/>② 设置超会专属红包（5-8元）<br/>③ 推超会专属套餐（9折）<br/>④ 绝不能关闭超会！</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每周</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>模块四：店铺分与体验（11项指标体系）</h2>
+<div class="section-box">
+<div class="formula">店铺分 = 体验(40%) + 服务(25%) + 活动(10%) + 基本信息(25%) = 100分
+目标分：≥85分（优质门店）</div>
+<table>
+  <thead>
+    <tr>
+      <th style="width:5%">序号</th>
+      <th style="width:12%">检查指标</th>
+      <th style="width:8%">权重</th>
+      <th style="width:8%">标准值</th>
+      <th style="width:8%">检查路径</th>
+      <th style="width:15%">诊断逻辑</th>
+      <th style="width:20%">提升动作</th>
+      <th style="width:7%">优先级</th>
+      <th style="width:5%">频次</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>4.1</td>
+      <td><b>店铺分</b><br/><span class="tag tag-blue">综合</span></td>
+      <td>100%</td>
+      <td><b>≥85分</b></td>
+      <td>商家版→店铺分</td>
+      <td><b>＜85</b>：逐项检查11个细分指标<br/>找出得分最低的3项优先整改</td>
+      <td>按权重排序：差评回复率(10%)→商家评分(10%)→高峰营业时长(20%)→出餐上报率(10%)</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>4.2</td>
+      <td><b>差评回复率</b></td>
+      <td>10%</td>
+      <td><b>100%</b></td>
+      <td>顾客管理→顾客评价</td>
+      <td>＜100%：有差评未回复</td>
+      <td>① 24小时内回复所有差评<br/>② 回复模板：道歉+原因+补偿方案+改进承诺<br/>③ 差评率控制在5%以下</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>4.3</td>
+      <td><b>商家评分</b></td>
+      <td>10%</td>
+      <td><b>≥4.5分</b></td>
+      <td>顾客管理→顾客评分</td>
+      <td>＜4.5：菜品质量/配送速度/包装问题</td>
+      <td>① 引导好评（评价返券1-2元）<br/>② 优化包装（防漏/保温）<br/>③ 提升出餐速度（高峰期≤15分钟）<br/>④ 差评订单溯源整改</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>4.4</td>
+      <td><b>高峰营业时长</b></td>
+      <td>20%</td>
+      <td><b>达到推荐值</b></td>
+      <td>商家版→营业设置</td>
+      <td>未达标：营业时间不够/午晚高峰停业</td>
+      <td>① 营业时间10:00-22:00（≥12小时）<br/>② 午高峰11:00-13:00不停业<br/>③ 晚高峰17:00-20:00不停业<br/>④ 夜宵21:00-23:00（可选）</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>4.5</td>
+      <td><b>出餐上报率</b></td>
+      <td>10%</td>
+      <td><b>≥90%</b></td>
+      <td>商家版→出餐管理</td>
+      <td>＜90%：未及时点击出餐/系统问题</td>
+      <td>① 每单出餐后立即点击"出餐完成"<br/>② 真实上报率≥90%<br/>③ 高峰期提前备餐</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>4.6</td>
+      <td><b>不接单率</b></td>
+      <td>10%</td>
+      <td><b>≤1%</b></td>
+      <td>商家版→订单管理</td>
+      <td>＞1%：人手不足/系统故障/忙碌未暂停</td>
+      <td>① 高峰期增加人手<br/>② 忙碌时及时开启"忙碌模式"暂停接单<br/>③ 确保网络/设备正常</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>4.7</td>
+      <td><b>在线联系回复率</b></td>
+      <td>5%</td>
+      <td><b>≥90%</b></td>
+      <td>商家版→消息</td>
+      <td>＜90%：客服响应慢</td>
+      <td>① 开启自动回复<br/>③ 5分钟内回复顾客消息</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>4.8</td>
+      <td><b>有效活动丰富度</b></td>
+      <td>10%</td>
+      <td><b>≥3种活动</b></td>
+      <td>经营罗盘→活动</td>
+      <td>＜3种：活动类型单一</td>
+      <td>同时开启：满减+折扣菜+配送费减免+新客立减+会员红包</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每周</td>
+    </tr>
+    <tr>
+      <td>4.9</td>
+      <td><b>装修丰富度</b></td>
+      <td>5%</td>
+      <td>达标</td>
+      <td>商家版→店铺装修</td>
+      <td>未达标：头图/Banner/环境图不全</td>
+      <td>上传：品牌logo+头图+Banner+环境图5张+菜品图20张</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每月</td>
+    </tr>
+    <tr>
+      <td>4.10</td>
+      <td><b>优质商品率</b></td>
+      <td>5%</td>
+      <td>≥60%</td>
+      <td>商家版→商品管理</td>
+      <td>＜60%：菜品图片/描述不完善</td>
+      <td>每个菜品：高清图+完整描述+标签（热卖/新品/招牌）</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每月</td>
+    </tr>
+    <tr>
+      <td>4.11</td>
+      <td><b>菜品丰富度</b></td>
+      <td>5%</td>
+      <td>≥20个菜品</td>
+      <td>商家版→商品管理</td>
+      <td>＜20个：菜品太少影响选择</td>
+      <td>卤味15个+套餐3个+饮料2个+小吃2个=22个</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每月</td>
+    </tr>
+    <tr>
+      <td>4.12</td>
+      <td><b>服务功能丰富度</b></td>
+      <td>10%</td>
+      <td>达标</td>
+      <td>商家版→功能设置</td>
+      <td>未达标：未开通功能</td>
+      <td>开通：超会+会员红包+天天神券+自配送+预约单+开发票</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每月</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>模块五：用户与复购（BETTER模型 T+E+R阶段）</h2>
+<div class="section-box">
+<table>
+  <thead>
+    <tr>
+      <th style="width:5%">序号</th>
+      <th style="width:12%">检查指标</th>
+      <th style="width:10%">计算公式</th>
+      <th style="width:8%">标准值</th>
+      <th style="width:8%">检查路径</th>
+      <th style="width:15%">诊断逻辑</th>
+      <th style="width:20%">提升动作</th>
+      <th style="width:7%">优先级</th>
+      <th style="width:5%">频次</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>5.1</td>
+      <td><b>老客占比</b><br/><span class="tag tag-red">最重要</span></td>
+      <td>曝光老客/(曝光新客+曝光老客)</td>
+      <td><b>≥30%</b><br/><span class="tag tag-red">＜15%严重不足</span></td>
+      <td>经营罗盘→顾客→新老客</td>
+      <td><b>＜15%</b>：无会员体系/无复购激励/产品同质化<br/><b>＜30%</b>：复购不足，需加强老客运营</td>
+      <td>① 上线会员积分/储值/等级体系<br/>② 推"周三会员日"（0元吃/5折/双倍积分）<br/>③ 30天未消费→CRM自动推券<br/>④ 老客专属套餐（9折）</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每周</td>
+    </tr>
+    <tr>
+      <td>5.2</td>
+      <td><b>新客下单转化率</b></td>
+      <td>下单新客/入店新客</td>
+      <td>≥10%</td>
+      <td>经营罗盘→顾客→新客</td>
+      <td>＜10%：新客进店后不下单（价格/评价/菜品）</td>
+      <td>① 设置新客立减5-10元<br/>② 新客专享套餐（19.9元尝鲜）<br/>③ 优化头图和TOP3菜品</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每周</td>
+    </tr>
+    <tr>
+      <td>5.3</td>
+      <td><b>老客复购率</b></td>
+      <td>月复购老客/上月下单用户</td>
+      <td>≥25%</td>
+      <td>经营罗盘→顾客→复购</td>
+      <td>＜25%：无复购激励/体验差/被竞品截流</td>
+      <td>① 发放老客专属优惠券（7天有效期）<br/>② 推套餐+饮料组合提升体验<br/>③ 收集老客反馈优化产品</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每月</td>
+    </tr>
+    <tr>
+      <td>5.4</td>
+      <td><b>月复购率</b></td>
+      <td>当月复购用户/当月下单用户</td>
+      <td>≥15%</td>
+      <td>经营罗盘→顾客→复购</td>
+      <td>＜15%：产品力不足/无粘性</td>
+      <td>① 推周度活动（每周三品牌日）<br/>② 月度话题活动（节日主题套餐）<br/>③ 建立私域群（粉丝群/微信群）</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每月</td>
+    </tr>
+    <tr>
+      <td>5.5</td>
+      <td><b>一二星差评率</b></td>
+      <td>一二星差评数/总评价数</td>
+      <td><b>≤5%</b></td>
+      <td>顾客管理→顾客评价</td>
+      <td>＞5%：菜品质量/配送/包装/服务问题</td>
+      <td>① 差评溯源（菜品/配送/包装）<br/>② 针对性整改（换包装/改配方/培训）<br/>③ 差评24h内回复+补偿</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>5.6</td>
+      <td><b>订单缺陷率</b></td>
+      <td>缺陷订单/总订单</td>
+      <td>≤2%</td>
+      <td>经营罗盘→运营→缺陷分析</td>
+      <td>＞2%：商责取消/超时/漏餐/错餐</td>
+      <td>① 检查商责取消率≤1%<br/>② 出餐时长≤15分钟<br/>③ 核对订单防止漏餐错餐</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每周</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>模块六：供给与运营</h2>
+<div class="section-box">
+<table>
+  <thead>
+    <tr>
+      <th style="width:5%">序号</th>
+      <th style="width:12%">检查指标</th>
+      <th style="width:10%">计算公式</th>
+      <th style="width:8%">标准值</th>
+      <th style="width:8%">检查路径</th>
+      <th style="width:15%">诊断逻辑</th>
+      <th style="width:20%">提升动作</th>
+      <th style="width:7%">优先级</th>
+      <th style="width:5%">频次</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>6.1</td>
+      <td><b>营业率</b></td>
+      <td>营业天数/应营业天数</td>
+      <td><b>≥95%</b></td>
+      <td>经营罗盘→运营→营业</td>
+      <td>＜95%：停业过多/设备故障/人员不足</td>
+      <td>① 确保每日10:00-22:00营业<br/>② 设备故障24h内修复<br/>③ 人员排班保证高峰期人手</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>6.2</td>
+      <td><b>动销率</b></td>
+      <td>有订单天数/营业天数</td>
+      <td><b>≥95%</b></td>
+      <td>经营罗盘→运营→动销</td>
+      <td>＜95%：营业但无订单（曝光不足/转化低）</td>
+      <td>① 检查曝光是否正常<br/>② 确认活动是否在线<br/>③ 排查店铺分是否骤降</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>6.3</td>
+      <td><b>有单率</b></td>
+      <td>有订单门店数/总门店数</td>
+      <td>≥85%</td>
+      <td>经营罗盘→运营→有单率</td>
+      <td>＜85%：部分门店长期无单</td>
+      <td>① 排查无单门店（位置/装修/评分）<br/>② 无单门店启动点金推广<br/>③ 7天无单→关门诊断</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每周</td>
+    </tr>
+    <tr>
+      <td>6.4</td>
+      <td><b>商品库存满足率</b></td>
+      <td>有库存商品数/总商品数</td>
+      <td><b>≥95%</b></td>
+      <td>商家版→商品管理→库存</td>
+      <td>＜95%：缺货影响订单和转化</td>
+      <td>① 每日检查TOP30商品库存<br/>② 缺货商品及时下架<br/>③ 销量前10商品备货≥100份</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+    <tr>
+      <td>6.5</td>
+      <td><b>在售商品数</b></td>
+      <td>当前在售商品数</td>
+      <td>≥20个</td>
+      <td>商家版→商品管理</td>
+      <td>＜20个：选择太少影响转化</td>
+      <td>卤味15+套餐3+饮料2+小吃2=22个</td>
+      <td><span class="tag tag-yellow">中</span></td>
+      <td>每月</td>
+    </tr>
+    <tr>
+      <td>6.6</td>
+      <td><b>商责取消率</b></td>
+      <td>商责取消订单/总订单</td>
+      <td><b>≤1%</b></td>
+      <td>经营罗盘→运营→取消分析</td>
+      <td>＞1%：缺货/超时/人手不足</td>
+      <td>① 备货充足防缺货取消<br/>② 出餐及时防超时取消<br/>③ 高峰期增加人手</td>
+      <td><span class="tag tag-red">高</span></td>
+      <td>每日</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>模块七：四象限诊断与门店分层（综合诊断）</h2>
+<div class="section-box">
+<div class="formula">四象限模型：
+     高下单率
+        ↑
+  第二象限  │  第一象限
+ (低消耗高转化)│(高消耗高转化)
+        │      → 加码投放
+ ───────┼───────→ 高消耗
+        │
+  第三象限  │  第四象限
+ (低消耗低转化)│(高消耗低转化)
+        │      → 降低出价/暂停
+        ↓
+     低下单率</div>
+<table>
+  <thead>
+    <tr>
+      <th style="width:8%">象限</th>
+      <th style="width:12%">特征</th>
+      <th style="width:15%">判断标准</th>
+      <th style="width:20%">运营策略</th>
+      <th style="width:15%">检查频率</th>
+      <th style="width:30%">督导动作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background:#D1FAE5;">
+      <td><b>第一象限</b><br/><span class="tag tag-green">标杆</span></td>
+      <td>高消耗<br/>高下单率</td>
+      <td>广告消耗＞均值<br/>下单率＞15%</td>
+      <td>加码投放<br/>复刻经验</td>
+      <td>每周</td>
+      <td>① 提炼成功经验（菜品/活动/装修）<br/>② 复制到其他门店<br/>③ 增加广告预算20%</td>
+    </tr>
+    <tr style="background:#DBEAFE;">
+      <td><b>第二象限</b><br/><span class="tag tag-blue">潜力</span></td>
+      <td>低消耗<br/>高下单率</td>
+      <td>广告消耗＜均值<br/>下单率＞15%</td>
+      <td>加大投入<br/>增加曝光</td>
+      <td>每周</td>
+      <td>① 增加点金推广出价0.1-0.2元<br/>② 报名平台活动获取流量<br/>③ 扩大配送范围</td>
+    </tr>
+    <tr style="background:#FEF3C7;">
+      <td><b>第三象限</b><br/><span class="tag tag-yellow">待诊断</span></td>
+      <td>低消耗<br/>低下单率</td>
+      <td>广告消耗＜均值<br/>下单率＜15%</td>
+      <td>诊断整改<br/>优化基础</td>
+      <td>每周</td>
+      <td>① 检查店铺分（≥85）<br/>② 优化菜品图片和价格<br/>③ 检查差评并整改<br/>④ 7天无改善→关门复盘</td>
+    </tr>
+    <tr style="background:#FEE2E2;">
+      <td><b>第四象限</b><br/><span class="tag tag-red">预警</span></td>
+      <td>高消耗<br/>低下单率</td>
+      <td>广告消耗＞均值<br/>下单率＜15%</td>
+      <td>降低出价<br/>暂停投放</td>
+      <td>每日</td>
+      <td>① 下调点金推广出价0.2元<br/>② ROI＜2→暂停投放<br/>③ 诊断门店问题并整改<br/>④ 7天无改善→关闭推广</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>督导每日检查清单（5分钟速查）</h2>
+<div class="section-box">
+<table>
+  <thead>
+    <tr>
+      <th style="width:5%">序号</th>
+      <th style="width:20%">检查项</th>
+      <th style="width:10%">标准</th>
+      <th style="width:15%">检查路径</th>
+      <th style="width:10%">达标</th>
+      <th style="width:10%">不达标</th>
+      <th style="width:30%">不达标处理</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>昨日订单量</td><td>≥20单</td><td>经营罗盘→订单</td><td>□</td><td>□</td><td>排查曝光/活动/库存</td></tr>
+    <tr><td>2</td><td>昨日营业额</td><td>≥700元</td><td>经营罗盘→营业</td><td>□</td><td>□</td><td>排查订单量+客单价</td></tr>
+    <tr><td>3</td><td>进店率</td><td>≥6%</td><td>经营罗盘→流量</td><td>□</td><td>□</td><td>优化头图/评分/满减</td></tr>
+    <tr><td>4</td><td>下单率</td><td>≥15%</td><td>经营罗盘→流量</td><td>□</td><td>□</td><td>优化菜品/价格/评价</td></tr>
+    <tr><td>5</td><td>店铺分</td><td>≥85分</td><td>商家版→店铺分</td><td>□</td><td>□</td><td>逐项检查11个指标</td></tr>
+    <tr><td>6</td><td>商家评分</td><td>≥4.5分</td><td>顾客管理→评分</td><td>□</td><td>□</td><td>差评溯源+引导好评</td></tr>
+    <tr><td>7</td><td>差评回复</td><td>100%回复</td><td>顾客管理→评价</td><td>□</td><td>□</td><td>24h内回复+补偿</td></tr>
+    <tr><td>8</td><td>活动在线</td><td>≥3种活动</td><td>经营罗盘→活动</td><td>□</td><td>□</td><td>满减+折扣+配送费减免</td></tr>
+    <tr><td>9</td><td>超会开通</td><td>已开通</td><td>经营罗盘→会员</td><td>□</td><td>□</td><td>立即开通超会</td></tr>
+    <tr><td>10</td><td>库存检查</td><td>TOP10商品有货</td><td>商品管理→库存</td><td>□</td><td>□</td><td>补货/下架缺货品</td></tr>
+    <tr><td>11</td><td>营业状态</td><td>正常营业</td><td>商家版→营业</td><td>□</td><td>□</td><td>排查设备/人员/网络</td></tr>
+    <tr><td>12</td><td>点金推广</td><td>正常消耗</td><td>点金推广→报表</td><td>□</td><td>□</td><td>调整出价/时段</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>门店分层运营策略</h2>
+<div class="section-box">
+<table>
+  <thead>
+    <tr>
+      <th style="width:10%">层级</th>
+      <th style="width:15%">判断标准</th>
+      <th style="width:15%">占比目标</th>
+      <th style="width:30%">运营策略</th>
+      <th style="width:30%">督导重点</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background:#FEF3C7;">
+      <td><b>明星店</b><br/><span class="tag tag-yellow">S级</span></td>
+      <td>营业额TOP20%<br/>下单率＞15%<br/>老客占比＞20%</td>
+      <td>20%</td>
+      <td>保持策略+复制经验<br/>加大S级活动投入</td>
+      <td>每周检查1次<br/>提炼成功经验</td>
+    </tr>
+    <tr style="background:#D1FAE5;">
+      <td><b>现金牛</b><br/><span class="tag tag-green">A级</span></td>
+      <td>营业额中上<br/>订单稳定<br/>转化率达标</td>
+      <td>40%</td>
+      <td>维持现状<br/>优化薄弱环节</td>
+      <td>每周检查1次<br/>关注趋势变化</td>
+    </tr>
+    <tr style="background:#DBEAFE;">
+      <td><b>潜力店</b><br/><span class="tag tag-blue">B级</span></td>
+      <td>营业额中下<br/>有增长潜力<br/>新客占比高</td>
+      <td>25%</td>
+      <td>加大曝光+拉新<br/>建设会员体系</td>
+      <td>每3天检查1次<br/>跟踪提升进度</td>
+    </tr>
+    <tr style="background:#FEE2E2;">
+      <td><b>问题店</b><br/><span class="tag tag-red">C级</span></td>
+      <td>营业额BOTTOM15%<br/>转化率低<br/>补贴率过高</td>
+      <td>15%</td>
+      <td>门店诊断+整改<br/>降低无效补贴</td>
+      <td>每日检查<br/>7天无改善→关闭</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="danger">
+<h3>红色预警规则（出现即整改）</h3>
+<ul>
+  <li><b>店铺分＜75</b> → 24小时内逐项整改</li>
+  <li><b>商家评分＜4.0</b> → 立即排查差评原因</li>
+  <li><b>进店率＜4%</b> → 头图/装修/活动全面检查</li>
+  <li><b>下单率＜8%</b> → 菜品/价格/评价全面诊断</li>
+  <li><b>老客占比＜8%</b> → 立即启动会员体系建设</li>
+  <li><b>商家活动支出率＞50%</b> → 降低满减力度</li>
+  <li><b>商责取消率＞3%</b> → 排查缺货/人手问题</li>
+  <li><b>超会关闭</b> → 立即重新开通（关闭即-30%订单）</li>
+  <li><b>连续3天订单＜10单</b> → 全面诊断+BD介入</li>
+  <li><b>ROI＜2</b> → 暂停点金推广，调整后再开</li>
+</ul>
+</div>
+
+<div class="success">
+<h3>达标门店奖励机制</h3>
+<ul>
+  <li><b>店铺分≥90</b> → 标杆门店，经验输出</li>
+  <li><b>月订单环比+15%</b> → 增长奖，增加广告预算</li>
+  <li><b>老客占比≥30%</b> → 复购奖，会员体系标杆</li>
+  <li><b>商家活动率≤35%</b> → 效率奖，低补贴高产出</li>
+</ul>
+</div>
+
+<div class="footer">
+外卖门店督导检查与提升工具表 V1 | 基于15大分析模型 | 适用美团外卖/淘宝闪购 | 生成日期：2026-08-06
+</div>
+
+</div>
+</body>
+</html>
