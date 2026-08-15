@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>煌上煌 5门店广告月度报告 2026年5-7月</title>
+<script src="https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" onerror="var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';document.head.appendChild(s)"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js" onerror="var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js';document.head.appendChild(s)"></script>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--txt:#e6edf3;--sub:#8b949e;--blue:#58a6ff;--mt:#ffd100;--tb:#ff5000;--green:#3fb950;--red:#f85149;--purple:#bc8cff;--cyan:#39c5cf}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:"Microsoft YaHei","PingFang SC",sans-serif;padding:24px}
+.wrap{max-width:1280px;margin:0 auto}
+h1{font-size:26px;margin-bottom:4px}
+.sub{color:var(--sub);font-size:13px;margin-bottom:20px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px}
+.kpi .v{font-size:24px;font-weight:700;margin-top:4px}
+.kpi .l{color:var(--sub);font-size:12px}
+.kpi .d{font-size:11px;color:var(--sub);margin-top:2px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px}
+.card h2{font-size:16px;margin-bottom:14px;border-left:4px solid var(--blue);padding-left:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.chart-box{position:relative;height:320px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)}
+th{color:var(--sub);font-weight:600;background:#1c2128}
+td:first-child,th:first-child{text-align:left}
+.good{color:var(--green)}.bad{color:var(--red)}.warn{color:#d29922}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;margin-right:6px}
+.tag-mt{background:rgba(255,209,0,.15);color:var(--mt)}
+.tag-tb{background:rgba(255,80,0,.15);color:var(--tb)}
+.concl{background:linear-gradient(135deg,#161b22,#1f2630);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:18px}
+.concl h2{font-size:16px;margin-bottom:12px;border-left:4px solid var(--green);padding-left:10px}
+.concl ol{margin-left:20px}
+.concl li{margin-bottom:8px;font-size:14px;line-height:1.7}
+.concl b{color:var(--blue)}
+.foot{color:var(--sub);font-size:11px;text-align:center;margin-top:24px;padding-bottom:20px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(3,1fr)}.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🦆 煌上煌 5门店广告月度报告</h1>
+<div class="sub">创新专项部 ｜ 2026年5月-7月 ｜ 数据来源：美团外卖·淘宝闪购广告数据（总部投放）｜ 门店口径：C14793/C14906/C15002/C15009/C15019</div>
+
+<div class="kpis" id="kpis"></div>
+
+<div class="card"><h2>📈 月度投放趋势（消耗 / 交易额 / ROI）</h2><div class="chart-box"><canvas id="cMonthly"></canvas></div></div>
+
+<div class="grid2">
+<div class="card"><h2>⚖️ 平台对比（美团 vs 淘宝）</h2><div class="chart-box"><canvas id="cPlatform"></canvas></div></div>
+<div class="card"><h2>🏬 5门店 ROI 排名</h2><div class="chart-box"><canvas id="cStore"></canvas></div></div>
+</div>
+
+<div class="grid3">
+<div class="card"><h2>💰 消耗占比（门店）</h2><div class="chart-box" style="height:260px"><canvas id="cDoughnut"></canvas></div></div>
+<div class="card"><h2>📊 月度×平台 消耗堆叠</h2><div class="chart-box" style="height:260px"><canvas id="cStack"></canvas></div></div>
+<div class="card"><h2>🎯 月度×门店 ROI</h2><div class="chart-box" style="height:260px"><canvas id="cMs"></canvas></div></div>
+</div>
+
+<div class="concl" id="concl"></div>
+
+<div class="card"><h2>📋 明细表：月度 × 门店 × 平台</h2><div style="overflow-x:auto"><table id="detail"></table></div></div>
+
+<div class="foot">生成时间：2026-08-13 ｜ 口径：ROI=订单交易额÷推广消费（美团手算，消费>0时有效）；"-"值按空处理 ｜ 数据：广告数据/美团广告/总部 + 淘宝广告/总部（5-7月）</div>
+</div>
+
+<script>
+const DATA = {"total": {"消耗": 60534.399999999994, "交易额": 239176.05, "曝光提升": 746508.0, "进店提升": 42655.0, "订单提升": 6823.0, "行数": 2137, "ROI": 3.9510765779457633, "进店成本": 1.00251582278481}, "monthly": {"2026-05": {"消耗": 15098.34, "交易额": 58722.47, "曝光提升": 229558.0, "进店提升": 13753.0, "订单提升": 1748.0, "行数": 586, "ROI": 3.889332867056908, "进店成本": 0.9612806026365348}, "2026-06": {"消耗": 25830.809999999998, "交易额": 88639.42, "曝光提升": 236900.0, "进店提升": 12799.0, "订单提升": 2523.0, "行数": 722, "ROI": 3.4315385386675836, "进店成本": 1.0501305057096246}, "2026-07": {"消耗": 19605.25, "交易额": 91814.16, "曝光提升": 280050.0, "进店提升": 16103.0, "订单提升": 2552.0, "行数": 829, "ROI": 4.683141505464098, "进店成本": 0.9928191489361701}}, "platform": {"淘宝": {"消耗": 13422.259999999998, "交易额": 86752.63, "曝光提升": 339287.0, "进店提升": 20885.0, "订单提升": 2709.0, "行数": 598, "ROI": 6.463340003844361, "进店成本": 0.6835785953177257}, "美团": {"消耗": 47112.14, "交易额": 152423.41999999998, "曝光提升": 407221.0, "进店提升": 21770.0, "订单提升": 4114.0, "行数": 1539, "ROI": 3.235332124586147, "进店成本": 1.1494530046224962}}, "store": {"C14793": {"消耗": 6665.379999999999, "交易额": 34802.810000000005, "曝光提升": 188199.0, "进店提升": 10499.0, "订单提升": 969.0, "行数": 768, "ROI": 5.221429235842519, "进店成本": 0.7013618157543392}, "C14906": {"消耗": 5856.030000000001, "交易额": 31340.069999999996, "曝光提升": 108840.0, "进店提升": 7506.0, "订单提升": 868.0, "行数": 507, "ROI": 5.35176049303026, "进店成本": 0.9778030303030304}, "C15002": {"消耗": 10112.43, "交易额": 66191.13, "曝光提升": 212723.0, "进店提升": 14200.0, "订单提升": 1906.0, "行数": 278, "ROI": 6.54552169953216, "进店成本": 1.025}, "C15009": {"消耗": 19257.93, "交易额": 53687.19, "曝光提升": 119977.0, "进店提升": 5610.0, "订单提升": 1580.0, "行数": 276, "ROI": 2.7877965077243507, "进店成本": 1.3450420168067228}, "C15019": {"消耗": 18642.63, "交易额": 53154.85, "曝光提升": 116769.0, "进店提升": 4840.0, "订单提升": 1500.0, "行数": 308, "ROI": 2.851252747064121, "进店成本": 1.6305106382978725}}, "mp": {"2026-05|淘宝": {"消耗": 4714.68, "交易额": 27955.310000000005, "曝光提升": 134252.0, "进店提升": 7507.0, "订单提升": 859.0, "行数": 180, "ROI": 5.929418327436857, "进店成本": 0.6640555555555555}, "2026-05|美团": {"消耗": 10383.66, "交易额": 30767.16, "曝光提升": 95306.0, "进店提升": 6246.0, "订单提升": 889.0, "行数": 406, "ROI": 2.9630361548818045, "进店成本": 1.1137037037037039}, "2026-06|淘宝": {"消耗": 2981.3199999999997, "交易额": 23016.870000000003, "曝光提升": 83492.0, "进店提升": 5180.0, "订单提升": 698.0, "行数": 163, "ROI": 7.720362121476395, "进店成本": 0.6392638036809817}, "2026-06|美团": {"消耗": 22849.49, "交易额": 65622.55, "曝光提升": 153408.0, "进店提升": 7619.0, "订单提升": 1825.0, "行数": 559, "ROI": 2.871948126632148, "进店成本": 1.1989555555555556}, "2026-07|淘宝": {"消耗": 5726.26, "交易额": 35780.45, "曝光提升": 121543.0, "进店提升": 8198.0, "订单提升": 1152.0, "行数": 255, "ROI": 6.2484850495786075, "进店成本": 0.7256862745098038}, "2026-07|美团": {"消耗": 13878.99, "交易额": 56033.70999999999, "曝光提升": 158507.0, "进店提升": 7905.0, "订单提升": 1400.0, "行数": 574, "ROI": 4.037304587725763, "进店成本": 1.1298792756539235}}, "ms": {"2026-05|C14793": {"消耗": 2749.2, "交易额": 14728.68, "曝光提升": 76129.0, "进店提升": 4659.0, "订单提升": 429.0, "行数": 258, "ROI": 5.357442164993453, "进店成本": 0.7237596899224806}, "2026-05|C14906": {"消耗": 2319.54, "交易额": 11965.53, "曝光提升": 45816.0, "进店提升": 3442.0, "订单提升": 349.0, "行数": 173, "ROI": 5.158578856152514, "进店成本": 1.0250694444444446}, "2026-05|C15002": {"消耗": 3415.02, "交易额": 18554.98, "曝光提升": 82142.0, "进店提升": 4848.0, "订单提升": 556.0, "行数": 86, "ROI": 5.433344460647375, "进店成本": 1.0129069767441863}, "2026-05|C15009": {"消耗": 2247.5900000000006, "交易额": 3811.35, "曝光提升": 7953.0, "进店提升": 256.0, "订单提升": 125.0, "行数": 13, "ROI": 1.6957496696461538, "进店成本": 1.3055555555555556}, "2026-05|C15019": {"消耗": 4366.99, "交易额": 9661.93, "曝光提升": 17518.0, "进店提升": 548.0, "订单提升": 289.0, "行数": 56, "ROI": 2.2124918994547733, "进店成本": 2.271764705882353}, "2026-06|C14793": {"消耗": 1961.13, "交易额": 9004.29, "曝光提升": 64965.0, "进店提升": 2902.0, "订单提升": 248.0, "行数": 249, "ROI": 4.591378439981032, "进店成本": 0.6925316455696202}, "2026-06|C14906": {"消耗": 1354.73, "交易额": 6796.78, "曝光提升": 26261.0, "进店提升": 1385.0, "订单提升": 191.0, "行数": 145, "ROI": 5.017073512803289, "进店成本": 1.0375925925925926}, "2026-06|C15002": {"消耗": 3160.94, "交易额": 23138.230000000003, "曝光提升": 68908.0, "进店提升": 4569.0, "订单提升": 647.0, "行数": 78, "ROI": 7.320047201149026, "进店成本": 1.1755128205128205}, "2026-06|C15009": {"消耗": 12788.36, "交易额": 30996.710000000003, "曝光提升": 41381.0, "进店提升": 2230.0, "订单提升": 928.0, "行数": 139, "ROI": 2.423822132001289, "进店成本": 1.4419266055045874}, "2026-06|C15019": {"消耗": 6565.6500000000015, "交易额": 18703.41, "曝光提升": 35385.0, "进店提升": 1713.0, "订单提升": 509.0, "行数": 111, "ROI": 2.8486760640606787, "进店成本": 1.4651851851851854}, "2026-07|C14793": {"消耗": 1955.0500000000002, "交易额": 11069.84, "曝光提升": 47105.0, "进店提升": 2938.0, "订单提升": 292.0, "行数": 261, "ROI": 5.6621774379171885, "进店成本": 0.6868503937007875}, "2026-07|C14906": {"消耗": 2181.7599999999998, "交易额": 12577.759999999998, "曝光提升": 36763.0, "进店提升": 2679.0, "订单提升": 328.0, "行数": 189, "ROI": 5.7649603989439715, "进店成本": 0.8856944444444445}, "2026-07|C15002": {"消耗": 3536.4700000000003, "交易额": 24497.92, "曝光提升": 61673.0, "进店提升": 4783.0, "订单提升": 703.0, "行数": 114, "ROI": 6.92722403979109, "进店成本": 0.9311403508771929}, "2026-07|C15009": {"消耗": 4221.9800000000005, "交易额": 18879.130000000005, "曝光提升": 70643.0, "进店提升": 3124.0, "订单提升": 527.0, "行数": 124, "ROI": 4.4716294250564905, "进店成本": 1.26}, "2026-07|C15019": {"消耗": 7709.99, "交易额": 24789.510000000002, "曝光提升": 63866.0, "进店提升": 2579.0, "订单提升": 702.0, "行数": 141, "ROI": 3.215245415363704, "进店成本": 1.5604166666666666}}, "msp": {"2026-05|C14793|淘宝": {"消耗": 1135.51, "交易额": 8255.68, "曝光提升": 33803.0, "进店提升": 2097.0, "订单提升": 247.0, "行数": 90, "ROI": 7.270459969529111, "进店成本": 0.5868888888888889}, "2026-05|C14793|美团": {"消耗": 1613.69, "交易额": 6473.0, "曝光提升": 42326.0, "进店提升": 2562.0, "订单提升": 182.0, "行数": 168, "ROI": 4.011303286256964, "进店成本": 0.7970833333333334}, "2026-05|C14906|淘宝": {"消耗": 1100.9199999999998, "交易额": 6417.599999999999, "曝光提升": 31384.0, "进店提升": 1946.0, "订单提升": 179.0, "行数": 59, "ROI": 5.829306398285071, "进店成本": 0.7520338983050848}, "2026-05|C14906|美团": {"消耗": 1218.62, "交易额": 5547.93, "曝光提升": 14432.0, "进店提升": 1496.0, "订单提升": 170.0, "行数": 114, "ROI": 4.5526333065270554, "进店成本": 1.2145882352941177}, "2026-05|C15002|淘宝": {"消耗": 2478.25, "交易额": 13282.03, "曝光提升": 69065.0, "进店提升": 3464.0, "订单提升": 433.0, "行数": 31, "ROI": 5.3594391203470195, "进店成本": 0.7206451612903225}, "2026-05|C15002|美团": {"消耗": 936.77, "交易额": 5272.95, "曝光提升": 13077.0, "进店提升": 1384.0, "订单提升": 123.0, "行数": 55, "ROI": 5.628863007995559, "进店成本": 1.1776363636363636}, "2026-05|C15009|美团": {"消耗": 2247.5900000000006, "交易额": 3811.35, "曝光提升": 7953.0, "进店提升": 256.0, "订单提升": 125.0, "行数": 13, "ROI": 1.6957496696461538, "进店成本": 1.3055555555555556}, "2026-05|C15019|美团": {"消耗": 4366.99, "交易额": 9661.93, "曝光提升": 17518.0, "进店提升": 548.0, "订单提升": 289.0, "行数": 56, "ROI": 2.2124918994547733, "进店成本": 2.271764705882353}, "2026-06|C14793|淘宝": {"消耗": 535.32, "交易额": 3787.93, "曝光提升": 18992.0, "进店提升": 919.0, "订单提升": 116.0, "行数": 81, "ROI": 7.076010610475976, "进店成本": 0.5983950617283952}, "2026-06|C14793|美团": {"消耗": 1425.81, "交易额": 5216.36, "曝光提升": 45973.0, "进店提升": 1983.0, "订单提升": 132.0, "行数": 168, "ROI": 3.6585239267504086, "进店成本": 0.7414102564102564}, "2026-06|C14906|淘宝": {"消耗": 535.0600000000001, "交易额": 2492.06, "曝光提升": 17640.0, "进店提升": 984.0, "订单提升": 79.0, "行数": 51, "ROI": 4.657533734534444, "进店成本": 0.7337254901960784}, "2026-06|C14906|美团": {"消耗": 819.67, "交易额": 4304.719999999999, "曝光提升": 8621.0, "进店提升": 401.0, "订单提升": 112.0, "行数": 94, "ROI": 5.251772054607342, "进店成本": 1.3094736842105261}, "2026-06|C15002|淘宝": {"消耗": 1910.94, "交易额": 16736.88, "曝光提升": 46860.0, "进店提升": 3277.0, "订单提升": 503.0, "行数": 31, "ROI": 8.758453954598261, "进店成本": 0.5906451612903226}, "2026-06|C15002|美团": {"消耗": 1250.0, "交易额": 6401.35, "曝光提升": 22048.0, "进店提升": 1292.0, "订单提升": 144.0, "行数": 47, "ROI": 5.12108, "进店成本": 1.5612765957446808}, "2026-06|C15009|美团": {"消耗": 12788.36, "交易额": 30996.710000000003, "曝光提升": 41381.0, "进店提升": 2230.0, "订单提升": 928.0, "行数": 139, "ROI": 2.423822132001289, "进店成本": 1.4419266055045874}, "2026-06|C15019|美团": {"消耗": 6565.6500000000015, "交易额": 18703.41, "曝光提升": 35385.0, "进店提升": 1713.0, "订单提升": 509.0, "行数": 111, "ROI": 2.8486760640606787, "进店成本": 1.4651851851851854}, "2026-07|C14793|淘宝": {"消耗": 754.83, "交易额": 3677.91, "曝光提升": 16606.0, "进店提升": 1038.0, "订单提升": 113.0, "行数": 88, "ROI": 4.872501092961328, "进店成本": 0.6763636363636363}, "2026-07|C14793|美团": {"消耗": 1200.2199999999998, "交易额": 7391.93, "曝光提升": 30499.0, "进店提升": 1900.0, "订单提升": 179.0, "行数": 173, "ROI": 6.158812551032312, "进店成本": 0.6924096385542169}, "2026-07|C14906|淘宝": {"消耗": 902.27, "交易额": 4875.71, "曝光提升": 17325.0, "进店提升": 1181.0, "订单提升": 124.0, "行数": 57, "ROI": 5.403825905771, "进店成本": 0.8763157894736842}, "2026-07|C14906|美团": {"消耗": 1279.4899999999998, "交易额": 7702.049999999999, "曝光提升": 19438.0, "进店提升": 1498.0, "订单提升": 204.0, "行数": 132, "ROI": 6.0196250068386625, "进店成本": 0.8918390804597701}, "2026-07|C15002|淘宝": {"消耗": 2510.54, "交易额": 18677.93, "曝光提升": 44892.0, "进店提升": 3674.0, "订单提升": 560.0, "行数": 58, "ROI": 7.439805778836426, "进店成本": 0.6865517241379311}, "2026-07|C15002|美团": {"消耗": 1025.93, "交易额": 5819.99, "曝光提升": 16781.0, "进店提升": 1109.0, "订单提升": 143.0, "行数": 56, "ROI": 5.672891912703595, "进店成本": 1.1844642857142857}, "2026-07|C15009|淘宝": {"消耗": 945.28, "交易额": 5289.760000000001, "曝光提升": 26164.0, "进店提升": 1386.0, "订单提升": 206.0, "行数": 26, "ROI": 5.595971563981044, "进店成本": 0.6903846153846154}, "2026-07|C15009|美团": {"消耗": 3276.7000000000003, "交易额": 13589.37, "曝光提升": 44479.0, "进店提升": 1738.0, "订单提升": 321.0, "行数": 98, "ROI": 4.14727317117832, "进店成本": 1.4175531914893618}, "2026-07|C15019|淘宝": {"消耗": 613.34, "交易额": 3259.1400000000003, "曝光提升": 16556.0, "进店提升": 919.0, "订单提升": 149.0, "行数": 26, "ROI": 5.313757459158053, "进店成本": 0.6849999999999999}, "2026-07|C15019|美团": {"消耗": 7096.65, "交易额": 21530.37, "曝光提升": 47310.0, "进店提升": 1660.0, "订单提升": 553.0, "行数": 115, "ROI": 3.033877956500602, "进店成本": 1.802553191489362}}, "S5": {"C14793": "直属地铁万科广场专卖店", "C14906": "万寿宫子固路店/直属子固路专卖店", "C15002": "南昌印象城", "C15009": "直属南山科兴科学园店", "C15019": "直属南山益田假日广场店"}};
+const S5 = DATA.S5;
+const fmt = (x, d=2) => { if(x===null||x===undefined||isNaN(x)) return '—'; return x.toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d}); };
+const MTC='#ffd100', TBC='#ff5000', BLU='#58a6ff', GRN='#3fb950', RED='#f85149', PRP='#bc8cff', CYN='#39c5cf';
+
+// KPI
+const t = DATA.total;
+const kpis = [
+ {l:'总广告消耗', v:'¥'+fmt(t['消耗'],0), d:'美团 ¥'+fmt(DATA.platform['美团']['消耗'],0)+' ｜ 淘宝 ¥'+fmt(DATA.platform['淘宝']['消耗'],0)},
+ {l:'广告带动交易额', v:'¥'+fmt(t['交易额'],0), d:'美团 ¥'+fmt(DATA.platform['美团']['交易额'],0)+' ｜ 淘宝 ¥'+fmt(DATA.platform['淘宝']['交易额'],0)},
+ {l:'综合 ROI', v:fmt(t['ROI']), d:'淘宝 '+fmt(DATA.platform['淘宝']['ROI'])+' ＞ 美团 '+fmt(DATA.platform['美团']['ROI']), c:(t['ROI']>=3?GRN:RED)},
+ {l:'曝光提升', v:fmt(t['曝光提升'],0), d:'美团 '+fmt(DATA.platform['美团']['曝光提升'],0)+' ｜ 淘宝 '+fmt(DATA.platform['淘宝']['曝光提升'],0)},
+ {l:'进店提升', v:fmt(t['进店提升'],0), d:'美团 '+fmt(DATA.platform['美团']['进店提升'],0)+' ｜ 淘宝 '+fmt(DATA.platform['淘宝']['进店提升'],0)},
+ {l:'订单提升', v:fmt(t['订单提升'],0)+' 单', d:'美团 '+fmt(DATA.platform['美团']['订单提升'],0)+' ｜ 淘宝 '+fmt(DATA.platform['淘宝']['订单提升'],0)},
+];
+document.getElementById('kpis').innerHTML = kpis.map(k=>`<div class="kpi"><div class="l">${k.l}</div><div class="v" style="color:${k.c||BLU}">${k.v}</div><div class="d">${k.d}</div></div>`).join('');
+
+Chart.defaults.color = '#8b949e';
+Chart.defaults.borderColor = 'rgba(139,148,158,.15)';
+Chart.register(ChartDataLabels);
+
+const months = ['2026-05','2026-06','2026-07'];
+const ml = months.map(m=>m.slice(5)+'月');
+
+// 1 月度趋势
+new Chart(document.getElementById('cMonthly'), {
+ data:{labels:ml,datasets:[
+  {type:'bar',label:'消耗(元)',data:months.map(m=>DATA.monthly[m]['消耗']),backgroundColor:'rgba(88,166,255,.55)',borderColor:BLU,borderWidth:1,yAxisID:'y'},
+  {type:'bar',label:'交易额(元)',data:months.map(m=>DATA.monthly[m]['交易额']),backgroundColor:'rgba(63,185,80,.5)',borderColor:GRN,borderWidth:1,yAxisID:'y'},
+  {type:'line',label:'ROI',data:months.map(m=>DATA.monthly[m]['ROI']),borderColor:'#ffd100',backgroundColor:'#ffd100',yAxisID:'y1',tension:.35,pointRadius:5,pointBackgroundColor:'#ffd100'},
+ ]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:{datalabels:{display:false}},scales:{y:{title:{display:true,text:'金额(元)'}},y1:{position:'right',title:{display:true,text:'ROI'},grid:{display:false}}}}
+});
+
+// 2 平台对比
+new Chart(document.getElementById('cPlatform'), {
+ type:'bar',
+ data:{labels:['消耗(元)','交易额(元)','ROI','进店成本(元)'],datasets:[
+  {label:'美团',data:[DATA.platform['美团']['消耗'],DATA.platform['美团']['交易额'],DATA.platform['美团']['ROI'],DATA.platform['美团']['进店成本']],backgroundColor:MTC},
+  {label:'淘宝',data:[DATA.platform['淘宝']['消耗'],DATA.platform['淘宝']['交易额'],DATA.platform['淘宝']['ROI'],DATA.platform['淘宝']['进店成本']],backgroundColor:TBC},
+ ]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:{datalabels:{anchor:'end',align:'top',font:{size:10},formatter:(v)=>v.toLocaleString('zh-CN',{maximumFractionDigits:2})}},scales:{y:{beginAtZero:true}}}
+});
+
+// 3 门店 ROI 排名
+const srank = Object.entries(DATA.store).sort((a,b)=>(b[1]['ROI']||0)-(a[1]['ROI']||0));
+new Chart(document.getElementById('cStore'), {
+ type:'bar',
+ data:{labels:srank.map(([k])=>k+' '+S5[k]),datasets:[{label:'ROI',data:srank.map(([,v])=>v['ROI']),backgroundColor:srank.map(([,v])=>(v['ROI']||0)>=5?GRN:(v['ROI']||0)>=3.5?BLU:RED)}]},
+ options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{datalabels:{anchor:'end',align:'right',font:{size:12,weight:'bold'},formatter:(v)=>fmt(v)},legend:{display:false}},scales:{x:{beginAtZero:true}}}
+});
+
+// 4 消耗占比
+new Chart(document.getElementById('cDoughnut'), {
+ type:'doughnut',
+ data:{labels:Object.entries(DATA.store).map(([k])=>S5[k]),datasets:[{data:Object.entries(DATA.store).map(([,v])=>v['消耗']),backgroundColor:[PRP,CYN,BLU,GRN,'#ffa657'],borderWidth:2,borderColor:'#161b22'}]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:{datalabels:{color:'#fff',font:{size:11},formatter:(v,ctx)=>ctx.chart.data.labels[ctx.dataIndex]+' '+fmt(v,0)}},legend:{display:false}}
+});
+
+// 5 月度×平台 堆叠
+new Chart(document.getElementById('cStack'), {
+ type:'bar',
+ data:{labels:ml,datasets:[
+  {label:'美团',data:months.map(m=>DATA.mp[m+'|美团']['消耗']),backgroundColor:MTC},
+  {label:'淘宝',data:months.map(m=>DATA.mp[m+'|淘宝']['消耗']),backgroundColor:TBC},
+ ]},
+ options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true}},plugins:{datalabels:{display:false},legend:{position:'bottom'}}}
+});
+
+// 6 月度×门店 ROI
+const s5 = Object.keys(DATA.store);
+new Chart(document.getElementById('cMs'), {
+ type:'bar',
+ data:{labels:ml,datasets:s5.map((k,i)=>({label:S5[k],data:months.map(m=>DATA.ms[m+'|'+k]['ROI']),backgroundColor:[PRP,CYN,BLU,GRN,'#ffa657'][i]}))},
+ options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true}},plugins:{datalabels:{display:false},legend:{position:'bottom',labels:{boxWidth:12,font:{size:10}}}}}
+});
+
+// 结论（五段式）
+const concl = document.getElementById('concl');
+concl.innerHTML = `<h2>💡 分析结论与建议（五段式）</h2><ol id="conclList"></ol>`;
+const items = [
+ `<b>【摘要】</b>5-7月 5店广告总消耗 <b>¥${fmt(t['消耗'],0)}</b>，带动订单交易额 <b>¥${fmt(t['交易额'],0)}</b>，综合 ROI <b>${fmt(t['ROI'])}</b>；累计曝光提升 ${fmt(t['曝光提升'],0)}、进店提升 ${fmt(t['进店提升'],0)}、订单提升 ${fmt(t['订单提升'],0)} 单。`,
+ `<b>【洞察①：淘宝效率碾压美团】</b>淘宝消耗仅 ¥${fmt(DATA.platform['淘宝']['消耗'],0)}（占22%）却产出 ROI <b>${fmt(DATA.platform['淘宝']['ROI'])}</b>，为美团（${fmt(DATA.platform['美团']['ROI'])}）的 <b>2 倍</b>；淘宝进店成本 ${fmt(DATA.platform['淘宝']['进店成本'])} 元 vs 美团 ${fmt(DATA.platform['美团']['进店成本'])} 元。`,
+ `<b>【洞察②：深圳两店拖累整体】</b>C15009/C15019 消耗合计 ¥${fmt(DATA.store['C15009']['消耗']+DATA.store['C15019']['消耗'],0)}（占 ${((DATA.store['C15009']['消耗']+DATA.store['C15019']['消耗'])/t['消耗']*100).toFixed(1)}%）但 ROI 仅 ${fmt(DATA.store['C15009']['ROI'])}/${fmt(DATA.store['C15019']['ROI'])}；南昌三店（C14793/C14906/C15002）ROI 5.2-6.5 全线高效。`,
+ `<b>【洞察③：6月投放效率低谷】</b>6月消耗最高 ¥${fmt(DATA.monthly['2026-06']['消耗'],0)} 但 ROI 最低 ${fmt(DATA.monthly['2026-06']['ROI'])}（C15009 单月投 ¥${fmt(DATA.ms['2026-06|C15009']['消耗'],0)} ROI 仅 ${fmt(DATA.ms['2026-06|C15009']['ROI'])}）；7月回升至 ${fmt(DATA.monthly['2026-07']['ROI'])}，交易额创 ${fmt(DATA.monthly['2026-07']['交易额'],0)} 新高。`,
+ `<b>【洞察④：淘宝覆盖缺口】</b>淘宝 5/6月仅南昌 3店有投放，深圳 2店 7月才上线；C15002 南昌印象城 ROI ${fmt(DATA.store['C15002']['ROI'])} 为全场最佳，且月度稳定攀升（5月${fmt(DATA.ms['2026-05|C15002']['ROI'])}→7月${fmt(DATA.ms['2026-07|C15002']['ROI'])}）。`,
+ `<b>【根因】</b>① 深圳两店进店成本高（C15019 ${fmt(DATA.store['C15019']['进店成本'])} 元/次、C15009 ${fmt(DATA.store['C15009']['进店成本'])} 元/次），远超南昌（≤1.0元），流量贵且转化弱；② 美团整体进店成本 ${fmt(DATA.platform['美团']['进店成本'])} 元偏高，竞价效率低于淘宝；③ 6月大额加投（+71%）未同步放大产出（交易额仅+51%）。`,
+ `<b>【建议】</b>① <span class="good">加投</span>：淘宝渠道（预算可翻倍）与南昌 3店，尤其是 C15002（高ROI持续放量）；② <span class="warn">优化</span>：深圳 2店压缩无效消耗、聚焦高转化时段/人群，目标将进店成本压至 1.0 元内；③ <span class="warn">诊断</span>：复盘美团 6月低效计划，将预算向 ROI>4 的计划倾斜；④ <span class="good">复制</span>：将南昌 3店投放策略（含淘宝组合）迁移至深圳 2店淘宝首月运营。`,
+ `<b>【展望】</b>若深圳 2店 ROI 提升至 4.0+、淘宝预算占比提升至 40%，预估整体 ROI 可由 ${fmt(t['ROI'])} 提升至 <b>5.0+</b>，同消耗下交易额可增约 ¥${fmt(t['交易额']*(5.0/t['ROI']-1),0)}。`,
+];
+document.getElementById('conclList').innerHTML = items.map(x=>`<li>${x}</li>`).join('');
+
+// 明细表（月度×门店×平台，msp）
+let th = `<tr><th>月份</th><th>门店</th><th>平台</th><th>消耗(元)</th><th>交易额(元)</th><th>ROI</th><th>曝光提升</th><th>进店提升</th><th>订单提升</th><th>进店成本(元)</th></tr>`;
+let tr = '';
+for (const m of months) {
+  for (const k of s5) {
+    for (const pf of ['美团','淘宝']) {
+      const v = DATA.msp[m+'|'+k+'|'+pf]; if(!v) continue;
+      const cl = pf==='美团'?'tag-mt':'tag-tb';
+      tr += `<tr><td>${m.slice(5)}月</td><td>${k} ${S5[k]}</td><td><span class="tag ${cl}">${pf}</span></td><td>${fmt(v['消耗'],0)}</td><td>${fmt(v['交易额'],0)}</td><td class="${(v['ROI']||0)>=5?'good':(v['ROI']||0)>=3.5?'':'bad'}">${fmt(v['ROI'])}</td><td>${fmt(v['曝光提升'],0)}</td><td>${fmt(v['进店提升'],0)}</td><td>${fmt(v['订单提升'],0)}</td><td>${fmt(v['进店成本'])}</td></tr>`;
+    }
+  }
+}
+document.getElementById('detail').innerHTML = th+tr;
+</script>
+</body>
+</html>
