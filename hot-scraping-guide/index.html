@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>如何抓取网上热点信息并总结 · 学习总结提炼</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family:"Microsoft YaHei",sans-serif; margin:0; background:#f5f7fa; color:#1f2328; }
+  .wrap { max-width:1000px; margin:0 auto; padding:24px 16px 60px; }
+  header { background:linear-gradient(135deg,#1a1a2e,#16213e); color:#fff; border-radius:12px; padding:28px 32px; margin-bottom:20px; }
+  header h1 { margin:0 0 6px; font-size:25px; }
+  header .sub { opacity:.8; font-size:13px; }
+  .badge { display:inline-block; background:rgba(255,255,255,.18); border-radius:10px; padding:2px 10px; font-size:12px; margin-left:8px; }
+  .card { background:#fff; border-radius:10px; padding:18px 22px; margin-bottom:16px; box-shadow:0 1px 4px rgba(0,0,0,.07); }
+  .card h2 { font-size:17px; margin:0 0 12px; padding-left:10px; border-left:4px solid #16213e; }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; }
+  th,td { padding:8px 10px; border-bottom:1px solid #eee; text-align:left; }
+  th { background:#16213e; color:#fff; font-weight:600; white-space:nowrap; }
+  tr:hover td { background:#f6f8fa; }
+  .ok { color:#1a7f37; font-weight:700; } .no { color:#cf222e; font-weight:700; }
+  .step { padding:10px 14px; background:#f0f4fa; border-radius:8px; margin-bottom:8px; font-size:13.5px; line-height:1.7; }
+  .step b { color:#16213e; }
+  .tip { background:#fff8e6; border:1px solid #f0d98c; border-radius:8px; padding:10px 14px; font-size:13px; color:#5b4a12; margin-bottom:8px; line-height:1.7; }
+  .kv { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:16px; }
+  .kv-item { background:#fff; border-radius:10px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,.07); text-align:center; }
+  .kv-item .v { font-size:24px; font-weight:700; color:#16213e; }
+  .kv-item .l { font-size:12px; color:#666; margin-top:4px; }
+  footer { text-align:center; color:#999; font-size:12px; margin-top:30px; }
+  @media (max-width:600px) { header h1 { font-size:19px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🕸️ 如何抓取网上热点信息并总结 <span class="badge">学习总结提炼 V1</span></h1>
+    <div class="sub">2026-08-15 深度学习 8:00-12:00 ｜ 10 技能深读 + 12 源实战 ｜ 交付：方法 + 工具 + 源地图 + 踩坑</div>
+  </header>
+
+  <div class="kv">
+    <div class="kv-item"><div class="v">12</div><div class="l">热点源实测</div></div>
+    <div class="kv-item"><div class="v">5</div><div class="l">全通源（脚本化）</div></div>
+    <div class="kv-item"><div class="v">10</div><div class="l">技能深读</div></div>
+    <div class="kv-item"><div class="v">191</div><div class="l">可抓热点条数/次</div></div>
+  </div>
+
+  <div class="card">
+    <h2>一、结论先行</h2>
+    <div class="tip">✅ <b>抓热点核心：优先找官方 JSON API，别硬刚 HTML 正则。</b>实测头条/百度/B站/知乎均有免 key 官方 JSON 接口，一条脚本全拿下；微博/知乎网页版有反爬，绕道 tophub 聚合源即可。</div>
+    <div class="tip">✅ <b>总结核心：多源交叉验证 + 分层提炼</b>（一句话洞察 → 3-5 要点 → 分类热点清单 → 背景影响 → 行动建议）。</div>
+  </div>
+
+  <div class="card">
+    <h2>二、热点源地图（12 源实测结果）</h2>
+    <table>
+      <thead><tr><th>源</th><th>类型</th><th>条数</th><th>状态</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>头条热榜 JSON</td><td>API</td><td>50</td><td class="ok">✅ 最稳</td><td>含 HotValue 热度 + 分类，首选</td></tr>
+        <tr><td>百度热搜 JSON API</td><td>API</td><td>51</td><td class="ok">✅</td><td>官方接口，重大发现</td></tr>
+        <tr><td>B站热门 API</td><td>API</td><td>30</td><td class="ok">✅</td><td>含播放量 + 分区</td></tr>
+        <tr><td>知乎热榜 API</td><td>API</td><td>30</td><td class="ok">✅</td><td>网页403但API可通，需Referer</td></tr>
+        <tr><td>tophub 聚合</td><td>HTML</td><td>30</td><td class="ok">✅</td><td>一次拿微博/知乎/抖音等多平台</td></tr>
+        <tr><td>虎嗅</td><td>HTML</td><td>—</td><td class="ok">✅</td><td>200 可抓</td></tr>
+        <tr><td>微博热搜</td><td>HTML</td><td>—</td><td class="no">❌ 反爬</td><td>重定向登录页</td></tr>
+        <tr><td>知乎网页</td><td>HTML</td><td>—</td><td class="no">❌ 403</td><td>API 可替代</td></tr>
+        <tr><td>GitHub Trending</td><td>HTML</td><td>—</td><td class="no">❌ 超时</td><td>国内网络</td></tr>
+        <tr><td>36kr API</td><td>JSON</td><td>—</td><td class="no">❌ 500</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>三、抓取 → 总结 标准流程（5 步）</h2>
+    <div class="step"><b>① 选源定题</b>：通用热点用头条+百度；科技/AI 用 RSS 92源；财经用头条 finance 分类</div>
+    <div class="step"><b>② 多源抓取</b>：至少 2 个独立源交叉验证同一热点，记录标题/热度/来源/时间/URL</div>
+    <div class="step"><b>③ 去噪去重</b>：跨源同题合并（如"印尼7.7级地震"三平台都有→归一条），剔除营销号/重复内容</div>
+    <div class="step"><b>④ 分类聚合</b>：按领域分桶（时政/国际/财经/科技/体育/娱乐/民生/健康），按热度排序</div>
+    <div class="step"><b>⑤ 总结提炼</b>：一句话核心洞察 → 3-5 条要点（带来源）→ 分类热点清单 → 背景与影响 → 行动建议</div>
+  </div>
+
+  <div class="card">
+    <h2>四、工具链（优先级从高到低）</h2>
+    <table>
+      <thead><tr><th>工具</th><th>用途</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr><td><b>hot_scraper.py</b>（五源脚本）</td><td>头条/百度/B站/知乎/tophub 一键抓取</td><td class="ok">✅ 已可用</td></tr>
+        <tr><td><b>hot_report_html.py</b></td><td>热点数据 → 网页版报告</td><td class="ok">✅ 已可用</td></tr>
+        <tr><td><b>rss_aggregator.py</b></td><td>RSS 聚合（InfoQ/少数派/阮一峰）</td><td class="ok">✅ 已可用</td></tr>
+        <tr><td>web_fetch 工具</td><td>单页精读（readability）</td><td class="ok">✅</td></tr>
+        <tr><td>rss-news-aggregator 技能</td><td>92 个科技 RSS 源 + 质量评分</td><td class="ok">✅</td></tr>
+        <tr><td>news-search / trend-scout</td><td>新闻溯源 / 趋势分析</td><td class="no">需 web_search provider</td></tr>
+        <tr><td>firecrawl</td><td>整站爬取</td><td class="no">需 Composio + 额度</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>五、踩坑记录（实战验证）</h2>
+    <div class="tip">1️⃣ JSON API 远优于 HTML 正则：优先找官方 JSON 接口，HTML 用 readability 而非手写正则</div>
+    <div class="tip">2️⃣ 微博/知乎有反爬 → 不硬刚，换 tophub 聚合源或 RSS</div>
+    <div class="tip">3️⃣ web_search 当前未配 provider → 用 web_fetch 直抓替代</div>
+    <div class="tip">4️⃣ 中文输出：文件写 UTF-8；控制台 GBK 乱码是正常的，文件内容没错</div>
+    <div class="tip">5️⃣ 中文长目录名别硬编码，用 os.walk 动态定位</div>
+  </div>
+
+  <div class="card">
+    <h2>六、今日实战产物（8/15 热点）</h2>
+    <div class="step">📰 <b>三线并行</b>：日本投降81周年（时政）+ 印尼7.7级地震（灾害，三平台全上榜）+ 旺旺经营危机（财经，微博161万热度）</div>
+    <div class="step">📊 五源 HTML 报告已生成：<b>hot-report.html</b>（5 卡片 / 105 行 / 无乱码）</div>
+  </div>
+
+  <footer>OpenClaw 学习总结提炼 · 2026-08-15 · 待办：配 web_search provider / cron 每日自动热点报告</footer>
+</div>
+</body>
+</html>
