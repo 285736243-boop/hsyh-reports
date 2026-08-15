@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>煌上煌外卖门店运营培训课件 V4</title>
+<style>
+:root{--bg:#0f1419;--card:#1a2129;--line:#2a343f;--text:#dce3ea;--dim:#8b98a5;--brand:#c41e3a;--brand2:#e74c3c;--blue:#58a6ff;--green:#3fb950;--orange:#f39c12;--purple:#a371f7}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Microsoft YaHei",sans-serif;line-height:1.8;padding:24px 16px 80px}
+.wrap{max-width:1080px;margin:0 auto}
+.header{text-align:center;padding:42px 20px 26px;border-bottom:2px solid var(--line);margin-bottom:26px;background:linear-gradient(160deg,rgba(196,30,58,.14),transparent 55%)}
+.header h1{font-size:2em;letter-spacing:3px}
+.header h1 span{color:var(--brand2);font-size:.5em;vertical-align:middle;margin-left:10px}
+.header .sub{color:var(--dim);margin-top:10px;font-size:.95em}
+.header .badge{display:inline-block;background:rgba(88,166,255,.12);color:var(--blue);border:1px solid rgba(88,166,255,.3);border-radius:20px;padding:3px 16px;font-size:.78em;margin-top:10px}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 22px;margin-bottom:22px}
+.toc .t{color:var(--dim);font-size:.75em;letter-spacing:1px;margin-bottom:6px}
+.toc a{display:inline-block;color:var(--text);text-decoration:none;font-size:.88em;opacity:.75;margin:2px 14px 2px 0}
+.toc a:hover{color:var(--blue);opacity:1}
+h2{font-size:1.38em;margin:42px 0 8px;padding:10px 16px;border-left:5px solid var(--brand);background:linear-gradient(90deg,rgba(196,30,58,.15),transparent);color:#fff;scroll-margin-top:12px}
+h2 .en{font-size:.5em;color:var(--dim);margin-left:10px;letter-spacing:2px}
+h2 .goal{display:block;font-size:.55em;color:var(--orange);font-weight:400;margin-top:4px}
+h3{font-size:1.1em;margin:22px 0 8px;color:var(--blue)}
+h4{font-size:.98em;margin:14px 0 6px;color:var(--orange)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.kpi{background:#0d1117;border:1px solid var(--line);border-radius:10px;padding:13px 15px;text-align:center}
+.kpi .v{font-size:1.35em;font-weight:700;color:var(--blue)}
+.kpi .l{font-size:.74em;color:var(--dim);margin-top:3px}
+table{width:100%;border-collapse:collapse;font-size:.87em;margin:10px 0}
+th{background:#232d38;text-align:left;padding:8px 11px;color:#fff;border:1px solid var(--line)}
+td{padding:7px 11px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+.ok{color:var(--green);font-weight:600}
+.warn{color:var(--orange);font-weight:600}
+.bad{color:var(--brand2);font-weight:600}
+.tip{background:rgba(63,185,80,.07);border-left:3px solid var(--green);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.9em}
+.alert{background:rgba(231,76,60,.08);border-left:3px solid var(--brand2);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.9em}
+.think{background:rgba(163,113,247,.07);border-left:3px solid var(--purple);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.9em}
+.note{color:var(--dim);font-size:.8em;margin-top:8px}
+ul,ol{padding-left:22px;margin:6px 0}
+li{margin:4px 0}
+/* 案例图：菜单结构示意 */
+.menudemo{background:#0d1117;border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.menudemo .md-head{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.menudemo .md-avatar{width:54px;height:54px;border-radius:10px;background:linear-gradient(135deg,#c41e3a,#e67e22);display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff}
+.menudemo .md-name{font-weight:700;font-size:1.05em}
+.menudemo .md-tags{font-size:.72em;color:var(--dim)}
+.menudemo .md-cat{display:flex;gap:6px;margin:8px 0 12px;flex-wrap:wrap}
+.menudemo .md-cat span{background:#232d38;border:1px solid var(--line);border-radius:16px;padding:3px 12px;font-size:.78em;color:var(--text)}
+.menudemo .md-cat .active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.menudemo .md-item{display:flex;justify-content:space-between;align-items:center;padding:8px 6px;border-bottom:1px dashed rgba(255,255,255,.06);font-size:.85em}
+.menudemo .md-item .mi-name{color:var(--text)}
+.menudemo .md-item .mi-name b{color:var(--orange);margin-right:4px}
+.menudemo .md-item .mi-tag{font-size:.7em;color:var(--green);border:1px solid rgba(63,185,80,.4);border-radius:8px;padding:0 6px;margin-left:6px}
+.menudemo .md-item .mi-price{color:var(--brand2);font-weight:700;white-space:nowrap}
+.menudemo .md-item .mi-price small{color:var(--dim);font-weight:400;font-size:.75em}
+.menudemo .md-foot{display:flex;justify-content:space-between;padding:10px 6px 0;font-size:.78em;color:var(--dim)}
+.menudemo .md-foot .f1{color:var(--green)}
+.menudemo .md-foot .f2{color:var(--orange)}
+/* 出价决策流程 */
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0}
+.flow .node{background:#0d1117;border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-align:center;min-width:130px}
+.flow .node .n1{font-size:.85em;font-weight:700;color:var(--blue)}
+.flow .node .n2{font-size:.72em;color:var(--dim);margin-top:3px}
+.flow .arrow{color:var(--dim);font-size:1.2em}
+.footer{text-align:center;color:var(--dim);font-size:.78em;margin-top:46px;border-top:1px solid var(--line);padding-top:16px}
+@media print{
+  body{background:#fff;color:#222;padding:8px}
+  .toc,.footer{display:none}
+  .card,.kpi,.menudemo{background:#fff;border:1px solid #bbb}
+  .menudemo .md-cat span{background:#eee;color:#222}
+  th{background:#eee;color:#222}
+  h2{color:#000;border-left-color:#c41e3a;background:none}
+  .tip,.alert,.think{background:#f5f5f5}
+  .flow .node{background:#f5f5f5}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+<h1>煌上煌外卖门店运营培训<span>V4</span></h1>
+<div class="sub">认知 → 诊断 → 实操 → 管理 ｜ 数值标准版：出价有阈值、菜单有方案、案例有图</div>
+<div class="badge">📅 2026-08-15 ｜ 投放标准值来源：25年广告数据 38,770 行真实投放分布 ｜ 授课建议 3 小时</div>
+</div>
+
+<div class="toc">
+<div class="t">📑 培训路线</div>
+<a href="#m1">一、认知篇</a>
+<a href="#m2">二、诊断篇</a>
+<a href="#m3">三、实操·流量与投流（含标准值）</a>
+<a href="#m4">四、实操·评分与口碑</a>
+<a href="#m5">五、实操·菜单与转化（含落地方案+案例图）</a>
+<a href="#m6">六、管理篇</a>
+<a href="#app">附录 · 速查卡与考核</a>
+</div>
+
+<!-- ===== 一、认知 ===== -->
+<h2 id="m1">一、认知篇 · 先搞懂这门生意<span class="en">COGNITION</span><span class="goal">学习目标：30分钟 · 建立"流量→转化→复购"的生意地图</span></h2>
+
+<div class="card">
+<h3>1.1 一句话搞懂外卖</h3>
+<p>堂食靠<b>位置</b>，外卖靠<b>数据</b>。外卖是"视觉电商"——<b>图片定生死</b>，排名决定流量，活动与基建决定转化。</p>
+<div class="think">🤔 想一想：同一条街两家煌上煌，为什么月售差 10 倍？——差距全在线上运营四个环节：曝光、进店、下单、复购。</div>
+</div>
+
+<div class="card">
+<h3>1.2 业绩公式：煌上煌的门店怎么算账</h3>
+<table>
+<tr><th>公式</th><th>白话</th><th>煌上煌落地动作</th></tr>
+<tr><td>营业额 = 曝光 × 进店率 × 下单率 × 客单价</td><td>四个杠杆</td><td>日报就看这四个数，哪个低补哪个</td></tr>
+<tr><td>利润 = 营业额÷1.3 − 食材 − 平台扣点 − 包装 − 推广费</td><td>毛利约30%（v2口径）</td><td>推广费超预算=白干，ROI≥3.3才保本</td></tr>
+<tr><td>复购 = 老客 × 复购率 × 频次</td><td>老客最便宜</td><td>粉丝群/会员价/好评返现加微信</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>1.3 平台流量规则</h3>
+<ul>
+<li>首屏/频道列表占 ≈70% 流量；排名 = 平台综合打分</li>
+<li><b>经营因素</b>：销量、营业时长10h+、评分4.5+/店铺分85+、活动</li>
+<li><b>场景因素</b>：卤味在下午茶、夜宵时段排名占优 → <b>夜宵必须营业</b></li>
+<li>平台逻辑：你帮平台转化，平台给你曝光；良性 vs 恶性循环</li>
+</ul>
+</div>
+
+<!-- ===== 二、诊断 ===== -->
+<h2 id="m2">二、诊断篇 · 先看病再开药<span class="en">DIAGNOSIS</span><span class="goal">学习目标：25分钟 · 会定位问题在漏斗哪一层</span></h2>
+
+<div class="card">
+<h3>2.1 五级漏斗与四症状归因</h3>
+<table>
+<tr><th>症状</th><th>病因</th><th>对策</th><th>煌上煌案例</th></tr>
+<tr><td><b>曝光低</b></td><td>排名后/营业短/没推广</td><td>提评分冲单量/延10h+/开投</td><td>子固路：口碑99.8但GMV垫底 → 曝光瓶颈</td></tr>
+<tr><td><b>进店低</b></td><td>头图差/没标签/评分低</td><td>换头图/挂标签/救评分</td><td>印象城：评分4.5拖累点击</td></tr>
+<tr><td><b>下单低</b></td><td>菜单乱/起送高/差评</td><td>整菜单/降起送/差评处理</td><td>益田：口碑+转化双崩</td></tr>
+<tr><td><b>复购低</b></td><td>品质/无召回/不认店</td><td>品质+召回+私域</td><td>科兴新店：复购爬坡中</td></tr>
+</table>
+</div>
+
+<!-- ===== 三、投流（标准值版） ===== -->
+<h2 id="m3">三、实操篇 · 流量与投流<span class="en">TRAFFIC</span><span class="goal">学习目标：40分钟 · 重点：出价有标准值、判断有阈值（本模块数据=25年真实投放 38,770 行分布）</span></h2>
+
+<div class="card">
+<h3>3.1 先认识：煌上煌真实投放长什么样</h3>
+<div class="grid">
+<div class="kpi"><div class="v">0.69元</div><div class="l">CPC 中位（P25 0.46 / P75 0.96）</div></div>
+<div class="kpi"><div class="v">3.5%</div><div class="l">CTR 点击率中位</div></div>
+<div class="kpi"><div class="v">12.5%</div><div class="l">CVR 下单转化率中位</div></div>
+<div class="kpi"><div class="v">6.2</div><div class="l">广告ROI 中位（P25 3.4 / P75 10.8）</div></div>
+<div class="kpi"><div class="v">7.5元</div><div class="l">单均订单推广成本</div></div>
+</div>
+<div class="tip">💡 这些是煌上煌自己 25 年点金推广的真实数据——<b>标准值不拍脑袋，就来自这里</b>。</div>
+</div>
+
+<div class="card">
+<h3>3.2 投放前六看（标准值版）</h3>
+<table>
+<tr><th>看什么</th><th>标准值</th><th>不达标怎么办</th></tr>
+<tr><td>① 店铺分</td><td class="ok">&gt;95分</td><td class="bad">先整改，不投钱</td></tr>
+<tr><td>② 商家评分</td><td class="ok">&gt;4.2</td><td class="bad">先救评分</td></tr>
+<tr><td>③ 下单转化率</td><td class="ok">&gt;20%（健康线17%，投流要求更高）</td><td>先整菜单/活动</td></tr>
+<tr><td>④ 进店人数</td><td>有基础流量（日进店&gt;100）</td><td>先修头图标签</td></tr>
+<tr><td>⑤ 新老客占比</td><td>新客60-70%可接受</td><td>老客占比过低加召回</td></tr>
+<tr><td>⑥ 菜单排序</td><td>爆款在前三</td><td>重排菜单</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>3.3 出价怎么定：标准值</h3>
+<table>
+<tr><th>项</th><th>标准值</th><th>说明</th></tr>
+<tr><td>基础出价（点金CPC）</td><td class="ok"><b>0.5-0.7元</b></td><td>对应真实 CPC P25-P50；新店爬坡期可 0.8-1.0 抢量</td></tr>
+<tr><td>出价上限</td><td class="warn">≤1.2元</td><td>超过 P75(0.96) 太多，订单成本失控</td></tr>
+<tr><td>调价步长</td><td class="ok"><b>±0.2元</b></td><td>每次只动 0.2，观察 2-3 天再动</td></tr>
+<tr><td>时段加价</td><td>下午茶+0.2 / 晚餐+0.2 / 夜宵+0.3</td><td>匹配卤味场景</td></tr>
+<tr><td>品类偏好加价</td><td class="ok">鸭脖/卤味/熟食 +0.3</td><td>只对想吃卤味的人加价</td></tr>
+<tr><td>老客加价</td><td>+0.3</td><td>复购是划算投放</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>3.4 出价四象限：判断标准值（重点）</h3>
+<table>
+<tr><th>象限</th><th>判断标准（看哪个数）</th><th>动作</th></tr>
+<tr><td>曝光降、ROI 升</td><td>曝光环比&lt;−20% 且 ROI &gt; 6（中位线）</td><td class="ok">+0.2 出价抢量</td></tr>
+<tr><td>曝光降、ROI 降</td><td>曝光&lt;−20% 且 ROI &lt; 3.3（保本线）</td><td class="bad">先查前后端（评分/菜单/营业），不是投放问题</td></tr>
+<tr><td>曝光涨、ROI 升</td><td>曝光&gt;+20% 且 ROI &gt; 6</td><td class="ok">维持出价，黄金状态</td></tr>
+<tr><td>曝光涨、ROI 降</td><td>曝光&gt;+20% 且 ROI &lt; 3.3</td><td class="warn">−0.2 出价降本，同时查转化</td></tr>
+</table>
+<h4>三个关键阈值（背下来）</h4>
+<div class="grid">
+<div class="kpi"><div class="v" style="color:var(--brand2)">ROI &lt; 3.3</div><div class="l">保本线（亏钱，必动）</div></div>
+<div class="kpi"><div class="v">ROI 3.3-6</div><div class="l">保本-中位（盯紧）</div></div>
+<div class="kpi"><div class="v" style="color:var(--green)">ROI &gt; 6</div><div class="l">健康线（可加码）</div></div>
+</div>
+<div class="flow">
+<div class="node"><div class="n1">半小时看数据</div><div class="n2">消耗/曝光/ROI</div></div>
+<div class="arrow">→</div>
+<div class="node"><div class="n1">ROI&lt;3.3?</div><div class="n2">保本线以下</div></div>
+<div class="arrow">→</div>
+<div class="node"><div class="n1">查前后端</div><div class="n2">评分/菜单/营业</div></div>
+<div class="arrow">→</div>
+<div class="node"><div class="n1">-0.2 或暂停</div><div class="n2">整改后重启</div></div>
+</div>
+<div class="flow">
+<div class="node"><div class="n1">ROI&gt;6 且曝光降</div><div class="n2">健康但没量</div></div>
+<div class="arrow">→</div>
+<div class="node"><div class="n1">+0.2 出价</div><div class="n2">抢晚高峰/夜宵</div></div>
+</div>
+<div class="note">曝光变化口径：对比<b>近7天同一时段</b>；波动 ±20% 内视为正常波动，超阈值才动作。</div>
+</div>
+
+<div class="card">
+<h3>3.5 预算与复盘</h3>
+<table>
+<tr><th>门店类型</th><th>日预算</th><th>月预算</th><th>订单成本红线</th></tr>
+<tr><td>低单店（日单&lt;30）</td><td>10-30元</td><td>300-500元</td><td class="warn">单均推广成本 &lt;15元</td></tr>
+<tr><td>高单店（日单≥30）</td><td>30-70元</td><td>700-1000元</td><td class="ok">单均推广成本 &lt;10元（真实均值7.5元）</td></tr>
+</table>
+<ul>
+<li><b>投前计算器</b>：预算×天数、出价比例50%-120%、双转化×0.8、客单/到手率/成本率 → 预计订单/利润/ROI，值得才投</li>
+<li><b>复盘</b>：《投放复盘.xlsx》模板，小时级记录，周/月汇总看趋势</li>
+</ul>
+</div>
+
+<!-- ===== 四、评分 ===== -->
+<h2 id="m4">四、实操篇 · 评分与口碑<span class="en">REPUTATION</span><span class="goal">学习目标：30分钟 · 评分机制 + 红线 + 好评差评打法</span></h2>
+
+<div class="card">
+<h3>4.1 红线与机制</h3>
+<table>
+<tr><th>指标</th><th>目标</th><th>红线</th></tr>
+<tr><td>美团评分（5分制）</td><td class="ok">≥4.5，冲4.8+</td><td class="bad">新店&lt;4.8 / 老店&lt;4.7 → 限流</td></tr>
+<tr><td>店铺分（100分制）</td><td class="ok">≥85，冲95+</td><td class="bad">低分→流量减少</td></tr>
+</table>
+<h4>美团10指标（三大模块）</h4>
+<table>
+<tr><th>模块</th><th>指标（权重）</th></tr>
+<tr><td>基本信息 30%</td><td>装修5% / 优质商品10% / 菜单5% / 服务功能10%</td></tr>
+<tr><td>服务 40%</td><td>基础营业5% / 高峰营业15% / 不接单10% / 出餐上报10%</td></tr>
+<tr><td>体验 30%</td><td>差评回复10% / <b>商家评分20%（最高）</b></td></tr>
+</table>
+<div class="tip">💡 高分捷径：高峰营业(15%)+活动(10%+)+零商责(10%)+商品齐全(10%) = 45%+ 权重轻松拿满。</div>
+</div>
+
+<div class="card">
+<h3>4.2 好评五板斧 & 差评四步法</h3>
+<table>
+<tr><th>好评</th><td>① 回访引导5星 ② 好评返现卡(加微信) ③ 好评红包 ④ 商品信息补齐 ⑤ 新客赠品仪式感</td></tr>
+<tr><th>差评</th><td>① 及时发现 ② 24h回复(致歉+方案) ③ 平台申诉(7天内) ④ 联系删除</td></tr>
+</table>
+<div class="alert">⚠️ 5店教训：印象城评分4.5接近限流线（GMV冠军的隐患）；益田评分垫底+ROI垫底+毛利8%三重实锤。</div>
+</div>
+
+<!-- ===== 五、菜单（落地方案+案例图） ===== -->
+<h2 id="m5">五、实操篇 · 菜单与转化<span class="en">MENU</span><span class="goal">学习目标：40分钟 · 重点：菜单布局/分组排序/命名/定价逻辑/套餐组合（附煌上煌案例图）</span></h2>
+
+<div class="card">
+<h3>5.1 菜单分组与排序：顾客 3 秒找到想吃的</h3>
+<h4>分组结构（煌上煌卤味 8 组）</h4>
+<table>
+<tr><th>顺序</th><th>分组</th><th>放什么</th><th>目的</th></tr>
+<tr><td>1</td><td><b>🏆 招牌必点</b></td><td>酱鸭、香辣鸭脖（最强单品 2-4 款）</td><td>0.2秒建立认知，爆款置顶</td></tr>
+<tr><td>2</td><td><b>🔥 热销榜单</b></td><td>月售 TOP 的鸭锁骨/鸭翅/鸭头</td><td>从众效应，跟卖</td></tr>
+<tr><td>3</td><td>🦆 鸭脖系列</td><td>香辣/酱香/藤椒鸭脖（分口味分装）</td><td>品类纵深，选择多</td></tr>
+<tr><td>4</td><td>🍗 鸭货熟食</td><td>鸭锁骨/鸭翅/鸭掌/鸭舌/鸭肠</td><td>卤味主力，按部位分</td></tr>
+<tr><td>5</td><td>🥦 素菜卤味</td><td>藕片/海带/毛豆/腐竹/豆干</td><td>凑单利器，拉客单</td></tr>
+<tr><td>6</td><td>🍱 超值套餐</td><td>一人食/双人餐/家庭餐/下午茶</td><td>提客单、省决策</td></tr>
+<tr><td>7</td><td>🥤 饮品搭配</td><td>酸梅汤/可乐/王老吉</td><td>解辣刚需，利润品</td></tr>
+<tr><td>8</td><td>🎁 礼盒专区</td><td>鸭脖礼盒/全家福礼盒</td><td>40元+高客单，ROI 2.03金矿</td></tr>
+</table>
+<h4>排序三原则</h4>
+<ul>
+<li><b>爆款置顶</b>：招牌在前 3 位，别让顾客翻</li>
+<li><b>引流在前</b>：低价引流款（9.9-19.9）放显眼位，先让人加购</li>
+<li><b>利润在中后</b>：高毛利单品（鸭舌/鸭肠/饮品）穿插在浏览路径中</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>5.2 案例图：菜单布局长这样（示范）</h3>
+<div class="menudemo">
+<div class="md-head">
+<div class="md-avatar">🦆</div>
+<div><div class="md-name">煌上煌热卤（示范店）</div><div class="md-tags">⭐4.8 ｜ 月售2000+ ｜ 配送约30分钟 ｜ 满40减8</div></div>
+</div>
+<div class="md-cat"><span class="active">招牌必点</span><span>热销榜单</span><span>鸭脖系列</span><span>鸭货熟食</span><span>素菜卤味</span><span>超值套餐</span><span>饮品</span><span>礼盒</span></div>
+<div class="md-item"><div><b>TOP1</b> 煌上煌酱鸭（整只）<span class="md-tag">必点</span></div><div class="md-price">¥58.8 <small>热销300+</small></div></div>
+<div class="md-item"><div><b>TOP2</b> 香辣鸭脖（250g）<span class="md-tag">爆款</span></div><div class="md-price">¥19.9 <small>热销900+</small></div></div>
+<div class="md-item"><div><b>TOP3</b> 招牌卤鸭锁骨（250g）</div><div class="md-price">¥15.9 <small>热销600+</small></div></div>
+<div class="md-item"><div>一人食卤味套餐（鸭脖+素菜+饮品）<span class="md-tag">省5元</span></div><div class="md-price">¥29.9 <small>热销400+</small></div></div>
+<div class="md-item"><div>冰镇酸梅汤 500ml</div><div class="md-price">¥6.0 <small>解辣搭配</small></div></div>
+<div class="md-item"><div>卤味全家福礼盒（8拼）<span class="md-tag">送礼</span></div><div class="md-price">¥88.8 <small>高客单</small></div></div>
+<div class="md-foot"><span class="f1">✓ 满40减8 ｜ 满60减12</span><span class="f2">凑单：还差 ¥10 减8</span></div>
+</div>
+<div class="note">示范数据仅用于教学展示，门店按实际 SKU 调整。要点：招牌置顶、套餐穿插、素菜凑单、饮品解辣、礼盒拉客单。</div>
+</div>
+
+<div class="card">
+<h3>5.3 产品命名规范</h3>
+<table>
+<tr><th>公式</th><th>例子（煌上煌）</th><th>❌ 错误示范</th></tr>
+<tr><td>口味 + 卖点 + 品名</td><td>✅ 香辣鸭锁骨·秘制卤汁 250g</td><td>❌ 鸭锁骨1号</td></tr>
+<tr><td>场景 + 品名</td><td>✅ 追剧必备·卤味拼盘</td><td>❌ 拼盘A</td></tr>
+<tr><td>规格明示</td><td>✅ 整只酱鸭·约2斤 够4人吃</td><td>❌ 酱鸭</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>5.4 定价逻辑：成本倒推（煌上煌公式）</h3>
+<table>
+<tr><th>步骤</th><th>公式</th><th>实例：鸭锁骨</th></tr>
+<tr><td>① 食材成本</td><td>原料+配料+包材</td><td>12.0 元/250g</td></tr>
+<tr><td>② 门店售价</td><td>成本 ÷ 0.45（成本率45%）= 成本 × 2.22</td><td>12 ÷ 0.45 ≈ 26.7 → 定 26.8 或 27.9（尾数定价）</td></tr>
+<tr><td>③ 平台到手</td><td>售价 × (1 − 平台综合扣点约30%)</td><td>26.8 × 0.70 ≈ 18.8 元</td></tr>
+<tr><td>④ 毛利验证</td><td>（到手 − 成本）÷ 到手</td><td>(18.8−12)÷18.8 ≈ 36% ✅ 健康</td></tr>
+</table>
+<div class="tip">💡 定价三档结构：<b>引流款</b>（9.9-19.9，拉新，毛利可低至15%）→ <b>主力款</b>（25-40，毛利30%+）→ <b>利润款</b>（40+礼盒，毛利35%+）。5店数据验证：&lt;20元档ROI 0.79失血，≥40元档ROI 2.03金矿——定价别全挤在低档。</div>
+</div>
+
+<div class="card">
+<h3>5.5 套餐组合公式</h3>
+<table>
+<tr><th>套餐</th><th>组合逻辑</th><th>定价</th><th>目的</th></tr>
+<tr><td>一人食</td><td>1主食鸭货(250g) + 1素菜 + 1饮品</td><td>单品合计×0.85</td><td>省决策，提客单到30+</td></tr>
+<tr><td>双人餐</td><td>2鸭货 + 2素菜 + 2饮品</td><td>合计×0.8</td><td>家庭/拼单</td></tr>
+<tr><td>下午茶</td><td>鸭脖小份 + 素菜拼盘 + 酸梅汤</td><td>合计×0.9</td><td>匹配下午茶场景（卤味占优时段）</td></tr>
+<tr><td>夜宵局</td><td>鸭货大份 + 素菜 + 饮品 ×2</td><td>合计×0.85</td><td>夜宵时段（排名占优+场景加成）</td></tr>
+</table>
+<div class="note">套餐命名带场景（"追剧夜宵局""办公室下午茶"），让顾客对号入座。</div>
+</div>
+
+<div class="card">
+<h3>5.6 活动"三加一减"（5店ROI实证）</h3>
+<table>
+<tr><th>评级</th><th>活动</th><th>ROI</th><th>动作</th></tr>
+<tr><td class="ok">加投</td><td>店铺满减 / 新客立减 / 减配送费</td><td>1.95 / 1.67 / 1.53</td><td>重点配置，阶梯满减提客单</td></tr>
+<tr><td class="warn">控制</td><td>支付红包</td><td>1.24</td><td>体量大但单均补贴15.3元，控力度</td></tr>
+<tr><td class="warn">精准</td><td>商品折扣</td><td>1.13</td><td>只做引流款限时折扣</td></tr>
+<tr><td class="bad">停发</td><td>商家代金券 / 平台津贴</td><td>0.97 / 0.82</td><td>亏损活动，立即停</td></tr>
+</table>
+</div>
+
+<!-- ===== 六、管理 ===== -->
+<h2 id="m6">六、管理篇 · 日常运营闭环<span class="en">MANAGEMENT</span><span class="goal">学习目标：20分钟 · 把打法变成每日动作</span></h2>
+
+<div class="card">
+<h3>6.1 营业前 8 项 / 营业中 8 项</h3>
+<table>
+<tr><th>时段</th><th>清单</th></tr>
+<tr><td>营业前<br>(09:30-10:30)</td><td>①营业状态(覆盖夜宵) ②设备 ③商品补缺(爆款置顶) ④包材 ⑤店铺分95+ ⑥评价回复+申诉 ⑦活动生效 ⑧资质</td></tr>
+<tr><td>营业中<br>(10:30-打烊)</td><td>①消息5分钟回 ②及时接单 ③拣货备餐出餐上报 ④配送跟踪 ⑤电话回访引导5星 ⑥数据监控 ⑦推广半小时盯ROI ⑧竞对巡查</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>6.2 数据闭环（真实案例）</h3>
+<ul>
+<li>5店2026年5-7月：GMV +44.3%，但 58% 增量靠科兴新店，老店真实增速仅 +6.3% ——不复盘，就被数字骗</li>
+<li>每日看转化四率 → 每周调策略 → 每月投放复盘表 + 下月计划</li>
+</ul>
+</div>
+
+<!-- ===== 附录 ===== -->
+<h2 id="app">附录 · 速查卡与考核<span class="en">CHEATSHEET</span></h2>
+
+<div class="card">
+<h3>A. 数值速查卡（贴墙上）</h3>
+<table>
+<tr><th>指标</th><th>标准值</th><th>指标</th><th>标准值</th></tr>
+<tr><td>出价基础</td><td>0.5-0.7元（上限1.2）</td><td>调价步长</td><td>±0.2元</td></tr>
+<tr><td>广告ROI</td><td>&lt;3.3必动 / 3.3-6盯紧 / &gt;6健康</td><td>CTR</td><td>≥3.5%</td></tr>
+<tr><td>CVR（投流要求）</td><td>≥20%</td><td>单均订单成本</td><td>&lt;10元（高单店）</td></tr>
+<tr><td>曝光波动</td><td>±20%内正常</td><td>评分</td><td>≥4.5（4.8/4.7红线）</td></tr>
+<tr><td>店铺分</td><td>≥85冲95</td><td>客单价</td><td>≥30元（40+金矿）</td></tr>
+</table>
+<h4>投流口诀：六看达标 → 出价0.5-0.7 → 卤味定向+0.3 → 半小时一查 → ROI&lt;3.3动 → ±0.2调</h4>
+<h4>定价口诀：成本×2.22=售价 → 尾数定价 → 三档结构（引流/主力/利润）→ 毛利率验证≥30%</h4>
+<h4>菜单口诀：招牌置顶 → 引流在前 → 素菜凑单 → 套餐提客单 → 礼盒拉利润</h4>
+</div>
+
+<div class="card">
+<h3>B. 训后考核（闭卷 60分及格）</h3>
+<ol>
+<li>出价基础值多少？调价步长？ROI 三个阈值？（15分）</li>
+<li>四象限判断标准：曝光降ROI降怎么办？为什么先查前后端？（15分）</li>
+<li>煌上煌定价公式？鸭锁骨成本12元售价定多少？毛利怎么验证？（15分）</li>
+<li>菜单8组排序前三组是什么？为什么素菜放第5组？（10分）</li>
+<li>美团店铺分最高权重项？高分捷径4项？（10分）</li>
+<li>实操：设计一个"追剧夜宵局"套餐（3个SKU+定价+毛利估算）？（15分）</li>
+<li>差评四步法？投前六看？（10分）</li>
+</ol>
+</div>
+
+<div class="footer">
+煌上煌外卖门店运营培训课件 V4 ｜ 投放标准值=25年真实广告数据 38,770 行分布（CPC/CTR/CVR/ROI）｜ 融合总部七大课件+5店实战 ｜ 配套PPT：煌上煌外卖门店运营培训课件_V3.pptx ｜ 网页版·Edge打开·可打印
+</div>
+</div>
+</body>
+</html>
