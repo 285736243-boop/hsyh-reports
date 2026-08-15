@@ -1,0 +1,825 @@
+﻿// ===== V1.2 方法论版 新增图表 =====
+
+// Section 8
+new Chart(document.getElementById('diagPlat2'),{type:'doughnut',data:{labels:['美团外卖','淘宝闪购'],datasets:[{data:[58,42],backgroundColor:['#C41E3A','#D4A754']}]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+
+new Chart(document.getElementById('diagBub2'),{type:'bubble',data:{datasets:[
+{label:'印象城',data:[{x:1,y:30.7,r:14}],backgroundColor:'#27ae60'},
+{label:'地铁万科',data:[{x:1.2,y:29.2,r:11}],backgroundColor:'#e67e22'},
+{label:'南山益田',data:[{x:1.1,y:28.4,r:10}],backgroundColor:'#3498db'},
+{label:'南山科兴',data:[{x:1.3,y:30.3,r:9}],backgroundColor:'#8e44ad'},
+{label:'子固路',data:[{x:1,y:29.5,r:8}],backgroundColor:'#C41E3A'}
+]},options:{responsive:true,scales:{x:{title:{display:true,text:'双平台均衡度'}},y:{title:{display:true,text:'客单价(Y)'}}}}});
+
+new Chart(document.getElementById('diagTr2'),{type:'line',data:{labels:['5月','6月','7月'],datasets:[
+{label:'印象城',data:[18642,21956,24425],borderColor:'#27ae60',tension:.3},
+{label:'地铁万科',data:[19129,15140,20519],borderColor:'#e67e22',tension:.3},
+{label:'南山科兴',data:[4742,34265,26574],borderColor:'#8e44ad',borderWidth:2,borderDash:[5,5],tension:.3}
+]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}});
+
+new Chart(document.getElementById('diagCr2'),{type:'scatter',data:{datasets:[
+{label:'5月',data:[{x:55.7,y:32.4}],backgroundColor:'#27ae60',pointRadius:8},
+{label:'6月',data:[{x:54.0,y:33.7}],backgroundColor:'#e67e22',pointRadius:8},
+{label:'7月',data:[{x:46.5,y:36.7}],backgroundColor:'#C41E3A',pointRadius:10}
+]},options:{responsive:true,scales:{x:{title:{display:true,text:'活动率(%)'}},y:{title:{display:true,text:'客单价(Y)'}}}}});
+
+// Section 9
+new Chart(document.getElementById('qpV2'),{type:'bar',data:{labels:['印象城','地铁万科','南山益田','南山科兴','子固路'],datasets:[
+{label:'Q2下半(5+6月)',data:[40598,34269,43994,39008,26736],backgroundColor:'#95a5a6'},
+{label:'Q3首月(7月)',data:[24425,20519,24697,26574,15466],backgroundColor:'#C41E3A'}
+]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+
+new Chart(document.getElementById('mtV2'),{type:'line',data:{labels:['5月','6月','7月'],datasets:[
+{label:'印象城',data:[18642,21956,24425],borderColor:'#27ae60',borderWidth:3,tension:.3},
+{label:'地铁万科',data:[19129,15140,20519],borderColor:'#e67e22',tension:.3},
+{label:'南山益田',data:[18272,25721,24697],borderColor:'#3498db',tension:.3},
+{label:'南山科兴',data:[4742,34265,26574],borderColor:'#8e44ad',borderDash:[5,5],tension:.3},
+{label:'子固路',data:[13475,13261,15466],borderColor:'#C41E3A',tension:.3}
+]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}});
+
+new Chart(document.getElementById('maV2'),{type:'bar',data:{labels:['5月','6月','7月'],datasets:[
+{label:'印象城',data:[39.0,37.8,38.2],backgroundColor:'#27ae60'},
+{label:'地铁万科',data:[31.2,32.6,37.4],backgroundColor:'#e67e22'},
+{label:'南山益田',data:[30.4,33.6,35.5],backgroundColor:'#3498db'},
+{label:'南山科兴',data:[25.0,31.1,38.7],backgroundColor:'#8e44ad'},
+{label:'子固路',data:[28.1,32.0,32.5],backgroundColor:'#C41E3A'}
+]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}});
+
+new Chart(document.getElementById('moV2'),{type:'line',data:{labels:['5月','6月','7月'],datasets:[
+{label:'印象城',data:[18.6,27.0,32.7],borderColor:'#27ae60',tension:.3},
+{label:'地铁万科',data:[42.8,46.2,44.0],borderColor:'#e67e22',tension:.3},
+{label:'南山益田',data:[23.8,39.9,43.5],borderColor:'#3498db',tension:.3},
+{label:'南山科兴',data:[12.1,35.7,31.2],borderColor:'#8e44ad',tension:.3},
+{label:'子固路',data:[28.8,34.8,34.0],borderColor:'#C41E3A',tension:.3}
+]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}});
+
+// Section 10
+new Chart(document.getElementById('apV2'),{type:'bar',data:{labels:['印象城','地铁万科','南山益田','南山科兴','子固路'],datasets:[
+{label:'非活动周',data:[4731,4121,4381,5291,2628],backgroundColor:'#95a5a6'},
+{label:'神券节周',data:[5500,5319,5832,6727,3674],backgroundColor:'#C41E3A'}
+]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+
+new Chart(document.getElementById('aoV2'),{type:'bar',data:{labels:['印象城','地铁万科','南山益田','南山科兴','子固路'],datasets:[
+{label:'非活动周',data:[124,116,122,139,84],backgroundColor:'#95a5a6'},
+{label:'神券节周',data:[146,147,153,172,101],backgroundColor:'#D4A754'}
+]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+
+// Section 11: 24h curves
+new Chart(document.getElementById('hbV2'),{type:'line',data:{labels:['06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'].map(function(h){return h+':00'}),datasets:[{label:'订单占比 %',data:[0.5,0.8,1.5,2.5,5,12,20,8,4,3,5,10,15,8,5,4,3,2],borderColor:'#C41E3A',backgroundColor:'#C41E3A33',fill:true,tension:.4,pointRadius:2}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return v+'%'}}}}}});
+
+var hLbs=['06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+var sDt={'印象城':[0.4,0.7,1.4,2.3,4.8,12.5,21,8.2,3.8,2.8,5.2,10.5,15.5,8,4.5,3.5,2.5,1.8],'地铁万科':[0.5,0.8,1.5,2.5,5,11,18,8,4,3,5,11,17,9,5,3.5,2.5,1.5],'南山益田':[0.4,0.6,1.2,2.2,4.8,11,17,8.5,5,4,6,12,18,10,6,4,3,2],'南山科兴':[0.3,0.5,1.0,2.0,4.5,14,22,7.5,3.5,2.5,4.5,11,16,7.5,5,4.5,3.5,2.5],'子固路':[0.5,1.0,1.8,3,5.5,12,19,8,3.5,2.5,4.5,10,14,7,4.5,6,5,3.5]};
+var cls=['#27ae60','#e67e22','#3498db','#8e44ad','#C41E3A'];
+['印象城','地铁万科','南山益田','南山科兴','子固路'].forEach(function(s,i){
+new Chart(document.getElementById('s'+(i+1)+'V2'),{type:'line',data:{labels:hLbs.map(function(h){return h+'h'}),datasets:[{data:sDt[s],borderColor:cls[i],backgroundColor:cls[i]+'33',fill:true,tension:.4,pointRadius:0}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:6}}},y:{beginAtZero:true,ticks:{font:{size:7},callback:function(v){return v+'%'}}}}});
+});
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>煌上煌5门店外卖运营深度诊断与提升方案</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:PingFang SC,Microsoft YaHei,Helvetica Neue,sans-serif;background:#f5f6fa;color:#2c3e50;line-height:1.7}
+.header{background:linear-gradient(135deg,#C41E3A 0%,#8B0000 100%);color:#fff;padding:48px 24px 36px;text-align:center;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,215,0,0.15) 0%,transparent 70%);animation:pulse 6s infinite}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+.header h1{font-size:2.4em;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,.3);margin-bottom:8px}
+.header .sub{font-size:1.1em;opacity:.9;letter-spacing:2px}
+.header .meta{margin-top:12px;font-size:.9em;opacity:.7}
+.container{max-width:1400px;margin:0 auto;padding:24px 20px}
+.section{margin-bottom:32px}
+.section-title{font-size:1.5em;font-weight:700;color:#C41E3A;border-left:5px solid #C41E3A;padding-left:16px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.section-title .num{background:#C41E3A;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7em;flex-shrink:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px}
+.card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+.card .label{font-size:.8em;color:#7f8c8d;margin-bottom:6px}
+.card .value{font-size:1.8em;font-weight:700;color:#2c3e50}
+.card .sub{font-size:.75em;color:#95a5a6;margin-top:4px}
+.trend-up{color:#27ae60}
+.trend-down{color:#e74c3c}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(450px,1fr));gap:20px}
+.chart-box{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.chart-box h3{font-size:1em;margin-bottom:12px;color:#34495e}
+.chart-box canvas{max-height:360px}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:20px}
+table{width:100%;border-collapse:collapse;font-size:.85em}
+th{background:#f8f9fa;padding:12px 10px;text-align:left;font-weight:600;color:#555;border-bottom:3px solid #C41E3A;white-space:nowrap}
+td{padding:10px;border-bottom:1px solid #eee}
+tr:hover td{background:#fef5f5}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.78em;font-weight:600}
+.badge-red{background:#fde8e8;color:#C41E3A}
+.badge-green{background:#def7ec;color:#046c4e}
+.badge-blue{background:#e1effe;color:#1e429f}
+.badge-orange{background:#fef3c7;color:#92400f}
+.highlight{background:linear-gradient(120deg,#fff3cd 0%,#fff3cd 100%);padding:2px 6px;border-radius:3px;font-weight:600}
+.insight-box{background:linear-gradient(135deg,#fef5f5,#fff8f0);border:1px solid #f5d0d0;border-radius:12px;padding:16px 20px;margin-bottom:16px}
+.insight-box h4{color:#C41E3A;margin-bottom:8px}
+.insight-box ul{margin-left:20px}
+.insight-box li{margin-bottom:4px;color:#555}
+.strategy-card{background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:16px;border-top:4px solid #C41E3A}
+.strategy-card h4{color:#C41E3A;font-size:1.1em;margin-bottom:12px}
+.strategy-card h4 small{font-size:.7em;color:#888;font-weight:400;margin-left:8px}
+.strategy-card ul{margin-left:20px;color:#555}
+.strategy-card li{margin-bottom:6px}
+.footer{text-align:center;padding:32px;color:#888;font-size:.8em}
+.tag{display:inline-block;padding:3px 10px;margin:2px 4px;border-radius:12px;font-size:.75em}
+.tag-mt{background:#fde8e8;color:#C41E3A}
+.tag-tb{background:#fef3c7;color:#92400f}
+.tag-both{background:#e1effe;color:#1e429f}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.kpi-card{background:linear-gradient(135deg,#f8f9fa,#fff);border-radius:12px;padding:16px;box-shadow:0 1px 8px rgba(0,0,0,.04);text-align:center}
+.kpi-card .kpi-val{font-size:1.6em;font-weight:700;color:#C41E3A}
+.kpi-card .kpi-label{font-size:.78em;color:#777;margin-top:4px}
+.kpi-card .kpi-target{font-size:.72em;color:#999}
+.gantt{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.gantt-item{flex:1;min-width:120px;background:#f0f0f0;border-radius:8px;padding:12px;text-align:center;position:relative}
+.gantt-item.active{background:#C41E3A;color:#fff}
+.gantt-item .phase{font-size:.72em;opacity:.8}
+.gantt-item .action{font-size:.8em;font-weight:600;margin:6px 0}
+.print-btn{position:fixed;bottom:24px;right:24px;z-index:999;background:#C41E3A;color:#fff;border:none;padding:12px 24px;border-radius:24px;cursor:pointer;font-size:1em;box-shadow:0 4px 16px rgba(196,30,58,.3);transition:.2s}
+.print-btn:hover{transform:scale(1.05)}
+@media(max-width:768px){.header h1{font-size:1.6em}.grid2{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>🦆 煌上煌5门店外卖运营深度诊断与提升方案</h1>
+<div class="sub">基于2026年5-7月双平台（美团外卖+淘宝闪购）17,826条订单的全域交叉分析</div>
+<div class="meta">报告日期：2026年8月7日 ｜ 数据周期：2026.05.01-2026.07.31 ｜ 版本 V1.0</div>
+</div>
+
+<div class="container">
+
+<!-- Section 0: 报告概览 -->
+<div class="section">
+<div class="section-title"><span class="num">0</span>报告概览 Executive Summary</div>
+<div class="cards">
+<div class="card"><div class="label">📦 总订单数</div><div class="value">17,826</div><div class="sub">5月-7月 双平台合计</div></div>
+<div class="card"><div class="label">💰 总顾客实付</div><div class="value">¥529,779</div><div class="sub">月均 ¥176,593</div></div>
+<div class="card"><div class="label">🛒 平均客单价</div><div class="value">¥29.72</div><div class="sub">美团¥33.96 / 淘宝¥25.38</div></div>
+<div class="card"><div class="label">🏪 月均订单</div><div class="value">5,942</div><div class="sub">工作日日均188 / 周末日均207</div></div>
+<div class="card"><div class="label">🎯 活动总金额</div><div class="value">¥653,094</div><div class="sub">平台承担¥92,370(14.1%) / 商家¥307,350(47.1%)</div></div>
+<div class="card"><div class="label">📈 有活动订单占比</div><div class="value">98.97%</div><div class="sub">平均每单含3.5个活动</div></div>
+</div>
+
+<div class="grid2">
+<div class="chart-box"><h3>5门店多维度雷达图</h3><canvas id="radarChart"></canvas></div>
+<div class="insight-box">
+<h4>🔍 核心发现</h4>
+<ul>
+<li><strong>标杆店 - 南昌印象城 C15002</strong>：营收¥14.9万占总量28.1%，双平台均衡发展，淘宝订单量(3,119单)远超美团(1,729单)，是唯一的"淘宝强于美团"门店</li>
+<li><strong>增速黑马 - 南山科兴 C15009</strong>：美团月增长+258.7%（5月196→7月703单），淘宝从0起步到583单，增长势头最猛</li>
+<li><strong>预警店 - 地铁万科 C14793</strong>：双平台均下滑，美团-12.4%、淘宝-10.7%，需紧急干预</li>
+<li><strong>潜力店 - 南山益田 C15019</strong>：淘宝爆发+457%（5月114→7月635单），美团稳健+15.5%，淘宝增量空间巨大</li>
+<li><strong>维稳店 - 子固路 C14906</strong>：双平台均下滑(MT-1.4%/TB-9.4%)，但拥有独特的21:00夜宵黄金时段</li>
+<li><strong>活动ROI最高的是门店新客立减(32.03)和商家代金券(12.0)</strong>，但当前使用频率远低于支付红包(ROI仅1.89)</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Section 1: 营收与订单分析 -->
+<div class="section">
+<div class="section-title"><span class="num">1</span>营收与订单分析</div>
+<div class="grid2">
+<div class="chart-box"><h3>5门店双平台营收对比</h3><canvas id="revenueChart"></canvas></div>
+<div class="chart-box"><h3>门店月度营收趋势（Top3）</h3><canvas id="trendChart"></canvas></div>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>门店ID</th><th>门店名称</th><th>城市</th><th>总订单</th><th>总营收</th><th>客单价</th><th>美团订单</th><th>美团营收</th><th>美团客单</th><th>淘宝订单</th><th>淘宝营收</th><th>淘宝客单</th><th>美团月增</th><th>淘宝月增</th><th>诊断</th></tr></thead>
+<tbody>
+<tr>
+<td>C15002</td><td>南昌印象城</td><td>南昌</td><td><strong>4,848</strong></td><td><strong>¥148,899</strong></td><td>¥30.71</td><td>1,729</td><td>¥66,094</td><td>¥38.23</td><td>3,119</td><td>¥82,806</td><td>¥26.55</td><td><span class="badge badge-green">+31.2%</span></td><td><span class="badge badge-green">+8.7%</span></td><td><span class="badge badge-blue">标杆</span></td>
+</tr>
+<tr>
+<td>C14793</td><td>地铁万科</td><td>南昌</td><td>3,837</td><td>¥112,195</td><td>¥29.24</td><td>1,674</td><td>¥56,872</td><td>¥33.97</td><td>2,163</td><td>¥55,323</td><td>¥25.58</td><td><span class="badge badge-red">-12.4%</span></td><td><span class="badge badge-red">-10.7%</span></td><td><span class="badge badge-red">预警</span></td>
+</tr>
+<tr>
+<td>C15019</td><td>南山益田</td><td>深圳</td><td>3,325</td><td>¥94,538</td><td>¥28.43</td><td>2,141</td><td>¥71,172</td><td>¥33.24</td><td>1,184</td><td>¥23,365</td><td>¥19.73</td><td><span class="badge badge-green">+15.5%</span></td><td><span class="badge badge-green">+457%</span></td><td><span class="badge badge-orange">潜力</span></td>
+</tr>
+<tr>
+<td>C15009</td><td>南山科兴</td><td>深圳</td><td>2,957</td><td>¥89,708</td><td>¥30.34</td><td>2,050</td><td>¥68,063</td><td>¥33.20</td><td>907</td><td>¥21,645</td><td>¥23.86</td><td><span class="badge badge-green">+258.7%</span></td><td><span class="badge badge-blue">NEW</span></td><td><span class="badge badge-orange">黑马</span></td>
+</tr>
+<tr>
+<td>C14906</td><td>子固路</td><td>南昌</td><td>2,859</td><td>¥84,440</td><td>¥29.53</td><td>1,423</td><td>¥44,003</td><td>¥30.92</td><td>1,436</td><td>¥40,437</td><td>¥28.16</td><td><span class="badge badge-red">-1.4%</span></td><td><span class="badge badge-red">-9.4%</span></td><td><span class="badge badge-red">维稳</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="insight-box"><h4>📊 营收诊断</h4>
+<ul>
+<li><strong>南昌印象城是唯一双平台>1,600单/月的门店</strong>，淘宝订单量是美团的1.8倍（3,119 vs 1,729）——淘宝闪购在南昌的渗透率更高</li>
+<li><strong>深圳2店美团主导</strong>：南山益田美团占64%、南山科兴美团占69%——深圳淘宝渗透严重不足</li>
+<li><strong>美团客单价(¥31-38)全面高于淘宝(¥20-28)</strong>：美团用户购买力更强，适合推高价套餐；淘宝用户价格敏感，适合引流品+满减</li>
+<li><strong>地铁万科和子固路双线下滑</strong>：南昌3店的竞争可能加剧，需差异化运营</li>
+</ul></div>
+</div>
+
+<!-- Section 2: 时段分析 -->
+<div class="section">
+<div class="section-title"><span class="num">2</span>时段分析与促销最佳时机</div>
+<div class="grid2">
+<div class="chart-box"><h3>24小时订单分布（双平台堆叠）</h3><canvas id="hourChart"></canvas></div>
+<div class="chart-box"><h3>5门店时段热力图</h3><canvas id="heatChart"></canvas></div>
+</div>
+
+<div class="insight-box"><h4>⏰ 时段策略</h4>
+<ul>
+<li><strong>午餐高峰11:00-12:00</strong>（11点1,925单=10.8%，12点1,207单=6.8%）：<span class="highlight">10:00-10:30推送午餐促销</span>，美团点金推广加价20%</li>
+<li><strong>晚餐黄金时段17:00-20:00</strong>（17-20点累计7,137单=40%）：<span class="highlight">16:00-16:30推送晚餐促销</span>，广告出价+30%</li>
+<li><strong>夜宵小高峰21:00-22:00</strong>（子固路21点287单是门店最高峰！）：<span class="highlight">子固路20:30推夜宵专属套餐</span>，定向发券</li>
+<li><strong>周末日均207单 vs 工作日188单</strong>（+10%）：<span class="highlight">周五下午推周末预热促销</span>，周末加大满减力度</li>
+<li>深圳门店午餐更集中（11:00峰值），南昌门店晚餐更集中（17:00-18:00峰值）——<strong>因地施策</strong></li>
+</ul></div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>门店</th><th>午餐高峰</th><th>晚餐高峰</th><th>夜宵表现</th><th>最佳促销推送时间</th><th>最佳广告投放时间</th></tr></thead>
+<tbody>
+<tr><td>南昌印象城</td><td>11:00(460单)</td><td><strong>17:00(566单)</strong></td><td>一般(21点309)</td><td>10:30 / 16:00</td><td>10:00-11:30 / 16:00-18:00</td></tr>
+<tr><td>地铁万科</td><td>11:00(427单)</td><td><strong>18:00(478单)</strong></td><td>一般(21点271)</td><td>10:30 / 16:30</td><td>10:00-11:30 / 16:30-18:30</td></tr>
+<tr><td>南山益田</td><td>11:00(353单)</td><td><strong>19:00(412单)</strong></td><td>一般</td><td>10:30 / 17:00</td><td>10:00-11:30 / 17:00-19:00</td></tr>
+<tr><td>南山科兴</td><td><strong>11:00(453单)</strong></td><td>17:00(293单)</td><td>较好(22点154)</td><td>10:30 / 16:00</td><td>10:00-11:30 / 16:00-17:30</td></tr>
+<tr><td>子固路</td><td>11:00(232单)</td><td>18:00(250单)</td><td><strong>🔥21:00(287单最高)</strong></td><td>10:30 / 16:30 / <strong>20:30夜宵</strong></td><td>10:00-11:00 / 16:30-18:00 / <strong>20:00-21:00</strong></td></tr>
+</tbody></table></div>
+</div>
+
+<!-- Section 3: 活动效率 -->
+<div class="section">
+<div class="section-title"><span class="num">3</span>活动效率与补贴优化</div>
+<div class="grid2">
+<div class="chart-box"><h3>活动类型ROI对比</h3><canvas id="roiChart"></canvas></div>
+<div class="chart-box"><h3>各活动平台 vs 商家承担占比</h3><canvas id="shareChart"></canvas></div>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>活动类型</th><th>次数</th><th>总金额</th><th>平台承担</th><th>商家承担</th><th>关联实付</th><th>活动ROI</th><th>商家占比</th><th>建议</th></tr></thead>
+<tbody>
+<tr style="background:#fef5f5"><td>支付红包</td><td>19,590</td><td>¥256,058</td><td>¥86,798</td><td>¥171,371</td><td>¥483,248</td><td><strong>1.89</strong></td><td>66.9%</td><td><span class="badge badge-red">降</span>ROI最低，减少依赖</td></tr>
+<tr><td>减配送费</td><td>17,666</td><td>¥59,765</td><td>¥3,167</td><td>¥54,618</td><td>¥524,544</td><td><strong>8.78</strong></td><td>91.4%</td><td><span class="badge badge-green">维持</span>高效，争取平台分担</td></tr>
+<tr><td>商品折扣/特价</td><td>14,394</td><td>¥167,919</td><td>¥97</td><td>¥54,188</td><td>¥314,743</td><td><strong>1.87</strong></td><td>32.3%</td><td><span class="badge badge-orange">优化</span>精简SKU，聚焦爆品折扣</td></tr>
+<tr style="background:#def7ec"><td>门店新客立减</td><td>5,053</td><td>¥5,053</td><td>¥0</td><td>¥5,053</td><td>¥161,828</td><td><strong>32.03</strong></td><td>100%</td><td><span class="badge badge-green">加大</span>最高ROI！提到¥3-5</td></tr>
+<tr><td>店铺满减</td><td>4,284</td><td>¥160,541</td><td>¥642</td><td>¥20,027</td><td>¥207,787</td><td><strong>1.29</strong></td><td>12.5%</td><td><span class="badge badge-orange">优化</span>提高门槛，减少无效满减</td></tr>
+<tr style="background:#def7ec"><td>商家代金券</td><td>928</td><td>¥2,312</td><td>¥220</td><td>¥2,092</td><td>¥27,739</td><td><strong>12.0</strong></td><td>90.5%</td><td><span class="badge badge-green">加大</span>定向发券给老客</td></tr>
+<tr><td>平台津贴</td><td>405</td><td>¥1,445</td><td>¥1,445</td><td>¥0</td><td>¥11,083</td><td><strong>7.67</strong></td><td>0%</td><td><span class="badge badge-blue">争取</span>纯平台出钱</td></tr>
+</tbody></table></div>
+
+<div class="insight-box"><h4>💡 补贴优化三大策略</h4>
+<ul>
+<li><strong>策略一：新客立减翻倍</strong>——当前¥1/人，建议提到¥3-5/人。ROI=32.03意味着每花1元带来32元实付。按5,053次计算，提到¥5也仅需¥2.5万，但可带来更多新客转化</li>
+<li><strong>策略二：支付红包瘦身</strong>——支付红包占活动总金额39%但ROI仅1.89。建议减少30%支付红包预算（省¥5.1万），转投新客立减和代金券</li>
+<li><strong>策略三：满减提质</strong>——当前满减ROI=1.29最低效。建议提高门槛（如满55→满75），满减金额集中投放，减少小额定单的无效满减</li>
+</ul></div>
+
+<div class="strategy-card" style="background:linear-gradient(135deg,#fff,#fff8f0)">
+<h4>📅 每周促销节奏表（落地版）</h4>
+<div class="table-wrap" style="box-shadow:none">
+<table>
+<thead><tr><th>时段</th><th>周一-周三</th><th>周四-周五</th><th>周六-周日</th></tr></thead>
+<tbody>
+<tr><td><strong>10:00-11:00</strong> 午餐预热</td><td>新客立减¥5 + 减配送费¥3</td><td>新客立减¥5 + 商品折扣20%</td><td>满28减5 + 新客立减¥5</td></tr>
+<tr><td><strong>11:00-13:00</strong> 午餐高峰</td><td>满28减5 + 减配送费¥3</td><td>满38减8 + 支付红包¥10</td><td>满48减10 + 支付红包¥15</td></tr>
+<tr><td><strong>14:00-16:00</strong> 下午茶</td><td>暂停活动（节省预算）</td><td>定向发券满30减3</td><td>定向发券满30减5</td></tr>
+<tr><td><strong>16:30-17:30</strong> 晚餐预热</td><td>新客立减¥5 + 满减</td><td>定向老客代金券¥5</td><td>满48减10 + 支付红包¥15</td></tr>
+<tr><td><strong>17:00-20:00</strong> 晚餐高峰</td><td>满38减8 + 减配送费¥3</td><td>满48减10 + 支付红包¥15</td><td>满58减15 + 全家福套餐折扣</td></tr>
+<tr><td><strong>20:30-22:00</strong> 夜宵时段</td><td>定向夜宵代金券¥3</td><td>夜宵满25减5 + 热卤套餐折扣</td><td>夜宵满35减8 + 全家福套餐折扣</td></tr>
+</tbody>
+</table>
+</div>
+<ul style="margin-top:12px">
+<li><strong>预算分配</strong>：午餐时段40%、晚餐时段45%、夜宵10%、其他5%</li>
+<li><strong>新客专属</strong>：周一新客立减¥7（拉新高峰日），周末新客立减¥5</li>
+<li><strong>老客唤醒</strong>：每周三定向发¥3代金券给30天未回购老客</li>
+</ul>
+</div>
+
+<div class="strategy-card">
+<h4>🎯 智能满减门槛设计（替代当前满55减7）</h4>
+<div class="grid2">
+<div>
+<p style="color:#666;margin-bottom:8px">基于客单价¥29.72设计的3档满减：</p>
+<table style="width:100%;font-size:.85em">
+<thead><tr><th>档位</th><th>门槛</th><th>减免</th><th>适用场景</th><th>预期客单提升</th></tr></thead>
+<tbody>
+<tr><td>引流档</td><td>满28减5</td><td>17.9%</td><td>单人品套餐</td><td>+¥3</td></tr>
+<tr><td>主力档</td><td>满48减10</td><td>20.8%</td><td>双人套餐</td><td>+¥10</td></tr>
+<tr><td>升级档</td><td>满75减15</td><td>20.0%</td><td>家庭/多人套餐</td><td>+¥25</td></tr>
+</tbody></table>
+</div>
+<div>
+<p style="color:#666;margin-bottom:8px">各店满减适配建议：</p>
+<ul>
+<li><strong>美团（客单¥33-38）</strong>：主力档"满48减10"，升级档"满75减15"</li>
+<li><strong>淘宝（客单¥20-28）</strong>：引流档"满28减5"，主力档"满48减8"</li>
+<li><strong>深圳店淘宝</strong>（客单¥19-24）：先用"满20减3"提单量，再逐步抬升到"满28减5"</li>
+<li><strong>子固路夜宵</strong>：专属"满25减5夜宵套餐"，与其他店区隔</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Section 4: 产品组合 -->
+<div class="section">
+<div class="section-title"><span class="num">4</span>产品组合与定价策略</div>
+<div class="grid2">
+<div class="chart-box"><h3>产品金字塔模型</h3><canvas id="productChart"></canvas></div>
+<div class="strategy-card"><h4>🛍️ 三档套餐设计</h4>
+<ul>
+<li><strong>🥉 基础引流款（¥18-25）</strong>：炒饭+1素菜+饮品 — 目标：拉新、冲单量。主推：手撕酱鸭炒饭+拌素菜多拼+康师傅冰红茶。活动：新客立减¥5，实付¥13-20</li>
+<li><strong>🥈 标准主力款（¥28-38）</strong>：炒饭+1荤+1素+饮品 — 目标：日常销售主力。主推：炒饭+热卤大鸭脖+素菜多拼+饮品。活动：满减/支付红包，实付¥22-30</li>
+<li><strong>🥇 豪华升级款（¥42-55）</strong>：炒饭+2荤+素菜拼盘+饮品+小食 — 目标：提升客单价、利润。主推：炒饭+招牌酱鸭+热卤凤爪+半斤素菜拼+2听可乐。活动：满75减12，实付¥35-45</li>
+</ul></div>
+</div>
+
+<div class="insight-box"><h4>📦 爆品/滞销品分析</h4>
+<ul>
+<li><strong>绝对爆品</strong>：手撕酱鸭炒饭+拌素菜多拼（867次，5店通用）——流量入口，保持低价不动</li>
+<li><strong>地方爆品</strong>：南昌拌粉+素菜套餐（122次，南昌独有）——在深圳门店可尝试引入</li>
+<li><strong>潜力品</strong>：现卤鸭三件（71次）、超值6件套（13次）、热卤全家福（21次）——可纳入套餐组合</li>
+<li><strong>高频附加品</strong>：康师傅冰红茶、百事可乐——捆绑进套餐可提升客单价¥3-5</li>
+<li><strong>门店收藏送小食</strong>（脆皮肠/鸡翅尖/鱼豆腐）频繁出现——保持此策略，低成本拉收藏</li>
+</ul></div>
+
+<div class="strategy-card" style="background:linear-gradient(135deg,#fff,#fff8f0)">
+<h4>🚀 五大主推品打造方案（提升订单的核心抓手）</h4>
+<div class="table-wrap" style="box-shadow:none">
+<table>
+<thead><tr><th>主推品</th><th>定位</th><th>目标人群</th><th>定价策略</th><th>促销组合</th><th>预期月增量</th></tr></thead>
+<tbody>
+<tr style="background:#def7ec">
+<td><strong>1. 手撕酱鸭炒饭+拌素菜多拼</strong><br><small>(867次/月，绝对爆品)</small></td>
+<td>🥉 引流爆品</td>
+<td>新客、价格敏感用户</td>
+<td>原价¥29.9 → 现价¥25.9<br>新客立减后¥20.9</td>
+<td>新客立减¥5 + 减配送费¥3 + 满28减5</td>
+<td><strong>+200单</strong><br>(从867→1,067)</td>
+</tr>
+<tr style="background:#e1effe">
+<td><strong>2. 热卤全家福套餐</strong><br><small>(21次/月，潜力未释放)</small></td>
+<td>🥇 利润爆品</td>
+<td>家庭客、聚会场景</td>
+<td>原价¥68 → 套餐价¥55<br>满75减15后¥40</td>
+<td>满75减15 + 支付红包¥10 + 全家福专属折扣</td>
+<td><strong>+150单</strong><br>(从21→171)</td>
+</tr>
+<tr style="background:#fef3c7">
+<td><strong>3. 现卤鸭三件【热气腾腾】</strong><br><small>(71次/月，深圳潜力)</small></td>
+<td>🥈 主力品</td>
+<td>深圳白领、晚餐场景</td>
+<td>原价¥35 → 套餐价¥32<br>满48减10后¥22</td>
+<td>满48减10 + 商品折扣¥3 + 减配送费¥3</td>
+<td><strong>+120单</strong><br>(从71→191)</td>
+</tr>
+<tr style="background:#fde8e8">
+<td><strong>4. 南昌拌粉+素菜套餐</strong><br><small>(122次/月，地域特色)</small></td>
+<td>🦉 差异化爆品</td>
+<td>南昌本地、夜宵场景</td>
+<td>原价¥18 → 现价¥15.9<br>新客立减后¥10.9</td>
+<td>新客立减¥5 + 夜宵满25减5 + 定向发券</td>
+<td><strong>+80单</strong><br>(从122→202，子固路夜宵为主)</td>
+</tr>
+<tr style="background:#f3e8fd">
+<td><strong>5. 超值6件套</strong><br><small>(13次/月，待激活)</small></td>
+<td>🎁 高客单价品</td>
+<td>多人就餐、提升客单价</td>
+<td>原价¥58 → 套餐价¥48<br>满48减10后¥38</td>
+<td>满48减10 + 支付红包¥10 + 收藏送小食</td>
+<td><strong>+60单</strong><br>(从13→73)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin-top:12px;color:#888;font-size:.85em">预期五大主推品合计月增量：<strong style="color:#C41E3A">+610单</strong>，对应营收增量约¥18,000+</p>
+</div>
+
+<div class="strategy-card">
+<h4>🆕 新品孵化计划（3款新品打造）</h4>
+<div class="grid2">
+<div>
+<h5 style="color:#C41E3A;margin-bottom:8px">① 深圳科技园午市套餐（南山科兴/益田专属）</h5>
+<ul>
+<li><strong>组合</strong>：炒饭+1荤(鸭脖/凤爪)+素菜+康师傅冰红茶</li>
+<li><strong>定价</strong>：原价¥35 → 套餐价¥28.9</li>
+<li><strong>促销</strong>：满28减5 + 新客立减¥5，实付¥18.9</li>
+<li><strong>场景</strong>：周一-周五11:00-13:00，办公楼定向投放</li>
+<li><strong>预期</strong>：南山2店月增200单</li>
+</ul>
+</div>
+<div>
+<h5 style="color:#C41E3A;margin-bottom:8px">② 子固路夜宵能量套餐</h5>
+<ul>
+<li><strong>组合</strong>：热卤全家福小份+南昌拌粉+卤蛋+冰红茶</li>
+<li><strong>定价</strong>：原价¥42 → 夜宵价¥32.9</li>
+<li><strong>促销</strong>：满25减5 + 减配送费¥3，实付¥24.9</li>
+<li><strong>场景</strong>：每日20:30-22:00，定向发券</li>
+<li><strong>预期</strong>：子固路夜宵时段月增150单</li>
+</ul>
+</div>
+</div>
+<h5 style="color:#C41E3A;margin:16px 0 8px">③ 印象城家庭分享装（高端定位）</h5>
+<ul>
+<li><strong>组合</strong>：手撕酱鸭350g+热卤全家福+素菜拼盘+2听可乐+米饭2份</li>
+<li><strong>定价</strong>：原价¥88 → 套餐价¥68，满75减15后¥53</li>
+<li><strong>促销</strong>：满75减15 + 支付红包¥15</li>
+<li><strong>场景</strong>：周末晚餐时段，家庭客群</li>
+<li><strong>预期</strong>：印象城月增80单，客单价提升¥15</li>
+</ul>
+</div>
+
+<div class="strategy-card" style="background:#fef5f5">
+<h4>✂️ SKU精简策略（砍掉低效品折扣）</h4>
+<p style="margin-bottom:12px">当前商品折扣SKU超50个，长尾滞销品折扣占比高但ROI仅1.87。建议：</p>
+<ul>
+<li><strong>保留折扣SKU（15个核心）</strong>：手撕酱鸭炒饭、南昌拌粉、热卤大鸭脖、招牌酱香鹌鹑、热卤虎皮凤爪、热卤鸭翅中、热卤鸭头、香卤猪耳丝、热卤鸭掌、热卤鸭锁骨、热卤鸭肫、香卤金钱腿、招牌卤凤爪、热卤鸡翅尖、五香卤蛋</li>
+<li><strong>砍掉折扣SKU（30+个长尾）</strong>：低频出现（<10次/月）的滞销品折扣，转为原价销售或下架</li>
+<li><strong>资源转移</strong>：节省的折扣预算¥15,000/月 → 投入新客立减和代金券</li>
+<li><strong>上新机制</strong>：每月新增1-2款试销品，30天后评估，留下表现Top3</li>
+</ul>
+</div>
+</div>
+
+<!-- Section 5: 广告投放 -->
+<div class="section">
+<div class="section-title"><span class="num">5</span>广告投放策略</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>门店</th><th>月预算</th><th>美团占比</th><th>淘宝占比</th><th>美团策略</th><th>淘宝策略</th><th>重点时段</th></tr></thead>
+<tbody>
+<tr><td>南昌印象城 C15002</td><td>¥3,000-5,000</td><td>40%</td><td>60%</td><td>点金推广，午餐+10%出价</td><td>精准营销，重点17:00时段</td><td>10:00-11:30 / 16:00-18:00</td></tr>
+<tr><td>地铁万科 C14793</td><td>¥2,500-4,000</td><td>60%</td><td>40%</td><td>点金+斗金，晚餐+30%出价</td><td>精准营销，新客定向</td><td>10:00-11:30 / 16:30-18:30</td></tr>
+<tr><td>南山益田 C15019</td><td>¥3,000-4,500</td><td>50%</td><td>50%</td><td>稳美团，推新客立减</td><td>乘胜追击，精准营销加码</td><td>10:00-11:30 / 17:00-19:00</td></tr>
+<tr><td>南山科兴 C15009</td><td>¥2,500-3,500</td><td>30%</td><td>70%</td><td>优化满减，稳定投放</td><td>淘宝是增量主力，重点投</td><td>10:00-11:30 / 16:00-17:30</td></tr>
+<tr><td>子固路 C14906</td><td>¥2,000-3,000</td><td>50%</td><td>50%</td><td>夜宵专属时段投放</td><td>常规投放+定向发券</td><td>10:00-11:00 / 20:00-21:00</td></tr>
+</tbody></table></div>
+
+<div class="insight-box"><h4>📣 出价与预算管理原则</h4>
+<ul>
+<li><strong>高峰加价</strong>：午餐(10:00-12:00)出价+20%、晚餐(16:30-19:00)出价+30%、夜宵(20:00-21:30)出价+15%</li>
+<li><strong>非高峰降本</strong>：9:00前、14:00-15:00、22:00后出价降30-50%</li>
+<li><strong>日预算分配</strong>：午餐时段40%、晚餐时段45%、夜宵10%、其他5%</li>
+<li><strong>周预算节奏</strong>：周五-周日加20%（周末+10%订单量），周一-周四保持基准</li>
+<li><strong>平台补贴效率</strong>：美团每1元平台补贴带来¥6.45实付(Taobao ¥4.98)，美团投放效率更高</li>
+</ul></div>
+</div>
+
+<!-- Section 6: 门店差异化 -->
+<div class="section">
+<div class="section-title"><span class="num">6</span>门店差异化运营方案</div>
+
+<div class="strategy-card"><h4>🏆 C15002 南昌印象城 — 标杆店 <small>营收¥148,899 | 双平台均衡</small></h4>
+<ul>
+<li><strong>诊断</strong>：双平台发展最均衡（淘宝3,119+美团1,729），月增长稳健。淘宝客单价¥26.55偏低，有提升空间</li>
+<li><strong>方案</strong>：①重点推豪华套餐（炒饭+2荤+素菜+饮品），提升客单价至¥35+；②探索京东秒送第三平台；③保持淘宝满减力度，复制成功经验给其他南昌店</li>
+<li><strong>KPI</strong>：月订单1,780+（+10%）、客单价¥34+（+15%）、淘宝客单价¥30+</li>
+</ul></div>
+
+<div class="strategy-card"><h4>🚨 C14793 地铁万科 — 预警店 <small>营收¥112,195 | 双平台下滑严重</small></h4>
+<ul>
+<li><strong>诊断</strong>：美团-12.4%、淘宝-10.7%，是下滑最严重的门店。可能原因：周边竞品增加、活动力度不足</li>
+<li><strong>方案</strong>：①紧急加大美团新客立减至¥5；②淘宝推爆单红包+精准营销组合；③联动周边写字楼推午市团餐（11:00午餐有427单需求）</li>
+<li><strong>KPI</strong>：月订单止跌回正+5%、美团月增长率转正、客单价维持¥30+</li>
+</ul></div>
+
+<div class="strategy-card"><h4>🚀 C15019 南山益田 — 潜力店 <small>营收¥94,538 | 淘宝爆发+457%</small></h4>
+<ul>
+<li><strong>诊断</strong>：美团稳健(2,141单)，淘宝从114→635单爆发增长。淘宝客单价仅¥19.73，严重偏低</li>
+<li><strong>方案</strong>：①淘宝乘胜追击——增加精准营销投放、推单品折扣；②美团增加新客立减和满减组合；③深圳用户价格更敏感？测试提高满减门槛（满55→满65）看客单价反应</li>
+<li><strong>KPI</strong>：淘宝月订单700+（+10%）、淘宝客单价¥24+（+20%）、美团月订单800+</li>
+</ul></div>
+
+<div class="strategy-card"><h4>⚡ C15009 南山科兴 — 黑马店 <small>营收¥89,708 | 美团+258.7%</small></h4>
+<ul>
+<li><strong>诊断</strong>：美团从196→703单爆发，淘宝从0→583单。增长势头最猛，但整体基数仍低</li>
+<li><strong>方案</strong>：①淘宝是最大增量空间（5月0→7月583），继续重点投放精准营销；②美团优化店铺满减（当前ROI极低），转投新客立减；③周边科技园区午市需求大，推"科技园午市套餐"</li>
+<li><strong>KPI</strong>：淘宝月订单稳定600+、美团月订单稳定700+、客单价¥32+</li>
+</ul></div>
+
+<div class="strategy-card"><h4>🦉 C14906 子固路 — 维稳店 <small>营收¥84,440 | 夜宵特色</small></h4>
+<ul>
+<li><strong>诊断</strong>：唯一拥有21:00夜宵黄金时段(287单)的门店，但双平台均下滑。</li>
+<li><strong>方案</strong>：①打造"南昌夜宵第一店"——推夜宵专属套餐（热卤全家福+饮品，¥25-35）；②20:30定向发夜宵代金券；③美团点金推广在20:00-21:00加价30%；④减少支付红包，转投新客立减</li>
+<li><strong>KPI</strong>：月订单止跌+3%、夜宵时段订单350+、美团月增长率转正</li>
+</ul></div>
+</div>
+
+<!-- Section 7: 执行计划 -->
+<div class="section">
+<div class="section-title"><span class="num">7</span>执行计划与KPI追踪</div>
+
+<h3 style="margin-bottom:16px;color:#444">📅 30-60-90天行动计划</h3>
+<div class="gantt">
+<div class="gantt-item active"><div class="phase">第1-30天</div><div class="action">紧急止血</div><div style="font-size:.7em">地铁万科新客立减¥5<br>子固路夜宵套餐上线<br>南山科兴淘宝投放加码</div></div>
+<div class="gantt-item"><div class="phase">第31-60天</div><div class="action">优化提效</div><div style="font-size:.7em">满减门槛调整<br>支付红包瘦身30%<br>三档套餐全店上线</div></div>
+<div class="gantt-item"><div class="phase">第61-90天</div><div class="action">规模化复制</div><div style="font-size:.7em">印象城经验复制<br>京东秒送探索<br>双周复盘机制固化</div></div>
+</div>
+
+<div class="table-wrap" style="margin-top:24px"><h3 style="margin-bottom:12px">📊 月度KPI追踪表</h3>
+<table>
+<thead><tr><th>门店</th><th>8月订单目标</th><th>8月营收目标</th><th>美团月增长率</th><th>淘宝月增长率</th><th>客单价目标</th><th>新客立减ROI</th><th>关键动作</th></tr></thead>
+<tbody>
+<tr><td>南昌印象城</td><td>1,780</td><td>¥55,000</td><td>+10%</td><td>+10%</td><td>¥34</td><td>>30</td><td>豪华套餐+京东探索</td></tr>
+<tr><td>地铁万科</td><td>1,350</td><td>¥39,000</td><td>+5%</td><td>+5%</td><td>¥30</td><td>>30</td><td>新客立减¥5+团餐</td></tr>
+<tr><td>南山益田</td><td>1,250</td><td>¥36,000</td><td>+10%</td><td>+10%</td><td>¥30</td><td>>25</td><td>淘宝加码+满减优化</td></tr>
+<tr><td>南山科兴</td><td>1,300</td><td>¥39,000</td><td>+5%</td><td>+10%</td><td>¥32</td><td>>25</td><td>淘宝重点+午市套餐</td></tr>
+<tr><td>子固路</td><td>1,020</td><td>¥30,000</td><td>+3%</td><td>+3%</td><td>¥30</td><td>>30</td><td>夜宵套餐+定向发券</td></tr>
+<tr style="background:#fef5f5;font-weight:700"><td>合计</td><td>6,700</td><td>¥199,000</td><td>+5%</td><td>+8%</td><td>¥32</td><td>>28</td><td>全店协同</td></tr>
+</tbody></table></div>
+
+<div class="insight-box" style="margin-top:20px"><h4>🔄 迭代优化机制</h4>
+<ul>
+<li><strong>双周复盘</strong>：每两周review一次KPI达成情况，对比目标vs实际，分析偏差原因</li>
+<li><strong>A/B测试</strong>：新客立减¥3 vs ¥5对比测试（地铁万科vs子固路），满减门槛对比（南山益田vs科兴）</li>
+<li><strong>月度调优</strong>：基于双周数据，调整预算分配、出价策略、活动力度</li>
+<li><strong>数据看板</strong>：基于本报告的JSON数据文件，每周自动刷新指标</li>
+<li><strong>标杆复制</strong>：南昌印象城的淘宝运营策略整理成SOP，复制给其他4店</li>
+</ul></div>
+</div>
+
+<!-- ===== V1.2 方法论版新增 ===== -->
+<div class="section">
+<div class="section-title"><span class="num">8</span>行业对标与四维诊断 <span class="badge badge-blue">V1.2</span></div>
+<div class="insight-box" style="background:linear-gradient(135deg,#e1effe,#f0f7ff);border-color:#bcd5ff">
+<h4>方法论来源</h4>
+<ul>
+<li><b>五层维度金字塔</b>：实体-业务-组织-时间-度量值（自有分析框架第1部分）</li>
+<li><b>四维诊断法</b>：效率/结构/趋势/对标诊断（分析框架第7.3节）</li>
+<li><b>行业对标</b>：42份平台资料 - 卤味占快餐6.4%，煌上煌占卤味2.7%但YOY+23.53%，绝味月交易额1400万+为KA TOP1</li>
+</ul></div>
+<h3>效率诊断</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>指标</th><th>5店7月</th><th>行业基准</th><th>状态</th></tr></thead>
+<tbody>
+<tr><td>客单价</td><td>¥36.7</td><td>美团¥32-35</td><td class="trend-up">优</td></tr>
+<tr><td>进店转化率</td><td>5.8%</td><td>6.5%(KA品牌)</td><td class="trend-down">待优化</td></tr>
+<tr><td>下单转化率</td><td>15.4%</td><td>12%(卤味品类)</td><td class="trend-up">优</td></tr>
+<tr><td>老客占比</td><td>37.1%</td><td>45%+(KA品牌)</td><td class="trend-down">待优化</td></tr>
+<tr><td>毛利率</td><td>55%</td><td>50-55%(上限)</td><td class="trend-up">优</td></tr>
+</tbody></table></div>
+<div class="grid2">
+<div class="chart-box"><h4>平台营收结构</h4><canvas id="dPlat2"></canvas></div>
+<div class="chart-box"><h4>门店气泡</h4><canvas id="dBub2"></canvas></div>
+<div class="chart-box"><h4>5店实付趋势</h4><canvas id="dTr2"></canvas></div>
+<div class="chart-box"><h4>活动率 x 客单价交叉</h4><canvas id="dCr2"></canvas></div>
+</div>
+<div class="table-wrap"><h3>对标诊断（42份资料）</h3><table>
+<thead><tr><th>维度</th><th>煌上煌</th><th>绝味</th><th>品类</th><th>差距</th></tr></thead>
+<tbody>
+<tr><td>神券节+%</td><td>+27%</td><td>+30-40%</td><td>+25%</td><td class="trend-down">低于绝味</td></tr>
+<tr><td>老客复购</td><td>37.1%</td><td>45-55%</td><td>40%</td><td class="trend-down">-13pct</td></tr>
+<tr><td>新客立减ROI</td><td>32.03</td><td>25-35</td><td>15-25</td><td class="trend-up">高于行业</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">9</span>季度与月度环比（三阶推导法） <span class="badge badge-blue">V1.2</span></div>
+<div class="grid2">
+<div class="chart-box"><h4>Q2下半 vs Q3首月</h4><canvas id="qp2"></canvas></div>
+<div class="chart-box"><h4>月度环比趋势</h4><canvas id="mt2"></canvas></div>
+<div class="chart-box"><h4>客单价变化</h4><canvas id="ma2"></canvas></div>
+<div class="chart-box"><h4>老客占比变化</h4><canvas id="mo2"></canvas></div>
+</div>
+<div class="table-wrap"><h3>月度环比诊断</h3><table>
+<thead><tr><th>门店</th><th>5月</th><th>6月</th><th>7月</th><th>7环比</th><th>趋势</th><th>诊断</th></tr></thead>
+<tbody>
+<tr style="background:#def7ec"><td><b>印象城</b></td><td>¥18,642</td><td>¥21,956</td><td>¥24,425</td><td class="trend-up">+11.2%</td><td>稳定上升</td><td>正循环</td></tr>
+<tr style="background:#fef3c7"><td><b>地铁万科</b></td><td>¥19,129</td><td>¥15,140</td><td>¥20,519</td><td class="trend-up">+35.5%</td><td>V型反转</td><td>6月竞品7月反弹</td></tr>
+<tr style="background:#fef3c7"><td><b>南山益田</b></td><td>¥18,272</td><td>¥25,721</td><td>¥24,697</td><td class="trend-down">-4.0%</td><td>高位回落</td><td>6月爆发后回落</td></tr>
+<tr style="background:#fde8e8"><td><b>南山科兴</b></td><td>¥4,742</td><td>¥34,265</td><td>¥26,574</td><td class="trend-down">-22.4%</td><td>异常波动</td><td>P0急救</td></tr>
+<tr style="background:#def7ec"><td><b>子固路</b></td><td>¥13,475</td><td>¥13,261</td><td>¥15,466</td><td class="trend-up">+16.6%</td><td>稳健复苏</td><td>夜宵见效</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">10</span>活动机制深度解析 <span class="badge badge-blue">V1.2</span></div>
+<div class="insight-box" style="background:linear-gradient(135deg,#fef3c7,#fff8dc)"><h4>42份资料：12种活动模式 + 7月第29周(15-21日含18日神券节)</h4></div>
+<div class="grid2">
+<div class="chart-box"><h4>活动周vs非活动周 实付</h4><canvas id="ap2"></canvas></div>
+<div class="chart-box"><h4>活动周vs非活动周 订单</h4><canvas id="ao2"></canvas></div>
+</div>
+<div class="table-wrap"><h3>活动效果归因</h3><table>
+<thead><tr><th>门店</th><th>非活动周</th><th>神券节周</th><th>增幅</th><th>弹性</th><th>8月策略</th></tr></thead>
+<tbody>
+<tr><td><b>印象城</b></td><td>¥4,731/124</td><td>¥5,500/146</td><td class="trend-up">+16.3%</td><td>1.16</td><td>15%预算</td></tr>
+<tr><td><b>地铁万科</b></td><td>¥4,121/116</td><td>¥5,319/147</td><td class="trend-up">+29.1%</td><td>1.29</td><td>30%预算</td></tr>
+<tr><td><b>南山益田</b></td><td>¥4,381/122</td><td>¥5,832/153</td><td class="trend-up">+33.1%</td><td>1.33</td><td>25%预算</td></tr>
+<tr><td><b>南山科兴</b></td><td>¥5,291/139</td><td>¥6,727/172</td><td class="trend-up">+27.1%</td><td>1.27</td><td>20%预算</td></tr>
+<tr><td><b>子固路</b></td><td>¥2,628/84</td><td>¥3,674/101</td><td class="trend-up">+39.8%</td><td>1.40</td><td>10%预算</td></tr>
+</tbody></table></div>
+<div class="insight-box"><h4>活动ROI规律</h4>
+<ul><li>低客单价门店活动弹性 > 高客单价门店（子固路1.40 > 印象城1.16）</li><li>预算分配公式 = 基准 x 弹性 x 基数权重</li><li>支付红包ROI=1.89减30%转投新客立减(32.03)+代金券(12.0)</li></ul></div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">11</span>时序策略与24小时曲线 <span class="badge badge-blue">V1.2</span></div>
+<div class="chart-box" style="margin-bottom:12px"><h4>行业24小时订单基准（三高峰模型）</h4><canvas id="hb2" style="max-height:160px"></canvas></div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px">
+<div class="chart-box" style="padding:8px"><h5 style="font-size:.65em;color:#27ae60;text-align:center;margin:0">印象城</h5><canvas id="s1n2" style="max-height:100px"></canvas></div>
+<div class="chart-box" style="padding:8px"><h5 style="font-size:.65em;color:#e67e22;text-align:center;margin:0">地铁万科</h5><canvas id="s2n2" style="max-height:100px"></canvas></div>
+<div class="chart-box" style="padding:8px"><h5 style="font-size:.65em;color:#3498db;text-align:center;margin:0">南山益田</h5><canvas id="s3n2" style="max-height:100px"></canvas></div>
+<div class="chart-box" style="padding:8px"><h5 style="font-size:.65em;color:#8e44ad;text-align:center;margin:0">南山科兴</h5><canvas id="s4n2" style="max-height:100px"></canvas></div>
+<div class="chart-box" style="padding:8px"><h5 style="font-size:.65em;color:#C41E3A;text-align:center;margin:0">子固路</h5><canvas id="s5n2" style="max-height:100px"></canvas></div>
+</div>
+<div class="strategy-card"><h4>5店时段策略</h4><table>
+<thead><tr><th>门店</th><th>午餐</th><th>晚餐</th><th>夜宵</th><th>主导</th><th>策略</th></tr></thead>
+<tbody>
+<tr><td><b>印象城</b></td><td>30%</td><td>27%</td><td>9%</td><td>晚餐</td><td>家庭装满减</td></tr>
+<tr><td><b>地铁万科</b></td><td>32%</td><td>30%</td><td>8%</td><td>晚餐</td><td>工作餐+双人</td></tr>
+<tr><td><b>南山益田</b></td><td>28%</td><td>30%</td><td>11%</td><td>晚餐</td><td>下午茶+家宴</td></tr>
+<tr><td><b>南山科兴</b></td><td><b>36%</b></td><td>27%</td><td>13%</td><td><b>午餐</b></td><td>出价+40%</td></tr>
+<tr><td><b>子固路</b></td><td>31%</td><td>26%</td><td><b>16%</b></td><td><b>夜宵</b></td><td>夜宵券+热卤</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="section" style="border-top:4px solid #C41E3A">
+<div class="section-title"><span class="num">12</span>五段式总结与执行闭环 <span class="badge badge-blue">V1.2</span></div>
+<h3>核心摘要</h3>
+<div class="card"><p style="font-size:1.0em;font-weight:600;color:#C41E3A">5店5-7月实付¥52.9万(17,826单)，趋势向上但老客占比37.1%是最大短板。神券节全部正向(+16~+40%)，南山科兴需P0急救。</p></div>
+<div class="kpi-grid" style="margin:12px 0">
+<div class="kpi-card"><div class="kpi-val">¥52.9万</div><div class="kpi-label">5-7月总实付</div></div>
+<div class="kpi-card"><div class="kpi-val">32.03</div><div class="kpi-label">新客立减ROI</div></div>
+<div class="kpi-card"><div class="kpi-val">+27.9%</div><div class="kpi-label">神券节周提升</div></div>
+<div class="kpi-card"><div class="kpi-val">37.1%</div><div class="kpi-label" style="color:#e74c3c">老客占比[低]</div></div>
+</div>
+<h3>根因分析</h3>
+<div class="light green">[+] Top3：活动率收紧释放客单价+13.3%(~60%) / 神券节+27.9%(~25%) / 老客复购改善(~15%)</div>
+<div class="light red">[-] Bottom3：科兴-22.4%暴跌(~8%拖累) / 进店率5.8%<行业6.5%(~10%损失) / 支付红包ROI=1.89(~15%预算浪费)</div>
+<h3>7个行动项</h3>
+<table>
+<thead><tr><th>ID</th><th>P</th><th>行动</th><th>截止</th><th>验收</th></tr></thead>
+<tbody>
+<tr class="p0"><td>1</td><td>P0</td><td>科兴6月诊断+持续方案</td><td>8/10</td><td>8月订单>=650</td></tr>
+<tr class="p0"><td>2</td><td>P0</td><td>5店老客复购体系</td><td>8/15</td><td>老客>=42%</td></tr>
+<tr class="p1"><td>3</td><td>P1</td><td>8/18神券节按弹性加码</td><td>8/18</td><td>活动周>=3.5万</td></tr>
+<tr class="p1"><td>4</td><td>P1</td><td>点金出价+30%(科兴+40%)</td><td>8/10</td><td>午餐>=35%</td></tr>
+<tr class="p1"><td>5</td><td>P1</td><td>支付红包瘦身30%</td><td>8/15</td><td>新客立减+50%</td></tr>
+<tr class="p2"><td>6</td><td>P2</td><td>子固路夜宵定向</td><td>持续</td><td>夜宵+50%</td></tr>
+<tr class="p2"><td>7</td><td>P2</td><td>深圳淘宝精准营销</td><td>持续</td><td>淘宝+20%</td></tr>
+</tbody></table>
+<h3>展望</h3>
+<div>8月目标：5店实付¥13万+(+16%)，老客>=42%。风险：暑期淡季+CPC上涨15-20%+绝味竞品压力</div>
+</div>
+<!-- ===== V1.2 新增结束 ===== -->
+
+<div class="footer">
+本报告基于2026年5-7月双平台17,826条订单数据生成 ｜ 数据文件：双平台订单明细合并_5-7月.xlsx ｜ 生成时间：2026-08-07<br>
+V1.1新增章节：季度对比+月度环比+活动周分析+24小时曲线+时段提升方案 ｜ 建议每两周更新数据刷新报告，持续迭代优化
+</div>
+
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨 打印报告</button>
+
+<script>
+// ===== Chart.js 图表 =====
+const red='#C41E3A', gold='#D4A754', blue='#3498db', green='#27ae60', orange='#e67e22', purple='#8e44ad';
+const mtColor='#C41E3A', tbColor='#D4A754';
+const storeNames=['南昌印象城','地铁万科','南山益田','南山科兴','子固路'];
+const storeColors=[green,orange,blue,purple,red];
+
+// Radar
+new Chart(document.getElementById('radarChart'),{type:'radar',data:{labels:['订单量','营收','客单价','月增长率','补贴效率'],datasets:[
+{label:'印象城',data:[100,100,95,85,70],borderColor:green,backgroundColor:green+'20'},
+{label:'地铁万科',data:[79,75,90,30,65],borderColor:orange,backgroundColor:orange+'20'},
+{label:'南山益田',data:[69,63,88,95,60],borderColor:blue,backgroundColor:blue+'20'},
+{label:'南山科兴',data:[61,60,93,100,55],borderColor:purple,backgroundColor:purple+'20'},
+{label:'子固路',data:[59,57,91,25,50],borderColor:red,backgroundColor:red+'20'},
+]},options:{responsive:true,scales:{r:{min:0,max:100,ticks:{stepSize:20}}},plugins:{legend:{position:'bottom'}}}});
+
+// Revenue bar
+new Chart(document.getElementById('revenueChart'),{type:'bar',data:{labels:storeNames,datasets:[
+{label:'美团外卖',data:[66094,56872,71172,68063,44003],backgroundColor:mtColor},
+{label:'淘宝闪购',data:[82806,55323,23365,21645,40437],backgroundColor:tbColor}
+]},options:{responsive:true,scales:{x:{stacked:true},y:{stacked:true,title:{display:true,text:'营收(¥)'}}},plugins:{legend:{position:'bottom'}}}});
+
+// Trend
+new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:['5月','6月','7月'],datasets:[
+{label:'印象城-美团',data:[19167,22191,24736],borderColor:'#27ae60',tension:.3},
+{label:'印象城-淘宝',data:[24718,28723,29365],borderColor:'#2ecc71',borderDash:[5,5],tension:.3},
+{label:'地铁万科-美团',data:[20435,15469,20967],borderColor:'#e67e22',tension:.3},
+{label:'南山益田-美团',data:[18974,26472,25727],borderColor:'#3498db',tension:.3},
+{label:'子固路-美团',data:[14182,13733,16087],borderColor:'#e74c3c',tension:.3},
+]},options:{responsive:true,scales:{y:{title:{display:true,text:'月营收(¥)'}}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true}}}}});
+
+// Hour distribution
+const hours=Array.from({length:24},(_,i)=>i+'时');
+const mtHour=[10,5,14,3,1,4,2,14,46,129,496,908,555,405,465,490,649,989,994,1003,917,647,223,59];
+const tbHour=[18,14,15,5,2,4,2,18,75,137,618,1017,652,411,483,534,734,922,903,736,673,621,160,55];
+new Chart(document.getElementById('hourChart'),{type:'bar',data:{labels:hours,datasets:[
+{label:'美团',data:mtHour,backgroundColor:mtColor+'90'},
+{label:'淘宝',data:tbHour,backgroundColor:tbColor+'90'}
+]},options:{responsive:true,scales:{x:{stacked:true},y:{stacked:true,title:{display:true,text:'订单数'}}},plugins:{legend:{position:'bottom'}}}});
+
+// Heatmap data
+const storeLabels=['印象城','地铁万科','南山益田','南山科兴','子固路'];
+const heatData=[
+[0,0,0,0,0,0,0,2,84,259,460,373,270,304,325,477,566,521,412,409,309,18,22,6,5,7,1,0,1,0,0],
+[0,0,0,0,0,1,4,7,30,283,427,242,156,162,229,318,418,478,407,332,271,30,23,4,7,6,1,1,0,0,0],
+[0,0,0,0,0,1,3,12,36,173,353,249,178,194,170,196,393,378,412,336,199,15,5,8,4,0,4,4,2,0,0],
+[0,0,0,0,0,1,1,6,30,281,453,153,98,147,129,172,293,270,280,238,202,154,43,2,1,0,3,0,0,0,0],
+[0,0,0,0,0,1,22,79,86,118,232,190,114,141,171,220,241,250,228,275,287,166,21,8,2,2,2,3,0,0,0],
+];
+new Chart(document.getElementById('heatChart'),{type:'bar',data:{labels:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'],datasets:storeLabels.map((n,i)=>({label:n,data:heatData[i].slice(0,24),backgroundColor:storeColors[i]+'60',borderColor:storeColors[i],borderWidth:i===0?3:1}))},options:{responsive:true,scales:{y:{title:{display:true,text:'订单数'},beginAtZero:true}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true}}}}});
+
+// ROI chart
+new Chart(document.getElementById('roiChart'),{type:'bar',data:{labels:['门店新客立减','商家代金券','减配送费','平台津贴','支付红包','商品折扣','店铺满减'],datasets:[{label:'活动ROI',data:[32.03,12.0,8.78,7.67,1.89,1.87,1.29],backgroundColor:[green,green,'#2ecc71','#f39c12',red,orange,'#c0392b']}]},options:{indexAxis:'y',responsive:true,scales:{x:{title:{display:true,text:'ROI(关联实付/活动总金额)'}}},plugins:{legend:{display:false}}}});
+
+// Share chart
+new Chart(document.getElementById('shareChart'),{type:'bar',data:{labels:['支付红包','减配送费','商品折扣','满减','新客立减','代金券','平台津贴'],datasets:[
+{label:'平台承担',data:[86798,3167,97,642,0,220,1445],backgroundColor:mtColor},
+{label:'商家承担',data:[171371,54618,54188,20027,5053,2092,0],backgroundColor:tbColor}
+]},options:{responsive:true,scales:{x:{stacked:true},y:{stacked:true,title:{display:true,text:'金额(¥)'}}},plugins:{legend:{position:'bottom'}}}});
+
+// Product pyramid
+new Chart(document.getElementById('productChart'),{type:'doughnut',data:{labels:['引流品(炒饭+素菜)','主力品(炒饭+荤+素)','利润品(纯卤味)','套餐品(豪华组合)','附饮品'],datasets:[{data:[35,30,20,10,5],backgroundColor:[green,blue,orange,purple,gold]}]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+
+// ===== V1.1 新增章节图表 =====
+
+// ===== V1.2 方法论版 新增图表 =====
+
+// Section 8
+new Chart(document.getElementById('diagPlat2'),{type:'doughnut',data:{labels:['美团外卖','淘宝闪购'],datasets:[{data:[58,42],backgroundColor:['#C41E3A','#D4A754']}]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+
+new Chart(document.getElementById('diagBub2'),{type:'bubble',data:{datasets:[
+{label:'印象城',data:[{x:1,y:30.7,r:14}],backgroundColor:'#27ae60'},
+{label:'地铁万科',data:[{x:1.2,y:29.2,r:11}],backgroundColor:'#e67e22'},
+{label:'南山益田',data:[{x:1.1,y:28.4,r:10}],backgroundColor:'#3498db'},
+{label:'南山科兴',data:[{x:1.3,y:30.3,r:9}],backgroundColor:'#8e44ad'},
+{label:'子固路',data:[{x:1,y:29.5,r:8}],backgroundColor:'#C41E3A'}
+]},options:{responsive:true,scales:{x:{title:{display:true,text:'双平台均衡度'}},y:{title:{display:true,text:'客单价(Y)'}}}}});
+
+new Chart(document.getElementById('diagTr2'),{type:'line',data:{labels:['5月','6月','7月'],datasets:[
+{label:'印象城',data:[18642,21956,24425],borderColor:'#27ae60',tension:.3},
+{label:'地铁万科',data:[19129,15140,20519],borderColor:'#e67e22',tension:.3},
+{label:'南山科兴',data:[4742,34265,26574],borderColor:'#8e44ad',borderWidth:2,borderDash:[5,5],tension:.3}
+]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}});
+
+new Chart(document.getElementById('diagCr2'),{type:'scatter',data:{datasets:[
+{label:'5月',data:[{x:55.7,y:32.4}],backgroundColor:'#27ae60',pointRadius:8},
+{label:'6月',data:[{x:54.0,y:33.7}],backgroundColor:'#e67e22',pointRadius:8},
+{label:'7月',data:[{x:46.5,y:36.7}],backgroundColor:'#C41E3A',pointRadius:10}
+]},options:{responsive:true,scales:{x:{title:{display:true,text:'活动率(%)'}},y:{title:{display:true,text:'客单价(Y)'}}}}});
+
+// Section 9
+new Chart(document.getElementById('qpV2'),{type:'bar',data:{labels:['印象城','地铁万科','南山益田','南山科兴','子固路'],datasets:[
+{label:'Q2下半(5+6月)',data:[40598,34269,43994,39008,26736],backgroundColor:'#95a5a6'},
+{label:'Q3首月(7月)',data:[24425,20519,24697,26574,15466],backgroundColor:'#C41E3A'}
+]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+
+new Chart(document.getElementById('mtV2'),{type:'line',data:{labels:['5月','6月','7月'],datasets:[
+{label:'印象城',data:[18642,21956,24425],borderColor:'#27ae60',borderWidth:3,tension:.3},
+{label:'地铁万科',data:[19129,15140,20519],borderColor:'#e67e22',tension:.3},
+{label:'南山益田',data:[18272,25721,24697],borderColor:'#3498db',tension:.3},
+{label:'南山科兴',data:[4742,34265,26574],borderColor:'#8e44ad',borderDash:[5,5],tension:.3},
+{label:'子固路',data:[13475,13261,15466],borderColor:'#C41E3A',tension:.3}
+]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}});
+
+new Chart(document.getElementById('maV2'),{type:'bar',data:{labels:['5月','6月','7月'],datasets:[
+{label:'印象城',data:[39.0,37.8,38.2],backgroundColor:'#27ae60'},
+{label:'地铁万科',data:[31.2,32.6,37.4],backgroundColor:'#e67e22'},
+{label:'南山益田',data:[30.4,33.6,35.5],backgroundColor:'#3498db'},
+{label:'南山科兴',data:[25.0,31.1,38.7],backgroundColor:'#8e44ad'},
+{label:'子固路',data:[28.1,32.0,32.5],backgroundColor:'#C41E3A'}
+]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}});
+
+new Chart(document.getElementById('moV2'),{type:'line',data:{labels:['5月','6月','7月'],datasets:[
+{label:'印象城',data:[18.6,27.0,32.7],borderColor:'#27ae60',tension:.3},
+{label:'地铁万科',data:[42.8,46.2,44.0],borderColor:'#e67e22',tension:.3},
+{label:'南山益田',data:[23.8,39.9,43.5],borderColor:'#3498db',tension:.3},
+{label:'南山科兴',data:[12.1,35.7,31.2],borderColor:'#8e44ad',tension:.3},
+{label:'子固路',data:[28.8,34.8,34.0],borderColor:'#C41E3A',tension:.3}
+]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}});
+
+// Section 10
+new Chart(document.getElementById('apV2'),{type:'bar',data:{labels:['印象城','地铁万科','南山益田','南山科兴','子固路'],datasets:[
+{label:'非活动周',data:[4731,4121,4381,5291,2628],backgroundColor:'#95a5a6'},
+{label:'神券节周',data:[5500,5319,5832,6727,3674],backgroundColor:'#C41E3A'}
+]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+
+new Chart(document.getElementById('aoV2'),{type:'bar',data:{labels:['印象城','地铁万科','南山益田','南山科兴','子固路'],datasets:[
+{label:'非活动周',data:[124,116,122,139,84],backgroundColor:'#95a5a6'},
+{label:'神券节周',data:[146,147,153,172,101],backgroundColor:'#D4A754'}
+]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
+
+// Section 11: 24h curves
+new Chart(document.getElementById('hbV2'),{type:'line',data:{labels:['06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'].map(function(h){return h+':00'}),datasets:[{label:'订单占比 %',data:[0.5,0.8,1.5,2.5,5,12,20,8,4,3,5,10,15,8,5,4,3,2],borderColor:'#C41E3A',backgroundColor:'#C41E3A33',fill:true,tension:.4,pointRadius:2}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return v+'%'}}}}}});
+
+var hLbs=['06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+var sDt={'印象城':[0.4,0.7,1.4,2.3,4.8,12.5,21,8.2,3.8,2.8,5.2,10.5,15.5,8,4.5,3.5,2.5,1.8],'地铁万科':[0.5,0.8,1.5,2.5,5,11,18,8,4,3,5,11,17,9,5,3.5,2.5,1.5],'南山益田':[0.4,0.6,1.2,2.2,4.8,11,17,8.5,5,4,6,12,18,10,6,4,3,2],'南山科兴':[0.3,0.5,1.0,2.0,4.5,14,22,7.5,3.5,2.5,4.5,11,16,7.5,5,4.5,3.5,2.5],'子固路':[0.5,1.0,1.8,3,5.5,12,19,8,3.5,2.5,4.5,10,14,7,4.5,6,5,3.5]};
+var cls=['#27ae60','#e67e22','#3498db','#8e44ad','#C41E3A'];
+['印象城','地铁万科','南山益田','南山科兴','子固路'].forEach(function(s,i){
+new Chart(document.getElementById('s'+(i+1)+'V2'),{type:'line',data:{labels:hLbs.map(function(h){return h+'h'}),datasets:[{data:sDt[s],borderColor:cls[i],backgroundColor:cls[i]+'33',fill:true,tension:.4,pointRadius:0}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:6}}},y:{beginAtZero:true,ticks:{font:{size:7},callback:function(v){return v+'%'}}}}});
+});
+
+
+</script>
+</body>
+</html>
