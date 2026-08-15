@@ -1,0 +1,874 @@
+ou<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>5门店外卖数据可视化看板 V2（2026年7月）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">// ==== 月度环比对比 ====
+const monthlyNames = ["地铁万科店","子固路店","印象城店","益田假日广场店","直属南山科兴科学园店"];
+const julyOrders = [548,476,640,696,686];
+const juneOrders = [465,414,581,765,1102];
+const julyRevenue = [20519,15466,24425,24697,26574];
+const juneRevenue = [15140,13261,21956,25721,34265];
+const orderMoMRates = julyOrders.map((v,i)=>+((v-juneOrders[i])/juneOrders[i]*100).toFixed(1));
+const revenueMoMRates = julyRevenue.map((v,i)=>+((v-juneRevenue[i])/juneRevenue[i]*100).toFixed(1));
+
+// 月度订单对比（双柱+环比率折线）
+new Chart(document.getElementById('monthlyOrdersCompare'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [
+      {label:'7月订单量',data:julyOrders,backgroundColor:'#3B82F6',yAxisID:'y'},
+      {label:'6月订单量',data:juneOrders,backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:orderMoMRates,borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:5,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const i=ctx[0].dataIndex;const r=orderMoMRates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{position:'left',title:{display:true,text:'订单量',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+
+// 月度营业额对比
+new Chart(document.getElementById('monthlyRevenueCompare'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [
+      {label:'7月营业额(元)',data:julyRevenue,backgroundColor:'#10B981',yAxisID:'y'},
+      {label:'6月营业额(元)',data:juneRevenue,backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:revenueMoMRates,borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:5,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const i=ctx[0].dataIndex;const r=revenueMoMRates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{position:'left',title:{display:true,text:'营业额(元)',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+
+// 订单量环比率柱状图（红绿色区分）
+new Chart(document.getElementById('monthlyOrderRate'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [{label:'订单量环比率(%)',data:orderMoMRates,backgroundColor:orderMoMRates.map(r=>r>=0?'#10B981':'#EF4444')}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:(c)=>`环比率: ${c.raw>=0?'↑':'↓'}${Math.abs(c.raw)}%`}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{title:{display:true,text:'环比率(%)',color:'#94A3B8'},ticks:{color:'#64748B',callback:(v)=>v+'%'}}}}
+});
+
+// 营业额环比率柱状图
+new Chart(document.getElementById('monthlyRevenueRate'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [{label:'营业额环比率(%)',data:revenueMoMRates,backgroundColor:revenueMoMRates.map(r=>r>=0?'#10B981':'#EF4444')}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:(c)=>`环比率: ${c.raw>=0?'↑':'↓'}${Math.abs(c.raw)}%`}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{title:{display:true,text:'环比率(%)',color:'#94A3B8'},ticks:{color:'#64748B',callback:(v)=>v+'%'}}}}
+});
+
+// 5门店合计对比
+new Chart(document.getElementById('totalCompare'), {
+  type: 'bar',
+  data: {
+    labels: ['总订单量','总营业额(元)','总曝光次数','总入店次数'],
+    datasets: [
+      {label:'7月',data:[3046,111680,357881,20767],backgroundColor:'#3B82F6',yAxisID:'y'},
+      {label:'6月',data:[3327,110343,392475,21735],backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:[-8.4,1.2,-8.8,-4.5],borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:6,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const rates=[-8.4,1.2,-8.8,-4.5];const i=ctx[0].dataIndex;const r=rates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:12}}},
+      y:{position:'left',title:{display:true,text:'数值',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js">// ==== 月度环比对比 ====
+const monthlyNames = ["地铁万科店","子固路店","印象城店","益田假日广场店","直属南山科兴科学园店"];
+const julyOrders = [548,476,640,696,686];
+const juneOrders = [465,414,581,765,1102];
+const julyRevenue = [20519,15466,24425,24697,26574];
+const juneRevenue = [15140,13261,21956,25721,34265];
+const orderMoMRates = julyOrders.map((v,i)=>+((v-juneOrders[i])/juneOrders[i]*100).toFixed(1));
+const revenueMoMRates = julyRevenue.map((v,i)=>+((v-juneRevenue[i])/juneRevenue[i]*100).toFixed(1));
+
+// 月度订单对比（双柱+环比率折线）
+new Chart(document.getElementById('monthlyOrdersCompare'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [
+      {label:'7月订单量',data:julyOrders,backgroundColor:'#3B82F6',yAxisID:'y'},
+      {label:'6月订单量',data:juneOrders,backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:orderMoMRates,borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:5,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const i=ctx[0].dataIndex;const r=orderMoMRates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{position:'left',title:{display:true,text:'订单量',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+
+// 月度营业额对比
+new Chart(document.getElementById('monthlyRevenueCompare'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [
+      {label:'7月营业额(元)',data:julyRevenue,backgroundColor:'#10B981',yAxisID:'y'},
+      {label:'6月营业额(元)',data:juneRevenue,backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:revenueMoMRates,borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:5,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const i=ctx[0].dataIndex;const r=revenueMoMRates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{position:'left',title:{display:true,text:'营业额(元)',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+
+// 订单量环比率柱状图（红绿色区分）
+new Chart(document.getElementById('monthlyOrderRate'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [{label:'订单量环比率(%)',data:orderMoMRates,backgroundColor:orderMoMRates.map(r=>r>=0?'#10B981':'#EF4444')}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:(c)=>`环比率: ${c.raw>=0?'↑':'↓'}${Math.abs(c.raw)}%`}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{title:{display:true,text:'环比率(%)',color:'#94A3B8'},ticks:{color:'#64748B',callback:(v)=>v+'%'}}}}
+});
+
+// 营业额环比率柱状图
+new Chart(document.getElementById('monthlyRevenueRate'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [{label:'营业额环比率(%)',data:revenueMoMRates,backgroundColor:revenueMoMRates.map(r=>r>=0?'#10B981':'#EF4444')}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:(c)=>`环比率: ${c.raw>=0?'↑':'↓'}${Math.abs(c.raw)}%`}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{title:{display:true,text:'环比率(%)',color:'#94A3B8'},ticks:{color:'#64748B',callback:(v)=>v+'%'}}}}
+});
+
+// 5门店合计对比
+new Chart(document.getElementById('totalCompare'), {
+  type: 'bar',
+  data: {
+    labels: ['总订单量','总营业额(元)','总曝光次数','总入店次数'],
+    datasets: [
+      {label:'7月',data:[3046,111680,357881,20767],backgroundColor:'#3B82F6',yAxisID:'y'},
+      {label:'6月',data:[3327,110343,392475,21735],backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:[-8.4,1.2,-8.8,-4.5],borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:6,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const rates=[-8.4,1.2,-8.8,-4.5];const i=ctx[0].dataIndex;const r=rates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:12}}},
+      y:{position:'left',title:{display:true,text:'数值',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: #0F172A; color: #E2E8F0; padding: 20px; }
+.container { max-width: 1600px; margin: 0 auto; }
+h1 { font-size: 26px; color: #fff; text-align: center; margin-bottom: 8px; }
+.subtitle { text-align: center; color: #94A3B8; font-size: 13px; margin-bottom: 24px; }
+.row { display: grid; gap: 16px; margin-bottom: 16px; }
+.kpi-row { grid-template-columns: repeat(6, 1fr); }
+.chart-row { grid-template-columns: 1fr 1fr; }
+.chart-row-full { grid-template-columns: 1fr; }
+@media (max-width: 1200px) { .kpi-row { grid-template-columns: repeat(3,1fr); } .chart-row { grid-template-columns: 1fr; } }
+.kpi-card { background: linear-gradient(135deg, #1E293B 0%, #334155 100%); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid #334155; }
+.kpi-card.highlight { background: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%); }
+.kpi-card.success { background: linear-gradient(135deg, #065F46 0%, #10B981 100%); }
+.kpi-card.warn { background: linear-gradient(135deg, #92400E 0%, #F59E0B 100%); }
+.kpi-card.danger { background: linear-gradient(135deg, #991B1B 0%, #EF4444 100%); }
+.kpi-label { font-size: 12px; color: #94A3B8; margin-bottom: 6px; }
+.kpi-card.highlight .kpi-label, .kpi-card.success .kpi-label, .kpi-card.warn .kpi-label, .kpi-card.danger .kpi-label { color: rgba(255,255,255,0.8); }
+.kpi-value { font-size: 24px; font-weight: 700; color: #fff; }
+.kpi-sub { font-size: 11px; color: #64748B; margin-top: 4px; }
+.kpi-card .kpi-sub { color: rgba(255,255,255,0.6); }
+.chart-box { background: #1E293B; border-radius: 12px; padding: 20px; border: 1px solid #334155; }
+.chart-box h3 { color: #93C5FD; font-size: 15px; margin-bottom: 12px; }
+.chart-box canvas { max-height: 300px; }
+.section-title { font-size: 18px; color: #60A5FA; margin: 24px 0 12px 0; border-left: 4px solid #2563EB; padding-left: 12px; }
+.event-legend { display: flex; gap: 12px; flex-wrap: wrap; margin: 8px 0; font-size: 11px; }
+.event-legend span { padding: 2px 8px; border-radius: 4px; }
+.ev-weekend { background: rgba(59,130,246,0.2); color: #60A5FA; }
+.ev-event { background: rgba(239,68,68,0.2); color: #EF4444; }
+.ev-solar { background: rgba(16,185,129,0.2); color: #10B981; }
+.report-box { background: #1E293B; border-radius: 12px; padding: 24px; border: 1px solid #334155; margin-top: 24px; }
+.report-box h2 { color: #fff; font-size: 20px; margin-bottom: 16px; border-bottom: 2px solid #2563EB; padding-bottom: 8px; }
+.report-box h3 { color: #93C5FD; font-size: 16px; margin: 20px 0 10px 0; }
+.report-box p, .report-box li { color: #CBD5E1; font-size: 14px; line-height: 1.8; }
+.report-box ul { padding-left: 24px; margin: 8px 0; }
+.report-box .insight { background: rgba(37,99,235,0.15); border-left: 4px solid #2563EB; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+.report-box .warning { background: rgba(245,158,11,0.15); border-left: 4px solid #F59E0B; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+.report-box .danger { background: rgba(239,68,68,0.15); border-left: 4px solid #EF4444; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+.report-box .success { background: rgba(16,185,129,0.15); border-left: 4px solid #10B981; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+.report-box table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.report-box th { background: #2563EB; color: #fff; padding: 8px; font-size: 12px; }
+.report-box td { padding: 8px; border-bottom: 1px solid #334155; color: #CBD5E1; font-size: 12px; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-green { background: rgba(16,185,129,0.2); color: #10B981; }
+.tag-red { background: rgba(239,68,68,0.2); color: #EF4444; }
+.tag-yellow { background: rgba(245,158,11,0.2); color: #F59E0B; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>5门店外卖数据可视化看板 V2（公式纠正+营销节点标注）</h1>
+<div class="subtitle">数据周期：2026年7月 | 平台：美团外卖 | 门店：5家（煌上煌热卤） | 生成日期：2026-08-06</div>
+
+<div class="event-legend">
+  <span class="ev-weekend">周末</span>
+  <span class="ev-event">🔴 营销大促（神券节）</span>
+  <span class="ev-solar">节气（小暑/大暑）</span>
+  <span style="color:#64748B">★ 公式纠正：进店率=入店次数/曝光次数 | 下单率=订单/入店次数 | 活动支出分商家/平台两率</span>
+</div>
+
+<!-- ===== 模块1: 数据总览 ===== -->
+<div class="section-title">模块一：数据总览（KPI看板）</div>
+<div class="row kpi-row">
+  <div class="kpi-card highlight"><div class="kpi-label">总营业额</div><div class="kpi-value">¥111,680</div><div class="kpi-sub">31天·5店合计</div></div>
+  <div class="kpi-card success"><div class="kpi-label">总订单量</div><div class="kpi-value">3,046</div><div class="kpi-sub">日均98单</div></div>
+  <div class="kpi-card"><div class="kpi-label">客单价</div><div class="kpi-value">¥36.66</div><div class="kpi-sub">营业额/订单</div></div>
+  <div class="kpi-card"><div class="kpi-label">曝光次数</div><div class="kpi-value">357,881</div><div class="kpi-sub">5店合计</div></div>
+  <div class="kpi-card warn"><div class="kpi-label">进店率</div><div class="kpi-value">5.80%</div><div class="kpi-sub">入店次数/曝光次数</div></div>
+  <div class="kpi-card success"><div class="kpi-label">下单率</div><div class="kpi-value">14.67%</div><div class="kpi-sub">订单/入店次数</div></div>
+</div>
+
+<div class="row kpi-row">
+  <div class="kpi-card"><div class="kpi-label">入店次数</div><div class="kpi-value">20,767</div><div class="kpi-sub">5店合计</div></div>
+  <div class="kpi-card"><div class="kpi-label">新客人数</div><div class="kpi-value">192,218</div><div class="kpi-sub">占比89.37%</div></div>
+  <div class="kpi-card danger"><div class="kpi-label">老客人数</div><div class="kpi-value">22,857</div><div class="kpi-sub">占比10.63%（过低）</div></div>
+  <div class="kpi-card danger"><div class="kpi-label">商家活动支出</div><div class="kpi-value">¥51,003</div><div class="kpi-sub">支出率45.67%</div></div>
+  <div class="kpi-card warn"><div class="kpi-label">平台补贴</div><div class="kpi-value">¥15,837</div><div class="kpi-sub">补贴率14.18%</div></div>
+  <div class="kpi-card"><div class="kpi-label">活动补贴总额</div><div class="kpi-value">¥66,840</div><div class="kpi-sub">合计率59.85%</div></div>
+</div>
+
+<!-- ===== 模块2: 订单趋势分析（含营销节点） ===== -->
+<div class="section-title">模块二：订单趋势分析（含7月营销节点&节气标注）</div>
+<div class="row chart-row-full">
+  <div class="chart-box"><h3>日度订单量&营业额趋势（标注：周末/神券节/节气）</h3><canvas id="dailyTrend" height="280"></canvas></div>
+</div>
+<div class="row chart-row-full">
+  <div class="chart-box"><h3>日度曝光次数&入店次数趋势（标注：周末/神券节/节气）</h3><canvas id="dailyExposure" height="280"></canvas></div>
+</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>周度订单量趋势（对比上月6月）</h3><canvas id="weeklyOrders" height="280"></canvas></div>
+  <div class="chart-box"><h3>周度营业额趋势（对比上月6月）</h3><canvas id="weeklyRevenue" height="280"></canvas></div>
+</div>
+
+<!-- ===== 模块3: 门店销售分布 ===== -->
+<div class="section-title">模块三：门店销售分布</div>
+
+<!-- 新增：月度环比对比模块 -->
+<div class="section-title" style="color:#F59E0B;border-left-color:#F59E0B;">模块2.5：月度环比对比（7月 vs 6月）</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>各门店订单量月度环比对比</h3><canvas id="monthlyOrdersCompare" height="280"></canvas></div>
+  <div class="chart-box"><h3>各门店营业额月度环比对比</h3><canvas id="monthlyRevenueCompare" height="280"></canvas></div>
+</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>各门店订单量环比率(%)</h3><canvas id="monthlyOrderRate" height="280"></canvas></div>
+  <div class="chart-box"><h3>各门店营业额环比率(%)</h3><canvas id="monthlyRevenueRate" height="280"></canvas></div>
+</div>
+<div class="row chart-row-full">
+  <div class="chart-box"><h3>5门店合计：7月 vs 6月核心指标对比</h3><canvas id="totalCompare" height="200"></canvas></div>
+</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>各门店营业额占比（环形图）</h3><canvas id="storePie" height="280"></canvas></div>
+  <div class="chart-box"><h3>各门店订单量对比（柱状图）</h3><canvas id="storeOrders" height="280"></canvas></div>
+</div>
+
+<!-- ===== 模块4: 热门门店排行 ===== -->
+<div class="section-title">模块四：热门门店排行（Top5）</div>
+<div class="row chart-row-full">
+  <div class="chart-box"><h3>门店营业额Top5排行（水平柱状图）</h3><canvas id="topRank" height="200"></canvas></div>
+</div>
+
+<!-- ===== 模块5: 转化时效分析 ===== -->
+<div class="section-title">模块五：转化时效分析（纠正公式）</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>流量转化漏斗（曝光次数→入店次数→订单）</h3><canvas id="funnel" height="280"></canvas></div>
+  <div class="chart-box"><h3>各门店进店率对比（入店次数/曝光次数）</h3><canvas id="visitRate" height="280"></canvas></div>
+</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>各门店下单率对比（订单/入店次数）</h3><canvas id="orderRate" height="280"></canvas></div>
+  <div class="chart-box"><h3>各门店商家活动支出率 vs 平台补贴率</h3><canvas id="actRate" height="280"></canvas></div>
+</div>
+
+<!-- ===== 模块6: 用户评价分析 ===== -->
+<div class="section-title">模块六：用户评价分析（新老客结构）</div>
+<div class="row chart-row">
+  <div class="chart-box"><h3>各门店新客/老客占比（堆叠条形图）</h3><canvas id="newOldStack" height="280"></canvas></div>
+  <div class="chart-box"><h3>新老客人数对比（柱状图）</h3><canvas id="newOldBar" height="280"></canvas></div>
+</div>
+
+<!-- ===== 复盘规划报告 ===== -->
+<div class="section-title">复盘规划报告（V2 公式纠正版）</div>
+<div class="report-box">
+<h2>5门店外卖运营复盘规划报告（2026年7月·V2）</h2>
+
+<h3>一、数据洞察发现（公式纠正后）</h3>
+<div class="insight">
+<p><b>1. 规模指标</b>：5家门店7月合计营业额 ¥111,680，订单3,046单，客单价 ¥36.66。日均营业额 ¥3,603，日均订单98单。</p>
+<p><b>2. 流量指标（纠正后）</b>：</p>
+<ul>
+  <li>曝光次数 357,881次，入店次数 20,767次，订单 3,046单</li>
+  <li><b>进店率 5.80%</b>（入店次数/曝光次数）— 行业正常区间5-10%</li>
+  <li><b>下单率 14.67%</b>（订单/入店次数）— 行业正常区间10-25%</li>
+  <li>整体转化率 0.85%（订单/曝光次数）</li>
+</ul>
+<p><b>3. 活动支出（区分后）</b>：</p>
+<ul>
+  <li><b>商家活动支出 ¥51,003</b>，支出率 <b>45.67%</b>（商家自掏）</li>
+  <li><b>平台补贴 ¥15,837</b>，补贴率 <b>14.18%</b>（平台让利）</li>
+  <li>合计活动补贴 ¥66,840，合计率 59.85%</li>
+</ul>
+<p><b>4. 用户结构</b>：新客192,218人（89.37%），老客22,857人（10.63%）。<span class="tag tag-red">老客占比仅10.63%，远低于行业健康水平30-50%</span></p>
+</div>
+
+<h3>二、7月营销节点&节气影响分析</h3>
+<div class="insight">
+<p><b>7.18 神券节（S级大促）</b>：</p>
+<ul>
+  <li>7.18当天订单113单（vs日均98单，+15%）</li>
+  <li>7.18营业额¥4,322（vs日均¥3,603，+20%）</li>
+  <li>7.18曝光14,302次（vs日均11,545次，+24%）</li>
+  <li>神券节预热期（7.15-7.17）：日均订单103单，日均¥3,646，略高于全月均值</li>
+  <li><b>结论：神券节当日有明显流量+订单拉动，但预热期效果一般</b></li>
+</ul>
+<p><b>周末 vs 工作日</b>：</p>
+<ul>
+  <li>周末日均订单108单，工作日日均94单（周末+15%）</li>
+  <li>周末日均营业额¥4,018，工作日¥3,422（周末+17%）</li>
+  <li>周末曝光更高（周末13,516次 vs 工作日10,934次）</li>
+  <li><b>结论：周末是外卖高峰，应加大周末活动力度</b></li>
+</ul>
+<p><b>节气影响（小暑7.7/大暑7.22）</b>：</p>
+<ul>
+  <li>7.7小暑：订单101单，略高于均值</li>
+  <li>7.22大暑：订单82单，低于均值（高温抑制需求？）</li>
+  <li><b>结论：大暑高温天气对外卖有负面影响，需提前备货+调整配送</b></li>
+</ul>
+</div>
+
+<h3>三、问题诊断</h3>
+<div class="danger">
+<p><b>问题1：复购率几乎为零</b> — 5家店老客占比均低于16%</p>
+<ul>
+  <li>C14906子固路店：老客9.53%（最低）</li>
+  <li>C15009直属南山科兴科学园店：老客8.74%（深圳新店）</li>
+  <li>C15019益田假日店：老客9.63%</li>
+  <li>C15002印象城店：老客11.16%（最高）</li>
+  <li>C14793地铁万科店：老客15.33%</li>
+</ul>
+</div>
+
+<div class="warning">
+<p><b>问题2：C14906和C14793商家活动支出率超48%</b></p>
+<ul>
+  <li>C14906商家活动支出率55.25%（最高）+ 平台补贴率18.85%（最高）= 合计74.10%</li>
+  <li>C14793商家活动支出率48.15% + 平台补贴率15.10% = 合计63.25%</li>
+  <li>C15002商家活动支出率41.00% + 平台补贴率10.89% = 合计51.89%（最低）</li>
+  <li><b>诊断：C14906和C14793补贴过度，但产出效率最低</b></li>
+</ul>
+</div>
+
+<div class="warning">
+<p><b>问题3：C15019进店率4.85%最低</b></p>
+<ul>
+  <li>曝光52,586次但入店仅2,545次，进店率4.85%（5店最低）</li>
+  <li>但下单率22.03%（最高），说明进店用户质量高</li>
+  <li>诊断：门店装修/头图/店铺分问题，导致曝光转化低</li>
+</ul>
+</div>
+
+<h3>四、改进建议</h3>
+<div class="success">
+<p><b>建议1：立即建设会员体系（第一优先级）</b></p>
+<ul>
+  <li>上线积分/储值/等级三合一会员体系</li>
+  <li>设定目标：3个月内老客占比从10.63%提升至25%</li>
+  <li>推出"周三会员日"（参考"0元吃鸭头"钩子策略）</li>
+  <li>建立CRM老客召回：30天未消费自动推送优惠券</li>
+</ul>
+</div>
+
+<div class="success">
+<p><b>建议2：优化活动补贴结构（区分商家/平台）</b></p>
+<ul>
+  <li>C14906：商家活动率55.25%→降至40%，平台补贴率18.85%→申请降低至15%</li>
+  <li>C14793：商家活动率48.15%→降至42%，优化满减凑单结构</li>
+  <li>C15002：保持现有策略（合计率51.89%最低，效率最高）</li>
+  <li>整体目标：商家活动支出率45.67%→38%，平台补贴率维持14%</li>
+</ul>
+</div>
+
+<div class="success">
+<p><b>建议3：加大神券节等S级活动投入</b></p>
+<ul>
+  <li>7.18神券节当日订单+15%、营业额+20%，效果显著</li>
+  <li>8月重点参与S级活动（如18会员日、暑期大促）</li>
+  <li>预热期（活动前3天）提前加大点金推广出价</li>
+  <li>周末加大投放（周末订单+15%、营业额+17%）</li>
+</ul>
+</div>
+
+<div class="success">
+<p><b>建议4：C15019门店诊断整改</b></p>
+<ul>
+  <li>排查门店头图/装修/店铺分（BETTER模型E阶段）</li>
+  <li>优化菜品图片和描述，提升入店吸引力</li>
+  <li>目标：进店率从4.85%提升至6.0%以上</li>
+  <li>利用高下单率（22.03%）优势，重点优化曝光→入店环节</li>
+</ul>
+</div>
+
+<h3>五、下阶段目标规划（8月）</h3>
+<table>
+  <thead><tr><th>指标</th><th>7月实际</th><th>8月目标</th><th>提升幅度</th><th>关键动作</th></tr></thead>
+  <tbody>
+    <tr><td>总营业额</td><td>¥111,680</td><td>¥125,000</td><td><span class="tag tag-green">+12%</span></td><td>S级活动+门店优化</td></tr>
+    <tr><td>总订单量</td><td>3,046</td><td>3,400</td><td><span class="tag tag-green">+12%</span></td><td>曝光提升+转化优化</td></tr>
+    <tr><td>客单价</td><td>¥36.66</td><td>¥37.50</td><td><span class="tag tag-green">+2%</span></td><td>推套餐+满减凑单</td></tr>
+    <tr><td>进店率</td><td>5.80%</td><td>6.5%</td><td><span class="tag tag-green">+0.70pp</span></td><td>C15019门店整改</td></tr>
+    <tr><td>下单率</td><td>14.67%</td><td>16.0%</td><td><span class="tag tag-green">+1.33pp</span></td><td>菜品/价格优化</td></tr>
+    <tr><td>老客占比</td><td>10.63%</td><td>15%</td><td><span class="tag tag-green">+4.37pp</span></td><td>会员体系上线</td></tr>
+    <tr><td>商家活动支出率</td><td>45.67%</td><td>38%</td><td><span class="tag tag-green">-7.67pp</span></td><td>补贴结构优化</td></tr>
+    <tr><td>平台补贴率</td><td>14.18%</td><td>14%</td><td>维持</td><td>维持现有平台政策</td></tr>
+  </tbody>
+</table>
+
+<h3>六、门店分层运营策略</h3>
+<table>
+  <thead><tr><th>门店</th><th>层级</th><th>特征</th><th>8月策略</th></tr></thead>
+  <tbody>
+    <tr><td><b>C15009</b><br/>直属南山科兴科学园店</td><td><span class="tag tag-green">明星店</span></td><td>营业额第一、下单率15.64%</td><td>保持策略，复制经验</td></tr>
+    <tr><td><b>C15019</b><br/>益田假日广场店</td><td><span class="tag tag-green">现金牛</span></td><td>下单率22.03%最高、进店率4.85%最低</td><td>门店整改提升进店率</td></tr>
+    <tr><td><b>C15002</b><br/>印象城店</td><td><span class="tag tag-green">效率王</span></td><td>补贴率最低(51.89%)、进店率6.46%</td><td>加大曝光，承接流量</td></tr>
+    <tr><td><b>C14793</b><br/>地铁万科店</td><td><span class="tag tag-yellow">潜力店</span></td><td>老客占比最高(15.33%)</td><td>降商家活动率，提升新客</td></tr>
+    <tr><td><b>C14906</b><br/>子固路店</td><td><span class="tag tag-red">末尾店</span></td><td>营业额最低、补贴率最高(74.10%)</td><td>大幅降补贴，诊断商圈</td></tr>
+  </tbody>
+</table>
+
+<div class="insight" style="margin-top:20px;">
+<p><b>总结</b>：纠正公式后，5家门店7月外卖运营核心矛盾更清晰：<b>进店率5.80%偏低+下单率14.67%中等+老客占比10.63%严重不足+商家活动支出率45.67%过高</b>。关键发现是C15019虽然进店率最低(4.85%)但下单率最高(22.03%)，说明该店<b>曝光质量有问题但产品力强</b>，应重点优化头图/装修。8月第一优先级仍是<b>会员体系建设</b>，同时区分商家/平台两类补贴分别优化，目标实现营业额+12%、老客+4.37pp、商家活动率-7.67pp。</p>
+</div>
+</div>
+
+</div>
+
+<script>
+Chart.defaults.color = '#94A3B8';
+Chart.defaults.borderColor = '#334155';
+const storeColors = ['#3B82F6','#10B981','#F59E0B','#8B5CF6','#EF4444'];
+
+const dates = ["07-01","07-02","07-03","07-04","07-05","07-06","07-07","07-08","07-09","07-10","07-11","07-12","07-13","07-14","07-15","07-16","07-17","07-18","07-19","07-20","07-21","07-22","07-23","07-24","07-25","07-26","07-27","07-28","07-29","07-30","07-31"];
+const orders = [123,98,98,112,115,96,101,102,86,109,116,109,98,94,110,99,99,113,130,89,103,82,81,84,97,100,70,74,80,74,104];
+const revenue = [4308,3183,3355,3802,3921,3126,3526,3432,2731,4477,4550,3840,3646,3039,3827,3452,3658,4322,4823,2995,3663,3030,3569,3625,4330,3788,2661,2817,3164,2862,4159];
+const exposureCnt = [10181,8955,9085,12593,11833,10387,13384,12031,10732,11833,14402,14927,11672,12921,13262,11928,10598,14302,14802,10968,12505,11337,8977,9310,11330,12419,8300,9305,9069,11657,12876];
+const visitCnt = [669,599,548,733,715,618,760,698,584,695,846,950,649,706,746,683,630,819,982,637,675,641,535,544,680,737,454,502,517,574,641];
+// 周末标记 (07-04,05,11,12,18,19,25,26)
+const weekends = [false,false,false,true,true,false,false,false,false,false,true,true,false,false,false,false,false,true,true,false,false,false,false,false,true,true,false,false,false,false,false];
+// 神券节07-18
+const eventDays = dates.map(d => d === '07-18' ? '🔴神券节' : (d==='07-07'?'小暑':(d==='07-22'?'大暑':(d==='07-01'?'建党节':''))));
+
+// 背景色数组
+const bgColors = dates.map((d,i) => {
+  if (d === '07-18') return 'rgba(239,68,68,0.3)'; // 神券节红
+  if (weekends[i]) return 'rgba(59,130,246,0.15)'; // 周末蓝
+  return 'rgba(30,41,59,0.5)';
+});
+
+// 以下图表在新代码块中定义
+
+// Stores - 使用店名（不显示C编号）
+const storeNames = ["直属南山科兴科学园店","益田假日广场店","印象城店","地铁万科店","子固路店"];
+const stores = [
+  {name:"直属南山科兴科学园店",revenue:26574,orders:686,visitRate:4.92,orderRate:15.64,merchantRate:39.89,platformRate:12.53,newPct:91.26,oldPct:8.74,newCust:49767,oldCust:4768},
+  {name:"益田假日广场店",revenue:24697,orders:696,visitRate:4.85,orderRate:22.03,merchantRate:48.44,platformRate:15.53,newPct:90.37,oldPct:9.63,newCust:47524,oldCust:5062},
+  {name:"印象城店",revenue:24425,orders:640,visitRate:6.46,orderRate:14.89,merchantRate:41.00,platformRate:10.89,newPct:88.84,oldPct:11.16,newCust:32835,oldCust:4123},
+  {name:"地铁万科店",revenue:20519,orders:548,visitRate:6.10,orderRate:12.36,merchantRate:48.15,platformRate:15.10,newPct:84.67,oldPct:15.33,newCust:31219,oldCust:5651},
+  {name:"子固路店",revenue:15466,orders:476,visitRate:6.97,orderRate:10.60,merchantRate:55.25,platformRate:18.85,newPct:90.47,oldPct:9.53,newCust:30873,oldCust:3253},
+];
+
+// Chart 1: Daily trend - 订单量变白色
+new Chart(document.getElementById('dailyTrend'), {
+  type: 'bar',
+  data: {
+    labels: dates.map((d,i) => d + (eventDays[i]?' '+eventDays[i]:'') + (weekends[i]?' [周末]':'')),
+    datasets: [
+      {label:'订单量',data:orders,backgroundColor:'#F8FAFC',borderColor:'#E2E8F0',yAxisID:'y'},
+      {label:'营业额(元)',data:revenue,type:'line',borderColor:'#10B981',backgroundColor:'rgba(16,185,129,0.1)',yAxisID:'y1',tension:0.3,borderWidth:2}
+    ]
+  },
+  options: {
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}}},
+    scales:{
+      x:{ticks:{color:'#64748B',maxTicksLimit:15,font:{size:9}}},
+      y:{position:'left',title:{display:true,text:'订单量',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'营业额(元)',color:'#94A3B8'},grid:{drawOnChartArea:false},ticks:{color:'#64748B'}}
+    }
+  }
+});
+
+// Chart 2: Exposure & Visit - 曝光次数变白色
+new Chart(document.getElementById('dailyExposure'), {
+  type: 'bar',
+  data: {
+    labels: dates.map((d,i) => d + (eventDays[i]?' '+eventDays[i]:'') + (weekends[i]?' [周末]':'')),
+    datasets: [
+      {label:'曝光次数',data:exposureCnt,backgroundColor:'#F8FAFC',borderColor:'#E2E8F0',yAxisID:'y'},
+      {label:'入店次数',data:visitCnt,type:'line',borderColor:'#F97316',backgroundColor:'#F97316',yAxisID:'y1',tension:0.3,borderWidth:2}
+    ]
+  },
+  options: {
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}}},
+    scales:{
+      x:{ticks:{color:'#64748B',maxTicksLimit:15,font:{size:9}}},
+      y:{position:'left',title:{display:true,text:'曝光次数',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'入店次数',color:'#94A3B8'},grid:{drawOnChartArea:false},ticks:{color:'#64748B'}}
+    }
+  }
+});
+
+// Weekly - 对比6月
+const weeklyLabels = ['07-01~07-06','07-07~07-13','07-14~07-20','07-21~07-27','07-28~07-31'];
+const weeklyOrders = [642,721,734,617,332];
+const weeklyRevenue = [21695,26202,26116,24666,13001];
+const juneWeeklyOrders = [740,778,808,697,304];
+const juneWeeklyRevenue = [21357,24380,29210,24899,10498];
+
+new Chart(document.getElementById('weeklyOrders'), {
+  type: 'bar',
+  data: {
+    labels: weeklyLabels,
+    datasets: [
+      {label:'7月订单量',data:weeklyOrders,backgroundColor:'#3B82F6',yAxisID:'y'},
+      {label:'6月订单量(对比)',data:juneWeeklyOrders,backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:weeklyOrders.map((v,i)=>+((v-juneWeeklyOrders[i])/juneWeeklyOrders[i]*100).toFixed(1)),borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:5,pointBackgroundColor:'#F59E0B'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{
+        afterBody:(ctx)=>{
+          const i=ctx[0].dataIndex;
+          const july=weeklyOrders[i], june=juneWeeklyOrders[i];
+          const rate=((july-june)/june*100).toFixed(1);
+          const arrow=rate>=0?'↑':'↓';
+          return [`环比率: ${arrow}${Math.abs(rate)}%`];
+        }
+      }}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10}}},
+      y:{position:'left',title:{display:true,text:'订单量',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+
+new Chart(document.getElementById('weeklyRevenue'), {
+  type: 'bar',
+  data: {
+    labels: weeklyLabels,
+    datasets: [
+      {label:'7月营业额(元)',data:weeklyRevenue,backgroundColor:'#10B981',yAxisID:'y'},
+      {label:'6月营业额(元,对比)',data:juneWeeklyRevenue,backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:weeklyRevenue.map((v,i)=>+((v-juneWeeklyRevenue[i])/juneWeeklyRevenue[i]*100).toFixed(1)),borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:5,pointBackgroundColor:'#F59E0B'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{
+        afterBody:(ctx)=>{
+          const i=ctx[0].dataIndex;
+          const july=weeklyRevenue[i], june=juneWeeklyRevenue[i];
+          const rate=((july-june)/june*100).toFixed(1);
+          const arrow=rate>=0?'↑':'↓';
+          return [`环比率: ${arrow}${Math.abs(rate)}%`];
+        }
+      }}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10}}},
+      y:{position:'left',title:{display:true,text:'营业额(元)',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+
+// Store pie - 只显示店名
+new Chart(document.getElementById('storePie'), {
+  type: 'doughnut',
+  data: {labels: storeNames,datasets:[{data:stores.map(s=>s.revenue),backgroundColor:storeColors}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#CBD5E1',font:{size:11}}}}}
+});
+
+// Store orders - 店名替换C编号
+new Chart(document.getElementById('storeOrders'), {
+  type: 'bar',
+  data: {labels:storeNames,datasets:[{label:'订单量',data:stores.map(s=>s.orders),backgroundColor:storeColors}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#CBD5E1',font:{size:10}}},y:{ticks:{color:'#64748B'}}}}
+});
+
+// Top rank - 只显示店名
+new Chart(document.getElementById('topRank'), {
+  type: 'bar',
+  data: {labels:storeNames,datasets:[{label:'营业额(元)',data:stores.map(s=>s.revenue),backgroundColor:storeColors}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#CBD5E1',font:{size:11}}}}}
+});
+
+// Funnel
+new Chart(document.getElementById('funnel'), {
+  type: 'bar',
+  data: {labels:['曝光次数\n357,881次','入店次数\n20,767次','订单\n3,046单'],datasets:[{label:'转化漏斗',data:[357881,20767,3046],backgroundColor:['#3B82F6','#06B6D4','#10B981']}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#CBD5E1',font:{size:11}}}}}
+});
+
+// Visit rate - 显示店名
+new Chart(document.getElementById('visitRate'), {
+  type: 'bar',
+  data: {labels:storeNames,datasets:[{label:'进店率(%)',data:stores.map(s=>s.visitRate),backgroundColor:storeColors}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>'进店率: '+c.raw+'% (入店次数/曝光次数)'}}},scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},y:{title:{display:true,text:'进店率(%)',color:'#94A3B8'},ticks:{color:'#64748B'}}}}
+});
+
+// Order rate - 显示店名
+new Chart(document.getElementById('orderRate'), {
+  type: 'bar',
+  data: {labels:storeNames,datasets:[{label:'下单率(%)',data:stores.map(s=>s.orderRate),backgroundColor:storeColors}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>'下单率: '+c.raw+'% (订单/入店次数)'}}},scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},y:{title:{display:true,text:'下单率(%)',color:'#94A3B8'},ticks:{color:'#64748B'}}}}
+});
+
+// Act rate - 显示店名
+new Chart(document.getElementById('actRate'), {
+  type: 'bar',
+  data: {
+    labels: storeNames,
+    datasets: [
+      {label:'商家活动支出率(%)',data:stores.map(s=>s.merchantRate),backgroundColor:'#EF4444'},
+      {label:'平台补贴率(%)',data:stores.map(s=>s.platformRate),backgroundColor:'#F59E0B'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#CBD5E1'}}},scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},y:{title:{display:true,text:'率(%)',color:'#94A3B8'},ticks:{color:'#64748B'}}}}
+});
+
+// New/Old stack - 显示店名
+new Chart(document.getElementById('newOldStack'), {
+  type: 'bar',
+  data: {labels:storeNames,datasets:[{label:'新客占比(%)',data:stores.map(s=>s.newPct),backgroundColor:'#10B981'},{label:'老客占比(%)',data:stores.map(s=>s.oldPct),backgroundColor:'#8B5CF6'}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#CBD5E1'}}},scales:{x:{stacked:true,max:100,ticks:{color:'#64748B'}},y:{stacked:true,ticks:{color:'#CBD5E1',font:{size:11}}}}}
+});
+
+// New/Old bar - 显示店名
+new Chart(document.getElementById('newOldBar'), {
+  type: 'bar',
+  data: {labels:storeNames,datasets:[{label:'新客人数',data:stores.map(s=>s.newCust),backgroundColor:'#10B981'},{label:'老客人数',data:stores.map(s=>s.oldCust),backgroundColor:'#8B5CF6'}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#CBD5E1'}}},scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},y:{type:'logarithmic',ticks:{color:'#64748B'}}}}
+});
+// ==== 月度环比对比 ====
+const monthlyNames = ["地铁万科店","子固路店","印象城店","益田假日广场店","直属南山科兴科学园店"];
+const julyOrders = [548,476,640,696,686];
+const juneOrders = [465,414,581,765,1102];
+const julyRevenue = [20519,15466,24425,24697,26574];
+const juneRevenue = [15140,13261,21956,25721,34265];
+const orderMoMRates = julyOrders.map((v,i)=>+((v-juneOrders[i])/juneOrders[i]*100).toFixed(1));
+const revenueMoMRates = julyRevenue.map((v,i)=>+((v-juneRevenue[i])/juneRevenue[i]*100).toFixed(1));
+
+// 月度订单对比（双柱+环比率折线）
+new Chart(document.getElementById('monthlyOrdersCompare'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [
+      {label:'7月订单量',data:julyOrders,backgroundColor:'#3B82F6',yAxisID:'y'},
+      {label:'6月订单量',data:juneOrders,backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:orderMoMRates,borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:5,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const i=ctx[0].dataIndex;const r=orderMoMRates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{position:'left',title:{display:true,text:'订单量',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+
+// 月度营业额对比
+new Chart(document.getElementById('monthlyRevenueCompare'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [
+      {label:'7月营业额(元)',data:julyRevenue,backgroundColor:'#10B981',yAxisID:'y'},
+      {label:'6月营业额(元)',data:juneRevenue,backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:revenueMoMRates,borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:5,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const i=ctx[0].dataIndex;const r=revenueMoMRates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{position:'left',title:{display:true,text:'营业额(元)',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+
+// 订单量环比率柱状图（红绿色区分）
+new Chart(document.getElementById('monthlyOrderRate'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [{label:'订单量环比率(%)',data:orderMoMRates,backgroundColor:orderMoMRates.map(r=>r>=0?'#10B981':'#EF4444')}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:(c)=>`环比率: ${c.raw>=0?'↑':'↓'}${Math.abs(c.raw)}%`}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{title:{display:true,text:'环比率(%)',color:'#94A3B8'},ticks:{color:'#64748B',callback:(v)=>v+'%'}}}}
+});
+
+// 营业额环比率柱状图
+new Chart(document.getElementById('monthlyRevenueRate'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [{label:'营业额环比率(%)',data:revenueMoMRates,backgroundColor:revenueMoMRates.map(r=>r>=0?'#10B981':'#EF4444')}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:(c)=>`环比率: ${c.raw>=0?'↑':'↓'}${Math.abs(c.raw)}%`}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{title:{display:true,text:'环比率(%)',color:'#94A3B8'},ticks:{color:'#64748B',callback:(v)=>v+'%'}}}}
+});
+
+// 5门店合计对比
+new Chart(document.getElementById('totalCompare'), {
+  type: 'bar',
+  data: {
+    labels: ['总订单量','总营业额(元)','总曝光次数','总入店次数'],
+    datasets: [
+      {label:'7月',data:[3046,111680,357881,20767],backgroundColor:'#3B82F6',yAxisID:'y'},
+      {label:'6月',data:[3327,110343,392475,21735],backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:[-8.4,1.2,-8.8,-4.5],borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:6,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const rates=[-8.4,1.2,-8.8,-4.5];const i=ctx[0].dataIndex;const r=rates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:12}}},
+      y:{position:'left',title:{display:true,text:'数值',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+
+// ==== 月度环比对比 ====
+const monthlyNames = ["地铁万科店","子固路店","印象城店","益田假日广场店","直属南山科兴科学园店"];
+const julyOrders = [548,476,640,696,686];
+const juneOrders = [465,414,581,765,1102];
+const julyRevenue = [20519,15466,24425,24697,26574];
+const juneRevenue = [15140,13261,21956,25721,34265];
+const orderMoMRates = julyOrders.map((v,i)=>+((v-juneOrders[i])/juneOrders[i]*100).toFixed(1));
+const revenueMoMRates = julyRevenue.map((v,i)=>+((v-juneRevenue[i])/juneRevenue[i]*100).toFixed(1));
+
+new Chart(document.getElementById('monthlyOrdersCompare'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [
+      {label:'7月订单量',data:julyOrders,backgroundColor:'#3B82F6',yAxisID:'y'},
+      {label:'6月订单量',data:juneOrders,backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:orderMoMRates,borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:5,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const i=ctx[0].dataIndex;const r=orderMoMRates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{position:'left',title:{display:true,text:'订单量',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+
+new Chart(document.getElementById('monthlyRevenueCompare'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [
+      {label:'7月营业额(元)',data:julyRevenue,backgroundColor:'#10B981',yAxisID:'y'},
+      {label:'6月营业额(元)',data:juneRevenue,backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:revenueMoMRates,borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:5,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const i=ctx[0].dataIndex;const r=revenueMoMRates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{position:'left',title:{display:true,text:'营业额(元)',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+
+new Chart(document.getElementById('monthlyOrderRate'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [{label:'订单量环比率(%)',data:orderMoMRates,backgroundColor:orderMoMRates.map(r=>r>=0?'#10B981':'#EF4444')}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:(c)=>`环比率: ${c.raw>=0?'↑':'↓'}${Math.abs(c.raw)}%`}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{title:{display:true,text:'环比率(%)',color:'#94A3B8'},ticks:{color:'#64748B',callback:(v)=>v+'%'}}}}
+});
+
+new Chart(document.getElementById('monthlyRevenueRate'), {
+  type: 'bar',
+  data: {
+    labels: monthlyNames,
+    datasets: [{label:'营业额环比率(%)',data:revenueMoMRates,backgroundColor:revenueMoMRates.map(r=>r>=0?'#10B981':'#EF4444')}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:(c)=>`环比率: ${c.raw>=0?'↑':'↓'}${Math.abs(c.raw)}%`}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:10},maxRotation:45}},
+      y:{title:{display:true,text:'环比率(%)',color:'#94A3B8'},ticks:{color:'#64748B',callback:(v)=>v+'%'}}}}
+});
+
+new Chart(document.getElementById('totalCompare'), {
+  type: 'bar',
+  data: {
+    labels: ['总订单量','总营业额(元)','总曝光次数','总入店次数'],
+    datasets: [
+      {label:'7月',data:[3046,111680,357881,20767],backgroundColor:'#3B82F6',yAxisID:'y'},
+      {label:'6月',data:[3327,110343,392475,21735],backgroundColor:'#64748B',yAxisID:'y'},
+      {label:'环比率(%)',type:'line',data:[-8.4,1.2,-8.8,-4.5],borderColor:'#F59E0B',backgroundColor:'#F59E0B',yAxisID:'y1',tension:0.3,borderWidth:2,pointRadius:6,pointBackgroundColor:(ctx)=>ctx.raw>=0?'#10B981':'#EF4444'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#CBD5E1'}},
+      tooltip:{callbacks:{afterBody:(ctx)=>{const rates=[-8.4,1.2,-8.8,-4.5];const i=ctx[0].dataIndex;const r=rates[i];return [`环比率: ${r>=0?'↑':'↓'}${Math.abs(r)}%`];}}}},
+    scales:{x:{ticks:{color:'#CBD5E1',font:{size:12}}},
+      y:{position:'left',title:{display:true,text:'数值',color:'#94A3B8'},ticks:{color:'#64748B'}},
+      y1:{position:'right',title:{display:true,text:'环比率(%)',color:'#F59E0B'},grid:{drawOnChartArea:false},ticks:{color:'#F59E0B',callback:(v)=>v+'%'}}}}
+});
+</script>
+</body>
+</html>
