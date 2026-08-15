@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw 助手底层架构导览 V3</title>
+<style>
+:root{--bg:#0f1419;--card:#1a2129;--line:#2a343f;--text:#dce3ea;--dim:#8b98a5;--brand:#c41e3a;--brand2:#e74c3c;--blue:#58a6ff;--green:#3fb950;--orange:#f39c12;--purple:#a371f7}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Microsoft YaHei",-apple-system,sans-serif;line-height:1.65;padding:32px 20px 80px}
+.wrap{max-width:1100px;margin:0 auto}
+.header{text-align:center;padding:28px 0 22px;border-bottom:2px solid var(--line);margin-bottom:30px}
+.header h1{font-size:1.9em;letter-spacing:2px}
+.header h1 span{color:var(--brand2);font-size:.55em;vertical-align:middle;margin-left:8px}
+.header .sub{color:var(--dim);margin-top:8px;font-size:.92em}
+.header .badge{display:inline-block;background:rgba(88,166,255,.15);color:var(--blue);border:1px solid rgba(88,166,255,.3);border-radius:20px;padding:2px 14px;font-size:.75em;margin-top:8px}
+
+/* 快速导航 */
+.quick-nav{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;flex-wrap:wrap;gap:8px 16px}
+.quick-nav .qn-title{color:var(--dim);font-size:.78em;width:100%;margin-bottom:4px;letter-spacing:1px}
+.quick-nav a{color:var(--blue);text-decoration:none;font-size:.85em;padding:4px 0;border-bottom:1px solid transparent;transition:border-color .2s}
+.quick-nav a:hover{border-bottom-color:var(--blue)}
+
+/* 侧边目录（粘性） */
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 20px;margin-bottom:24px;display:flex;flex-wrap:wrap;gap:6px 18px}
+.toc .toc-title{color:var(--dim);font-size:.72em;letter-spacing:1px;width:100%;margin-bottom:2px}
+.toc a{color:var(--text);text-decoration:none;font-size:.82em;opacity:.7;transition:opacity .2s}
+.toc a:hover{opacity:1;color:var(--blue)}
+
+h2{font-size:1.25em;margin:34px 0 14px;padding-left:12px;border-left:4px solid var(--brand);color:#fff;scroll-margin-top:16px}
+h3{font-size:1.02em;margin:18px 0 8px;color:var(--blue);scroll-margin-top:16px}
+h4{font-size:.92em;margin:14px 0 6px;color:var(--text);opacity:.85}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.72em;margin-right:6px;vertical-align:middle}
+.t-brand{background:rgba(231,76,60,.15);color:#ff8a8a;border:1px solid rgba(231,76,60,.4)}
+.t-blue{background:rgba(88,166,255,.12);color:#8cc5ff;border:1px solid rgba(88,166,255,.35)}
+.t-green{background:rgba(63,185,80,.12);color:#7ee2a0;border:1px solid rgba(63,185,80,.35)}
+.t-purple{background:rgba(163,113,247,.12);color:#c4a8ff;border:1px solid rgba(163,113,247,.35)}
+.t-orange{background:rgba(243,156,18,.12);color:#ffd08a;border:1px solid rgba(243,156,18,.35)}
+.t-red{background:rgba(231,76,60,.12);color:#ff8a8a;border:1px solid rgba(231,76,60,.35)}
+
+table{width:100%;border-collapse:collapse;font-size:.88em;margin-top:8px}
+th{background:#232d38;text-align:left;padding:8px 12px;color:#fff;font-weight:600;border:1px solid var(--line)}
+td{padding:7px 12px;border:1px solid var(--line);vertical-align:top}
+td.c, .mono{font-family:Consolas,"Courier New",monospace;background:#0d1117;border-radius:4px;padding:1px 8px;color:#9ecbff;font-size:.88em;display:inline-block}
+td.c{background:transparent;padding:0 4px;display:inline}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+
+/* 架构分层图 */
+.layers{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.layer{border-radius:10px;padding:14px 18px;border:1px solid var(--line);position:relative}
+.layer .lt{font-size:.78em;letter-spacing:1px;color:var(--dim);margin-bottom:6px;text-transform:uppercase}
+.layer .items{display:flex;flex-wrap:wrap;gap:8px}
+.layer .item{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:.85em}
+.layer .item b{color:#fff}
+.layer .item small{display:block;color:var(--dim);font-size:.75em}
+.l0{background:linear-gradient(135deg,rgba(88,166,255,.10),rgba(88,166,255,.02));border-color:rgba(88,166,255,.3)}
+.l1{background:linear-gradient(135deg,rgba(231,76,60,.10),rgba(231,76,60,.02));border-color:rgba(231,76,60,.3)}
+.l2{background:linear-gradient(135deg,rgba(163,113,247,.10),rgba(163,113,247,.02));border-color:rgba(163,113,247,.3)}
+.l3{background:linear-gradient(135deg,rgba(63,185,80,.10),rgba(63,185,80,.02));border-color:rgba(63,185,80,.3)}
+.l4{background:linear-gradient(135deg,rgba(243,156,18,.08),rgba(243,156,18,.02));border-color:rgba(243,156,18,.3)}
+.arrow{text-align:center;color:var(--dim);font-size:.8em;padding:2px 0}
+.note{color:var(--dim);font-size:.82em;margin-top:8px}
+.note-imp{color:var(--orange);font-size:.85em;margin-top:6px;padding:8px 12px;background:rgba(243,156,18,.06);border-radius:6px;border-left:3px solid var(--orange)}
+
+.footer{text-align:center;color:var(--dim);font-size:.78em;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}
+
+/* 待办项样式 */
+.todo-item{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.todo-item .marker{color:var(--orange);font-weight:bold;flex-shrink:0}
+.todo-item.done .marker{color:var(--green)}
+.todo-item .desc{color:var(--text);font-size:.9em}
+.todo-item .meta{color:var(--dim);font-size:.78em;margin-left:8px}
+
+.priority-high{border-left:3px solid var(--brand2);padding-left:12px}
+.priority-mid{border-left:3px solid var(--orange);padding-left:12px}
+@media print{
+  body{background:#fff;color:#222;padding:8px}
+  .quick-nav,.toc,.footer{display:none}
+  .card,.layer{border:1px solid #bbb;background:#fff;box-shadow:none}
+  .layer .item,.mono{background:#f5f5f5;border:1px solid #ccc;color:#222}
+  table th{background:#eee;color:#222}
+  h2{color:#000;border-left-color:#c41e3a}
+  .note,.note-imp{color:#444}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+<h1>OpenClaw 助手底层架构导览<span>V3</span></h1>
+<div class="sub">运行时（Gateway / Agent Runtime / LLM / 工具 / MCP）× 工作区（记忆 / 规则 / 技能 / 知识库 / 脚本）× 业务管线（数据→分析→看板→发布）</div>
+<div class="badge">📅 统计基准日：2026-08-14 15:22 · 数据快照 ｜ V3：织入 P1 架构短板 9 项落地资产（监控/指纹/口径库/漂移告警/发布回滚/服务脚本/记忆拆分）</div>
+</div>
+
+<!-- ===== 快速导航 ===== -->
+<div class="quick-nav">
+<div class="qn-title">🚀 快速导航 · 按任务找入口</div>
+<a href="#nav-rules">📜 修改规则</a>
+<a href="#nav-skills">🧠 加新技能</a>
+<a href="#nav-debug">🐛 调试 Agent</a>
+<a href="#nav-report">📊 跑报告管线</a>
+<a href="#nav-tools">🔧 工具权限</a>
+<a href="#nav-memory">💾 记忆机制</a>
+<a href="#nav-todo">🚧 演进方向</a>
+</div>
+
+<!-- ===== 目录 ===== -->
+<div class="toc">
+<div class="toc-title">📑 本文目录</div>
+<a href="#s1">一、总体架构</a>
+<a href="#s2">二、运行时引擎</a>
+<a href="#s3">三、工作区（身体）</a>
+<a href="#s4">四、业务管线</a>
+<a href="#s5">五、关键路径</a>
+<a href="#s6">六、可观测性</a>
+<a href="#s7">七、配置与集成</a>
+<a href="#s8">八、演进方向</a>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s1">一、总体架构图（自底向上 5 层）</h2>
+
+<div class="note-imp">
+<strong>⚠️ 阅读前提：</strong> 分层不代表隔离 —— 一次对话会贯穿全部 5 层，但每层有明确的责任边界。L0-L1 是 OpenClaw 运行时，L2-L3 是工具与工作区资产，L4 是煌上煌业务管线。
+</div>
+
+<div class="layers">
+<div class="layer l4">
+<div class="lt">L4 业务应用层 · 为老大哥服务的业务管线</div>
+<div class="items">
+<div class="item"><b>四大数据路径</b><small>外卖/订单明细/活动明细/广告数据</small></div>
+<div class="item"><b>分析流水线</b><small>Python(.venv) pandas/plotly</small></div>
+<div class="item"><b>报告看板</b><small>自包含HTML · 17图表 · 打印PDF</small></div>
+<div class="item"><b>Power BI</b><small>4月15.pbix · 77+度量值</small></div>
+<div class="item"><b>发布链路</b><small>GitHub Pages · hsyh-reports</small></div>
+</div>
+</div>
+<div class="arrow">▲ 调用 / ▼ 服务（双向）</div>
+<div class="layer l3">
+<div class="lt">L3 能力资产层 · 我的"知识库与技能库"（workspace）</div>
+<div class="items">
+<div class="item"><b>技能 skills/</b><small>~5,069 技能 · 4来源(workspace/codebuddy/agents/workbuddy)</small></div>
+<div class="item"><b>知识库 knowledge/</b><small>外卖行业/PowerBI/方法论/工程化/营销</small></div>
+<div class="item"><b>规则 rules/</b><small>R1-R9 · 称呼/行为/路径/红线/不死鸟</small></div>
+<div class="item"><b>记忆 memory/</b><small>每日日志 · episodes · 进化日志</small></div>
+<div class="item"><b>脚本 scripts/</b><small>~1,776 文件 · 盘点/合并/部署/运维(健康检查/指纹/回滚)</small></div>
+<div class="item"><b>不死鸟 .phoenix/</b><small>快照备份与恢复</small></div>
+</div>
+</div>
+<div class="arrow">▲ 加载 / ▼ 写入（双向）</div>
+<div class="layer l2">
+<div class="lt">L2 工具与集成层 · 我能调用的"手脚"</div>
+<div class="items">
+<div class="item"><b>核心工具</b><small>read/write/edit/apply_patch/exec</small></div>
+<div class="item"><b>执行引擎</b><small>exec(pty/后台) · process · sandbox</small></div>
+<div class="item"><b>网络工具</b><small>web_search/web_fetch(受限)</small></div>
+<div class="item"><b>调度工具</b><small>cron(定时/提醒) · heartbeat</small></div>
+<div class="item"><b>会话工具</b><small>sessions_spawn/子代理 · sessions_list</small></div>
+<div class="item"><b>MCP 服务器</b><small>powerbi-modeling · stata · 记忆工具</small></div>
+</div>
+</div>
+<div class="arrow">▲ 工具调用 / ▼ 结果（双向）</div>
+<div class="layer l1">
+<div class="lt">L1 智能核心层 · OpenClaw Agent Runtime</div>
+<div class="items">
+<div class="item"><b>Gateway</b><small>长驻守护进程 · WS 127.0.0.1:18789 · 多通道(webchat/telegram…)</small></div>
+<div class="item"><b>Agent Loop</b><small>attempt loop · 思考→工具→验证 · compaction</small></div>
+<div class="item"><b>会话管理</b><small>sessions.sqlite · 转录 · 压缩</small></div>
+<div class="item"><b>工具策略</b><small>tool policy · 权限分级 · approvals</small></div>
+<div class="item"><b>技能加载</b><small>SKILL.md 注入 · 上下文组装</small></div>
+<div class="item"><b>记忆检索</b><small>memory_search · MEMORY.md · daily notes</small></div>
+</div>
+</div>
+<div class="arrow">▲ Prompt+工具 / ▼ Token流（双向）</div>
+<div class="layer l0">
+<div class="lt">L0 模型层 · LLM Provider</div>
+<div class="items">
+<div class="item"><b>DeepSeek v4-flash</b><small>当前模型 · 1M上下文 · OpenAI兼容API</small></div>
+<div class="item"><b>备用模型</b><small>v4-pro · 按任务切换(model override)</small></div>
+<div class="item"><b>身份注入</b><small>SOUL/USER/MEMORY/AGENTS 上下文</small></div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s2">二、运行时架构（OpenClaw 引擎）</h2>
+
+<div class="card">
+<h3>2.1 Gateway 守护进程</h3>
+<table>
+<tr><th>组件</th><th>职责</th></tr>
+<tr><td class="c">Gateway daemon</td><td>长驻进程，唯一入口，维护所有消息通道连接（WebChat/Telegram/Slack/Discord…）</td></tr>
+<tr><td class="c">WebSocket API</td><td>控制面协议，绑定 <span class="mono">127.0.0.1:18789</span>；请求/响应/事件推送（agent/chat/presence/heartbeat/cron）</td></tr>
+<tr><td class="c">Canvas Host</td><td>HTTP 服务 <span class="mono">/__openclaw__/canvas/</span>（agent 可编辑 HTML/JS 富渲染）</td></tr>
+<tr><td class="c">会话存储</td><td><span class="mono">~/.openclaw/state/openclaw.sqlite</span> + <span class="mono">agents/&lt;id&gt;/sessions/</span> 转录索引</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>2.2 Agent Runtime（智能核心）</h3>
+<table>
+<tr><th>模块</th><th>职责</th></tr>
+<tr><td class="c">embedded-agent-runner</td><td>attempt loop（思考→工具调用→观察→继续）、模型选择、compaction 上下文压缩</td></tr>
+<tr><td class="c">sessions</td><td>会话持久化、技能/提示词/主题资源加载、TUI 工具渲染</td></tr>
+<tr><td class="c">agent-tools</td><td>工具定义与参数 Schema、工具策略（tool policy）、调用前后适配器</td></tr>
+<tr><td class="c">agent-hooks</td><td>compaction 护栏、上下文剪枝（长会话保护）</td></tr>
+<tr><td class="c">src/llm</td><td>模型/Provider 注册表、传输层、流式实现（当前 provider=deepseek）</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>2.3 状态与数据目录</h3>
+<table>
+<tr><th>路径（相对 ~/.openclaw/）</th><th>内容</th></tr>
+<tr><td class="c">openclaw.json</td><td>全局配置（通道/模型/工具策略）</td></tr>
+<tr><td class="c">state/openclaw.sqlite</td><td>共享运行时状态库</td></tr>
+<tr><td class="c">agents/&lt;id&gt;/agent/*.sqlite</td><td>模型认证（API Key）+ 运行状态</td></tr>
+<tr><td class="c">agents/&lt;id&gt;/sessions/</td><td>会话转录 + sessions.json 索引</td></tr>
+<tr><td class="c">workspace/</td><td>默认工作区（= C:\Users\Oo\.openclaw\workspace，我的"身体"）</td></tr>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s3">三、工作区架构（我的"身体"）</h2>
+
+<div class="card" id="nav-rules">
+<h3>3.1 身份与人格（启动时注入）</h3>
+<table>
+<tr><th>文件</th><th>作用</th></tr>
+<tr><td class="c">SOUL.md</td><td>灵魂/人格：真诚帮助、有观点、先自己想办法、内部大胆外部谨慎</td></tr>
+<tr><td class="c">USER.md</td><td>用户档案：邓超今（老大哥）、煌上煌外卖数据分析负责人（称呼规则单一来源=rules/addressing-rules.md，此处仅指针）</td></tr>
+<tr><td class="c">MEMORY.md</td><td>长期记忆（34.6KB）：路径规则/口径/技能地图/发布惯例</td></tr>
+<tr><td class="c">AGENTS.md</td><td>工作区行为契约：会话启动流程、记忆机制、红线</td></tr>
+<tr><td class="c">TOOLS.md</td><td>环境坑位笔记（PowerShell编码坑、命令引号坑等）</td></tr>
+<tr><td class="c">IDENTITY.md</td><td>身份元数据</td></tr>
+</table>
+</div>
+
+<div class="card" id="nav-memory">
+<h3>3.2 记忆体系（分层持久化 + 检索机制）</h3>
+<div class="grid">
+<div><span class="tag t-brand">长期</span><b>MEMORY.md</b><div class="note">精炼记忆：规则/口径/经验/结论（最高优先级规则）</div></div>
+<div><span class="tag t-blue">每日</span><b>memory/YYYY-MM-DD.md</b><div class="note">每日会话日志，30 个文件（含 03-31 起）</div></div>
+<div><span class="tag t-green">演化</span><b>episodes / observations / evolution-log / learned-rules</b><div class="note">经验→规则晋升管线（R1 记忆规则）</div></div>
+<div><span class="tag t-purple">备份</span><b>codebuddy-archive / checkpoints</b><div class="note">CodeBuddy 记忆迁移存档 + 检查点</div></div>
+</div>
+<div class="note" style="margin-top:10px">
+<strong>🔍 检索机制：</strong> 工具 <span class="mono">memory_search</span> 检索优先级为：<br>
+<code style="color:var(--blue)">MEMORY.md</code> → <code style="color:var(--blue)">memory/</code> 每日日志 → <code style="color:var(--blue)">episodes/</code> → 兜底（模型自身知识）
+</div>
+</div>
+
+<div class="card">
+<h3>3.3 规则体系（rules/，9 份）</h3>
+<table>
+<tr><th>规则</th><th>编号</th><th>内容</th></tr>
+<tr><td class="c">addressing-rules.md</td><td>称呼</td><td>7变量动态称呼（角色/场合/亲密度/语气/时段/任务/口味），锁定"老大哥"</td></tr>
+<tr><td class="c">behavior-contract.md</td><td>R9</td><td>行为契约：真诚帮助/有观点/先自己想办法/内部大胆外部谨慎</td></tr>
+<tr><td class="c">path-routing.md</td><td>R3</td><td>任务5分类×风险4级（L0直接做/L1快照/L2快照+验证/L3暂停确认）</td></tr>
+<tr><td class="c">risk-boundaries.md</td><td>R6</td><td>红线：密钥不写明文/删除先trash/外发确认/沙箱执行</td></tr>
+<tr><td class="c">memory-write-rules.md</td><td>R1</td><td>记忆保存规则（每次会话每条记录必存）</td></tr>
+<tr><td class="c">phoenix-triggers.md</td><td>R4</td><td>不死鸟：崩溃/升级后自动恢复检查</td></tr>
+<tr><td class="c">R2 未编号</td><td>R2</td><td>预留：待盘点（2026-08-14 审查发现 R1-R9 缺号）</td></tr>
+<tr><td class="c">R5 未编号</td><td>R5</td><td>预留：待盘点</td></tr>
+<tr><td class="c">R7 未编号</td><td>R7</td><td>预留：待盘点</td></tr>
+<tr><td class="c">R8 未编号</td><td>R8</td><td>预留：待盘点</td></tr>
+<tr><td class="c">capabilities / evolution-triggers / README</td><td>—</td><td>能力清单 / 晋升触发 / 规则总索引</td></tr>
+</table>
+</div>
+
+<div class="card" id="nav-skills">
+<h3>3.4 技能体系（skills/，实时盘点 5,069 SKILL.md）</h3>
+<table>
+<tr><th>来源</th><th>规模</th><th>核心内容</th></tr>
+<tr><td class="c">workspace/skills</td><td>~4,098</td><td>小白赛亚人(PowerBI全链路)、waimai-diagnose、analysis-framework/models、powerbi-dashboard、数学建模1-6链、awesome-codex-skills 等</td></tr>
+<tr><td class="c">codebuddy skills</td><td>~943</td><td>小白AI 48子技能 + 15核心 + stata 全家桶</td></tr>
+<tr><td class="c">agents</td><td>20</td><td>stata 统计套件</td></tr>
+<tr><td class="c">workbuddy</td><td>8</td><td>金融数据</td></tr>
+</table>
+<div class="note">业务速查：外卖诊断→waimai-diagnose；Power BI→代码小白；报告复盘→analysis-framework；办公→小白AI；统计→stata。总数=4,098+943+20+8=5,069（skill-inventory.py 2026-08-14 15:1x 实时盘点；"文件数"≠"技能数"，前者含 assets/子目录）</div>
+</div>
+
+<div class="card">
+<h3>3.5 知识库（knowledge/，六类 16 文件）</h3>
+<table>
+<tr><th>目录</th><th>内容</th></tr>
+<tr><td class="c">waimai/</td><td>外卖行业知识 8大模块 + SOP + 诊断结论</td></tr>
+<tr><td class="c">marketing/</td><td>25大管理方法论、竞争与市场分析（波特五力/TAM）</td></tr>
+<tr><td class="c">powerbi/</td><td>连接运维手册、OCR工具链、驾驶舱工程化、数据科学方法论、文档报告生成、LLM框架</td></tr>
+<tr><td class="c">framework/ engineering/ skills/</td><td>分析框架、工程实践、技能全景地图</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>3.6 自动化与基础设施</h3>
+<table>
+<tr><th>组件</th><th>作用</th></tr>
+<tr><td class="c">.phoenix/（139文件）</td><td>不死鸟快照（snapshot-*）：崩溃恢复基线</td></tr>
+<tr><td class="c">.snapshots/（8文件）</td><td>校验快照（sha256）</td></tr>
+<tr><td class="c">hsyh-reports-site/（78文件）</td><td>报告集 GitHub Pages 站点（索引+各报告子目录）</td></tr>
+<tr><td class="c">scripts/（~1,776文件）</td><td>skill-inventory.py、merge_report.py、deploy-hsyh-pages.ps1、evolution-cycle.sh、vault-sync 等自动化脚本</td></tr>
+<tr><td class="c">scripts/healthcheck.ps1</td><td>P1#4 Gateway 健康检查：端口18789检测+事件日志+拉起（附每5分钟计划任务）</td></tr>
+<tr><td class="c">scripts/hash-datasource.py</td><td>P1#7 数据源版本指纹：50文件SHA256 → datasource-hash.txt，报告可精确复现数据版本</td></tr>
+<tr><td class="c">scripts/install-gateway-service.ps1</td><td>P1#5 Windows 服务注册（nssm，自动重启；nssm 未装，脚本就绪）</td></tr>
+<tr><td class="c">knowledge/口径库.md</td><td>P1#8 口径单一来源（利润v2/ROI/四公式/36列），版本化维护，MEMORY.md 留指针</td></tr>
+<tr><td class="c">memory/topics/</td><td>P1#10 记忆主题拆分骨架（防 MEMORY.md 膨胀）</td></tr>
+<tr><td class="c">scripts/_skill_inventory.tsv</td><td>P1#9 技能盘点TSV：用途|触发词|入口路径|状态（5,069 技能）</td></tr>
+<tr><td class="c">.git/（4242文件）</td><td>workspace 版本库（git 巡检/提交）</td></tr>
+</table>
+</div>
+
+
+<div class="card">
+<h3>3.7 运维与健康体系（P1 审查清单落地，2026-08-14）</h3>
+<table>
+<tr><th>能力</th><th>机制</th><th>状态</th></tr>
+<tr><td>进程健康</td><td>healthcheck.ps1 每 5 分钟探测 Gateway 端口 18789，异常记事件日志并尝试拉起</td><td><span class="tag t-green">已落地</span></td></tr>
+<tr><td>单点防护</td><td>install-gateway-service.ps1 注册 Windows 服务 + 自动重启（nssm；备选 schtasks 开机启动）</td><td><span class="tag t-orange">脚本就绪</span></td></tr>
+<tr><td>数据版本</td><td>hash-datasource.py 生成 50 文件 SHA256 指纹，报告引用指纹可复现数据版本</td><td><span class="tag t-green">已落地</span></td></tr>
+<tr><td>口径独立</td><td>knowledge/口径库.md 版本化（V1.0），MEMORY.md 只留指针与结论</td><td><span class="tag t-green">已落地</span></td></tr>
+<tr><td>数值漂移</td><td>verify_numbers.py 环比&gt;20% 输出[异常]告警（7月vs6月 5 项正常）</td><td><span class="tag t-green">已落地</span></td></tr>
+<tr><td>发布回滚</td><td>deploy-hsyh-pages.ps1 发布前备份 + try/catch 失败自动还原</td><td><span class="tag t-green">已落地</span></td></tr>
+<tr><td>技能治理</td><td>skill-inventory.py 输出 TSV（用途|触发词|入口路径|状态），疑似重复自动标记</td><td><span class="tag t-green">已落地</span></td></tr>
+<tr><td>记忆治理</td><td>memory/topics/ 主题拆分骨架（口径已迁，其余渐进）</td><td><span class="tag t-orange">渐进中</span></td></tr>
+<tr><td>密钥治理</td><td>api_key 存 agent sqlite 为 OpenClaw 原生机制（非文档明文）；env 引用改造待决策</td><td><span class="tag t-orange">待决策</span></td></tr>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s4">四、业务数据管线（煌上煌）</h2>
+
+<div class="card" id="nav-report">
+<h3>4.1 数据 → 分析 → 看板 → 发布</h3>
+<table>
+<tr><th>环节</th><th>工具/路径</th><th>说明</th></tr>
+<tr><td>1 数据源</td><td class="c">D:\邓超今\临时数据源\OneDrive\桌面\双平台数据\</td><td>四大路径（外卖/订单明细/活动明细/广告），美团CSV(GBK)+淘宝XLSX</td></tr>
+<tr><td>2 计算环境</td><td class="c">C:\Users\Oo\Desktop\.venv\</td><td>Python 3.14 + pandas 3.0 + plotly + openpyxl</td></tr>
+<tr><td>3 口径规则</td><td class="c">MEMORY.md</td><td>36列模板、实际补贴=平台+商家、ROI口径、利润v2（÷1.35×45%）</td></tr>
+<tr><td>4 报告生成</td><td class="c">report_parts/ + merge_report.py</td><td>部件化→合并→结构校验→数值断言(83项)→Edge无头渲染验证</td></tr>
+<tr><td>5 交付存放</td><td class="c">指定生成文件存放\</td><td>HTML报告（版本管理 V1→V2→V3）</td></tr>
+<tr><td>6 发布</td><td class="c">scripts/deploy-hsyh-pages.ps1</td><td>GitHub Pages：https://285736243-boop.github.io/hsyh-reports/</td></tr>
+<tr><td>7 Power BI</td><td class="c">4月15.pbix + powerbi-modeling-mcp</td><td>模型/度量值/关系操作 + SQLite 元数据直改</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>4.2 交付质量保障链</h3>
+<div class="grid">
+<div><span class="tag t-green">数值</span><b>verify_numbers.py</b><div class="note">83项断言：GMV/订单/补贴/利润/ROI/漏斗/时段全维度交叉自洽</div></div>
+<div><span class="tag t-green">结构</span><b>merge_report.py</b><div class="note">canvas/chart配对、div/table/script平衡、无重复id</div></div>
+<div><span class="tag t-green">渲染</span><b>Edge headless probe</b><div class="note">DOM注入验证 Chart.js 实例数 = canvas 数</div></div>
+<div><span class="tag t-green">发布</span><b>deliver-check</b><div class="note">交付前自检全绿才交付（R9）</div></div>
+</div>
+</div>
+
+
+<div class="card">
+<h3>4.3 一次任务如何贯穿 5 层（实例：合并月报 2026-08-14）</h3>
+<div class="note-imp"><strong>📌 为什么讲这个：</strong> 架构图是"静态地图"，真实运行是"一次任务走完一条链路"。以下用今天凌晨的月报合并任务还原完整调用链。</div>
+<table>
+<tr><th>顺序</th><th>层级</th><th>动作</th><th>实际发生的事</th></tr>
+<tr><td>①</td><td><span class="tag t-brand">L4</span></td><td>任务接收</td><td>老大哥下达：合并 V13 + 促销定稿 → 分析总结月报，连续优化 3 小时</td></tr>
+<tr><td>②</td><td><span class="tag t-blue">L3</span></td><td>技能与记忆装载</td><td>读 waimai-diagnose / analysis-framework SKILL.md；MEMORY.md 注入口径规则（利润/ROI/路径）</td></tr>
+<tr><td>③</td><td><span class="tag t-purple">L2</span></td><td>数据与计算</td><td>exec 调 Python(.venv) 读 6 个原始文件（美团CSV GBK + 淘宝XLSX）→ 提取评分/补贴/利润 v2 新洞察</td></tr>
+<tr><td>④</td><td><span class="tag t-red">L1</span></td><td>工具策略把关</td><td>edit 写报告部件（L1 快照级）；脚本运行无需审批；delete 操作走 trash</td></tr>
+<tr><td>⑤</td><td><span class="tag t-blue">L3</span></td><td>质量保障</td><td>merge_report.py 结构校验 + verify_numbers.py 83 项数值断言（全 PASS）+ Edge headless 渲染 probe（17/17 图表）</td></tr>
+<tr><td>⑥</td><td><span class="tag t-orange">L4</span></td><td>交付与发布</td><td>报告存指定目录（版本 V2）→ 可选 GitHub Pages 发布 → 截图预览 + 汇报</td></tr>
+</table>
+<div class="note">一次任务 = 6 个动作 × 贯穿 5 层；模型（L0）全程驱动：理解需求→选技能→调工具→验结果→写记忆。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s5">五、关键路径速查</h2>
+<div class="card">
+<table>
+<tr><th>用途</th><th>路径</th></tr>
+<tr><td>工作区根</td><td class="c">C:\Users\Oo\.openclaw\workspace\</td></tr>
+<tr><td>长期记忆</td><td class="c">C:\Users\Oo\.openclaw\workspace\MEMORY.md</td></tr>
+<tr><td>每日记忆</td><td class="c">C:\Users\Oo\.openclaw\workspace\memory\</td></tr>
+<tr><td>规则体系</td><td class="c">C:\Users\Oo\.openclaw\workspace\rules\</td></tr>
+<tr><td>核心技能</td><td class="c">C:\Users\Oo\.openclaw\workspace\skills\waimai-diagnose\、skills\analysis-framework\</td></tr>
+<tr><td>Python 环境</td><td class="c">C:\Users\Oo\Desktop\.venv\Scripts\python.exe</td></tr>
+<tr><td>数据根目录</td><td class="c">D:\邓超今\临时数据源\OneDrive\桌面\双平台数据\</td></tr>
+<tr><td>报告存放</td><td class="c">D:\邓超今\临时数据源\OneDrive\桌面\指定生成文件存放\</td></tr>
+<tr><td>报告发布站</td><td class="c">https://285736243-boop.github.io/hsyh-reports/</td></tr>
+<tr><td>Power BI 文件</td><td class="c">D:\code\4月15 - 副本.pbix</td></tr>
+<tr><td>OpenClaw 文档</td><td class="c">C:\Users\Oo\AppData\Roaming\npm\node_modules\openclaw\docs\</td></tr>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s6">六、可观测性 & 调试指南</h2>
+<div class="card" id="nav-debug">
+<h3>6.1 日志与状态</h3>
+<table>
+<tr><th>用途</th><th>位置 / 命令</th></tr>
+<tr><td>Gateway 日志</td><td class="c">~/.openclaw/logs/gateway.log</td></tr>
+<tr><td>Agent 运行时日志</td><td class="c">~/.openclaw/logs/agent-&lt;id&gt;.log</td></tr>
+<tr><td>会话列表</td><td class="c">openclaw sessions list</td></tr>
+<tr><td>会话详情</td><td class="c">openclaw session inspect &lt;id&gt;</td></tr>
+<tr><td>实时 tail 日志</td><td class="c">openclaw logs --tail --follow</td></tr>
+<tr><td>健康检查（心跳）</td><td>Gateway WS 推送 <span class="mono">heartbeat</span> 事件，状态可通过 <span class="mono">/presence</span> 查询</td></tr>
+<tr><td>Compaction 触发条件</td><td>会话 Token 超过模型上下文 60% 时自动触发</td></tr>
+</table>
+</div>
+
+<div class="card" id="nav-tools">
+<h3>6.2 工具策略（Tool Policy）—— 权限分级明细</h3>
+<table>
+<tr><th>工具</th><th>默认级别</th><th>审批要求</th><th>可覆盖？</th></tr>
+<tr><td class="c">read</td><td>L0（直接）</td><td>无</td><td>—</td></tr>
+<tr><td class="c">write / edit</td><td>L1（快照）</td><td>自动备份原文件</td><td>是</td></tr>
+<tr><td class="c">exec（高风险命令）</td><td>L2（需确认）</td><td>人工审批（rm -rf / 等拦截）</td><td>是</td></tr>
+<tr><td class="c">exec（低风险命令）</td><td>L1（快照）</td><td>自动记录</td><td>是</td></tr>
+<tr><td class="c">apply_patch</td><td>L2（需确认）</td><td>快照备份 + 预览差异</td><td>是</td></tr>
+<tr><td class="c">web_fetch</td><td>L1（受限）</td><td>可请求外部 URL；当前网络环境境外站点超时（github 慢/huggingface 断）</td><td>否</td></tr>
+<tr><td class="c">web_search</td><td>L1（受限）</td><td>搜索结果不自动执行</td><td>否</td></tr>
+<tr><td class="c">sessions_spawn</td><td>L0（直接）</td><td>记录子会话关系</td><td>—</td></tr>
+<tr><td class="c">cron / schedule</td><td>L1（快照）</td><td>自动保存任务定义</td><td>是</td></tr>
+</table>
+<div class="note" style="margin-top:10px">
+<strong>🔒 红线（R6）：</strong> 密钥不写明文 · 删除先 trash · 外发需确认 · 沙箱执行高风险命令
+</div>
+<div class="note">⚠️ 上表为实际使用观测整理（示意），非配置文件原文；真实权限以 <span class="mono">openclaw.json</span> 的 tool policy 与运行时的 approvals 为准。</div>
+</div>
+
+
+<!-- ============================================================ -->
+<h2 id="s7">七、配置与集成（模型 / 通道 / MCP）</h2>
+
+<div class="card">
+<h3>7.1 模型配置</h3>
+<table>
+<tr><th>项</th><th>值</th></tr>
+<tr><td>当前模型</td><td class="c">deepseek/deepseek-v4-flash（Flash-0731，1M 上下文，2500 并发）</td></tr>
+<tr><td>运行时版本</td><td class="c">OpenClaw 2026.7.1-2 (0790d9f) · Node v24.19.0 · Gateway 运行 13h56m</td></tr>
+<tr><td>模型成本配置</td><td class="c">input ¥0.28 / output ¥0.42 / cache读 ¥0.028（per 1M tokens，openclaw.json）</td></tr>
+<tr><td>会话实测</td><td class="c">本会话(11h)：24k tokens（7.8k入/16k出）· 成本 $0.01 · 缓存命中97%(241k) · 上下文260k/1.0M(26%)</td></tr>
+<tr><td>备用模型</td><td class="c">deepseek-v4-pro（Pro-0813，500 并发）</td></tr>
+<tr><td>API 格式</td><td class="c">OpenAI 兼容 https://api.deepseek.com（Anthropic 格式 /anthropic）</td></tr>
+<tr><td>别名</td><td class="c">deepseek-chat / deepseek-v4-flash（旧 deepseek-chat/reasoner 已停用 404）</td></tr>
+<tr><td>切换方式</td><td><span class="mono">/model</span> 命令或 session_status model override</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>7.2 通道（Messaging Surfaces）</h3>
+<table>
+<tr><th>通道</th><th>说明</th></tr>
+<tr><td class="c">WebChat</td><td>当前正在使用的会话通道（webchat 直连）</td></tr>
+<tr><td class="c">Telegram / Slack / Discord / Signal / iMessage / WhatsApp</td><td>Gateway 可承载的多通道，均走同一 WS API（18789）</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>7.3 MCP 服务器（外部能力接入）</h3>
+<table>
+<tr><th>MCP</th><th>接入方式</th><th>提供能力</th></tr>
+<tr><td class="c">powerbi-modeling-mcp</td><td>node index.js --read-write --compatibility=powerbi（0.5.0-beta.12）</td><td>模型/表/列/度量值/关系/计算组/DAX查询/安全角色/文化翻译 全量 CRUD</td></tr>
+<tr><td class="c">mcp-stata</td><td>STATA_PATH 环境变量 + pystata</td><td>Stata MP 18 统计分析套件（20 技能）</td></tr>
+<tr><td class="c">记忆检索</td><td>内置（FTS-only 模式）</td><td>memory_search / memory_get：MEMORY.md + 每日日志 + 会话转录语义索引</td></tr>
+<tr><td class="c">Power BI SQLite 直改</td><td>AnalysisServicesWorkspaces\*.sqlitedb</td><td>MCP 不响应时直接改模型元数据（改后需重启 Power BI）</td></tr>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s8">八、🚧 已知缺口 & 演进方向</h2>
+<div class="card">
+<div class="todo-item">
+<span class="marker">⬜</span>
+<span class="desc"><b>记忆向量化检索</b> — 当前为全文搜索（grep 风格），无语义检索能力</span>
+<span class="meta">优先级：高</span>
+</div>
+<div class="todo-item">
+<span class="marker">⬜</span>
+<span class="desc"><b>多 Agent 协作拓扑</b> — 当前为单 Agent 串行处理，无并行/分工机制</span>
+<span class="meta">优先级：中</span>
+</div>
+<div class="todo-item">
+<span class="marker">⬜</span>
+<span class="desc"><b>Power BI MCP 与 SQLite 直改一致性保障</b> — 双写可能不同步，需事务或锁机制</span>
+<span class="meta">优先级：高</span>
+</div>
+<div class="todo-item">
+<span class="marker">⬜</span>
+<span class="desc"><b>技能自动发现与热加载</b> — 目前需重启 Gateway 才能识别新技能</span>
+<span class="meta">优先级：中</span>
+</div>
+<div class="todo-item">
+<span class="marker">✅</span>
+<span class="desc"><b>报告数值断言（83项）</b> — 已完成，作为质量保障基线</span>
+<span class="meta">状态：已落地</span>
+</div>
+<div class="todo-item">
+<span class="marker">⬜</span>
+<span class="desc"><b>跨会话记忆关联</b> — 当前每次会话独立，无法自动关联历史相似议题</span>
+<span class="meta">优先级：低</span>
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<h2 id="s9">九、📜 变更记录（Changelog）</h2>
+<div class="card">
+<table>
+<tr><th>版本</th><th>日期</th><th>变更内容</th></tr>
+<tr><td class="c">V1</td><td>2026-08-14 14:5x</td><td>初版：5层架构图 + 5部分文档</td></tr>
+<tr><td class="c">V1.1</td><td>2026-08-14 14:58</td><td>工具箱化（老大哥改造）：快速导航/粘性目录/可观测性/工具策略表/记忆检索/演进清单</td></tr>
+<tr><td class="c">V1.2</td><td>2026-08-14 15:30</td><td>修正工具策略表（web_fetch描述/以实际policy为准）· 4.3数据流实例 · 七、配置与集成章 · 打印样式 · 八章结构</td></tr>
+<tr><td class="c">V3</td><td>2026-08-14 15:22</td><td>织入 P1 架构短板 9 项落地（healthcheck/hash-datasource/口径库/topics/漂移告警/发布回滚/服务脚本/技能TSV）；新增 3.7 运维与健康体系小节</td></tr>
+<tr><td class="c">V2</td><td>2026-08-14 15:15</td><td><b>P0 数据硬伤修正</b>：技能数统一为5,069（原4540/3545矛盾）· 规则编号补R2/R5/R7/R8预留 · 称呼规则标注单一来源；<b>P2 运行时数据</b>：版本2026.7.1-2/模型成本/会话实测；新增 changelog 章节</td></tr>
+</table>
+<div class="note">P1 架构短板（healthcheck.ps1/hash-datasource.py/口径库/漂移告警/发布回滚/技能盘点TSV/服务注册脚本/记忆topics）已落地 scripts/ 与 knowledge/，见工作区。</div>
+</div>
+
+<!-- ============================================================ -->
+<div class="footer">
+OpenClaw Agent 底层架构导览 V3 ｜ 运行时数据来自官方文档 + session_status 实测 ｜ 工作区数据为实时盘点（2026-08-14 15:22）｜ 文件自包含，Edge 打开，支持打印/导出PDF<br>
+<strong>版本沿革：</strong> V1 → V1.1（工具箱化）→ V1.2（数据流/配置章/打印）→ V2（P0修正+P2数据）→ <strong>V3</strong>（P1运维资产9项织入）
+</div>
+
+</div>
+</body>
+</html>
