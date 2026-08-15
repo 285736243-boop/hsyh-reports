@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>平台资料分析架构与模型提炼（补充版）</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: #F8FAFC; color: #1E293B; margin: 0; padding: 24px; line-height: 1.7; }
+.container { max-width: 1400px; margin: 0 auto; }
+h1 { font-size: 28px; color: #0F172A; border-bottom: 5px solid #2563EB; padding-bottom: 14px; }
+h2 { font-size: 22px; color: #0F172A; border-left: 6px solid #2563EB; padding-left: 14px; margin-top: 40px; background: linear-gradient(90deg, #DBEAFE 0%, transparent 100%); padding-top: 8px; padding-bottom: 8px; }
+h3 { font-size: 18px; color: #1E40AF; margin-top: 24px; padding-bottom: 4px; border-bottom: 2px dashed #93C5FD; }
+.subtitle { color: #64748B; font-size: 14px; margin-bottom: 24px; }
+.box { background: white; border-radius: 10px; padding: 20px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #E2E8F0; }
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-size: 13px; }
+th { background: #1E40AF; color: white; padding: 10px 8px; text-align: center; }
+td { padding: 8px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:hover { background: #F1F5F9; }
+.code { background: #1E293B; color: #E2E8F0; padding: 16px; border-radius: 8px; font-family: Consolas, monospace; font-size: 12px; margin: 12px 0; white-space: pre-wrap; }
+.insight { background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%); border-left: 5px solid #2563EB; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+.warning { background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border-left: 5px solid #F59E0B; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+.bad { background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%); border-left: 5px solid #EF4444; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+.success { background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%); border-left: 5px solid #10B981; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-blue { background: #DBEAFE; color: #1E40AF; }
+.tag-green { background: #D1FAE5; color: #065F46; }
+.tag-orange { background: #FED7AA; color: #9A3412; }
+.tag-red { background: #FEE2E2; color: #991B1B; }
+.footer { margin-top: 50px; padding: 24px; text-align: center; color: #94A3B8; font-size: 12px; border-top: 2px solid #E2E8F0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>平台资料分析架构与模型提炼</h1>
+<div class="subtitle">补充版 | 更新日期：2026-08-06 | 来源：39个文件深度解读+2份核心复盘报告</div>
+
+<h2>一、已提炼的15大分析模型总览</h2>
+
+<div class="box">
+<table>
+  <thead><tr><th>序号</th><th>模型名称</th><th>来源文件</th><th>核心用途</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><b>GMV拆解模型</b></td><td>美团商服报告</td><td>诊断GMV下降的5因子归因</td></tr>
+    <tr><td>2</td><td><b>BETTER人群资产模型</b></td><td>BETTER培训</td><td>6阶段人群生命周期评估</td></tr>
+    <tr><td>3</td><td><b>复盘6层结构</b></td><td>所有复盘报告</td><td>标准月报/季报/年报模板</td></tr>
+    <tr><td>4</td><td><b>5维度红色预警</b></td><td>美团商服报告</td><td>问题识别和预警</td></tr>
+    <tr><td>5</td><td><b>店铺分11项指标</b></td><td>BETTER培训</td><td>门店健康度评分</td></tr>
+    <tr><td>6</td><td><b>营销月历8维模板</b></td><td>11个月历文件</td><td>活动策划标准模板</td></tr>
+    <tr><td>7</td><td><b>招商S/A/B/C分级</b></td><td>月历+神券节</td><td>活动门槛和资源匹配</td></tr>
+    <tr><td>8</td><td><b>点金"5看"诊断</b></td><td>点金推广培训</td><td>推广前数据诊断</td></tr>
+    <tr><td>9</td><td><b>颜色编码预警规则</b></td><td>美团+淘宝通用</td><td>红色/黄色/绿色诊断</td></tr>
+    <tr><td>10</td><td><b>四象限诊断法</b><span class="tag tag-blue">新</span></td><td>淘宝商业化复盘</td><td>门店/城市ROI诊断</td></tr>
+    <tr><td>11</td><td><b>流量健康度模型</b><span class="tag tag-blue">新</span></td><td>淘宝商业化复盘</td><td>自然vs广告流量结构评估</td></tr>
+    <tr><td>12</td><td><b>广告TR/ROI模型</b><span class="tag tag-blue">新</span></td><td>淘宝商业化复盘</td><td>广告投放效率评估</td></tr>
+    <tr><td>13</td><td><b>品牌vs品类对标模型</b><span class="tag tag-blue">新</span></td><td>所有复盘报告</td><td>市场份额和竞争力判断</td></tr>
+    <tr><td>14</td><td><b>超会渗透率模型</b><span class="tag tag-blue">新</span></td><td>品牌季度数据复盘</td><td>会员体系健康度评估</td></tr>
+    <tr><td>15</td><td><b>月度营销日历模型</b><span class="tag tag-blue">新</span></td><td>品牌季度数据复盘</td><td>品牌+平台联动节奏</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>二、四象限诊断法（新增）</h2>
+
+<div class="box">
+<h3>2.1 四象限模型定义</h3>
+<div class="code">       高转化率
+          ↑
+   第二象限  │  第一象限
+  (低消耗高转化) │ (高消耗高转化)
+          │
+ ─────────┼─────────→ 高消耗
+          │
+   第三象限  │  第四象限
+  (低消耗低转化) │ (高消耗低转化)
+          ↓
+       低转化率</div>
+</div>
+
+<div class="insight">
+<h4>2.2 四象限运营策略</h4>
+<ul>
+  <li><b>第一象限（高消耗高转化）</b>：<span class="tag tag-green">加码投放</span> 标杆门店，复刻成功经验</li>
+  <li><b>第二象限（低消耗高转化）</b>：<span class="tag tag-green">加大投入</span> 潜力门店，增加曝光</li>
+  <li><b>第三象限（低消耗低转化）</b>：<span class="tag tag-orange">诊断整改</span> 营销活动/菜品/装修问题</li>
+  <li><b>第四象限（高消耗低转化）</b>：<span class="tag tag-red">降低出价</span> 调整策略或暂停投放</li>
+</ul>
+</div>
+
+<div class="box">
+<h3>2.3 煌上煌实际案例（TOP3城市）</h3>
+<table>
+  <thead><tr><th>城市</th><th>ROI</th><th>vs品类</th><th>象限</th><th>建议</th></tr></thead>
+  <tbody>
+    <tr><td>南昌</td><td>4.72</td><td>-49.62%</td><td>第二象限</td><td>加码投放</td></tr>
+    <tr><td>赣州</td><td>4.06</td><td>-67.81%</td><td>第二象限</td><td>加大投入</td></tr>
+    <tr><td>深圳</td><td>4.49</td><td>-51.19%</td><td>第二象限</td><td>加码投放</td></tr>
+    <tr style="background:#FEE2E2;"><td>海口</td><td>2.14</td><td>-85.33%</td><td>第四象限</td><td>降低出价</td></tr>
+    <tr style="background:#FEE2E2;"><td>广州</td><td>1.80</td><td>-75.94%</td><td>第四象限</td><td>调整策略</td></tr>
+    <tr style="background:#FEE2E2;"><td>东莞</td><td>2.88</td><td>-78.66%</td><td>第四象限</td><td>暂停投放</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>三、流量健康度模型（新增）</h2>
+
+<div class="box">
+<h3>3.1 流量结构评估公式</h3>
+<div class="code">整体曝光 = 自然曝光 + 广告曝光
+         ↓                  ↓
+   健康占比 77.37%    健康占比 22.63%
+         ↓                  ↓
+   分为：搜索/推荐/自然    分为：斗金/优享大牌/搜索展位
+
+流量健康度判断：
+  自然占比 > 70% → 健康（品牌力强）
+  自然占比 50-70% → 正常（广告辅助）
+  自然占比 < 50% → 不健康（过度依赖广告）</div>
+</div>
+
+<div class="insight">
+<h4>3.2 煌上煌2023年流量结构</h4>
+<ul>
+  <li><b>整体曝光</b>：20,294万次</li>
+  <li><b>自然曝光</b>：15,702万（77.37%）<span class="tag tag-green">健康</span></li>
+  <li><b>广告曝光</b>：4,592万（22.63%）</li>
+  <li>广告曝光中：<b>斗金推广 84.50%</b> + 优享大牌 15.47%</li>
+  <li>建议：<b>强化搜索+推荐曝光获取</b>，目前搜索仅占8.19%</li>
+</ul>
+</div>
+
+<h2>四、广告TR/ROI模型（新增）</h2>
+
+<div class="box">
+<h3>4.1 核心广告指标定义</h3>
+<table>
+  <thead><tr><th>指标</th><th>公式</th><th>含义</th><th>健康值</th></tr></thead>
+  <tbody>
+    <tr><td><b>广告TR</b></td><td>广告净消耗/品牌净GMV</td><td>广告投入强度</td><td>3-5%</td></tr>
+    <tr><td><b>ROI</b></td><td>广告实收GMV/广告净消耗</td><td>投放回报率</td><td>≥3</td></tr>
+    <tr><td><b>广告渗透率</b></td><td>日均投放门店/日均动销门店</td><td>投放覆盖度</td><td>20-30%</td></tr>
+    <tr><td><b>日店均消耗</b></td><td>日均消耗/日均投放门店</td><td>单店投入强度</td><td>20-30元</td></tr>
+    <tr><td><b>PPC</b></td><td>净消耗/点击数</td><td>单次点击成本</td><td>0.6-0.8元</td></tr>
+    <tr><td><b>CTR</b></td><td>点击数/曝光数</td><td>点击率</td><td>5-8%</td></tr>
+    <tr><td><b>CVR</b></td><td>订单数/点击数</td><td>下单转化率</td><td>4-6%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box">
+<h3>4.2 煌上煌2023年广告数据</h3>
+<table>
+  <thead><tr><th>指标</th><th>数值</th><th>同比</th><th>诊断</th></tr></thead>
+  <tbody>
+    <tr><td>广告毛消耗</td><td>166.24万</td><td>+71.56%</td><td><span class="tag tag-green">增长</span></td></tr>
+    <tr><td>广告净消耗</td><td>154.50万</td><td>+114.06%</td><td><span class="tag tag-green">高增</span></td></tr>
+    <tr><td>广告净GMV</td><td>515.89万</td><td>+38.71%</td><td><span class="tag tag-green">增长</span></td></tr>
+    <tr><td>ROI</td><td>3.34</td><td>-35.20%</td><td><span class="tag tag-red">下降</span></td></tr>
+    <tr><td>广告TR</td><td>3.35%</td><td>+128.47%</td><td><span class="tag tag-orange">过高</span></td></tr>
+    <tr><td>广告渗透率</td><td>17.27%</td><td>vs 21.60%</td><td><span class="tag tag-orange">下降</span></td></tr>
+    <tr><td>日店均消耗</td><td>24.68元</td><td>+76.04%</td><td><span class="tag tag-green">提升</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="bad">
+<h4>4.3 核心诊断：ROI下降35%的根因</h4>
+<ul>
+  <li>ROI从5.14→3.34，下降35.20%</li>
+  <li>根因：<b>广告TR提升128%（从1.47%→3.35%）</b>，消耗增速（114%）远高于GMV增速（38.71%）</li>
+  <li>建议：优化投放策略，<b>调整产品结构</b>，降低低效门店投放</li>
+  <li>成熟老店 → 优享大牌-点击付费（品效合一）</li>
+  <li>新店 → 推广魔方（指定品牌爆品）</li>
+</ul>
+</div>
+
+<h2>五、品牌vs品类对标模型（新增）</h2>
+
+<div class="box">
+<h3>5.1 对标维度</h3>
+<table>
+  <thead><tr><th>维度</th><th>品牌数据</th><th>品类均值</th><th>差异</th><th>诊断</th></tr></thead>
+  <tbody>
+    <tr><td>广告曝光占比</td><td>22.63%</td><td>——</td><td>+6.63pt vs去年</td><td>曝光提升</td></tr>
+    <tr><td>广告实收GMV占比</td><td>11.20%</td><td>——</td><td>-5.66pt vs去年</td><td><span class="tag tag-red">效率下降</span></td></tr>
+    <tr><td>广告TR</td><td>3.35%</td><td>——</td><td>vs品类均值</td><td>判断投入强度</td></tr>
+    <tr><td>ROI</td><td>3.34</td><td>——</td><td>vs品类均值</td><td>判断投放效率</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="insight">
+<h4>5.2 品牌vs品类对标逻辑</h4>
+<ul>
+  <li><b>品牌增速 vs 品类增速</b>：品牌增速<品类增速 → 红色预警（市场份额下降）</li>
+  <li><b>品牌ROI vs 品类ROI</b>：品牌ROI<品类ROI → 投放效率低于行业</li>
+  <li><b>品牌TR vs 品类TR</b>：品牌TR>品类TR → 投入强度高于行业</li>
+  <li><b>品牌渗透率 vs 品类渗透率</b>：判断广告覆盖度</li>
+</ul>
+</div>
+
+<h2>六、超会渗透率模型（新增）</h2>
+
+<div class="box">
+<h3>6.1 超会（超级会员）健康度评估</h3>
+<div class="code">超会订单占比 = 超会订单数 / 总订单数
+  煌上煌：41%（健康水平）
+
+超会渗透率 = 开通超会门店数 / 总门店数
+  关闭超会的影响：
+  - 交易额下降22.70%
+  - 订单量下降30.20%
+  - 自营销力度下降8.00%
+  - 日均曝光下降32.90%
+  - P2（下单转化率）下降2.20%</div>
+</div>
+
+<div class="warning">
+<h4>6.2 超会关闭的连锁影响</h4>
+<ul>
+  <li>超会关闭 → <b>日均曝光下降32.90%</b>（流量断崖式下跌）</li>
+  <li>超会关闭 → <b>订单下降30.20%</b>（超会贡献订单量大）</li>
+  <li>超会关闭 → <b>P2（下单转化率）下降2.2pp</b>（转化效率下降）</li>
+  <li>结论：<b>超会是流量+转化+订单的三重保障</b>，必须保持开通</li>
+</ul>
+</div>
+
+<h2>七、月度营销日历模型（新增）</h2>
+
+<div class="box">
+<h3>7.1 品牌+平台联动节奏</h3>
+<table>
+  <thead><tr><th>类型</th><th>频次</th><th>内容</th><th>目的</th></tr></thead>
+  <tbody>
+    <tr><td><b>S级&A级大促</b></td><td>每月1-2次</td><td>平台主推活动</td><td>冲GMV</td></tr>
+    <tr><td><b>基础营销</b></td><td>常态</td><td>满减/减免配送费</td><td>基础转化</td></tr>
+    <tr><td><b>会员开卡礼</b></td><td>每月</td><td>新会员权益</td><td>拉新</td></tr>
+    <tr><td><b>超值推荐橱窗</b></td><td>常态</td><td>招牌/主题/人气菜品</td><td>曝光</td></tr>
+    <tr><td><b>超级会员</b></td><td>常态</td><td>红包+套餐</td><td>会员留存</td></tr>
+    <tr><td><b>满赠活动</b></td><td>每月</td><td>满额赠券</td><td>提升客单</td></tr>
+    <tr><td><b>新客活动</b></td><td>常态</td><td>新客立减/收藏红包</td><td>拉新</td></tr>
+    <tr><td><b>评价红包</b></td><td>常态</td><td>评价返现</td><td>口碑</td></tr>
+    <tr><td><b>品牌会员日</b></td><td>每周三</td><td>煌家卤味日0元吃</td><td>心智筑造</td></tr>
+    <tr><td><b>月度话题活动</b></td><td>每月</td><td>节日主题套餐</td><td>话题传播</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="insight">
+<h4>7.2 煌上煌"0元吃鸭头"钩子策略</h4>
+<ul>
+  <li><b>活动</b>：每周三 11:00-20:00 香卤鸭头0元吃</li>
+  <li><b>目的</b>：培养品牌自然流量+品牌记忆点，筑造用户心智</li>
+  <li><b>推广渠道</b>：店铺Banner + 品牌公众号 + 平台反圈流量</li>
+  <li><b>关键细节</b>：
+    <ul>
+      <li>Banner活动前一天设置</li>
+      <li>菜单类目设置品牌日专属类目，活动当天顶置</li>
+      <li>公众号提前1天推文宣传</li>
+      <li>活动菜品名保持一致，确保宣传统一性</li>
+      <li>品牌日菜品提前设置上线时间，自动上下线</li>
+      <li>菜品名称贴合主题，形成菜品记忆</li>
+      <li>品牌日是持续培养过程，建议坚持3-6个月再调整</li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<h2>八、广告产品矩阵对比（新增）</h2>
+
+<div class="box">
+<h3>8.1 淘宝闪购广告产品体系</h3>
+<table>
+  <thead><tr><th>产品</th><th>计费</th><th>特点</th><th>适用场景</th><th>煌上煌数据</th></tr></thead>
+  <tbody>
+    <tr style="background:#FEF3C7;">
+      <td><b>斗金推广</b></td>
+      <td>CPC</td>
+      <td>按点击付费</td>
+      <td>直接带动订单</td>
+      <td>消耗138万/ROI 3.35</td>
+    </tr>
+    <tr>
+      <td><b>优享大牌-点击付费</b></td>
+      <td>CPC</td>
+      <td>首页第一坑+按点击扣费</td>
+      <td>成熟商户每天投放</td>
+      <td>消耗5.5万/ROI 3.01</td>
+    </tr>
+    <tr>
+      <td><b>优享大牌-曝光付费</b></td>
+      <td>CPM</td>
+      <td>首页第一坑+保量</td>
+      <td>菜品上新/打爆</td>
+      <td>消耗2.1万/ROI 0.64</td>
+    </tr>
+    <tr>
+      <td><b>优选流量卡</b></td>
+      <td>包段</td>
+      <td>保量+多创意模板</td>
+      <td>品牌表达</td>
+      <td>——</td>
+    </tr>
+    <tr>
+      <td><b>搜索展位-品牌词CPT</b></td>
+      <td>CPT</td>
+      <td>未进店先触达</td>
+      <td>品牌心智渗透</td>
+      <td>——</td>
+    </tr>
+    <tr>
+      <td><b>搜索展位-品类词CPM</b></td>
+      <td>CPM</td>
+      <td>全品类搜索收割</td>
+      <td>获取新客增量</td>
+      <td>消耗0.1万/ROI 0.25</td>
+    </tr>
+    <tr>
+      <td><b>增量助手</b></td>
+      <td>CPC</td>
+      <td>智能投放</td>
+      <td>补充曝光</td>
+      <td>消耗0.16万/ROI 5.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="insight">
+<h4>8.2 广告产品选择策略</h4>
+<ul>
+  <li><b>成熟老店</b> → 优享大牌-点击付费（品效合一，进店成本有保障）</li>
+  <li><b>新店</b> → 推广魔方（指定品牌爆品推广）</li>
+  <li><b>菜品上新</b> → 优享大牌-曝光付费（保量模式，快速提升知名度）</li>
+  <li><b>品牌心智</b> → 搜索展位-品牌词CPT（精准触达搜索人群）</li>
+  <li><b>新客增量</b> → 搜索展位-品类词CPM（拦截同类目潜在购买人群）</li>
+  <li><b>日常投放</b> → 斗金推广（主力，占广告消耗94.68%）</li>
+</ul>
+</div>
+
+<h2>九、门店分层运营模型（新增）</h2>
+
+<div class="box">
+<h3>9.1 TOP3标杆门店（复刻对象）</h3>
+<table>
+  <thead><tr><th>排名</th><th>门店</th><th>ROI</th><th>广告客单价</th><th>广告TR</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>煌上煌酱鸭(万达星城店)</td><td><b>8.42</b></td><td>50.18</td><td>8.25%</td></tr>
+    <tr><td>2</td><td>煌上煌酱鸭(上海光启城店)</td><td><b>6.10</b></td><td>59.13</td><td>5.46%</td></tr>
+    <tr><td>3</td><td>煌上煌酱鸭(布吉大芬油画村店)</td><td><b>5.34</b></td><td>43.12</td><td>10.72%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box">
+<h3>9.2 末位3门店（诊断整改）</h3>
+<table>
+  <thead><tr><th>排名</th><th>门店</th><th>ROI</th><th>广告订单成本</th><th>诊断</th></tr></thead>
+  <tbody>
+    <tr style="background:#FEE2E2;"><td>1</td><td>煌上煌(太乙路店)</td><td><b>0.60</b></td><td>52.01元</td><td>暂停投放</td></tr>
+    <tr style="background:#FEE2E2;"><td>2</td><td>煌上煌酱鸭(直属海口海甸城)</td><td><b>0.60</b></td><td>70.74元</td><td>暂停投放</td></tr>
+    <tr style="background:#FEE2E2;"><td>3</td><td>煌上煌酱鸭(长沙万家丽店)</td><td><b>1.25</b></td><td>34.68元</td><td>调整策略</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>十、分维度数据流转链路</h2>
+
+<div class="box">
+<h3>10.1 完整数据流转架构</h3>
+<div class="code">[营销月历] ───────→ 品牌方参询 ──→ 招商签约
+    │                                    │
+    ↓                                    ↓
+[品牌月报] ←─── 平台数据 ←─── [活动执行]
+    │                                    │
+    ↓                                    ↓
+[诊断分析] ──── 5维度红色预警 ──→ [整改行动]
+    │                                    │
+    ↓                                    ↓
+[BETTER分] ←─── 人群资产评估 ──→ [会员体系]
+    │                                    │
+    ↓                                    ↓
+[点金推广] ──── 5看诊断 ──→ [出价调整]
+    │                                    │
+    ↓                                    ↓
+[店铺分] ──── 11项指标 ──→ [体验优化]
+    │                                    │
+    ↓                                    ↓
+[四象限诊断] ── 门店分层 ──→ [标杆复刻/末位整改]
+    │                                    │
+    ↓                                    ↓
+[总对总会议] ── 季度/年度 ──→ [合作框架升级]</div>
+</div>
+
+<h2>十一、核心公式速查表</h2>
+
+<div class="box">
+<table>
+  <thead><tr><th>指标</th><th>公式</th><th>用途</th></tr></thead>
+  <tbody>
+    <tr><td>GMV</td><td>曝光×访问转化×下单转化×单均价×频次</td><td>业务拆解</td></tr>
+    <tr><td>ROI</td><td>广告实收GMV/广告净消耗</td><td>投放效率</td></tr>
+    <tr><td>TR</td><td>广告净消耗/品牌净GMV</td><td>投入强度</td></tr>
+    <tr><td>广告渗透率</td><td>日均投放门店/日均动销门店</td><td>投放覆盖</td></tr>
+    <tr><td>日店均消耗</td><td>日均消耗/日均投放门店</td><td>单店投入</td></tr>
+    <tr><td>PPC</td><td>净消耗/点击数</td><td>单次点击成本</td></tr>
+    <tr><td>CTR</td><td>点击数/曝光数</td><td>点击率</td></tr>
+    <tr><td>CVR</td><td>订单数/点击数</td><td>下单转化率</td></tr>
+    <tr><td>广告客单价</td><td>广告GMV/广告订单数</td><td>客单价</td></tr>
+    <tr><td>广告订单成本</td><td>广告毛消耗/广告订单数</td><td>获客成本</td></tr>
+    <tr><td>广告GMV占比</td><td>广告GMV/品牌净GMV</td><td>广告贡献度</td></tr>
+    <tr><td>超会订单占比</td><td>超会订单/总订单</td><td>会员健康度</td></tr>
+    <tr><td>店铺分</td><td>Σ(各项指标×权重)</td><td>门店健康度</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>十二、后续需要请教的问题</h2>
+
+<div class="warning">
+<h4>12.1 待确认的6个深度问题</h4>
+<ol>
+  <li><b>美赢币膨胀机制</b>：T0-300万膨胀后500万（1.67x），T1-50万膨胀后85万（1.7x），T2-5万膨胀后8万（1.6x），<b>膨胀比例为何不同？是基于什么逻辑？</b></li>
+  <li><b>拼好饭"第二卖场"定位</b>：2.7亿低消费意愿用户如何转化为高价值用户？是否有专门的下沉产品策略？</li>
+  <li><b>BETTER分评分标准</b>：煌上煌新客→老客转化率仅16.7%，行业基准30-50%，<b>哪些运营动作能最有效提升E→T转化？</b></li>
+  <li><b>点金推广定向加价</b>：6个维度中"搜索加价"如何设置？哪些关键词最有效？</li>
+  <li><b>店铺分"高峰营业时长"</b>：推荐值是固定的还是按城市/品类不同？卤味品类的推荐值是多少？</li>
+  <li><b>京东秒送</b>：品牌合作4大收益中"政策支持"具体包含哪些？与美团/淘宝的政策差异在哪？</li>
+</ol>
+</div>
+
+<div class="success">
+<h4>12.2 已完整提炼的15大模型</h4>
+<ul>
+  <li>✅ 1. GMV拆解模型（5因子归因）</li>
+  <li>✅ 2. BETTER人群资产模型（6阶段漏斗）</li>
+  <li>✅ 3. 复盘6层结构（KPI→大盘→品牌→活动→诊断→规划）</li>
+  <li>✅ 4. 5维度红色预警（交易/供给/活动/体验/合规）</li>
+  <li>✅ 5. 店铺分11项指标（体验40%+服务25%+活动10%+基本信息25%）</li>
+  <li>✅ 6. 营销月历8维模板（名/时/级/源/品/象/货/材）</li>
+  <li>✅ 7. 招商S/A/B/C分级（S百万级→C万级）</li>
+  <li>✅ 8. 点金"5看"诊断（评分/转化/进店/新老客/时段）</li>
+  <li>✅ 9. 颜色编码预警（红=下降超10%/黄=下降5-10%/绿=健康）</li>
+  <li>✅ 10. 四象限诊断法（转化率×消耗，4类门店分层运营）</li>
+  <li>✅ 11. 流量健康度模型（自然vs广告占比，77%+22%健康）</li>
+  <li>✅ 12. 广告TR/ROI模型（TR 3-5%/ROI≥3健康）</li>
+  <li>✅ 13. 品牌vs品类对标（增速/ROI/TR/渗透率4维对标）</li>
+  <li>✅ 14. 超会渗透率模型（超会关闭→曝光-32.9%/订单-30.2%）</li>
+  <li>✅ 15. 月度营销日历模型（10种活动类型联动节奏）</li>
+</ul>
+</div>
+
+<div class="footer">
+报告日期：2026-08-06 | 来源：39个文件深度解读 | 分析方法：逐文件提取+模型归纳+案例验证
+</div>
+
+</div>
+</body>
+</html>
