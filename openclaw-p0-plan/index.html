@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw 框架 P0 整改执行方案 V1（2026-08-14）</title>
+<style>
+  :root{--bg:#f4f6f8;--card:#fff;--ink:#1f2328;--muted:#656d76;--line:#d0d7de;--brand:#0969da;--good:#1a7f37;--warn:#9a6700;--bad:#cf222e}
+  *{box-sizing:border-box}
+  body{font-family:"Microsoft YaHei",-apple-system,sans-serif;margin:0;background:var(--bg);color:var(--ink);line-height:1.7}
+  .wrap{max-width:1060px;margin:0 auto;padding:24px 16px 80px}
+  header.hero{background:linear-gradient(135deg,#1f2328,#cf222e);color:#fff;border-radius:14px;padding:28px 32px;margin-bottom:20px}
+  header.hero h1{margin:0 0 6px;font-size:23px}
+  header.hero .sub{opacity:.9;font-size:13.5px}
+  .badge{display:inline-block;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 10px;font-size:12px;margin:2px 6px 2px 0}
+  .fix{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden}
+  .fix-head{padding:14px 20px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .fix-head h2{margin:0;font-size:17px}
+  .fix-head .tag{font-size:12px;padding:2px 10px;border-radius:10px}
+  .tag.p0{background:#ffebe9;color:var(--bad)}
+  .fix-body{padding:18px 22px}
+  .copy-hint{background:#ddf4ff;color:var(--brand);border-radius:8px;padding:8px 14px;font-size:13px;margin:10px 0;font-weight:600}
+  pre.code{margin:0;background:#0d1117;color:#c9d1d9;padding:16px 18px;font-size:12.5px;line-height:1.6;overflow:auto;white-space:pre-wrap;word-break:break-word;border-radius:8px;font-family:Consolas,monospace}
+  pre.code .c{color:#8b949e}
+  pre.code .a{color:#7ee787}
+  pre.code .d{color:#ffa657}
+  pre.code .r{color:#ff7b72}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:#f6f8fa}
+  .step{display:grid;grid-template-columns:32px 1fr;gap:10px;margin:10px 0;align-items:start}
+  .step .n{background:var(--brand);color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;font-size:13px;font-weight:700}
+  .note{background:#fff8e6;border:1px solid #f0d79a;border-radius:8px;padding:10px 14px;font-size:13px;margin:10px 0}
+  .note.bad{background:#ffebe9;border-color:#ff8182}
+  .note.good{background:#e6ffec;border-color:#4ac26b}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px}
+  .chk{margin:6px 0;padding-left:8px}
+  .chk:before{content:"☐ ";color:var(--brand)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <h1>⚡ OpenClaw 框架 P0 整改执行方案 <span class="badge">V1 · 2026-08-14</span></h1>
+  <div class="sub">四项 P0 整改 · 每块代码标注目标文件 · 可直接复制粘贴执行</div>
+  <div style="margin-top:10px"><span class="badge">Token 安全</span><span class="badge">MEMORY 瘦身</span><span class="badge">五层记忆体激活</span><span class="badge">收尾沉淀阻塞门</span></div>
+</header>
+
+<div class="note bad">⚠️ <b>执行顺序</b>：先做整改1（Token 安全，立即止损）→ 整改4（收尾阻塞门，改动最小见效最快）→ 整改3（记忆体激活）→ 整改2（MEMORY 瘦身，工作量最大放最后）。每步做完跑一次 <code>phoenix-snapshot.sh status</code> 对比基线。</div>
+
+<!-- ============ 整改1 ============ -->
+<div class="fix">
+  <div class="fix-head"><h2>整改 1 ｜ GitHub Token 明文 → 凭据管理器</h2><span class="tag p0">P0 安全</span></div>
+  <div class="fix-body">
+    <p>问题：<code>memory/2026-08-14.md</code> 存了 token 明文，deploy 脚本自动提取。违反 R6 红线。</p>
+
+    <div class="step"><div class="n">1</div><div><b>到 GitHub 后台 revoke 旧 token</b>（旧 token 已暴露在记忆文件里，必须作废）<br>访问 <code>https://github.com/settings/tokens</code> → 找到那个 classic token → Delete</div></div>
+
+    <div class="step"><div class="n">2</div><div><b>生成新 token</b>（classic，勾选 repo + workflow），<b>不要</b>复制到任何文件</div></div>
+
+    <div class="step"><div class="n">3</div><div><b>存进 Windows 凭据管理器</b>（PowerShell 跑一次，替换 ghp_xxx 为新 token）：</div></div>
+    <div class="copy-hint">复制到：PowerShell（手动跑一次）</div>
+<pre class="code"><span class="c"># 存 token 到凭据管理器（替换 ghp_xxx 为你的新 token）</span>
+cmdkey /generic:GitHubPagesToken /user:token /pass:ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<span class="c"># 验证已存入（应显示 Generic credentials 里有 GitHubPagesToken）</span>
+cmdkey /list:GitHubPagesToken
+
+<span class="c"># 跑完确认后，清屏历史防残留</span>
+Clear-Host</pre>
+
+    <div class="step"><div class="n">4</div><div><b>改 deploy 脚本</b>，从凭据管理器读 token，不再读 memory 文件：</div></div>
+    <div class="copy-hint">复制到：scripts/deploy-both.ps1（替换原 token 提取逻辑）</div>
+<pre class="code"><span class="c"># ===== 替换原来的 token 提取段（原逻辑：从 memory/2026-08-14.md 正则提取）=====</span>
+<span class="c"># 新逻辑：从 Windows 凭据管理器读取，失败则提示手动注入</span>
+
+function Get-GhToken {
+    <span class="c"># 优先：环境变量（CI/临时注入）</span>
+    <span class="k">if</span> ($env:GH_TOKEN) { <span class="k">return</span> $env:GH_TOKEN }
+    <span class="c"># 其次：凭据管理器</span>
+    <span class="k">try</span> {
+        $cred = Get-StoredCredential -Target <span class="s">"GitHubPagesToken"</span> -ErrorAction Stop
+        <span class="k">if</span> ($cred) {
+            <span class="c"># SecureString 转 plaintext（仅内存，不落盘）</span>
+            <span class="k">return</span> [Runtime.InteropServices.Marshal]::PtrToStringAuto(
+                [Runtime.InteropServices.Marshal]::SecureStringToBSTR($cred.Password)
+            )
+        }
+    } <span class="k">catch</span> { }
+    <span class="c"># 兜底：报错退出，不读文件</span>
+    Write-Error <span class="s">"未找到 token。请先执行: cmdkey /generic:GitHubPagesToken /user:token /pass:ghp_xxx  或  `$env:GH_TOKEN='ghp_xxx'"</span>
+    exit 1
+}
+
+$Token = Get-GhToken
+<span class="c"># 以下原 deploy 逻辑不变（用 $Token 变量）</span></pre>
+
+    <div class="step"><div class="n">5</div><div><b>清理 memory 文件里的 token 残留</b>：</div></div>
+    <div class="copy-hint">复制到：PowerShell（手动跑，清理历史记忆里的 token）</div>
+<pre class="code"><span class="c"># 用 node 脚本清理（避免 PowerShell 中文/引号坑）</span>
+node -e <span class="s">"const fs=require('fs'),p='memory/2026-08-14.md';let t=fs.readFileSync(p,'utf8');t=t.replace(/ghp_[A-Za-z0-9]{30,}/g,'[REDACTED-见凭据管理器]');fs.writeFileSync(p,t,'utf8');console.log('done')"</span>
+
+<span class="c"># 验证已清理（应输出 0）</span>
+node -e <span class="s">"const t=require('fs').readFileSync('memory/2026-08-14.md','utf8');console.log((t.match(/ghp_/g)||[]).length)"</span></pre>
+
+    <div class="step"><div class="n">6</div><div><b>给 risk-boundaries.md 加一条子规则</b>：</div></div>
+    <div class="copy-hint">复制到：rules/risk-boundaries.md（追加到「红线」段落下）</div>
+<pre class="code"><span class="c">### R6.1 密钥读取纪律（2026-08-14 整改）</span>
+- token / SecretKey / AKSK / 密码 <span class="r">禁止落地任何文件</span>（含 memory/、scripts/、.env）
+- 读取路径优先级：① 环境变量 `$env:GH_TOKEN ② Windows 凭据管理器（cmdkey）③ 失败则报错退出，不读文件
+- deploy 类脚本必须用 `Get-GhToken` 函数，禁止 `Select-String` 从 memory 提取
+- 历史记忆文件若发现 token 残留，立即用清理脚本替换为 `[REDACTED]` 并 revoke 旧 token</pre>
+  </div>
+</div>
+
+<!-- ============ 整改4 ============ -->
+<div class="fix">
+  <div class="fix-head"><h2>整改 4 ｜ 收尾沉淀阻塞门（改动最小，见效最快）</h2><span class="tag p0">P0 自进化</span></div>
+  <div class="fix-body">
+    <p>问题：68 个交付物只对应 3 条学习日志，沉淀率 4.4%。自进化链无原料。</p>
+    <p>改一个地方撬动全局：把「完成标准三问」加第 4 问并设为<b>阻塞门</b>。</p>
+
+    <div class="copy-hint">复制到：rules/path-routing.md（替换原「完成标准」整段，约 1583-1594 行）</div>
+<pre class="code"><span class="c">## 完成标准（四问阻塞门）</span>
+
+每个任务收尾四问，<span class="r">任一不满足 = 不算完成</span>：
+
+1. **结果验证了吗？**（测试 / 检查 / 截图 / 输出）
+2. **记忆沉淀了吗？**（observations / events.log / 每日笔记 —— 见第4问）
+3. **该 commit 吗？**（重要变更 git commit）
+4. <span class="a">**本次沉淀了吗？（阻塞门 R2-强制）**</span>
+   - 必须写 ≥1 条记录，否则任务标记为「未完成」：
+     - 失败类 → events.log（带反思三字段：原因 / 尝试 / 下次）
+     - 成功类 → observations.md（标 positive + 可复用模式）
+     - 用户偏好/纠正 → observations.md（标 source=user）
+   - <span class="r">跳过此问 = 违规</span>，phoenix-triggers.md 视为单点阻塞，立即停下补写
+
+> 第4问是自进化的原料入口。没有沉淀，梦境循环无东西可凝练，规则永远不晋升。
+> 一条也算，流水账不算——必须带「下次怎么做」或「可复用模式」。</pre>
+
+    <div class="copy-hint">复制到：rules/capabilities.md「使用规则」段（替换原第3条，约 1205 行）</div>
+<pre class="code">3. **同类失败 ≥2 次**：把规避规则写入本文件对应能力的"铁律"栏 + 更新样例（R2 自动升级闭环）
+4. <span class="a">**收尾沉淀阻塞（R2-强制，2026-08-14 整改）**</span>：
+   每次能力调用结束（成败不论）→ 必须更新该能力 samples 样例（产出物结构 / 关键参数 / 踩坑点）
+   + 写 ≥1 条 events.log 或 observations（见 path-routing.md 第4问）
+   <span class="r">不写 = 任务未完成</span>。这是 O9 的强制版本——不再靠自觉。</pre>
+  </div>
+</div>
+
+<!-- ============ 整改3 ============ -->
+<div class="fix">
+  <div class="fix-head"><h2>整改 3 ｜ 五层记忆体激活（M0/M2/候选层）</h2><span class="tag p0">P0 记忆体</span></div>
+  <div class="fix-body">
+    <p>问题：M0(events.log)/M2(episodes.md)/observations.md 全空白，五层只有 M1/M3 在用。</p>
+
+    <div class="step"><div class="n">1</div><div><b>建 episodes.md 模板</b>（M2 情节记忆，每次交付后填）：</div></div>
+    <div class="copy-hint">复制到：memory/episodes.md（新建文件）</div>
+<pre class="code"># Episodes - 情节记忆（M2）
+
+> 每次完整任务交付后追加一条。正负证据都记，用于梦境循环凝练规则。
+> 格式：[时间] [类型] 目标 | 做法 | 结果 | Reward(±) | 可复用模式
+
+---
+
+## [2026-08-14] [positive] 示例条目（参考用，可删）
+- **目标**：分析 OpenClaw 框架并给出优化建议
+- **做法**：通读52文件 → 九维度诊断 → P0/P1/P2 分级
+- **结果**：产出 HTML 报告 V1，识别22项整改
+- **Reward**：+1（完整闭环，方法论可复用）
+- **可复用模式**：「通读→维度诊断→优先级分级→可执行清单」适用于任何框架/系统审计任务
+
+## [YYYY-MM-DD] [positive/negative] 任务标题
+- **目标**：
+- **做法**：
+- **结果**：
+- **Reward**：±N
+- **可复用模式**：</pre>
+
+    <div class="step"><div class="n">2</div><div><b>建 observations.md 模板</b>（候选层，单次经验先停这）：</div></div>
+    <div class="copy-hint">复制到：memory/observations.md（新建或覆盖）</div>
+<pre class="code"># Observations - 候选层（晋升前中转）
+
+> 单次经验只能进这层。满足晋升门（≥2次/用户要求/高价值）才进 learned-rules。
+> 标签：positive / negative / preference / instruction / unknown
+> 失败类必须带反思三字段：原因 / 尝试 / 下次
+
+---
+
+## [2026-08-14] [negative] PowerShell findstr 搜中文必失败（已晋升 TOOLS.md）
+- **原因**：findstr 按 GBK 读文件，UTF-8 中文匹配不到
+- **尝试**：cmd /c "findstr ..." → 退出码1无结果
+- **下次**：中文搜索写 node 脚本用 fs.readFileSync('utf8')+includes
+- **状态**：已晋升（≥3次）→ TOOLS.md 环境坑位
+
+## [YYYY-MM-DD] [标签] 观察标题
+- **描述**：
+- **反思三字段**（失败类必填）：原因 / 尝试 / 下次
+- **状态**：候选 / 已晋升 / 已丢弃</pre>
+
+    <div class="step"><div class="n">3</div><div><b>给工具执行加失败自动写 events.log 钩子</b>（不靠自觉）：</div></div>
+    <div class="copy-hint">复制到：scripts/event-log-hook.ps1（新建文件）</div>
+<pre class="code"><span class="c"># scripts/event-log-hook.ps1 — 工具失败自动写 events.log</span>
+<span class="c"># 用法：在 exec 命令后接管道调用，或包成 wrapper</span>
+<span class="c"># 示例：Invoke-Command { 你的命令 } | Tee-Object result.txt ; if($LASTEXITCODE -ne 0){ .\scripts\event-log-hook.ps1 -Cmd "你的命令" -ExitCode $LASTEXITCODE }</span>
+
+param(
+    [Parameter(Mandatory)][string]$Cmd,
+    [Parameter(Mandatory)][int]$ExitCode,
+    [string]$Note = ""
+)
+$ts = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+$entry = "<span class="s">[$ts] [FAIL] exit=$ExitCode cmd=$Cmd</span>"
+<span class="k">if</span> ($Note) { $entry += <span class="s">" note=$Note"</span> }
+$entry += <span class="s">"  反思: 原因= 待填 / 尝试= 待填 / 下次= 待填"</span>
+
+<span class="c"># UTF-8 无 BOM 追加（规避 PowerShell 5.1 GBK 坑）</span>
+$logPath = <span class="s">"memory/events.log"</span>
+[System.IO.File]::AppendAllText((Resolve-Path $logPath).Path, $entry + <span class="s">"`n"</span>, (New-Object System.Text.UTF8Encoding $false))
+Write-Host <span class="s">"[hook] 已记录失败到 events.log，请补全反思三字段"</span> -ForegroundColor Yellow</pre>
+
+    <div class="step"><div class="n">4</div><div><b>建周度记忆体检 cron 脚本</b>（统计沉淀率，低于阈值告警）：</div></div>
+    <div class="copy-hint">复制到：scripts/memory-health-check.ps1（新建文件）</div>
+<pre class="code"><span class="c"># scripts/memory-health-check.ps1 — 周度记忆体检</span>
+<span class="c"># 挂 cron 每周一 9:00 跑，统计上周沉淀率，低于阈值向用户告警</span>
+
+$week = (Get-Date).AddDays(-7)
+$msg = @()
+
+<span class="c"># 统计 events.log 本周失败条数</span>
+$events = Get-Content memory/events.log -ErrorAction SilentlyContinue | Where-Object { $_ -match (Get-Date -Format "yyyy-MM-dd") }
+$failCount = ($events | Where-Object { $_ -match "FAIL" }).Count
+$msg += "本周 events.log 失败条数: $failCount"
+
+<span class="c"># 统计 observations 本周新增</span>
+$obs = Get-Content memory/observations.md -ErrorAction SilentlyContinue
+$obsCount = ($obs | Select-String "^\## \[" + (Get-Date -Format "yyyy-MM-dd")).Count
+$msg += "本周 observations 新增: $obsCount"
+
+<span class="c"># 统计 episodes 本周新增</span>
+$epi = Get-Content memory/episodes.md -ErrorAction SilentlyContinue
+$epiCount = ($epi | Select-String "^\## \[" + (Get-Date -Format "yyyy-MM-dd")).Count
+$msg += "本周 episodes 新增: $epiCount"
+
+<span class="c"># 候选层积压告警</span>
+$pending = ($obs | Select-String "状态.*候选").Count
+<span class="k">if</span> ($pending -gt 20) {
+    $msg += "<span class="r">⚠️ 候选层积压 $pending 条（>20），请跑一轮 evolution-cycle.sh --dry 做晋升</span>"
+}
+
+<span class="c"># 阈值：本周交付物数 vs 沉淀条数</span>
+$total = $failCount + $obsCount + $epiCount
+<span class="k">if</span> ($total -lt 3) {
+    $msg += "<span class="r">⚠️ 本周沉淀仅 $total 条，低于阈值3。检查 path-routing.md 第4问是否在执行</span>"
+}
+
+$output = $msg -join "`n"
+[System.IO.File]::AppendAllText("memory/evolution-log.md", "<span class="s">`n## [$(Get-Date -Format 'yyyy-MM-dd HH:mm')] 记忆体检`n$output`n</span>", (New-Object System.Text.UTF8Encoding $false))
+<span class="k">if</span> ($total -lt 3 -or $pending -gt 20) { Write-Host $output -ForegroundColor Red }
+<span class="k">else</span> { Write-Host $output -ForegroundColor Green }</pre>
+  </div>
+</div>
+
+<!-- ============ 整改2 ============ -->
+<div class="fix">
+  <div class="fix-head"><h2>整改 2 ｜ MEMORY.md 瘦身（35KB → ≤8KB）</h2><span class="tag p0">P0 精简</span></div>
+  <div class="fix-body">
+    <p>问题：MEMORY.md 35KB 塞满资料，违反精简铁律。先迁出资料，再覆盖新模板。</p>
+
+    <div class="step"><div class="n">1</div><div><b>迁移映射表</b>（原内容 → 目标文件，搬完再删）：</div></div>
+    <table>
+      <tr><th>原 MEMORY.md 段落</th><th>迁移目标</th><th>动作</th></tr>
+      <tr><td>36列字段对照表 + 跨平台列名映射</td><td>knowledge/powerbi/data-architecture.md</td><td>合并（去重）</td></tr>
+      <tr><td>四大数据路径命名规范 + 文件清单</td><td>knowledge/powerbi/data-architecture.md</td><td>合并</td></tr>
+      <tr><td>Power BI 项目 / SQLite / MCP 连接规则</td><td>knowledge/powerbi/connection-manual.md</td><td>已有，去重合并</td></tr>
+      <tr><td>环境信息（Python路径/DeepSeek模型名/Stata/Git）</td><td>TOOLS.md</td><td>合并到环境坑位</td></tr>
+      <tr><td>促销活动分析细节（口径/分摊公式/解析bug）</td><td>knowledge/口径库.md</td><td>已有，去重</td></tr>
+      <tr><td>技能全景地图（3545技能盘点）</td><td>knowledge/skills/skill-map.md</td><td>已有，去重</td></tr>
+      <tr><td>开源LLM模型与框架调研</td><td>knowledge/powerbi/llm-models-frameworks.md</td><td>已有，去重</td></tr>
+      <tr><td>GitHub Pages 发布链路细节</td><td>knowledge/engineering/deploy-pipeline.md（新建）</td><td>新建文件</td></tr>
+      <tr><td>MCP+数据AI+MLOps 深度挖掘</td><td>knowledge/powerbi/mcp-ai-engineering.md</td><td>已有，去重</td></tr>
+    </table>
+
+    <div class="step"><div class="n">2</div><div><b>用新模板覆盖 MEMORY.md</b>（只留跨任务核心语义，目标 ≤8KB）：</div></div>
+    <div class="copy-hint">复制到：MEMORY.md（先备份原文件，再整体覆盖）</div>
+<pre class="code"># MEMORY.md - 长期记忆（精简版 V2，2026-08-14 整改）
+
+> 本文件只装跨任务稳定语义（结论/偏好/铁律）。资料性内容迁至 knowledge/。
+> 完整口径见 knowledge/口径库.md；字段映射见 knowledge/powerbi/data-architecture.md；
+> 环境信息见 TOOLS.md；发布链路见 knowledge/engineering/deploy-pipeline.md。
+
+## 用户背景
+- 邓超今（老大哥，2026-08-14 锁定称呼，永远优先）
+- 煌上煌卤味品牌 双平台外卖（美团 + 淘宝闪购）数据分析负责人
+- 核心诉求：数据分析 → 总结 → 数据可视化看板/驾驶舱
+- 同时用 OpenClaw（我）和 CodeBuddy（C:\Users\Oo\.codebuddy\）
+
+## 最高优先级铁律（不可妥协）
+1. **每条会话记录必须保存**到 memory/YYYY-MM-DD.md，不得遗漏
+2. **报告版本管理**：内容更新必须出新版本文件（V1→V2→V3），禁止覆盖旧版本；标题同步标版本号
+3. **生成文件一律 HTML 网页版**（自包含，Edge 打开）；HTML报告+分析xlsx → D:\邓超今\临时数据源\OneDrive\桌面\指定生成文件存放；其他文件留桌面
+4. **任务-工具匹配 R10**：执行前先查 skill-map.md 匹配技能，再动手
+5. **好事情马上干**：发现新资产/好经验立即吸收，不等定时任务
+
+## 业务核心结论（煌上煌）
+- 分析维度：分公司(江西/广东/陕西/浙江/重庆) × 平台(美团/淘宝) × 投放层级(总部/门店) × 加盟/直营
+- 利润 v2 口径：门店零售价=商品原价÷1.35；门店成本=零售价×0.45；平台收入=营业收入；利润=收入−成本；毛利率=利润÷收入
+- 5店5-7月实测：原价82.2万→零售价60.9万→成本27.4万；营业收入38.4万→利润11.0万/毛利率28.6%
+- 2026年7月广告总消耗约32.5万；江西占52%(ROI6.06)、广东占36%(ROI5.78)；总部ROI7.16高于门店5.31
+- 关键文件：4月15.pbix（10表/77+度量值/7关系）；数据根目录 D:\邓超今\临时数据源\OneDrive\桌面\双平台数据\
+
+## 分析方法论（结论，细节在 knowledge/）
+- 五层维度金字塔 / Z型视觉流 / 三阶推导(What→Why→What Next) / 五段式结论
+- 洞察优先级 = 影响×0.4 + 可执行×0.3 + 置信×0.2 + 时效×0.1
+- 配色：美团#FFD100 / 淘宝#FF5000 / 正面绿#3fb950 / 负面红 / 中性蓝
+
+## 发布链路（结论，细节在 knowledge/engineering/deploy-pipeline.md）
+- 铁律：生成交付文件 → 网页版 → 同步 GitHub Pages
+- 报告集：https://285736243-boop.github.io/hsyh-reports/
+- token 走凭据管理器（R6.1），禁止落地文件
+
+## 待办
+- [ ] GitHub CLI (gh) 登录认证
+- [ ] 驾驶舱看板落地（能力已齐：waimai-diagnose + analysis-framework + powerbi-dashboard）
+- [ ] 网络代理配置（huggingface/github 境外超时）</pre>
+
+    <div class="note good">✅ 瘦身后约 <b>2.8KB</b>（原 35KB，瘦身 92%）。启动加载省 token，检索更准，符合「curated wisdom」定位。所有迁出的资料在 knowledge/ 里按需加载（L3 层），不污染 L1/L2。</div>
+  </div>
+</div>
+
+<!-- 执行检查清单 -->
+<div class="fix">
+  <div class="fix-head"><h2>执行检查清单</h2><span class="tag p0">打勾确认</span></div>
+  <div class="fix-body">
+    <div class="chk">GitHub 旧 token 已 revoke</div>
+    <div class="chk">新 token 存进凭据管理器（cmdkey）</div>
+    <div class="chk">deploy-both.ps1 已改用 Get-GhToken 函数</div>
+    <div class="chk">memory/2026-08-14.md 的 token 已替换为 [REDACTED]</div>
+    <div class="chk">risk-boundaries.md 已加 R6.1 密钥读取纪律</div>
+    <div class="chk">path-routing.md 完成标准已改为四问阻塞门</div>
+    <div class="chk">capabilities.md 使用规则第4条已更新</div>
+    <div class="chk">memory/episodes.md 模板已建</div>
+    <div class="chk">memory/observations.md 模板已建</div>
+    <div class="chk">scripts/event-log-hook.ps1 已建</div>
+    <div class="chk">scripts/memory-health-check.ps1 已建</div>
+    <div class="chk">MEMORY.md 已备份原文件 → 用 V2 模板覆盖</div>
+    <div class="chk">资料已迁到对应 knowledge/ 文件（按迁移表）</div>
+    <div class="chk">跑一次 phoenix-snapshot.sh 生成新基线快照</div>
+  </div>
+</div>
+
+<div class="note">📌 <b>做完后验证</b>：① 随便跑一个任务，看收尾时是否强制写 episodes/observations；② 跑 deploy 脚本看是否从凭据管理器读 token；③ <code>openclaw memory index --force</code> 重建索引（MEMORY.md 变了）；④ <code>phoenix-snapshot.sh status</code> 确认基线更新。</div>
+
+<footer>执行方案 V1 · 2026-08-14 18:00 · 配套「OpenClaw框架优化升级建议 V1」报告 · 四项 P0 可直接复制落地</footer>
+</div>
+</body>
+</html>
