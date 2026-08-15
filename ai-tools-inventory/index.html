@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的 AI 工具与知识库资源清单</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f5f6fa; color:#2d3436; line-height:1.7; }
+  .container { max-width:1200px; margin:0 auto; padding:24px; }
+  .hero { background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%); color:#fff; padding:48px 36px; border-radius:16px; margin-bottom:28px; box-shadow:0 10px 30px rgba(26,26,46,.3); }
+  .hero h1 { font-size:30px; margin-bottom:10px; }
+  .hero .sub { opacity:.85; font-size:14px; }
+  .hero .stats { display:flex; gap:28px; margin-top:24px; flex-wrap:wrap; }
+  .hero .stat { text-align:center; }
+  .hero .stat .num { font-size:34px; font-weight:700; color:#00d4ff; }
+  .hero .stat .lbl { font-size:12px; opacity:.8; margin-top:2px; }
+  .section { background:#fff; border-radius:12px; padding:28px; margin-bottom:24px; box-shadow:0 2px 10px rgba(0,0,0,.06); }
+  .section h2 { font-size:20px; color:#1a1a2e; border-left:4px solid #00d4ff; padding-left:12px; margin-bottom:8px; }
+  .section .desc { color:#6c757d; font-size:13px; margin-bottom:18px; }
+  .card { border:1px solid #e9ecef; border-radius:10px; padding:18px; margin-bottom:14px; transition:.2s; }
+  .card:hover { box-shadow:0 4px 16px rgba(0,0,0,.08); border-color:#00d4ff; }
+  .card .title { font-size:16px; font-weight:700; color:#1a1a2e; margin-bottom:4px; }
+  .card .title .tag { display:inline-block; font-size:11px; padding:2px 8px; border-radius:10px; margin-left:8px; vertical-align:middle; }
+  .tag.core { background:#ffe0e6; color:#c41e3a; }
+  .tag.mcp { background:#e0f0ff; color:#0077cc; }
+  .tag.market { background:#e0ffe8; color:#1a8a3c; }
+  .tag.kb { background:#fff3d6; color:#b8791a; }
+  .card .meta { font-size:12px; color:#6c757d; margin-top:6px; }
+  .card .meta code { background:#f1f3f5; padding:1px 6px; border-radius:4px; font-size:11px; color:#e74c3c; }
+  .card .triggers { font-size:12px; color:#495057; margin-top:8px; }
+  .card .triggers b { color:#1a1a2e; }
+  table { width:100%; border-collapse:collapse; font-size:13px; margin:12px 0; }
+  th, td { padding:10px 12px; text-align:left; border-bottom:1px solid #e9ecef; }
+  th { background:#f8f9fa; color:#495057; font-weight:600; white-space:nowrap; }
+  tr:hover td { background:#f8f9fa; }
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .note { background:#e3f2fd; border-left:4px solid #2196f3; padding:12px 16px; border-radius:6px; margin:14px 0; font-size:13px; }
+  .note.green { background:#e8f5e9; border-color:#4caf50; }
+  .note.orange { background:#fff8e1; border-color:#ff9800; }
+  .footer { text-align:center; padding:24px; color:#6c757d; font-size:12px; }
+  .howto { counter-reset:step; }
+  .howto li { list-style:none; position:relative; padding:8px 0 8px 36px; font-size:14px; }
+  .howto li::before { counter-increment:step; content:counter(step); position:absolute; left:0; top:8px; width:24px; height:24px; background:#1a1a2e; color:#fff; border-radius:50%; text-align:center; line-height:24px; font-size:12px; font-weight:700; }
+  @media print { .section { page-break-inside:avoid; } .hero { -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <h1>我的 AI 工具与知识库资源清单</h1>
+  <div class="sub">邓超今 · 煌上煌外卖运营分析体系 · 整理日期 2026-08-13</div>
+  <div class="stats">
+    <div class="stat"><div class="num">14</div><div class="lbl">核心自定义 Skill</div></div>
+    <div class="stat"><div class="num">5</div><div class="lbl">MCP 服务器</div></div>
+    <div class="stat"><div class="num">2</div><div class="lbl">插件市场（500+ Skill）</div></div>
+    <div class="stat"><div class="num">4</div><div class="lbl">知识库文件</div></div>
+    <div class="stat"><div class="num">16+</div><div class="lbl">配套工具</div></div>
+  </div>
+</div>
+
+<!-- 一、核心 Skill -->
+<div class="section">
+  <h2>一、核心自定义 Skill（14 个）</h2>
+  <div class="desc">这是最核心的资产，集中在 <code>C:\Users\Oo\.codebuddy\skills\</code> 目录下。每个 Skill 包含 SKILL.md 主指令 + references 知识库。</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="title">代码小白 <span class="tag core">核心</span></div>
+      <div class="meta">Power BI 全链路自动化 Skill</div>
+      <div class="triggers"><b>触发词：</b>检查、度量值、代码、函数、合并、看板、报告、可视化、页面、驾驶舱、方法论、管理框架、5W2H、PDCA、SWOT、AARRR、金字塔原理、SMART、波特五力、波士顿矩阵、安索夫</div>
+      <div class="meta">连接 Power BI → 优化 DAX 度量值 → 清理模型 → 生成 PBIR 看板 → 输出 PDF 报告。内置 25 大管理方法论知识库。</div>
+    </div>
+
+    <div class="card">
+      <div class="title">小白AI <span class="tag core">核心</span></div>
+      <div class="meta">日常办公效率 Skill 合集（48 个子 Skill）</div>
+      <div class="triggers"><b>触发词：</b>会议、邮件、简历、竞品、PR、CI、Notion、发票、周报、日报、OCR、文档解析、平台资料、开源调研、分析框架、复盘、诊断、优化执行、数据分析、外卖诊断</div>
+      <div class="meta">整合 ComposioHQ 的 awesome-codex-skills（1.5万⭐），自动关联记忆上下文，跨会话持久化。</div>
+    </div>
+
+    <div class="card">
+      <div class="title">分析框架 <span class="tag core">方法论</span></div>
+      <div class="meta">自有分析框架 - 数据到洞察的完整方法论</div>
+      <div class="triggers"><b>触发词：</b>分析框架、建模、看板设计、洞察、复盘、报告、维度设计、指标、结论推导</div>
+      <div class="meta">五层维度建模 + Z型视觉布局 + 三阶分析推导 + 五段式报告输出 + 四阶段闭环（分析→诊断→复盘→执行）。</div>
+    </div>
+
+    <div class="card">
+      <div class="title">分析模型 <span class="tag core">方法论</span></div>
+      <div class="meta">四大数据分析模型</div>
+      <div class="triggers"><b>触发词：</b>OSM、UJM、RFM、人货场、漏斗、留存、复购、转化路径、用户价值、客群分层、场景分析、渠道分析、商品分析</div>
+      <div class="meta">OSM目标策略度量 + UJM用户旅程 + RFM用户分层 + 人货场三维分析，以煌上煌外卖为案例。</div>
+    </div>
+
+    <div class="card">
+      <div class="title">chart-embed <span class="tag core">工具</span></div>
+      <div class="meta">图表本地嵌入工具</div>
+      <div class="triggers"><b>触发词：</b>图表不显示、CDN加载失败、离线查看、嵌入Chart.js</div>
+      <div class="meta">将 Chart.js 和 datalabels 嵌入 HTML，消除外部 CDN 依赖，确保报告离线可用。</div>
+    </div>
+
+    <div class="card">
+      <div class="title">ai-ppt-generate <span class="tag core">工具</span></div>
+      <div class="meta">百度智能 PPT 生成</div>
+      <div class="triggers"><b>用途：</b>根据主题/问题智能生成 PPT，支持自定义模板、图片/PDF/Word 素材</div>
+    </div>
+
+    <div class="card">
+      <div class="title">ppt-maker <span class="tag core">工具</span></div>
+      <div class="meta">专业级 PPT 一键生成</div>
+      <div class="triggers"><b>用途：</b>Markdown 创建幻灯片，支持自动图表、多主题、表格、感谢页</div>
+    </div>
+
+    <div class="card">
+      <div class="title">github <span class="tag core">工具</span></div>
+      <div class="meta">GitHub 全功能操作</div>
+      <div class="triggers"><b>用途：</b>仓库克隆/创建/提交/推送、PR管理、代码审查、Issue修复、仓库分析</div>
+    </div>
+
+    <div class="card">
+      <div class="title">tavily-search <span class="tag core">工具</span></div>
+      <div class="meta">Tavily 搜索引擎集成</div>
+      <div class="triggers"><b>用途：</b>web搜索、内容提取、实时新闻查询、事实验证（需 TAVILY_API_KEY）</div>
+    </div>
+
+    <div class="card">
+      <div class="title">summarize <span class="tag core">工具</span></div>
+      <div class="meta">智能内容摘要</div>
+      <div class="triggers"><b>用途：</b>长文本/文档/网页自动摘要，提取核心要点、关键词，自定义长度</div>
+    </div>
+
+    <div class="card">
+      <div class="title">memory-setup <span class="tag core">工具</span></div>
+      <div class="meta">持久化记忆配置</div>
+      <div class="triggers"><b>用途：</b>配置 MEMORY.md、每日日志、向量搜索，解决"金鱼脑"问题</div>
+    </div>
+
+    <div class="card">
+      <div class="title">skill-creator <span class="tag core">工具</span></div>
+      <div class="meta">Skill 创建向导</div>
+      <div class="triggers"><b>用途：</b>创建新的自定义 Skill，含 best practices 和模板</div>
+    </div>
+
+    <div class="card">
+      <div class="title">self-improving-agent <span class="tag core">工具</span></div>
+      <div class="meta">自我改进 Agent（含中文版）</div>
+      <div class="triggers"><b>用途：</b>自动分析工作记录、提炼改进点、优化自身能力</div>
+    </div>
+
+    <div class="card">
+      <div class="title">github（marketplace版）</div>
+      <div class="meta">oh-my-codebuddy 插件市场中的 GitHub 搜索</div>
+      <div class="triggers"><b>用途：</b>通过 grep_app MCP 搜索 GitHub 代码</div>
+    </div>
+  </div>
+</div>
+
+<!-- 二、MCP 服务器 -->
+<div class="section">
+  <h2>二、MCP 服务器（5 个）</h2>
+  <div class="desc">配置文件：<code>C:\Users\Oo\.codebuddy\mcp.json</code>。这些是连接外部系统/服务的桥梁。</div>
+  <table>
+    <thead><tr><th>名称</th><th>类型</th><th>功能</th><th>关键能力</th></tr></thead>
+    <tbody>
+      <tr><td><b>powerbi-modeling-mcp</b></td><td><span class="tag mcp">核心</span></td><td>Power BI 建模</td><td>连接Desktop实例、DAX度量值CRUD、关系/表/列管理、DAX查询、模型刷新（27个操作）</td></tr>
+      <tr><td><b>mcp-stata</b></td><td><span class="tag mcp">统计</span></td><td>Stata MP 18 统计</td><td>运行 Stata 命令、统计分析、回归建模（需 STATA_PATH）</td></tr>
+      <tr><td><b>supabase</b></td><td><span class="tag mcp">数据库</span></td><td>Supabase 云数据库</td><td>项目/表/迁移/SQL执行/Edge函数部署/分支管理</td></tr>
+      <tr><td><b>Todoist</b></td><td><span class="tag mcp">效率</span></td><td>任务管理</td><td>创建/查询/更新/删除/完成任务</td></tr>
+      <tr><td><b>grep_app</b></td><td><span class="tag mcp">搜索</span></td><td>GitHub 代码搜索</td><td>searchGitHub 跨仓库代码检索</td></tr>
+    </tbody>
+  </table>
+  <div class="note">💡 Power BI MCP 是核心，通过 <code>localhost:端口</code> 连接运行中的 Power BI Desktop 实例，或通过 ConnectFolder 连接 pbip 项目文件夹。</div>
+</div>
+
+<!-- 三、插件市场 -->
+<div class="section">
+  <h2>三、插件市场（500+ Skill）</h2>
+  <div class="desc">位于 <code>C:\Users\Oo\.codebuddy\plugins\</code>，提供海量现成 Skill。</div>
+  <table>
+    <thead><tr><th>市场</th><th>来源</th><th>内容</th><th>规模</th></tr></thead>
+    <tbody>
+      <tr><td><b>awesome-codex-skills</b></td><td>ComposioHQ（GitHub 1.5万⭐）</td><td>办公效率 + Composio 自动化（500+ 子 Skill）</td><td>超 500 个 Skill</td></tr>
+      <tr><td><b>codebuddy-plugins-official</b></td><td>官方市场</td><td>oh-my-codebuddy、supabase 等官方插件</td><td>多个官方插件</td></tr>
+    </tbody>
+  </table>
+  <div class="note orange">⚡ awesome-codex-skills 包含 Composio 集成的 500+ 自动化 Skill（Slack、Notion、Linear、Sentry、各类 SaaS API 自动化）。</div>
+</div>
+
+<!-- 四、知识库 -->
+<div class="section">
+  <h2>四、知识库与记忆</h2>
+  <div class="desc">持久化记忆，跨会话自动加载。</div>
+  <table>
+    <thead><tr><th>文件</th><th>路径</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td><b>MEMORY.md</b></td><td><code>C:\Users\Oo\Desktop\.codebuddy\memory\MEMORY.md</code></td><td>长期记忆：用户偏好、项目约定、技术决策、分析框架、数据概况</td></tr>
+      <tr><td><b>每日日志</b></td><td><code>...\memory\YYYY-MM-DD.md</code></td><td>按天记录工作成果、关键发现、修复记录</td></tr>
+      <tr><td><b>Skill references</b></td><td><code>各 skill 的 references\ 目录</code></td><td>Power BI连接指南、DAX优化、模型清理、OCR工具链、开源调研等专项知识</td></tr>
+      <tr><td><b>平台资料分析</b></td><td><code>C:\Users\Oo\Desktop\平台资料深度解析\</code></td><td>42份平台资料（美团/淘宝/京东）的深度解析结果</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 五、工具栈 -->
+<div class="section">
+  <h2>五、配套工具栈（15+）</h2>
+  <div class="desc">支撑 Skill 运行的外部工具。</div>
+  <table>
+    <thead><tr><th>工具</th><th>版本</th><th>用途</th></tr></thead>
+    <tbody>
+      <tr><td>Python</td><td>3.14.3</td><td>数据处理核心（pandas/numpy/matplotlib/openpyxl）</td></tr>
+      <tr><td>pbi-cli</td><td>3.10.10</td><td>Power BI CLI 工具（通过 COM 接口操作 Desktop）</td></tr>
+      <tr><td>PyMuPDF (fitz)</td><td>latest</td><td>PDF 渲染、文字提取</td></tr>
+      <tr><td>pdfplumber</td><td>latest</td><td>PDF 文字+表格提取</td></tr>
+      <tr><td>camelot-py</td><td>latest</td><td>PDF 表格精准提取</td></tr>
+      <tr><td>python-pptx</td><td>latest</td><td>PPTX 内容提取</td></tr>
+      <tr><td>img2table</td><td>latest</td><td>图片/PDF 表格检测</td></tr>
+      <tr><td>EasyOCR</td><td>1.7.2</td><td>中文 OCR 文字识别</td></tr>
+      <tr><td>Tesseract OCR</td><td>5.3.3</td><td>OCR 引擎（需中文语言包）</td></tr>
+      <tr><td>winrt OCR</td><td>3.2.1</td><td>Windows 内置 OCR（简体中文）</td></tr>
+      <tr><td>Pillow</td><td>12.3.0</td><td>图片处理</td></tr>
+      <tr><td>OpenCV</td><td>5.0.0</td><td>图像处理</td></tr>
+      <tr><td>pywin32</td><td>latest</td><td>Windows COM 接口（控制 Power BI）</td></tr>
+      <tr><td>Stata MP 18</td><td>18</td><td>统计分析与回归建模（通过 mcp-stata 集成）</td></tr>
+      <tr><td>Chart.js</td><td>4.4.1</td><td>交互式图表（嵌入 HTML 报告）</td></tr>
+      <tr><td>pandas</td><td>3.0.5</td><td>表格数据处理</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 六、如何分享 -->
+<div class="section">
+  <h2>六、如何分享给其他人使用</h2>
+  <ol class="howto">
+    <li><b>复制 Skill 文件夹</b>：把 <code>C:\Users\Oo\.codebuddy\skills\</code> 下需要的 Skill 文件夹（如 代码小白、小白AI、分析框架、分析模型）复制到对方的 <code>~\.codebuddy\skills\</code> 目录</li>
+    <li><b>复制 MCP 配置</b>：把 <code>mcp.json</code> 中需要的服务器配置复制到对方的 CodeBuddy MCP 设置</li>
+    <li><b>复制知识库</b>：把 <code>MEMORY.md</code> 和 references 文件复制，让对方了解项目上下文</li>
+    <li><b>安装配套工具</b>：对方需安装 Python 环境（pandas/pymupdf 等），Power BI Desktop 需本地安装</li>
+    <li><b>Power BI 数据文件</b>：需同步 <code>4月15.pbip</code> 项目和数据源 Excel 文件</li>
+  </ol>
+  <div class="note green">✅ 最简分享：只需分享「代码小白 + 分析框架 + 分析模型」3 个 Skill 文件夹，即可让对方获得 Power BI 自动化 + 完整分析方法论能力。</div>
+</div>
+
+<div class="footer">
+  我的 AI 工具与知识库资源清单 · 邓超今 · 2026-08-13 · 共 14 核心 Skill + 5 MCP + 2 插件市场 + 4 知识库 + 16 配套工具
+</div>
+
+</div>
+</body>
+</html>
