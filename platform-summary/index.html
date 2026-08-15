@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>平台资料学习总结分析报告（2026-08-05）</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+       background: #F8FAFC; color: #1E293B; margin: 0; padding: 24px; line-height: 1.7; }
+.container { max-width: 1400px; margin: 0 auto; }
+h1 { font-size: 30px; color: #0F172A; border-bottom: 5px solid #2563EB;
+      padding-bottom: 14px; margin-bottom: 10px; }
+h2 { font-size: 22px; color: #0F172A; border-left: 6px solid #2563EB;
+      padding-left: 14px; margin-top: 40px; margin-bottom: 18px;
+      background: linear-gradient(90deg, #DBEAFE 0%, transparent 100%); padding-top: 8px; padding-bottom: 8px; }
+h3 { font-size: 18px; color: #1E40AF; margin-top: 24px; padding-bottom: 4px; border-bottom: 2px dashed #93C5FD; }
+h4 { font-size: 15px; color: #1E40AF; margin-top: 18px; }
+.subtitle { color: #64748B; font-size: 14px; margin-bottom: 24px; }
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 16px 0; }
+.kpi { background: white; padding: 18px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        border-top: 4px solid #2563EB; }
+.kpi.orange { border-top-color: #FF6A00; }
+.kpi.green { border-top-color: #10B981; }
+.kpi.purple { border-top-color: #8B5CF6; }
+.kpi.red { border-top-color: #EF4444; }
+.kpi-label { color: #64748B; font-size: 12px; margin-bottom: 6px; }
+.kpi-value { font-size: 22px; font-weight: 700; color: #0F172A; }
+.kpi-sub { color: #94A3B8; font-size: 11px; margin-top: 4px; }
+.insight { background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+            border-left: 5px solid #2563EB; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+.insight h4 { color: #1E40AF; margin: 0 0 8px 0; }
+.insight ul { margin: 8px 0; padding-left: 22px; }
+.insight li { margin: 4px 0; }
+.warning { background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border-left: 5px solid #F59E0B; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+.success { background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+            border-left: 5px solid #10B981; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+.bad { background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+        border-left: 5px solid #EF4444; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+.framework-box { background: white; border-radius: 10px; padding: 20px; margin: 16px 0;
+                  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #E2E8F0; }
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px;
+        overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-size: 13px; }
+th { background: #1E40AF; color: white; padding: 10px 8px; text-align: center; }
+td { padding: 8px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:hover { background: #F1F5F9; }
+.code-block { background: #1E293B; color: #E2E8F0; padding: 16px; border-radius: 8px;
+              font-family: 'Consolas', monospace; font-size: 12px; margin: 12px 0;
+              overflow-x: auto; white-space: pre-wrap; }
+.matrix-cell { background: #F1F5F9; padding: 12px; border-radius: 6px; margin: 8px 0;
+                font-family: 'Consolas', monospace; font-size: 12px; }
+.platform-card { background: white; border-radius: 10px; padding: 18px; margin: 12px 0;
+                  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #2563EB; }
+.platform-card h4 { color: #1E40AF; margin: 0 0 8px 0; }
+.platform-card .meta { color: #64748B; font-size: 12px; margin-bottom: 8px; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px;
+        font-weight: 600; margin-right: 4px; }
+.tag-blue { background: #DBEAFE; color: #1E40AF; }
+.tag-green { background: #D1FAE5; color: #065F46; }
+.tag-orange { background: #FED7AA; color: #9A3412; }
+.tag-purple { background: #EDE9FE; color: #5B21B6; }
+.tag-red { background: #FEE2E2; color: #991B1B; }
+.footer { margin-top: 50px; padding: 24px; text-align: center; color: #94A3B8;
+          font-size: 12px; border-top: 2px solid #E2E8F0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>平台资料学习总结分析报告</h1>
+<div class="subtitle">资料来源：D:\邓超今\临时数据源\OneDrive\桌面\平台资料\ | 学习日期：2026-08-05 | 文件总数：42个</div>
+
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">美团外卖营销月历</div>
+    <div class="kpi-value">9个</div>
+    <div class="kpi-sub">5-10月 + 1月+6月 + 8月</div>
+  </div>
+  <div class="kpi orange">
+    <div class="kpi-label">淘宝闪购复盘报告</div>
+    <div class="kpi-value">7个</div>
+    <div class="kpi-sub">月报/季报/年报</div>
+  </div>
+  <div class="kpi green">
+    <div class="kpi-label">美团商服/复盘</div>
+    <div class="kpi-value">5个</div>
+    <div class="kpi-sub">商服报告+品牌月报</div>
+  </div>
+  <div class="kpi purple">
+    <div class="kpi-label">培训/方法论</div>
+    <div class="kpi-value">4个</div>
+    <div class="kpi-sub">BETTER+点金+总对总</div>
+  </div>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi red">
+    <div class="kpi-label">美团团购</div>
+    <div class="kpi-value">2个</div>
+    <div class="kpi-sub">品牌月报22年7月</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">京东秒送</div>
+    <div class="kpi-value">1个</div>
+    <div class="kpi-sub">餐饮业务介绍</div>
+  </div>
+  <div class="kpi orange">
+    <div class="kpi-label">淘宝赋能文档</div>
+    <div class="kpi-value">1个</div>
+    <div class="kpi-sub">品牌推广赋能25MB</div>
+  </div>
+  <div class="kpi green">
+    <div class="kpi-label">煌上煌品牌月历</div>
+    <div class="kpi-value">1个</div>
+    <div class="kpi-sub">9月全国KA活动</div>
+  </div>
+</div>
+
+<h2>一、四大平台定位与差异</h2>
+
+<div class="framework-box">
+<h3>1.1 平台矩阵图</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="width:12%">平台</th>
+      <th style="width:18%">定位</th>
+      <th style="width:18%">核心场景</th>
+      <th style="width:18%">KA商家策略</th>
+      <th style="width:18%">主推产品</th>
+      <th style="width:16%">资料密度</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>美团外卖</b><br/><span class="tag tag-orange">主战场</span></td>
+      <td>成熟期/全场景外卖</td>
+      <td>三餐/下午茶/夜宵/商超<br/>全时段+全品类</td>
+      <td>总对总+分区+连锁<br/>3层KA体系</td>
+      <td>点金推广+神券节<br/>品牌月+品类日</td>
+      <td>19个文件（45%）</td>
+    </tr>
+    <tr>
+      <td><b>淘宝闪购</b><br/><span class="tag tag-blue">增长极</span></td>
+      <td>成长期/补贴驱动</td>
+      <td>正餐+下午茶+夜宵<br/>偏向引流</td>
+      <td>C配/满减/门店新客<br/>3大招商活动类型</td>
+      <td>C配+满减+门店新客<br/>+超会+卡券+品质联盟</td>
+      <td>10个文件（24%）</td>
+    </tr>
+    <tr>
+      <td><b>美团团购</b><br/><span class="tag tag-purple">补充</span></td>
+      <td>到店+外卖券</td>
+      <td>代金券+套餐券<br/>引流转外卖</td>
+      <td>团购券+爆品套餐<br/>+到店自提</td>
+      <td>团购券包<br/>爆品5折</td>
+      <td>2个文件（5%）</td>
+    </tr>
+    <tr>
+      <td><b>京东秒送</b><br/><span class="tag tag-green">探索</span></td>
+      <td>即时零售/商超+餐饮</td>
+      <td>商超+餐饮+药品<br/>全品类</td>
+      <td>餐饮商家入驻<br/>+秒送业务</td>
+      <td>餐饮业务介绍</td>
+      <td>1个文件（2%）</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="insight">
+  <h4>核心洞察：平台定位差异</h4>
+<ul>
+  <li><b>美团外卖</b>：成熟运营期，月度营销活动密集（1/5/6/7/8/9/10月），招商版+商家版双线，KA商家有"总对总-分区-连锁"3级服务</li>
+  <li><b>淘宝闪购</b>：2025年5月新上线，2025年全年净GMV 3405万+12月单月1293万，处于<b>高速补贴扩张期</b>（平台补贴713万+211%/年）</li>
+  <li><b>美团团购</b>：作为外卖的补充渠道，主要承接"到店+代金券"流量</li>
+  <li><b>京东秒送</b>：仅1份业务介绍资料，说明煌上煌在该平台<b>尚未深度合作</b>，是潜在拓展方向</li>
+</ul>
+</div>
+
+<h2>二、平台营销月历框架（核心方法论）</h2>
+
+<div class="framework-box">
+<h3>2.1 美团外卖KA活动月历标准框架</h3>
+<p>以"美团外卖10月全国KA活动月历-商家版"和"12月C端招商要求概览"为典型范本，提炼出<b>6维标准框架</b>：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>维度</th>
+      <th>说明</th>
+      <th>示例（来自12月C端招商）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>① 活动名称</b></td>
+      <td>活动主题+卖点</td>
+      <td>17吃货节、五折天、冬季滋补、年末回馈</td>
+    </tr>
+    <tr>
+      <td><b>② 活动时间</b></td>
+      <td>具体日期+周期</td>
+      <td>12.14-12.17（4天），12.18-12.23（5天）</td>
+    </tr>
+    <tr>
+      <td><b>③ 投入资源</b></td>
+      <td>平台/商家/BD资源</td>
+      <td>百万级CPD/曝光坑位/推文/抖音/小红书/微博/微信</td>
+    </tr>
+    <tr>
+      <td><b>④ 招商品类（方向）</b></td>
+      <td>目标商家品类</td>
+      <td>卤味/中餐/西餐/饮品/特色小吃/小吃</td>
+    </tr>
+    <tr>
+      <td><b>⑤ 招商对象</b></td>
+      <td>商家资质要求</td>
+      <td>10家品牌全城曝光/全国连锁商家/连锁商家优先</td>
+    </tr>
+    <tr>
+      <td><b>⑥ 货品/服务要求</b></td>
+      <td>招商门槛+权益</td>
+      <td>折扣门槛5-7折，返佣比例3%-5%，坑位费S级5000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="framework-box">
+<h3>2.2 招商活动类型分级（S/A/B/C）</h3>
+<table>
+  <thead>
+    <tr>
+      <th>级别</th>
+      <th>投入</th>
+      <th>招商门槛</th>
+      <th>坑位费</th>
+      <th>典型活动</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background:#FEF3C7;">
+      <td><b>S级</b><span class="tag tag-red">头部</span></td>
+      <td>百万级</td>
+      <td>头部连锁/TOP商家</td>
+      <td>¥5000起</td>
+      <td>17吃货节、神券节、品类日</td>
+    </tr>
+    <tr style="background:#DBEAFE;">
+      <td><b>S+级</b></td>
+      <td>百万级+独家</td>
+      <td>独家赞助+曝光坑位</td>
+      <td>¥5500+</td>
+      <td>冬季滋补、年货节</td>
+    </tr>
+    <tr>
+      <td><b>A级</b></td>
+      <td>50万级</td>
+      <td>KA品牌</td>
+      <td>¥3000起</td>
+      <td>五折天、8月营销</td>
+    </tr>
+    <tr>
+      <td><b>B级</b></td>
+      <td>10万级</td>
+      <td>区域连锁</td>
+      <td>¥1000起</td>
+      <td>日常品类日</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="insight">
+<h4>2.3 月度营销活动排期规律</h4>
+<ul>
+  <li><b>核心节点</b>：春节/618/双11/12月年货节/暑期/冬季滋补，<b>5大必参S级活动</b></li>
+  <li><b>月度节奏</b>：每月1-2个S级+2-3个A级+若干日常B级</li>
+  <li><b>资源倾斜</b>：神券节、17吃货节、品类日是<b>流量高峰</b>，转化率最高</li>
+  <li><b>品牌匹配</b>：煌上煌作为卤味头部品牌，<b>17吃货节+冬季滋补+年货节</b>是最匹配的3大节点</li>
+</ul>
+</div>
+
+<h2>三、淘宝闪购招商玩法体系（学习重点）</h2>
+
+<div class="framework-box">
+<h3>3.1 6大招商活动类型（来自12月C端招商要求概览）</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>活动类型</th>
+      <th>定位</th>
+      <th>招商对象</th>
+      <th>货品要求</th>
+      <th>活动订单占比</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>C配</b><span class="tag tag-blue">头部</span></td>
+      <td>主推爆品+品牌曝光</td>
+      <td>每店4-5个S级货品</td>
+      <td>折扣15-20折/100元/5折</td>
+      <td>75.59%</td>
+    </tr>
+    <tr>
+      <td><b>满减</b><span class="tag tag-green">主流</span></td>
+      <td>凑单提升客单价</td>
+      <td>每个品牌40-25单</td>
+      <td>满40-25/100-15/50-10等</td>
+      <td>32.13%</td>
+    </tr>
+    <tr>
+      <td><b>门店新客</b><span class="tag tag-orange">拉新</span></td>
+      <td>新客转化</td>
+      <td>新店商家TOP20</td>
+      <td>新客专享价7-5折</td>
+      <td>9.92%</td>
+    </tr>
+    <tr>
+      <td><b>超会</b></td>
+      <td>会员体系</td>
+      <td>KA会员开通≥20</td>
+      <td>会员专享</td>
+      <td>5.94%</td>
+    </tr>
+    <tr>
+      <td><b>卡券</b></td>
+      <td>品牌券包</td>
+      <td>——</td>
+      <td>——</td>
+      <td>0.07%</td>
+    </tr>
+    <tr>
+      <td><b>品质联盟</b></td>
+      <td>品质背书</td>
+      <td>——</td>
+      <td>——</td>
+      <td>0.00%</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="insight">
+<h4>3.2 关键发现：C配+满减占99.6%</h4>
+<ul>
+  <li>煌上煌在淘宝闪购的活动订单中，<b>C配占75.59% + 满减占32.13%</b>（合计107.72%存在重叠），是<b>绝对主力</b></li>
+  <li>门店新客9.92%是<b>第3大引流工具</b>，但增长空间大（对比美团的拉新机制）</li>
+  <li>超会5.94%说明会员体系刚起步，<b>是未来增长点</b></li>
+  <li>卡券+品质联盟几乎为0，<b>这两个类型平台仍在测试</b>，提前布局有红利</li>
+</ul>
+</div>
+
+<div class="framework-box">
+<h3>3.3 12月C端活动排期表（招商模板）</h3>
+<table>
+  <thead>
+    <tr>
+      <th>活动名</th>
+      <th>时间</th>
+      <th>投入</th>
+      <th>品类</th>
+      <th>招商对象</th>
+      <th>货品要求</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>17吃货节</td>
+      <td>12.14-12.17</td>
+      <td>S级百万资源</td>
+      <td>奶茶果汁/咖啡/中餐/西餐/地方菜/小吃</td>
+      <td>17家BC+15个新商家</td>
+      <td>5-7折，每家4-5个货品</td>
+    </tr>
+    <tr>
+      <td>五折天</td>
+      <td>12.18-12.23</td>
+      <td>S级百万资源</td>
+      <td>冬季应季属性品类</td>
+      <td>每店至少5个S级</td>
+      <td>5折商品占50%</td>
+    </tr>
+    <tr>
+      <td>冬季滋补</td>
+      <td>12.18-12.23</td>
+      <td>S+百万级独家</td>
+      <td>滋补卤味/汤品</td>
+      <td>卤味头部商家</td>
+      <td>6折+冬季滋补货品</td>
+    </tr>
+    <tr>
+      <td>土年菜周</td>
+      <td>品牌活动</td>
+      <td>——</td>
+      <td>咖啡/饮品/西快</td>
+      <td>——</td>
+      <td>土年菜套餐</td>
+    </tr>
+    <tr>
+      <td>年末回馈</td>
+      <td>品类日</td>
+      <td>——</td>
+      <td>——</td>
+      <td>——</td>
+      <td>——</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="warning">
+<h4>3.4 下午茶/夜宵/早餐三大时段细分</h4>
+<ul>
+  <li><b>早餐时段</b> 04:00-10:00：咖啡/烘焙/便利/便当，<b>爆品3-7折</b></li>
+  <li><b>下午茶时段</b> 14:00-17:00：奶茶果汁/咖啡，<b>双人套餐+满减</b></li>
+  <li><b>夜宵时段</b> 20:00-04:00：地方菜/特色菜/夜宵烧烤，<b>多人套餐+大额满减</b></li>
+  <li><b>关键素材规格</b>：活动Banner 5-7档(纯色背景最优)、<b>SKU图3-3张</b>、动态SKU动图(500-1500kb)</li>
+</ul>
+</div>
+
+<h2>四、品牌复盘报告标准框架</h2>
+
+<div class="framework-box">
+<h3>4.1 复盘报告6层结构（来自"淘宝煌上煌季度复盘"和"美团商服报告"）</h3>
+
+<div class="code-block">┌─────────────────────────────────────────┐
+│ 第1层：核心数据摘要（KPI看板）            │
+│  - 净GMV / 日均净G / 同比环比            │
+│  - 有效订单 / 单店订单量                  │
+│  - 活动订单占比                          │
+├─────────────────────────────────────────┤
+│ 第2层：营销大盘解读（市场环境）            │
+│  - 平台整体GMV增长 / 行业趋势            │
+│  - 平台补贴政策 / 流量分配               │
+├─────────────────────────────────────────┤
+│ 第3层：品牌核心数据（横向对比）            │
+│  - 同品类TOP排名 / 同比/环比             │
+│  - 月度数据明细表                        │
+├─────────────────────────────────────────┤
+│ 第4层：活动复盘（细分到类型）              │
+│  - C配/满减/门店新客 各自效果            │
+│  - 活动订单占比 / 活动净G / 有效订单     │
+├─────────────────────────────────────────┤
+│ 第5层：诊断分析（问题识别）                │
+│  - 环比/同比红色高亮下降指标             │
+│  - 关键问题归因                          │
+├─────────────────────────────────────────┤
+│ 第6层：后续规划（下月建议）                │
+│  - 活动排期 / 货品建议 / 资源申请        │
+└─────────────────────────────────────────┘</div>
+</div>
+
+<div class="insight">
+<h4>4.2 关键复盘指标体系（12维度）</h4>
+<table>
+  <thead>
+    <tr>
+      <th>类别</th>
+      <th>指标</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3"><b>规模指标</b></td>
+      <td>净GMV</td>
+      <td>平台成交总额（剔除退款）</td>
+    </tr>
+    <tr>
+      <td>日均净G</td>
+      <td>GMV/天数，反映日均水平</td>
+    </tr>
+    <tr>
+      <td>有效订单数</td>
+      <td>实际成交订单数</td>
+    </tr>
+    <tr>
+      <td rowspan="3"><b>效率指标</b></td>
+      <td>日均有效订单数</td>
+      <td>订单效率</td>
+    </tr>
+    <tr>
+      <td>店均订单量</td>
+      <td>每店日均订单</td>
+    </tr>
+    <tr>
+      <td>客单价</td>
+      <td>GMV/订单数</td>
+    </tr>
+    <tr>
+      <td rowspan="3"><b>增长指标</b></td>
+      <td>GMV同比/环比</td>
+      <td>市场对比</td>
+    </tr>
+    <tr>
+      <td>日均G同比/环比</td>
+      <td>增速</td>
+    </tr>
+    <tr>
+      <td>订单数同比/环比</td>
+      <td>订单增长</td>
+    </tr>
+    <tr>
+      <td rowspan="3"><b>强度指标</b></td>
+      <td>店均订单量(同比/环比)</td>
+      <td>单店效率</td>
+    </tr>
+    <tr>
+      <td>平台总强度</td>
+      <td>商家活动强度占比</td>
+    </tr>
+    <tr>
+      <td>C补强度</td>
+      <td>平台补贴强度</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="framework-box">
+<h3>4.3 数据对比逻辑（4层对比）</h3>
+<table>
+  <thead>
+    <tr>
+      <th>对比维度</th>
+      <th>说明</th>
+      <th>用途</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>① 同比（YoY）</b></td>
+      <td>今年vs去年同月</td>
+      <td>长期趋势判断</td>
+    </tr>
+    <tr>
+      <td><b>② 环比（MoM）</b></td>
+      <td>本月vs上月</td>
+      <td>短期波动监控</td>
+    </tr>
+    <tr>
+      <td><b>③ 预算vs实际</b></td>
+      <td>投入产出对比</td>
+      <td>ROI评估</td>
+    </tr>
+    <tr>
+      <td><b>④ 同业对比</b></td>
+      <td>vs品类TOP10</td>
+      <td>市场份额</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="warning">
+<h4>4.4 颜色编码规则（重要）</h4>
+<ul>
+  <li><span style="color:red;font-weight:bold;">红色</span>：同比/环比<span style="color:red;">下降</span>超10%，<b>预警信号</b></li>
+  <li><span style="color:red;font-weight:bold;">红色</span>：活动订单占比同比/环比<span style="color:red;">下降</span>，<b>活动效果减弱</b></li>
+  <li>数字颜色为表格内置诊断标签，便于快速识别问题</li>
+</ul>
+</div>
+
+<h2>五、淘宝闪购2025年实际数据复盘案例（来自图片）</h2>
+
+<div class="framework-box">
+<h3>5.1 2025年1-12月煌上煌核心数据</h3>
+<table>
+  <thead>
+    <tr>
+      <th>月份</th>
+      <th>净GMV</th>
+      <th>日均净G</th>
+      <th>GMV环比</th>
+      <th>GMV同比</th>
+      <th>有效订单</th>
+      <th>订单同比</th>
+      <th>店均订单</th>
+      <th>活动占比</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1月</td><td>204万</td><td>65,936</td><td>+4.76%</td><td>-6.73%</td><td>1,522</td><td>-18%</td><td>3</td><td>6%</td></tr>
+    <tr><td>2月</td><td>182万</td><td>65,169</td><td>-1.16%</td><td>-27.66%</td><td>1,495</td><td>-28%</td><td>3</td><td>6%</td></tr>
+    <tr><td>3月</td><td>192万</td><td>61,889</td><td>-5.03%</td><td>-26.50%</td><td>1,462</td><td>-32%</td><td>3</td><td>6%</td></tr>
+    <tr><td>4月</td><td>173万</td><td>57,688</td><td>-6.79%</td><td>-32.15%</td><td>1,379</td><td>-36%</td><td>3</td><td>6%</td></tr>
+    <tr><td>5月</td><td>249万</td><td>80,465</td><td>+39.48%</td><td>+5.98%</td><td>2,354</td><td>+71%</td><td>4</td><td>16%</td></tr>
+    <tr style="background:#FEF3C7;"><td>6月</td><td>274万</td><td>91,408</td><td>+13.60%</td><td>+18.93%</td><td>2,904</td><td>+56%</td><td>4</td><td>24%</td></tr>
+    <tr style="background:#FECACA;"><td><b>7月</b></td><td><b>400万</b></td><td><b>129,304</b></td><td><b>+41.46%</b></td><td><b>+63.31%</b></td><td><b>4,617</b></td><td><b>+129%</b></td><td><b>6</b></td><td><b>31%</b></td></tr>
+    <tr style="background:#FECACA;"><td><b>8月</b></td><td><b>415万</b></td><td><b>133,952</b></td><td><b>+3.60%</b></td><td><b>+78.08%</b></td><td><b>4,612</b></td><td><b>+151%</b></td><td><b>6</b></td><td><b>29%</b></td></tr>
+    <tr><td>9月</td><td>316万</td><td>105,397</td><td>-21.32%</td><td>+45.93%</td><td>3,364</td><td>+84%</td><td>5</td><td>23%</td></tr>
+    <tr><td>10月</td><td>307万</td><td>99,083</td><td>-5.99%</td><td>+43.48%</td><td>3,078</td><td>+76%</td><td>5</td><td>22%</td></tr>
+    <tr style="background:#DBEAFE;"><td>11月</td><td>333万</td><td>110,922</td><td>+11.95%</td><td>+70.64%</td><td>4,086</td><td>+145%</td><td>6</td><td>26%</td></tr>
+    <tr style="background:#DBEAFE;"><td>12月</td><td>358万</td><td>115,355</td><td>+4.00%</td><td>+83.27%</td><td>4,239</td><td>+166%</td><td>6</td><td>26%</td></tr>
+    <tr style="background:#F1F5F9;font-weight:bold;"><td>合计</td><td>3,404万</td><td>93,047</td><td>——</td><td>——</td><td>2,926均</td><td>——</td><td>4.50均</td><td>——</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="insight">
+<h4>5.2 2025年关键趋势洞察</h4>
+<ul>
+  <li><b>Q1弱势期（1-4月）</b>：净GMV仅200万/月，日均6万，<span style="color:red;">同比持续下降（最高-32%）</span>，<b>平台未发力</b></li>
+  <li><b>5月拐点</b>：环比+39%开始起飞，<b>淘宝闪购2025年5月正式上线，平台补贴爆发</b></li>
+  <li><b>暑期高峰（7-8月）</b>：单月突破400万，<b>7月单月+129%同比+63.31%环比</b>，全年最高</li>
+  <li><b>Q4稳健期（10-12月）</b>：维持300万+水平，同比+43%-+83%，<b>进入稳态</b></li>
+  <li><b>活动订单占比</b>：从1-4月6% → 12月26%，<b>活动贡献从边缘到主流</b></li>
+  <li><b>店均订单</b>：从1-4月3单/店 → 12月6单/店，<b>单店效率翻倍</b></li>
+</ul>
+</div>
+
+<div class="framework-box">
+<h3>5.3 2025全年营销活动类型分析</h3>
+<table>
+  <thead>
+    <tr>
+      <th>活动类型</th>
+      <th>活动净G</th>
+      <th>活动订单</th>
+      <th>订单占比</th>
+      <th>ROI评估</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background:#FEF3C7;">
+      <td><b>C配</b></td>
+      <td>2,725万</td>
+      <td>809,019</td>
+      <td>75.59%</td>
+      <td>⭐⭐⭐⭐⭐ 主力</td>
+    </tr>
+    <tr style="background:#DBEAFE;">
+      <td><b>满减</b></td>
+      <td>1,730万</td>
+      <td>343,849</td>
+      <td>32.13%</td>
+      <td>⭐⭐⭐⭐ 凑单主力</td>
+    </tr>
+    <tr>
+      <td><b>门店新客</b></td>
+      <td>308万</td>
+      <td>106,210</td>
+      <td>9.92%</td>
+      <td>⭐⭐⭐ 拉新</td>
+    </tr>
+    <tr>
+      <td><b>超会</b></td>
+      <td>251万</td>
+      <td>63,538</td>
+      <td>5.94%</td>
+      <td>⭐⭐ 会员起步</td>
+    </tr>
+    <tr style="background:#F3F4F6;">
+      <td>卡券</td>
+      <td>2.6万</td>
+      <td>737</td>
+      <td>0.07%</td>
+      <td>⭐ 试点</td>
+    </tr>
+    <tr style="background:#F3F4F6;">
+      <td>品质联盟</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.00%</td>
+      <td>未启动</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="success">
+<h4>5.4 2025全年关键数字总览</h4>
+<ul>
+  <li><b>商家自营销金额</b>：1,226万（同比+16.86%）</li>
+  <li><b>平台补贴金额</b>：714万（同比+211.15% 🚀）</li>
+  <li><b>平台满减活动补贴</b>：8.8万（同比-75.05% 📉，已让位商家自营）</li>
+  <li><b>自营营销强度</b>：36.07%（同比+0.36pp）</li>
+  <li><b>平台补贴强度</b>：21.01%（同比+13.19pp 🚀）</li>
+</ul>
+</div>
+
+<h2>六、平台培训与方法论</h2>
+
+<div class="framework-box">
+<h3>6.1 美团外卖 BETTER 经营品牌分体系</h3>
+<table>
+  <thead>
+    <tr>
+      <th>字母</th>
+      <th>维度</th>
+      <th>含义</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>B</b></td>
+      <td>Brand</td>
+      <td>品牌力（品牌认知/搜索权重）</td>
+    </tr>
+    <tr>
+      <td><b>E</b></td>
+      <td>Experience</td>
+      <td>体验力（商品/服务体验分）</td>
+    </tr>
+    <tr>
+      <td><b>T</b></td>
+      <td>Traffic</td>
+      <td>流量力（曝光/入店/下单转化）</td>
+    </tr>
+    <tr>
+      <td><b>T</b></td>
+      <td>Trade</td>
+      <td>交易力（GMV/客单价/复购）</td>
+    </tr>
+    <tr>
+      <td><b>E</b></td>
+      <td>Engage</td>
+      <td>互动力（评价/复购/会员）</td>
+    </tr>
+    <tr>
+      <td><b>R</b></td>
+      <td>Retention</td>
+      <td>留存力（用户留存/LTV）</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="framework-box">
+<h3>6.2 外卖点金推广体系</h3>
+<ul>
+  <li><b>核心目标</b>：提升门店曝光和下单转化</li>
+  <li><b>出价方式</b>：CPC（按点击付费）/CPM（按千次曝光）</li>
+  <li><b>关键数据</b>：CTR（点击率）/CVR（转化率）/ROI（投产比）</li>
+  <li><b>适用场景</b>：新品推广 / 爆品冲单 / 活动期间</li>
+  <li><b>优化方向</b>：定向（商圈/人群）+ 出价（出价策略）+ 创意（头图/文案）</li>
+</ul>
+</div>
+
+<div class="insight">
+<h4>6.3 培训资料核心要点</h4>
+<ul>
+  <li>美团外卖的"总对总会议材料"是<b>面向品牌总部的顶层战略沟通</b>，含年度合作框架</li>
+  <li>"分区会议材料"是<b>面向省区运营的中观策略</b>，含省区专项政策</li>
+  <li>"商服报告"是<b>面向单个门店的微观服务</b>，含门店诊断和改善建议</li>
+  <li>3级服务体系：<b>总部-省区-门店</b>，每级有不同的资料模板和沟通重点</li>
+</ul>
+</div>
+
+<h2>七、四大平台资源类型对比</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>资源类型</th>
+      <th>美团外卖</th>
+      <th>淘宝闪购</th>
+      <th>美团团购</th>
+      <th>京东秒送</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>平台首页Banner</td>
+      <td>✅ S级专属</td>
+      <td>✅ 招商期</td>
+      <td>✅ 套餐页</td>
+      <td>——</td>
+    </tr>
+    <tr>
+      <td>频道坑位</td>
+      <td>✅ 17吃货节</td>
+      <td>✅ 品类页</td>
+      <td>——</td>
+      <td>——</td>
+    </tr>
+    <tr>
+      <td>平台公众号</td>
+      <td>✅ 推文</td>
+      <td>——</td>
+      <td>✅ 朋友圈</td>
+      <td>——</td>
+    </tr>
+    <tr>
+      <td>外部媒体（抖音/小红书）</td>
+      <td>✅ 矩阵投放</td>
+      <td>✅ 微博/微信</td>
+      <td>——</td>
+      <td>——</td>
+    </tr>
+    <tr>
+      <td>平台补贴</td>
+      <td>🟡 神券/品类券</td>
+      <td>🟢 满减/C补</td>
+      <td>——</td>
+      <td>——</td>
+    </tr>
+    <tr>
+      <td>BD对接</td>
+      <td>✅ 三级KA</td>
+      <td>✅ KA经理</td>
+      <td>——</td>
+      <td>——</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>八、关键学习总结</h2>
+
+<div class="insight">
+<h4>8.1 平台月历策划的标准范式（4步法）</h4>
+<ul>
+  <li><b>Step 1：定位主题</b> - 17吃货节/五折天/品类日/品牌日</li>
+  <li><b>Step 2：投入资源</b> - 平台+商家+媒体3方资源打包</li>
+  <li><b>Step 3：招商门槛</b> - 头部商家/S级货品/折扣力度</li>
+  <li><b>Step 4：素材规范</b> - Banner+SKU图+动态图规格</li>
+</ul>
+</div>
+
+<div class="insight">
+<h4>8.2 复盘报告的标准范式（6层结构）</h4>
+<ul>
+  <li><b>第1层</b>：核心数据摘要（KPI看板）</li>
+  <li><b>第2层</b>：营销大盘解读</li>
+  <li><b>第3层</b>：品牌核心数据</li>
+  <li><b>第4层</b>：活动复盘</li>
+  <li><b>第5层</b>：诊断分析</li>
+  <li><b>第6层</b>：后续规划</li>
+</ul>
+</div>
+
+<div class="insight">
+<h4>8.3 关键指标对比逻辑（4维度）</h4>
+<ul>
+  <li><b>同比YoY</b>：长期趋势</li>
+  <li><b>环比MoM</b>：短期波动</li>
+  <li><b>预算vs实际</b>：ROI</li>
+  <li><b>同业对比</b>：市场份额</li>
+</ul>
+</div>
+
+<div class="warning">
+<h4>8.4 关键发现与建议</h4>
+<ul>
+  <li><b>淘宝闪购处于高速增长红利期</b>（2025年5月-2026年7月），煌上煌应<b>加大投入</b></li>
+  <li><b>美团外卖是现金牛</b>，维持现有策略即可</li>
+  <li><b>京东秒送尚未合作</b>，是新增长点</li>
+  <li><b>复盘报告的6层框架可复用到所有平台</b>，是标准分析模板</li>
+  <li><b>活动订单占比是核心健康度指标</b>（健康区间20-40%）</li>
+  <li><b>颜色编码（红=预警）</b>是行业通用最佳实践</li>
+</ul>
+</div>
+
+<div class="success">
+<h4>8.5 可直接复用的方法论资产</h4>
+<ul>
+  <li>✅ 平台月历策划 4步法</li>
+  <li>✅ 招商活动分级 S/A/B/C</li>
+  <li>✅ 复盘报告 6层结构</li>
+  <li>✅ 12维度指标体系</li>
+  <li>✅ 4层对比逻辑</li>
+  <li>✅ BETTER经营品牌分 6维度</li>
+  <li>✅ 活动类型权重分析（C配+满减占99%）</li>
+  <li>✅ 颜色编码预警规则</li>
+</ul>
+</div>
+
+<h2>九、文档清单与分类</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>类别</th>
+      <th>文件数</th>
+      <th>代表文件</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>美团外卖-营销月历</td>
+      <td>9个</td>
+      <td>5/6/7/8/9/10月+1月+6月(招商)+神券节</td>
+    </tr>
+    <tr>
+      <td>美团外卖-商服/复盘</td>
+      <td>4个</td>
+      <td>22年3/5/8月商服报告+22年5月品牌月报</td>
+    </tr>
+    <tr>
+      <td>美团外卖-总对总</td>
+      <td>5个</td>
+      <td>11月28日+9月12日(2份)+广东分区+1月服务报告</td>
+    </tr>
+    <tr>
+      <td>美团外卖-培训</td>
+      <td>3个</td>
+      <td>BETTER品牌分+点金推广+陕西培训</td>
+    </tr>
+    <tr>
+      <td>美团团购</td>
+      <td>2个</td>
+      <td>22年7月品牌月报(2版本)</td>
+    </tr>
+    <tr>
+      <td>淘宝闪购-复盘</td>
+      <td>7个</td>
+      <td>4月复盘+2023年商业化(2份)+季度复盘0805+季度复盘+月度复盘+2023年报</td>
+    </tr>
+    <tr>
+      <td>淘宝闪购-赋能</td>
+      <td>1个</td>
+      <td>品牌推广赋能文档(25MB)</td>
+    </tr>
+    <tr>
+      <td>京东秒送</td>
+      <td>1个</td>
+      <td>餐饮业务介绍</td>
+    </tr>
+    <tr>
+      <td>煌上煌-品牌</td>
+      <td>1个</td>
+      <td>9月全国KA活动月历</td>
+    </tr>
+    <tr>
+      <td>品牌季度数据</td>
+      <td>1个</td>
+      <td>品牌季度数据复盘1124</td>
+    </tr>
+    <tr>
+      <td>图片</td>
+      <td>2个</td>
+      <td>淘宝闪购招商+数据图</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="footer">
+报告生成时间：2026-08-05 | 资料来源：D:\邓超今\临时数据源\OneDrive\桌面\平台资料\ |
+学习目的：提炼平台运营方法论，输出可复用的分析框架
+</div>
+
+</div>
+</body>
+</html>
