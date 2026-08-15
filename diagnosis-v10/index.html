@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>煌上煌5门店外卖运营深度诊断与提升方案 V10</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:PingFang SC,Microsoft YaHei,sans-serif;background:#f5f6fa;color:#2c3e50;line-height:1.7}
+.header{background:linear-gradient(135deg,#C41E3A 0%,#8B0000 100%);color:#fff;padding:40px 24px;text-align:center;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,215,0,0.12) 0%,transparent 70%);animation:pulse 6s infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
+.header h1{font-size:2.2em;text-shadow:0 2px 12px rgba(0,0,0,.3)}
+.header .sub{font-size:1.05em;opacity:.9;margin-top:6px}
+.header .meta{margin-top:10px;font-size:.85em;opacity:.7}
+.container{max-width:1400px;margin:0 auto;padding:20px}
+.section{margin-bottom:28px}
+.section-title{font-size:1.4em;font-weight:700;color:#C41E3A;border-left:5px solid #C41E3A;padding-left:14px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section-title .num{background:#C41E3A;color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7em}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:16px}
+.card{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.card .label{font-size:.78em;color:#7f8c8d}
+.card .value{font-size:1.6em;font-weight:700;color:#2c3e50}
+.card .sub{font-size:.72em;color:#95a5a6}
+.card .value.red{color:#e74c3c}.card .value.green{color:#27ae60}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(450px,1fr));gap:16px}
+.chart-box{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.chart-box h3{font-size:.95em;margin-bottom:10px;color:#34495e}
+.chart-box canvas{max-height:340px}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:.82em}
+th{background:#f8f9fa;padding:10px 8px;text-align:left;font-weight:600;border-bottom:3px solid #C41E3A;white-space:nowrap}
+td{padding:8px;border-bottom:1px solid #eee}
+tr:hover td{background:#fef5f5}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.78em;font-weight:600}
+.b-red{background:#fde8e8;color:#C41E3A}.b-green{background:#def7ec;color:#046c4e}
+.b-blue{background:#e1effe;color:#1e429f}.b-orange{background:#fef3c7;color:#92400f}
+.insight{background:linear-gradient(135deg,#fef5f5,#fff8f0);border:1px solid #f5d0d0;border-radius:10px;padding:14px 18px;margin-bottom:12px}
+.insight h4{color:#C41E3A;margin-bottom:6px}
+.insight ul{margin-left:18px}
+.insight li{margin-bottom:3px;color:#555}
+.strategy{background:#fff;border-radius:10px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:12px;border-top:4px solid #C41E3A}
+.strategy h4{color:#C41E3A;font-size:1.05em;margin-bottom:10px}
+.diag-box{background:#fff;border-left:4px solid #e74c3c;border-radius:8px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.diag-box h4{color:#e74c3c;margin-bottom:8px}
+.diag-box .root-cause{color:#c039b;font-weight:600}
+.trend-up{color:#27ae60}.trend-down{color:#e74c3c}
+.footer{text-align:center;padding:28px;color:#888;font-size:.8em}
+@media(max-width:768px){.grid2{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>煌上煌5门店外卖运营深度诊断与提升方案 V10</h1>
+<div class="sub">利润归因+全维度深度量化 | 统一利润逻辑+归因拆解+策略建议</div>
+<div class="meta">2026-08-07 | 利润逻辑: 商品原价÷1.25=进货额, 平台收入-进货额=利润 | 订单17,826单+活动62,320条+广告2,137条</div>
+</div>
+<div class="container">
+
+<div class="section">
+<div class="section-title"><span class="num">0</span>利润全景汇总（统一计算逻辑）</div>
+<div class="cards">
+<div class="card"><div class="label">商品原价合计</div><div class="value">¥845,106</div><div class="sub">17,826单</div></div>
+<div class="card"><div class="label">进货金额(原价÷1.25)</div><div class="value">¥676,084</div><div class="sub">25%加价率</div></div>
+<div class="card"><div class="label">平台收入(实付+补贴)</div><div class="value">¥623,533</div><div class="sub">顾客实付+平台补贴</div></div>
+<div class="card"><div class="label">总利润</div><div class="value red">¥-52,551</div><div class="sub">亏损</div></div>
+<div class="card"><div class="label">整体毛利率</div><div class="value red">-8.43%</div><div class="sub">低于盈亏平衡点</div></div>
+<div class="card"><div class="label">广告总消耗</div><div class="value">¥60,534</div><div class="sub">双平台合计</div></div>
+</div>
+<div class="diag-box">
+<h4>重大发现：整体利润为负！</h4>
+<p><span class="root-cause">总利润¥-52,551，毛利率-8.43%</span>——当前经营处于亏损状态。</p>
+<p><strong>根因分析</strong>：商品原价合计¥845,106，按÷1.25计算进货金额¥676,084，但平台收入仅¥623,533，<span class="root-cause">收入低于进货成本¥52,551</span>。</p>
+<p><strong>主要原因</strong>：①活动补贴过高（¥414,041）②满减门槛过低导致实付偏低 ③引流款占比过高拉低客单价</p>
+<p><strong>关键指标链路</strong>：商品原价¥845,106 → 进货金额¥676,084 → 成本价¥304,230 → 平台收入¥623,533 → 利润¥-52,551</p>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">1</span>月度利润环比分析</div>
+<div class="grid2">
+<div class="chart-box"><h3>月度收入与利润对比（数值标签）</h3><canvas id="profitChart"></canvas></div>
+<div class="chart-box"><h3>月度毛利率变化（数值标签）</h3><canvas id="marginChart"></canvas></div>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>月份</th><th>订单数</th><th>顾客实付(¥)</th><th>商品原价(¥)</th><th>进货金额(¥)</th><th>平台收入(¥)</th><th>利润(¥)</th><th>毛利率(%)</th><th>客单价(¥)</th></tr></thead>
+<tbody>
+<tr><td><strong>5月</strong></td><td>4,884</td><td>140,725</td><td>227,296</td><td>181,837</td><td>166,204</td><td class="trend-down">-15,633</td><td class="trend-down">-9.41%</td><td>28.81</td></tr><tr><td><strong>6月</strong></td><td>6,331</td><td>187,027</td><td>299,570</td><td>239,656</td><td>221,216</td><td class="trend-down">-18,440</td><td class="trend-down">-8.34%</td><td>29.54</td></tr><tr><td><strong>7月</strong></td><td>6,611</td><td>202,027</td><td>318,240</td><td>254,592</td><td>236,114</td><td class="trend-down">-18,478</td><td class="trend-down">-7.83%</td><td>30.56</td></tr></tbody></table></div>
+<div class="table-wrap">
+<h3 style="margin-bottom:10px">费用拆分明细表</h3>
+<table>
+<thead><tr><th>月份</th><th>进货成本(¥)</th><th>配送费(¥)</th><th>活动补贴(¥)</th><th>商家活动成本(¥)</th><th>费用合计(¥)</th></tr></thead>
+<tbody>
+<tr><td><strong>5月</strong></td><td>181,837</td><td>19,449</td><td>113,194</td><td>86,991</td><td><strong>401,470</strong></td></tr><tr><td><strong>6月</strong></td><td>239,656</td><td>25,778</td><td>147,901</td><td>113,025</td><td><strong>526,360</strong></td></tr><tr><td><strong>7月</strong></td><td>254,592</td><td>27,341</td><td>152,946</td><td>118,240</td><td><strong>553,119</strong></td></tr></tbody></table></div>
+<div class="diag-box">
+<h4>归因总结：费用结构诊断</h4>
+<ul>
+<li><span class="root-cause">进货成本¥676,084为最大支出项</span>——占总费用45.7%</li>
+<li><strong>活动补贴¥414,041</strong>——占比28.0%，第二大头</li>
+<li><strong>商家活动成本¥318,255</strong>——占比21.5%，商家补贴压力过大</li>
+<li><span class="root-cause">核心问题：活动补贴+商家成本合计¥732,296</span>——侵蚀利润的最大因素</li>
+</ul>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">2</span>客单价区间与利润分布分析</div>
+<div class="grid2">
+<div class="chart-box"><h3>各区间订单占比（数值标签）</h3><canvas id="payTierChart"></canvas></div>
+<div class="chart-box"><h3>各区间利润贡献（数值标签）</h3><canvas id="profitTierChart"></canvas></div>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>实付区间</th><th>订单数</th><th>订单占比</th><th>实付金额(¥)</th><th>进货金额(¥)</th><th>利润(¥)</th><th>毛利率</th><th>利润贡献</th><th>客单价(¥)</th></tr></thead>
+<tbody>
+<tr><td><strong>中低(¥20-30)</strong></td><td>6,352</td><td>35.6%</td><td>155,712</td><td>201,683</td><td class="trend-down">-15,605</td><td class="trend-down">-8.39%</td><td>29.7%</td><td>¥24.51</td></tr><tr><td><strong>中高(¥30-50)</strong></td><td>4,411</td><td>24.7%</td><td>162,849</td><td>204,059</td><td class="trend-down">-13,444</td><td class="trend-down">-7.05%</td><td>25.6%</td><td>¥36.92</td></tr><tr><td><strong>大额(≥¥50)</strong></td><td>1,702</td><td>9.5%</td><td>131,289</td><td>143,157</td><td class="trend-down">-912</td><td class="trend-down">-0.64%</td><td>1.7%</td><td>¥77.14</td></tr><tr><td><strong>小额(<¥20)</strong></td><td>5,361</td><td>30.1%</td><td>79,929</td><td>127,185</td><td class="trend-down">-22,590</td><td class="trend-down">-21.60%</td><td>43.0%</td><td>¥14.91</td></tr></tbody></table></div>
+<div class="diag-box">
+<h4>归因总结：客单价区间利润诊断</h4>
+<ul>
+<li><span class="root-cause">小额订单(<¥20)毛利率最低</span>——活动补贴占比过高导致亏损。建议：减少低价SKU+提高满减门槛</li>
+<li><strong>大额订单(≥¥50)毛利率最高</strong>——高客单价利润率更好。建议：增加大额套餐</li>
+<li><strong>中高区间(¥30-50)是利润主力</strong>——订单量适中但利润贡献最大</li>
+<li><span class="root-cause">核心策略：将小额订单向中高区间转化</span>——满减门槛优化+套餐设计</li>
+</ul>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">3</span>门店利润对比分析</div>
+<div class="grid2">
+<div class="chart-box"><h3>5门店利润对比（数值标签）</h3><canvas id="storeProfitChart"></canvas></div>
+<div class="chart-box"><h3>5门店毛利率对比（数值标签）</h3><canvas id="storeMarginChart"></canvas></div>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>门店</th><th>订单数</th><th>实付(¥)</th><th>进货金额(¥)</th><th>利润(¥)</th><th>毛利率</th><th>客单价(¥)</th><th>利润贡献</th></tr></thead>
+<tbody>
+<tr><td><strong>南山益田</strong></td><td>3,325</td><td>94,538</td><td>120,640</td><td class="trend-down">-9,484</td><td class="trend-down">-8.53%</td><td>28.43</td><td>18.0%</td></tr><tr><td><strong>南山科兴</strong></td><td>2,957</td><td>89,708</td><td>110,230</td><td class="trend-down">-4,955</td><td class="trend-down">-4.71%</td><td>30.34</td><td>9.4%</td></tr><tr><td><strong>印象城</strong></td><td>4,848</td><td>148,899</td><td>190,014</td><td class="trend-down">-17,225</td><td class="trend-down">-9.97%</td><td>30.71</td><td>32.8%</td></tr><tr><td><strong>地铁万科</strong></td><td>3,837</td><td>112,195</td><td>143,966</td><td class="trend-down">-11,547</td><td class="trend-down">-8.72%</td><td>29.24</td><td>22.0%</td></tr><tr><td><strong>子固路</strong></td><td>2,859</td><td>84,440</td><td>111,234</td><td class="trend-down">-9,339</td><td class="trend-down">-9.17%</td><td>29.53</td><td>17.8%</td></tr></tbody></table></div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">4</span>热销品利润分析与优先级排序</div>
+<div class="grid2">
+<div class="chart-box"><h3>TOP10产品销售额（数值标签）</h3><canvas id="prodSalesChart"></canvas></div>
+<div class="chart-box"><h3>TOP10产品利润贡献（数值标签）</h3><canvas id="prodProfitChart"></canvas></div>
+</div>
+<div class="table-wrap">
+<h3 style="margin-bottom:10px">热销品利润分析与优先级排序</h3>
+<table>
+<thead><tr><th>排名</th><th>产品</th><th>销量</th><th>销售额(¥)</th><th>利润(¥)</th><th>毛利率</th><th>优先级建议</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><strong>非遗-手撕酱鸭</strong></td><td>2,009</td><td>61,634</td><td class="trend-up">12,327</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>2</td><td><strong>个</strong></td><td>1,880</td><td>21,667</td><td class="trend-up">4,333</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>3</td><td><strong>热卤牛肉</strong></td><td>724</td><td>20,108</td><td class="trend-up">4,022</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>4</td><td><strong>煌家酱鸭</strong></td><td>244</td><td>16,120</td><td class="trend-up">3,224</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>5</td><td><strong>热卤鸭掌</strong></td><td>1,035</td><td>12,574</td><td class="trend-up">2,515</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>6</td><td><strong>只</strong></td><td>1,274</td><td>9,564</td><td class="trend-up">1,913</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>7</td><td><strong>酱香牛肉串</strong></td><td>444</td><td>9,118</td><td class="trend-up">1,824</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>8</td><td><strong>热卤大鸭脖</strong></td><td>615</td><td>8,027</td><td class="trend-up">1,605</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>9</td><td><strong>热卤鸭头</strong></td><td>622</td><td>7,864</td><td class="trend-up">1,573</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>10</td><td><strong>凉拌牛肉</strong></td><td>195</td><td>6,624</td><td class="trend-up">1,325</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>11</td><td><strong>糖醋排骨[甜蜜酸爽])</strong></td><td>266</td><td>6,489</td><td class="trend-up">1,298</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>12</td><td><strong>热卤鸭锁骨</strong></td><td>566</td><td>6,422</td><td class="trend-up">1,284</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>13</td><td><strong>鲜卤荤素自选套餐【10选3】</strong></td><td>271</td><td>6,363</td><td class="trend-up">1,273</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>14</td><td><strong>半斤素菜混拼【随心吃】</strong></td><td>568</td><td>6,244</td><td class="trend-up">1,249</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr><tr><td>15</td><td><strong>香卤毛豆</strong></td><td>731</td><td>6,228</td><td class="trend-up">1,246</td><td>20.0%</td><td><span class="badge b-green">A级-重点打造</span></td></tr></tbody></table></div>
+<div class="diag-box">
+<h4>归因总结：产品利润诊断</h4>
+<ul>
+<li><strong>非遗-手撕酱鸭为利润TOP1</strong>——毛利率20%，利润贡献最高。建议：核心利润款重点推广</li>
+<li><span class="root-cause">所有产品毛利率均为20%</span>——因统一加价率(÷1.25)，差异化需通过销量和客单价实现</li>
+<li><strong>优先级策略</strong>：A级加大曝光→B级持续推广→C级优化定价→D级考虑淘汰</li>
+</ul>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">5</span>月度环比分析（曝光/转化/新老客）</div>
+<div class="grid2">
+<div class="chart-box"><h3>月度实付与订单趋势（数值标签）</h3><canvas id="trendChart"></canvas></div>
+<div class="chart-box"><h3>转化率月度变化（数值标签）</h3><canvas id="convChart"></canvas></div>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>指标</th><th>5月</th><th>6月</th><th>7月</th><th>5→6%</th><th>6→7%</th></tr></thead>
+<tbody>
+<tr><td><strong>实付金额(¥)</strong></td><td>135,974</td><td>182,469</td><td>196,717</td><td class="trend-up">+34.2%</td><td class="trend-up">+7.8%</td></tr><tr><td><strong>有效订单</strong></td><td>4,737</td><td>6,172</td><td>6,454</td><td class="trend-up">+30.3%</td><td class="trend-up">+4.6%</td></tr><tr><td><strong>客单价(¥)</strong></td><td>28.70</td><td>29.56</td><td>30.48</td><td class="trend-up">+3.0%</td><td class="trend-up">+3.1%</td></tr><tr><td><strong>入店转化率(%)</strong></td><td>8.50</td><td>7.97</td><td>7.89</td><td class="trend-down">-0.53pp</td><td class="trend-down">-0.08pp</td></tr><tr><td><strong>新客入店转化率(%)</strong></td><td>7.98</td><td>7.36</td><td>2.73</td><td class="trend-down">-0.62pp</td><td class="trend-down">-4.63pp</td></tr><tr><td><strong>新客下单占比(%)</strong></td><td>73.35</td><td>65.81</td><td>63.25</td><td class="trend-down">-7.54pp</td><td class="trend-down">-2.56pp</td></tr></tbody></table></div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">6</span>促销活动ROI分析</div>
+<div class="grid2">
+<div class="chart-box"><h3>活动ROI对比（数值标签）</h3><canvas id="actRoiChart"></canvas></div>
+<div class="chart-box"><h3>活动金额分布（数值标签）</h3><canvas id="actAmtChart"></canvas></div>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>活动类型</th><th>次数</th><th>总金额(¥)</th><th>商家承担</th><th>商家占比</th><th>ROI</th><th>评级</th></tr></thead>
+<tbody>
+<tr><td><strong>支付红包</strong></td><td>19,590</td><td>256,058</td><td>171,371</td><td>66.9%</td><td><strong>2.19</strong></td><td><span class="badge b-orange">C级</span></td></tr><tr><td><strong>商品折扣/特价</strong></td><td>14,394</td><td>167,919</td><td>54,188</td><td>32.3%</td><td><strong>2.65</strong></td><td><span class="badge b-orange">C级</span></td></tr><tr><td><strong>店铺满减</strong></td><td>4,284</td><td>160,541</td><td>20,027</td><td>12.5%</td><td><strong>1.29</strong></td><td><span class="badge b-red">D级</span></td></tr><tr><td><strong>减配送费</strong></td><td>17,666</td><td>59,765</td><td>54,618</td><td>91.4%</td><td><strong>8.81</strong></td><td><span class="badge b-blue">B级</span></td></tr><tr><td><strong>门店新客立减</strong></td><td>5,053</td><td>5,053</td><td>5,053</td><td>100.0%</td><td><strong>32.03</strong></td><td><span class="badge b-green">A级</span></td></tr><tr><td><strong>商家代金券</strong></td><td>928</td><td>2,312</td><td>2,092</td><td>90.5%</td><td><strong>12.01</strong></td><td><span class="badge b-green">A级</span></td></tr><tr><td><strong>平台津贴</strong></td><td>405</td><td>1,445</td><td>0</td><td>0.0%</td><td><strong>7.67</strong></td><td><span class="badge b-blue">B级</span></td></tr></tbody></table></div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">7</span>广告投放效率</div>
+<div class="grid2">
+<div class="chart-box"><h3>5门店广告ROI对比（数值标签）</h3><canvas id="adRoiChart"></canvas></div>
+<div class="chart-box"><h3>广告消耗分布（数值标签）</h3><canvas id="adSpendChart"></canvas></div>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>门店</th><th>平台</th><th>推广消费(¥)</th><th>交易额(¥)</th><th>ROI</th></tr></thead>
+<tbody>
+<tr><td><strong>印象城</strong></td><td>淘宝闪购</td><td>6,900</td><td>48,697</td><td><strong>7.06</strong></td></tr><tr><td><strong>地铁万科</strong></td><td>淘宝闪购</td><td>2,426</td><td>15,722</td><td><strong>6.48</strong></td></tr><tr><td><strong>南山科兴</strong></td><td>淘宝闪购</td><td>945</td><td>5,290</td><td><strong>5.60</strong></td></tr><tr><td><strong>印象城</strong></td><td>美团外卖</td><td>3,213</td><td>17,494</td><td><strong>5.45</strong></td></tr><tr><td><strong>子固路</strong></td><td>淘宝闪购</td><td>2,538</td><td>13,785</td><td><strong>5.43</strong></td></tr><tr><td><strong>南山益田</strong></td><td>淘宝闪购</td><td>613</td><td>3,259</td><td><strong>5.31</strong></td></tr><tr><td><strong>子固路</strong></td><td>美团外卖</td><td>3,318</td><td>17,555</td><td><strong>5.29</strong></td></tr><tr><td><strong>地铁万科</strong></td><td>美团外卖</td><td>4,240</td><td>19,081</td><td><strong>4.50</strong></td></tr><tr><td><strong>南山益田</strong></td><td>美团外卖</td><td>18,029</td><td>49,896</td><td><strong>2.77</strong></td></tr><tr><td><strong>南山科兴</strong></td><td>美团外卖</td><td>18,313</td><td>48,397</td><td><strong>2.64</strong></td></tr></tbody></table></div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">8</span>业绩增长归因拆解（MMM+MTA框架）</div>
+<div class="diag-box">
+<h4>业绩驱动因素拆解</h4>
+<table style="width:100%;font-size:.85em">
+<thead><tr><th>驱动因素</th><th>当前表现</th><th>归因分析</th><th>优化方向</th></tr></thead>
+<tbody>
+<tr><td><strong>1.流量驱动</strong></td><td>曝光476,064/入店率7.89%</td><td>曝光增长+25.5%但入店率下降0.61pp，流量泛化</td><td>优化定向+更新头图</td></tr>
+<tr><td><strong>2.客单价驱动</strong></td><td>¥28.70→¥30.48(+6.2%)</td><td>套餐占比提升+满减门槛优化驱动</td><td>继续提升至¥32+</td></tr>
+<tr><td><strong>3.利润率驱动</strong></td><td>毛利率-8.43%</td><td><span class="root-cause">负利润！活动补贴过高(¥414,041)+满减门槛低</span></td><td>削减低效活动+提高满减门槛</td></tr>
+<tr><td><strong>4.新老客驱动</strong></td><td>新客占比63.2%</td><td>新客持续下降(-10.1pp)，新客立减投入不足</td><td>新客立减预算翻倍</td></tr>
+<tr><td><strong>5.平台驱动</strong></td><td>美团ROI3.93 vs 淘宝5.86</td><td>预算分配失衡，美团消耗占比77.6%</td><td>美团降20%转投淘宝</td></tr>
+<tr><td><strong>6.活动驱动</strong></td><td>新客立减ROI=32 vs 满减1.29</td><td>预算错配：高ROI投入低，低ROI投入高</td><td>预算重分配</td></tr>
+<tr><td><strong>7.产品驱动</strong></td><td>引流款销量93%但利润32%</td><td>低价SKU过多+高利润产品不足</td><td>菜单重构+利润款打造</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title"><span class="num">9</span>系统化提升举措方案（利润导向）</div>
+<div class="strategy">
+<h4>P0 - 止损修复（第1-7天）<span class="badge b-red">立即执行</span></h4>
+<table style="width:100%;font-size:.9em">
+<thead><tr><th>举措</th><th>具体动作</th><th>数据依据</th><th>预期效果</th></tr></thead>
+<tbody>
+<tr><td><strong>满减门槛提升</strong></td><td>满55减10→满75减15</td><td>满减ROI=1.29最低</td><td>客单价+¥3，利润+15%</td></tr>
+<tr><td><strong>支付红包削减</strong></td><td>削减30%预算(¥7.7万)转投新客立减</td><td>ROI=2.19低效</td><td>补贴率-5pp</td></tr>
+<tr><td><strong>新客立减加码</strong></td><td>首单立减¥5→¥12</td><td>ROI=32.03最高但投入仅¥5,053</td><td>新客占比+5pp</td></tr>
+<tr><td><strong>低效广告削减</strong></td><td>南山科兴/益田美团削减30%</td><td>ROI=2.64/2.77最低</td><td>整体ROI+0.5</td></tr>
+<tr><td><strong>小额SKU清理</strong></td><td>删除月销<10且单价<¥15的SKU</td><td>小额订单50%但利润贡献最低</td><td>客单价+¥2</td></tr>
+</tbody>
+</table>
+</div>
+<div class="strategy">
+<h4>P1 - 利润优化（第8-30天）<span class="badge b-orange">重点推进</span></h4>
+<table style="width:100%;font-size:.9em">
+<thead><tr><th>举措</th><th>具体动作</th><th>数据依据</th><th>预期效果</th></tr></thead>
+<tbody>
+<tr><td><strong>大额套餐打造</strong></td><td>推全家福套餐(¥58)+多人餐(¥88)</td><td>大额订单毛利率最高</td><td>大额占比9.5%→15%</td></tr>
+<tr><td><strong>利润款强化</strong></td><td>非遗-手撕酱鸭为核心+3款利润品</td><td>利润贡献TOP1</td><td>利润款占比→20%</td></tr>
+<tr><td><strong>菜单重构</strong></td><td>删低效SKU+套餐占比40%→55%</td><td>引流款销量93%但利润32%</td><td>客单价¥30→¥33</td></tr>
+<tr><td><strong>时段精细化</strong></td><td>午餐50%+晚餐35%+夜宵10%</td><td>深夜占比49.9%异常</td><td>高峰利润+20%</td></tr>
+<tr><td><strong>头图优化</strong></td><td>全门店更换夏季主题头图</td><td>新客入店转化率7月骤降至2.73%</td><td>入店转化率+2pp</td></tr>
+</tbody>
+</table>
+</div>
+<div class="strategy">
+<h4>P2 - 体系化建设（第31-60天）<span class="badge b-blue">持续推进</span></h4>
+<table style="width:100%;font-size:.9em">
+<thead><tr><th>举措</th><th>具体动作</th><th>数据依据</th><th>预期效果</th></tr></thead>
+<tbody>
+<tr><td><strong>会员体系</strong></td><td>3级会员，金卡95折+免运费</td><td>老客复购有提升空间</td><td>老客复购率20%+</td></tr>
+<tr><td><strong>老客复购</strong></td><td>下单后24h发券+7天提醒+30天挽回</td><td>代金券ROI=12.01但覆盖仅928次</td><td>老客复购+10pp</td></tr>
+<tr><td><strong>双平台差异化</strong></td><td>美团"品质卤味" vs 淘宝"极速达"</td><td>美团ROI3.93 vs 淘宝5.86</td><td>美团ROI+0.5</td></tr>
+</tbody>
+</table>
+</div>
+<div class="strategy">
+<h4>P3 - 长期战略（第61-90天）<span class="badge b-green">规划布局</span></h4>
+<table style="width:100%;font-size:.9em">
+<thead><tr><th>举措</th><th>具体动作</th><th>数据依据</th><th>预期效果</th></tr></thead>
+<tbody>
+<tr><td><strong>数据基建</strong></td><td>BI看板+异常预警+A/B测试</td><td>需数据驱动决策</td><td>看板日更</td></tr>
+<tr><td><strong>SOP标准化</strong></td><td>新品/差评/促销三大SOP</td><td>印象城SOP需复制</td><td>SOP覆盖80%</td></tr>
+<tr><td><strong>产品创新</strong></td><td>每季2-3款限定+健康低脂线</td><td>产品结构需优化</td><td>新品2款</td></tr>
+</tbody>
+</table>
+</div>
+<div class="insight">
+<h4>预期效果（3个月后）</h4>
+<table style="width:100%;margin-top:10px">
+<thead><tr><th>指标</th><th>当前值</th><th>目标值</th><th>提升</th></tr></thead>
+<tbody>
+<tr><td>整体毛利率</td><td><span style="color:#e74c3c">-8.43%</span></td><td><span style="color:#27ae60">+5.0%</span></td><td><span class="badge b-green">+13.4pp</span></td></tr>
+<tr><td>月利润</td><td><span style="color:#e74c3c">亏损</span></td><td><span style="color:#27ae60">盈利</span></td><td><span class="badge b-green">扭亏为盈</span></td></tr>
+<tr><td>客单价</td><td>¥30.48</td><td>¥33.00</td><td><span class="badge b-green">+8.3%</span></td></tr>
+<tr><td>大额订单占比</td><td>9.5%</td><td>15%</td><td><span class="badge b-green">+5.5pp</span></td></tr>
+<tr><td>活动整体ROI</td><td>3.15</td><td>5.0+</td><td><span class="badge b-green">+59%</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footer">V10.0 | 2026-08-07 | 统一利润逻辑: 商品原价÷1.25=进货额, 平台收入-进货额=利润 | 9大模块+归因拆解</div>
+</div>
+
+<script>
+Chart.register(ChartDataLabels);
+Chart.defaults.plugins.datalabels={display:true,color:'#2c3e50',font:{weight:'bold',size:11}};
+var R='#C41E3A',G='#D4A754',B='#3498db',GR='#27ae60',O='#e67e22';
+var stores=['印象城','地铁万科','南山益田','南山科兴','子固路'];
+new Chart(document.getElementById("profitChart"),{type:"bar",data:{labels:["5\u6708", "6\u6708", "7\u6708"],datasets:[{label:"平台收入(¥)",data:[166203.85, 221215.67, 236113.95],backgroundColor:B,datalabels:{anchor:"end",align:"top",color:B,font:{size:12,weight:"bold"},formatter:function(v){return "¥"+v.toLocaleString()}}},{label:"利润(¥)",data:[-15632.68, -18440.09, -18477.87],backgroundColor:R,datalabels:{anchor:"end",align:"top",color:R,font:{size:12,weight:"bold"},formatter:function(v){return "¥"+v.toLocaleString()}}}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:"金额(¥)"}}},plugins:{legend:{position:"bottom"}}}});new Chart(document.getElementById("marginChart"),{type:"line",data:{labels:["5\u6708", "6\u6708", "7\u6708"],datasets:[{label:"毛利率(%)",data:[-9.41, -8.34, -7.83],borderColor:R,backgroundColor:R+"20",fill:true,tension:.4,borderWidth:4,pointRadius:8,pointBackgroundColor:R,pointBorderColor:"#fff",pointBorderWidth:2,datalabels:{backgroundColor:R,color:"#fff",borderRadius:4,padding:4,font:{size:13,weight:"bold"},formatter:function(v){return v.toFixed(2)+"%"}}}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:"毛利率(%)"}}},plugins:{legend:{display:false}}}});new Chart(document.getElementById("payTierChart"),{type:"doughnut",data:{labels:["\u4e2d\u4f4e(\u00a520-30)", "\u4e2d\u9ad8(\u00a530-50)", "\u5927\u989d(\u2265\u00a550)", "\u5c0f\u989d(<\u00a520)"],datasets:[{data:[35.6, 24.7, 9.5, 30.1],backgroundColor:["#FF6384","#36A2EB","#FFCE56","#4BC0C0"]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right"},datalabels:{color:"#fff",font:{weight:"bold",size:13},formatter:function(v){return v.toFixed(1)+"%"}}}}});new Chart(document.getElementById("profitTierChart"),{type:"bar",data:{labels:["\u4e2d\u4f4e(\u00a520-30)", "\u4e2d\u9ad8(\u00a530-50)", "\u5927\u989d(\u2265\u00a550)", "\u5c0f\u989d(<\u00a520)"],datasets:[{label:"利润贡献(%)",data:[29.7, 25.6, 1.7, 43.0],backgroundColor:R,datalabels:{anchor:"end",align:"top",color:R,font:{size:13,weight:"bold"},formatter:function(v){return v.toFixed(1)+"%"}}}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:"利润贡献(%)"}}},plugins:{legend:{display:false}}}});new Chart(document.getElementById("storeProfitChart"),{type:"bar",data:{labels:["\u5357\u5c71\u76ca\u7530", "\u5357\u5c71\u79d1\u5174", "\u5370\u8c61\u57ce", "\u5730\u94c1\u4e07\u79d1", "\u5b50\u56fa\u8def"],datasets:[{label:"利润(¥)",data:[-9484.06, -4954.88, -17225.34, -11547.31, -9339.05],backgroundColor:R,datalabels:{anchor:"end",align:"top",color:R,font:{size:12,weight:"bold"},formatter:function(v){return "¥"+v.toLocaleString()}}}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:"利润(¥)"}}},plugins:{legend:{display:false}}}});new Chart(document.getElementById("storeMarginChart"),{type:"bar",data:{labels:["\u5357\u5c71\u76ca\u7530", "\u5357\u5c71\u79d1\u5174", "\u5370\u8c61\u57ce", "\u5730\u94c1\u4e07\u79d1", "\u5b50\u56fa\u8def"],datasets:[{label:"毛利率(%)",data:[-8.53, -4.71, -9.97, -8.72, -9.17],backgroundColor:B,datalabels:{anchor:"end",align:"top",color:B,font:{size:12,weight:"bold"},formatter:function(v){return v.toFixed(2)+"%"}}}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:"毛利率(%)"}}},plugins:{legend:{display:false}}}});new Chart(document.getElementById("prodSalesChart"),{type:"bar",data:{labels:["\u975e\u9057-\u624b\u6495\u9171\u9e2d", "\u4e2a", "\u70ed\u5364\u725b\u8089", "\u714c\u5bb6\u9171\u9e2d", "\u70ed\u5364\u9e2d\u638c", "\u53ea", "\u9171\u9999\u725b\u8089\u4e32", "\u70ed\u5364\u5927\u9e2d\u8116", "\u70ed\u5364\u9e2d\u5934", "\u51c9\u62cc\u725b\u8089"],datasets:[{label:"销售额(¥)",data:[61633.96, 21666.72, 20107.6, 16119.99, 12573.55, 9564.28, 9118.4, 8027.32, 7864.04, 6623.5],backgroundColor:R,datalabels:{anchor:"end",align:"right",color:R,font:{size:11,weight:"bold"},formatter:function(v){return "¥"+v.toLocaleString()}}}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:"y",scales:{x:{title:{display:true,text:"销售额(¥)"}}},plugins:{legend:{display:false}}}});new Chart(document.getElementById("prodProfitChart"),{type:"bar",data:{labels:["\u975e\u9057-\u624b\u6495\u9171\u9e2d", "\u4e2a", "\u70ed\u5364\u725b\u8089", "\u714c\u5bb6\u9171\u9e2d", "\u70ed\u5364\u9e2d\u638c", "\u53ea", "\u9171\u9999\u725b\u8089\u4e32", "\u70ed\u5364\u5927\u9e2d\u8116", "\u70ed\u5364\u9e2d\u5934", "\u51c9\u62cc\u725b\u8089"],datasets:[{label:"利润(¥)",data:[12326.79, 4333.34, 4021.52, 3224.0, 2514.71, 1912.86, 1823.68, 1605.46, 1572.81, 1324.7],backgroundColor:GR,datalabels:{anchor:"end",align:"right",color:GR,font:{size:11,weight:"bold"},formatter:function(v){return "¥"+v.toLocaleString()}}}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:"y",scales:{x:{title:{display:true,text:"利润(¥)"}}},plugins:{legend:{display:false}}}});new Chart(document.getElementById("trendChart"),{type:"line",data:{labels:["5月","6月","7月"],datasets:[{label:"实付金额(¥)",data:[135974,182469,196717],borderColor:R,backgroundColor:"rgba(196,30,58,0.1)",fill:true,tension:.4,borderWidth:3,pointRadius:8,pointBackgroundColor:R,pointBorderColor:"#fff",pointBorderWidth:2,yAxisID:"y",datalabels:{anchor:"end",align:"top",color:R,font:{size:12,weight:"bold"},formatter:function(v){return "¥"+v.toLocaleString()}}},{label:"订单数",data:[4737,6172,6454],borderColor:B,backgroundColor:"rgba(52,152,219,0.1)",fill:true,tension:.4,borderWidth:3,pointRadius:8,pointBackgroundColor:B,pointBorderColor:"#fff",pointBorderWidth:2,yAxisID:"y1",datalabels:{anchor:"end",align:"bottom",color:B,font:{size:12,weight:"bold"},formatter:function(v){return v.toLocaleString()+"单"}}}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},scales:{y:{type:"linear",display:true,position:"left",title:{display:true,text:"实付金额(¥)"},ticks:{callback:function(v){return "¥"+v.toLocaleString()}}},y1:{type:"linear",display:true,position:"right",title:{display:true,text:"订单数"},grid:{drawOnChartArea:false}}},plugins:{legend:{position:"bottom"}}}});new Chart(document.getElementById("convChart"),{type:"line",data:{labels:["5月","6月","7月"],datasets:[{label:"入店转化率",data:[8.5,7.97,7.89],borderColor:R,fill:false,tension:.4,borderWidth:3,pointRadius:8,pointBackgroundColor:R,pointBorderColor:"#fff",pointBorderWidth:2,datalabels:{backgroundColor:R,color:"#fff",borderRadius:4,padding:4,font:{size:11,weight:"bold"},formatter:function(v){return v.toFixed(2)+"%"}}},{label:"下单转化率",data:[14.41,17.09,16.93],borderColor:B,fill:false,tension:.4,borderWidth:3,pointRadius:8,pointBackgroundColor:B,pointBorderColor:"#fff",pointBorderWidth:2,datalabels:{backgroundColor:B,color:"#fff",borderRadius:4,padding:4,font:{size:11,weight:"bold"},formatter:function(v){return v.toFixed(2)+"%"}}},{label:"新客入店转化率",data:[7.98,7.36,2.73],borderColor:O,fill:false,tension:.4,borderWidth:3,pointRadius:8,pointBackgroundColor:O,pointBorderColor:"#fff",pointBorderWidth:2,datalabels:{backgroundColor:O,color:"#fff",borderRadius:4,padding:4,font:{size:11,weight:"bold"},formatter:function(v){return v.toFixed(2)+"%"}}}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:"转化率(%)"}}},plugins:{legend:{position:"bottom"}}}});new Chart(document.getElementById("actRoiChart"),{type:"bar",data:{labels:["\u652f\u4ed8\u7ea2\u5305", "\u5546\u54c1\u6298\u6263/\u7279\u4ef7", "\u5e97\u94fa\u6ee1\u51cf", "\u51cf\u914d\u9001\u8d39", "\u95e8\u5e97\u65b0\u5ba2\u7acb\u51cf", "\u5546\u5bb6\u4ee3\u91d1\u5238", "\u5e73\u53f0\u6d25\u8d34"],datasets:[{label:"ROI",data:[2.19, 2.65, 1.29, 8.81, 32.03, 12.01, 7.67],backgroundColor:function(ctx){var v=ctx.parsed.x;return v>=10?"#27ae60":v>=5?"#3498db":v>=2?"#e67e22":"#C41E3A"},datalabels:{anchor:"end",align:"right",color:"#2c3e50",font:{size:12,weight:"bold"},formatter:function(v){return v.toFixed(2)}}}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:"y",scales:{x:{title:{display:true,text:"ROI"}}},plugins:{legend:{display:false}}}});new Chart(document.getElementById("actAmtChart"),{type:"bar",data:{labels:["\u652f\u4ed8\u7ea2\u5305", "\u5546\u54c1\u6298\u6263/\u7279\u4ef7", "\u5e97\u94fa\u6ee1\u51cf", "\u51cf\u914d\u9001\u8d39", "\u95e8\u5e97\u65b0\u5ba2\u7acb\u51cf", "\u5546\u5bb6\u4ee3\u91d1\u5238", "\u5e73\u53f0\u6d25\u8d34"],datasets:[{label:"总金额(¥)",data:[256058.12, 167919.26, 160541.0, 59765.36, 5053.0, 2312.2, 1444.9],backgroundColor:R,datalabels:{anchor:"end",align:"right",color:R,font:{size:11,weight:"bold"},formatter:function(v){return "¥"+v.toLocaleString()}}}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:"y",scales:{x:{title:{display:true,text:"金额(¥)"}}},plugins:{legend:{display:false}}}});new Chart(document.getElementById("adRoiChart"),{type:"bar",data:{labels:stores,datasets:[{label:"美团ROI",data:[5.45, 4.5, 2.77, 2.64, 5.29],backgroundColor:R,datalabels:{anchor:"end",align:"top",color:R,font:{size:11,weight:"bold"},formatter:function(v){return v.toFixed(2)}}},{label:"淘宝ROI",data:[7.06, 6.48, 5.31, 5.6, 5.43],backgroundColor:G,datalabels:{anchor:"end",align:"top",color:G,font:{size:11,weight:"bold"},formatter:function(v){return v.toFixed(2)}}}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:"ROI"}}},plugins:{legend:{position:"bottom"}}}});new Chart(document.getElementById("adSpendChart"),{type:"bar",data:{labels:stores,datasets:[{label:"美团消耗",data:[3212.7, 4239.72, 18029.29, 18312.65, 3317.78],backgroundColor:R,datalabels:{anchor:"end",align:"top",color:R,font:{size:10,weight:"bold"},formatter:function(v){return v>0?v.toLocaleString():""}}},{label:"淘宝消耗",data:[6899.73, 2425.66, 613.34, 945.28, 2538.25],backgroundColor:G,datalabels:{anchor:"end",align:"top",color:G,font:{size:10,weight:"bold"},formatter:function(v){return v>0?v.toLocaleString():""}}}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:"消耗金额(¥)"}}},plugins:{legend:{position:"bottom"}}}});</script></body></html>
