@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>煌上煌5店8月经营分析报告</title>
+<style>
+:root{--red:#C41A1A;--gold:#C9A063;--warn:#F5A623;--green:#2ECC71;--neutral:#7F8C8D;--dark:#1F2937;--bg:#F7F5F0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Microsoft YaHei','SimHei',sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
+.wrap{max-width:1140px;margin:0 auto;padding:16px}
+.brand{display:flex;align-items:center;gap:14px;background:#fff;border-radius:16px 16px 0 0;padding:16px 28px;border:1px solid #F0E6D8;border-bottom:none}
+.brand .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,#8E0E22,#C41A1A);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px}
+.brand .bt{font-size:13px;color:#666}
+.brand .bt b{font-size:15px;color:var(--red);display:block}
+.hero{background:linear-gradient(135deg,#8E0E22 0%,#C41A1A 55%,#E8A33D 130%);color:#fff;border-radius:0 0 16px 16px;padding:26px 42px;margin-bottom:14px}
+.hero h1{font-size:24px;letter-spacing:1.5px}
+.hero .sub{color:#F5D9C8;margin-top:6px;font-size:12.5px}
+.hero .oneline{font-size:15px;margin-top:14px;background:rgba(255,255,255,.12);padding:12px 16px;border-radius:10px;border-left:4px solid #FFD100}
+nav.toc{position:sticky;top:8px;background:#fff;z-index:99;display:flex;gap:8px;padding:10px 14px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:16px;flex-wrap:wrap;border:1px solid #F0E6D8}
+nav.toc a{padding:7px 14px;border-radius:18px;text-decoration:none;color:var(--red);font-size:12.5px;font-weight:600}
+nav.toc a:hover,nav.toc a.on{background:var(--red);color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:22px}
+.kpi{background:#fff;border-radius:14px;padding:16px 10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.05);text-align:center;border-top:3px solid var(--red)}
+.kpi .kt{min-height:24px;margin-bottom:5px}
+.kpi .hs{display:inline-block;padding:2px 12px;border-radius:12px;color:#fff;font-size:11px;font-weight:600}
+.kpi .v{font-size:21px;font-weight:700;color:var(--dark)}
+.kpi .l{font-size:12px;color:#666;margin-top:4px;font-weight:600}
+.kpi .d{font-size:11px;margin-top:4px;color:#888}
+.section{background:#fff;border-radius:16px;padding:24px 26px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.04);border:1px solid #F3EBDF}
+.section h2{font-size:18px;color:var(--red);border-left:5px solid var(--red);padding-left:12px;margin-bottom:6px}
+.lead{font-size:13px;color:#555;margin:6px 0 12px;padding:10px 14px;background:#FBF8F3;border-radius:8px}
+.chart{width:100%;height:320px;margin:10px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.insight{background:#FDF6EC;border-left:4px solid var(--gold);padding:12px 16px;border-radius:10px;margin:12px 0;font-size:13.5px;line-height:1.8}
+.insight b{color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px}
+caption{caption-side:top;text-align:left;font-size:13px;font-weight:700;color:var(--red);padding:6px 2px}
+th{background:var(--red);color:#fff;padding:9px 8px;text-align:center;font-size:12px;cursor:pointer;user-select:none;white-space:nowrap}
+td{padding:9px 8px;border-bottom:1px solid #F0EAE0;text-align:center;white-space:nowrap}
+td:first-child,th:first-child{text-align:left}
+tr:hover td{background:#FDF6EC}
+tfoot td{background:#F7F2EA;font-weight:700;border-top:2px solid var(--gold)}
+.tnote{font-size:11.5px;color:#888;margin:6px 0 0 2px}
+.h-hot{color:var(--green);font-weight:600}
+.h-cold{color:var(--red);font-weight:600}
+.trans{background:#F0EAF8;border-left:4px solid #8E44AD;padding:11px 16px;border-radius:10px;margin:14px 0;font-size:13.5px;color:#5B3A8E}
+.mod{background:#FCE9E5;color:var(--red);border-radius:8px;padding:4px 12px;display:inline-block;font-size:12px;font-weight:700;margin-bottom:8px}
+.glossary{background:#FBF8F3;border:1px dashed var(--gold);border-radius:12px;padding:18px 22px;font-size:13px;line-height:2}
+.glossary b{color:var(--red)}
+.foot{text-align:center;color:#999;font-size:12px;padding:18px 0 36px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(3,1fr)}.two{grid-template-columns:1fr}}
+@media(max-width:600px){
+.kpis{grid-template-columns:repeat(2,1fr)}
+.hero{padding:20px 18px}.hero h1{font-size:18px}
+.chart{height:260px}
+.section{padding:16px 12px}
+table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="brand"><div class="logo">煌上煌</div><div class="bt"><b>5 店 8 月经营分析报告</b>周期 2026-08-01~08-13 ｜ 淘宝闪购/广告/订单明细 ｜ v7</div></div>
+<nav class="toc" id="toc">
+<a href="#p0">🏠 总览</a><a href="#m1">① 运营</a><a href="#m2">② 活动</a><a href="#m3">③ 活动ROI</a><a href="#m4">④ 广告</a><a href="#m5">结论</a><a href="#glos">名词</a>
+</nav>
+<div class="hero" id="p0">
+<h1>煌上煌 · 5 店 8 月经营分析报告</h1>
+<div class="sub">🟢 健康 ｜ 🟡 关注 ｜ 🔴 警示 ｜ 图表可悬停、表头可排序</div>
+<div class="oneline"><b>5 店 8 月集体爆发：订单 1,881（▲ +44.0% 环比）、收入 ¥39,084（▲ +47.4% 环比）</b> —— 增长强劲但利润被补贴结构侵蚀，四模块逐层解剖。</div>
+</div>
+<div class="kpis"><div class="kpi"><div class="kt"><span class="hs" style="background:#2ECC71">🟢 健康</span></div><div class="v">¥39,084</div><div class="l">门店收入</div><div class="d">▲ +47.4% 环比</div></div><div class="kpi"><div class="kt"><span class="hs" style="background:#F5A623">🟡 关注</span></div><div class="v">1,881</div><div class="l">有效订单</div><div class="d">▲ +44.0% 环比</div></div><div class="kpi"><div class="kt"><span class="hs" style="background:#7F8C8D">⚪ 中性</span></div><div class="v">¥46,021</div><div class="l">实付金额</div><div class="d">顾客实付总额</div></div><div class="kpi"><div class="kt"><span class="hs" style="background:#F5A623">🟡 关注</span></div><div class="v">¥24.47</div><div class="l">客单价</div><div class="d">基准 ≥¥30</div></div><div class="kpi"><div class="kt"><span class="hs" style="background:#F5A623">🟡 关注</span></div><div class="v">60.2%</div><div class="l">到手率</div><div class="d">平台抽佣后实收比例</div></div><div class="kpi"><div class="kt"><span class="hs" style="background:#F5A623">🟡 关注</span></div><div class="v">27.4%</div><div class="l">门店毛利率</div><div class="d">利润 ¥10,721</div></div></div>
+
+<div class="section" id="m1">
+<span class="mod">模块1 · 路径1 外卖数据</span>
+<h2>① 流量分析：曝光放量，进店转化全线承压</h2>
+<div class="lead">曝光 +18%~+44% 是增长引擎之一；P1 进店率全线下降 0.8~2.5pt，转化效率承压。</div>
+<div class="two"><div><div class="chart" id="c_funnel"></div></div><div><div class="chart" id="c_daily"></div></div></div>
+<table class='t1'><caption>表1 流量漏斗（量）</caption><thead><tr><th>门店</th><th>曝光</th><th>进店</th><th>下单</th><th>订单占比</th></tr></thead><tbody><tr><td>万科</td><td>22,536</td><td>2,023</td><td>388</td><td>21.3%</td></tr><tr><td>子固路</td><td>21,566</td><td>1,699</td><td>287</td><td>15.8%</td></tr><tr><td>印象城</td><td>39,167</td><td>3,013</td><td>567</td><td>31.5%</td></tr><tr><td>科兴</td><td>18,166</td><td>1,278</td><td>308</td><td>16.7%</td></tr><tr><td>益田</td><td>17,232</td><td>1,026</td><td>272</td><td>14.6%</td></tr></tbody><tfoot><tr class='total'><td><b>5店合计</b></td><td><b>118,667</b></td><td><b>9,039</b></td><td><b>1,822</b></td><td><b>100%</b></td></tr></tfoot></table><table class='t2'><caption>表2 流量效率（环比与转化）</caption><thead><tr><th>门店</th><th>曝光环比</th><th>P1进店率</th><th>P2下单率</th></tr></thead><tbody><tr><td>万科</td><td>+18.30%</td><td>8.98%</td><td>19.18%</td></tr><tr><td>子固路</td><td>+43.50%</td><td>7.88%</td><td>16.89%</td></tr><tr><td>印象城</td><td>+22.10%</td><td>7.69%</td><td>18.82%</td></tr><tr><td>科兴</td><td>+40.90%</td><td>7.04%</td><td>24.10%</td></tr><tr><td>益田</td><td>+11.70%</td><td>5.95%</td><td>26.51%</td></tr></tbody><tfoot><tr class='total'><td><b>5店均值</b></td><td><b>+27.30%</b></td><td><b>7.51%</b></td><td><b>21.10%</b></td></tr></tfoot></table>
+
+<h2>② 新老客分析：增长靠新客拉动，老客底盘待加固</h2>
+<div class="lead">老客贡献偏低（35-45%）；新客转化率 12-16% 远低于老客 26-46%，老客留存是短板。</div>
+<div class="chart" id="c_newold"></div>
+<div class="insight">📌 <b>结构性判断：新客驱动型增长</b>。新客下单占比 54-63%，益田最均衡（54%/46%）。老客转化率是新客 2-3 倍，老客留存 ROI 更高，应作为下阶段重点。</div>
+<table class='t3'><caption>表3 新老客结构</caption><thead><tr><th>门店</th><th>新客下单</th><th>老客下单</th><th>新客占比</th><th>老客占比</th></tr></thead><tbody><tr><td>万科</td><td>221</td><td>167</td><td>55.2%</td><td>41.8%</td></tr><tr><td>子固路</td><td>175</td><td>112</td><td>58.7%</td><td>37.6%</td></tr><tr><td>印象城</td><td>357</td><td>210</td><td>60.2%</td><td>35.4%</td></tr><tr><td>科兴</td><td>191</td><td>117</td><td>60.6%</td><td>37.1%</td></tr><tr><td>益田</td><td>147</td><td>125</td><td>53.5%</td><td>45.5%</td></tr></tbody><tfoot><tr class='total'><td><b>5店合计</b></td><td><b>1,091</b></td><td><b>731</b></td><td><b>59.9%</b></td><td><b>40.1%</b></td></tr></tfoot></table>
+
+<h2>③ 增长归因：双引擎驱动，P2 是最大功臣</h2>
+<div class="lead">订单增长 = 曝光 × P1 × P2。曝光放量 + P2 下单暴增是双引擎，P1 全线下降被 P2 碾压。</div>
+<div class="two"><div><div class="chart" id="c_decomp"></div></div><div><div class="chart" id="c_quality"></div></div></div>
+<div class="insight">📌 流量质量指数全线 +50%~+144%。<b>参照系</b>：&gt;3.0 优质 / 2.0-3.0 正常 / &lt;2.0 泛流量。科兴 3.43、益田 4.45 已入优质区；万科/子固路 2.14 处正常区下限。</div>
+
+<h2>④ 产品单价：客单全线低于 ¥30，<20 元订单是结构性根因</h2>
+<div class="lead"><20 元订单占比 34-65%，直接压低客单与毛利。</div>
+<div class="chart" id="c_band"></div>
+<div class="insight">🔴 <b>益田 &lt;20元 占 65.4%</b>、科兴 51.5% —— 低客单结构性根因；子固路 30+ 元占 33.9% 最优。客单 ¥18.4~¥27.8 全线低于 ¥30 基准。</div>
+<table class='t4'><caption>表4 产品单价与价格带</caption><div class='tnote'>红 = <20元占比过高（需关注）；绿 = 40+占比优于均值</div><thead><tr><th>门店</th><th>客单价</th><th><20</th><th>20-30</th><th>30-40</th><th>40+</th></tr></thead><tbody><tr><td>万科</td><td>¥24.15</td><td class='h-cold'>42%</td><td>32%</td><td>15%</td><td class=''>11%</td></tr><tr><td>子固路</td><td>¥27.47</td><td class=''>34%</td><td>32%</td><td>19%</td><td class='h-hot'>14%</td></tr><tr><td>印象城</td><td>¥27.13</td><td class=''>38%</td><td>32%</td><td>18%</td><td class=''>12%</td></tr><tr><td>科兴</td><td>¥22.30</td><td class='h-cold'>52%</td><td>27%</td><td>12%</td><td class=''>9%</td></tr><tr><td>益田</td><td>¥18.41</td><td class='h-cold'>65%</td><td>21%</td><td>8%</td><td class=''>6%</td></tr></tbody><tfoot><tr class='total'><td><b>5店均值</b></td><td><b>¥23.89</b></td><td><b>46%</b></td><td><b>29%</b></td><td><b>15%</b></td><td><b>10%</b></td></tr></tfoot></table>
+
+<h2>⑤ 时段分布：午餐+晚餐为主力，早餐/夜宵是差异化机会</h2>
+<div class="lead">子固路早餐 8.1%（社区早餐店）、科兴夜宵 15.1%（写字楼加班餐），时段结构印证商圈基因。</div>
+<div class="chart" id="c_period"></div>
+<table class='t5'><caption>表5 时段分布（占比%）</caption><thead><tr><th>门店</th><th>早餐</th><th>午餐</th><th>下午茶</th><th>晚餐</th><th>夜宵</th></tr></thead><tbody><tr><td>万科</td><td>1.2%</td><td>31.1%</td><td>20.0%</td><td>38.6%</td><td>8.8%</td></tr><tr><td>子固路</td><td>8.1%</td><td>23.7%</td><td>19.8%</td><td>30.8%</td><td>17.0%</td></tr><tr><td>印象城</td><td>2.1%</td><td>31.9%</td><td>22.6%</td><td>36.7%</td><td>6.3%</td></tr><tr><td>科兴</td><td>0.1%</td><td>35.2%</td><td>16.1%</td><td>33.5%</td><td>15.1%</td></tr><tr><td>益田</td><td>1.9%</td><td>31.3%</td><td>15.5%</td><td>42.7%</td><td>8.4%</td></tr></tbody><tfoot><tr class='total'><td><b>5店均值</b></td><td><b>2.7%</b></td><td><b>30.6%</b></td><td><b>18.8%</b></td><td><b>36.5%</b></td><td><b>11.1%</b></td></tr></tfoot></table>
+
+<h2>⑥ 门店画像：四种基因，四种打法</h2>
+<div class="lead">周末基因 + KPI 雷达 + 营收结构 + 门店总表（热力图：绿=优于均值，红=低于均值）。</div>
+<div class="two"><div><div class="chart" id="c_weekend"></div></div><div><div class="chart" id="c_radar"></div></div></div>
+<div class="two"><div><div class="chart" id="c_gmvpie"></div></div><div><div class="insight" style="height:100%">🏢 科兴 0.68 = 写字楼店；🏠 印象城 1.14 = 社区店。<b>增长策略按基因定制，不能一套打法。</b></div></div></div>
+<table class='t6'><caption>表6 门店经营总表</caption><div class='tnote'>绿 = 高于5店均值，红 = 低于均值</div><thead><tr><th>门店</th><th>订单</th><th>收入</th><th>客单价</th><th>到手率</th><th>毛利率</th><th>P1</th><th>P2</th><th>评分</th></tr></thead><tbody><tr><td>万科</td><td>400</td><td class='h-hot'>¥8,332</td><td class='h-hot'>¥24.15</td><td class='h-hot'>61.7%</td><td class='h-hot'>29.3%</td><td>8.98%</td><td>19.18%</td><td>4.88</td></tr><tr><td>子固路</td><td>298</td><td class=''>¥7,119</td><td class='h-hot'>¥27.47</td><td class='h-hot'>62.9%</td><td class='h-hot'>30.3%</td><td>7.88%</td><td>16.89%</td><td>4.89</td></tr><tr><td>印象城</td><td>593</td><td class='h-hot'>¥13,766</td><td class='h-hot'>¥27.13</td><td class='h-hot'>61.0%</td><td class='h-hot'>28.1%</td><td>7.69%</td><td>18.82%</td><td>4.80</td></tr><tr><td>科兴</td><td>315</td><td class=''>¥5,890</td><td class='h-cold'>¥22.30</td><td class='h-cold'>58.9%</td><td class='h-hot'>26.3%</td><td>7.04%</td><td>24.10%</td><td>4.90</td></tr><tr><td>益田</td><td>275</td><td class=''>¥3,977</td><td class='h-cold'>¥18.41</td><td class='h-cold'>52.9%</td><td class='h-cold'>17.5%</td><td>5.95%</td><td>26.51%</td><td>4.84</td></tr></tbody><tfoot><tr class='total'><td><b>5店合计/均</b></td><td><b>1,881</b></td><td><b>¥39,084.0</b></td><td><b>¥23.89</b></td><td><b>59.5%</b></td><td><b>26.3%</b></td><td><b>7.51%</b></td><td><b>21.10%</b></td><td><b>4.86</b></td></tr></tfoot></table>
+</div>
+<div class='trans'>📌 流量端 8 月表现强劲，但增长的利润去哪了？<b>补贴结构藏着答案 → 进入活动分析</b></div>
+<div class='trans'>📌 活动渗透 98% 已是常态，<b>每个活动的钱花得值不值？→ 进入活动 ROI 解剖</b></div>
+<div class='trans'>📌 商户承担 77%+ 的补贴已成最大出血点，<b>广告费是另一大开支 → 进入广告效率体检</b></div>
+
+<div class="section" id="m2">
+<span class="mod">模块2 · 路径2 订单明细</span>
+<h2>活动分析：98.0% 订单参与活动 —— 活动已是常态</h2>
+<div class="lead">98.0% 订单参与活动，活动从"促销工具"变为"日常成本"；商户承担 77.1% 补贴成本。</div>
+<div class="two"><div><div class="chart" id="c_actpen"></div></div><div><div class="chart" id="c_subsidy"></div></div></div>
+<div class="insight">🔴 <b>商户承担率 77.1%</b>（商户 ¥161,514.0 vs 平台 ¥46,065.0）。<b>行业对标：平台补贴均值约 22.9%</b> —— 远高于行业，利润最大漏水点。</div>
+<table class='t7'><caption>表7 活动补贴结构</caption><div class='tnote'>行业对标：平台补贴均值约 22.9%；煌上煌商户承担 77% = 远高于行业</div><thead><tr><th>门店</th><th>活动占比</th><th>活动总补贴</th><th>商家成本</th><th>平台补贴</th><th>商户承担率</th></tr></thead><tbody><tr><td>万科</td><td>97.3%</td><td>¥48,283</td><td>¥36,371</td><td>¥11,392</td><td class='h-cold'>75.3%</td></tr><tr><td>子固路</td><td>97.9%</td><td>¥34,304</td><td>¥25,830</td><td>¥8,185</td><td class='h-cold'>75.3%</td></tr><tr><td>印象城</td><td>97.9%</td><td>¥78,681</td><td>¥61,302</td><td>¥16,315</td><td class='h-hot'>77.9%</td></tr><tr><td>科兴</td><td>99.6%</td><td>¥21,381</td><td>¥16,238</td><td>¥5,063</td><td class='h-cold'>75.9%</td></tr><tr><td>益田</td><td>98.7%</td><td>¥26,963</td><td>¥21,773</td><td>¥5,110</td><td class='h-hot'>80.8%</td></tr></tbody><tfoot><tr class='total'><td><b>5店合计</b></td><td><b>98.3%</b></td><td><b>¥209,612.0</b></td><td><b>¥161,514.0</b></td><td><b>¥46,065.0</b></td><td><b>77.0%</b></td></tr></tfoot></table>
+</div>
+
+<div class="section" id="m3">
+<span class="mod">模块3 · 路径3 活动明细</span>
+<h2>活动 ROI：爆单红包是主力，商品活动是出血点</h2>
+<div class="lead">爆单红包 ¥37,316 为补贴主力（商户承担 68%）；商品活动/新客立减 100% 商户承担。</div>
+<div class="two"><div><div class="chart" id="c_types"></div></div><div><div class="chart" id="c_subquad"></div></div></div>
+<table class='t9'><caption>表9 活动类型补贴归属</caption><div class='tnote'>商户承担率 >85% = 出血，60-85% = 关注，≤60% = 健康</div><thead><tr><th>活动类型</th><th>订单数</th><th>补贴合计</th><th>商户补贴</th><th>平台补贴</th><th>商户承担率</th><th>判定</th></tr></thead><tbody><tr><td>爆单红包</td><td>2,717</td><td>¥37,316</td><td>¥25,578</td><td>¥11,738</td><td class=''>68.5%</td><td>⚠️改善</td></tr><tr><td>商品活动</td><td>1,921</td><td>¥9,685</td><td>¥9,685</td><td>¥0</td><td class='h-hot'>100.0%</td><td>🔴出血</td></tr><tr><td>减配送费</td><td>2,841</td><td>¥9,150</td><td>¥8,298</td><td>¥852</td><td class='h-hot'>90.7%</td><td>🔴出血</td></tr><tr><td>店铺满减</td><td>479</td><td>¥2,014</td><td>¥1,861</td><td>¥153</td><td class='h-hot'>92.4%</td><td>🔴出血</td></tr><tr><td>门店新客立减</td><td>505</td><td>¥505</td><td>¥505</td><td>¥0</td><td class='h-hot'>100.0%</td><td>🔴出血</td></tr><tr><td>吃货红包</td><td>59</td><td>¥301</td><td>¥0</td><td>¥301</td><td class='h-cold'>0.0%</td><td>✅优质</td></tr><tr><td>大额吃货红包</td><td>1</td><td>¥0</td><td>¥0</td><td>¥0</td><td class='h-cold'>0.0%</td><td>✅优质</td></tr></tbody></table>
+<div class="insight">📌 <b>判定标准</b>：商户承担率 &gt;85% = 🔴 出血，60-85% = 🟡 关注，≤60% = 🟢 健康。</div>
+</div>
+
+<div class="section" id="m4">
+<span class="mod">模块4 · 路径4 广告数据</span>
+<h2>广告效率：美团 vs 淘宝 ROI 分化严重，钱没投对平台</h2>
+<div class="lead">万科美团 ROI 7.54 vs 淘宝 3.30（美团系）；益田淘宝 7.31 vs 美团 4.76（淘宝系）。</div>
+<div class="two"><div><div class="chart" id="c_adroi"></div></div><div><div class="chart" id="c_adconsume"></div></div></div>
+<div class="two"><div><div class="chart" id="c_adscatter"></div></div><div><div class="insight" style="height:100%">⚠️ 科兴美团消耗 ¥999 最大但 ROI 4.66 最低 —— <b>增长里有"花钱买来"的成分</b>；益田淘宝 ROI 7.31 只投 ¥164 —— 平台红利未吃满。</div></div></div>
+<table class='t8'><caption>表8 广告投放效率</caption><div class='tnote'>ROI ≥ 6 绿，< 6 红</div><thead><tr><th>门店</th><th>美团消耗</th><th>淘宝消耗</th><th>美团ROI</th><th>淘宝ROI</th></tr></thead><tbody><tr><td>万科</td><td>¥414</td><td>¥564</td><td class='h-hot'>7.54</td><td class='h-cold'>3.30</td></tr><tr><td>子固路</td><td>¥521</td><td>¥664</td><td class='h-cold'>5.06</td><td class='h-cold'>4.19</td></tr><tr><td>印象城</td><td>¥518</td><td>¥1,406</td><td class='h-hot'>7.62</td><td class='h-cold'>5.12</td></tr><tr><td>科兴</td><td>¥999</td><td>¥374</td><td class='h-cold'>4.66</td><td class='h-cold'>5.70</td></tr><tr><td>益田</td><td>¥1,015</td><td>¥164</td><td class='h-cold'>4.76</td><td class='h-hot'>7.31</td></tr></tbody><tfoot><tr class='total'><td><b>—</b></td><td><b>¥3,467</b></td><td><b>¥3,172</b></td><td><b>5.93</b></td><td><b>5.12</b></td></tr></tfoot></table>
+</div>
+
+<div class="section" id="m5">
+<span class="mod">结论与行动</span>
+<h2>跨路径因果链</h2>
+<div class="lead">流量(路径1) → 活动补贴(路径2/3) → 广告(路径4) → 利润</div>
+<div class="insight" style="font-size:14px">📊 <b>生意公式</b>：曝光 → 进店率 → 下单率 → 实付 − 补贴(商户承担 77.1%) − 抽成 = 到手收入 − 成本 = 利润。补贴结构与客单是两大漏水点。</div>
+<h2>门店行动清单（含量化目标）</h2>
+<div class='act'><b>科兴 · 写字楼爆发店 P0 美团ROI 4.66→6.0（优化定向，预算不变）；P1 客单 ¥22.3→¥25（<20元占比 51.5%→40%）</b><br>🌟</div>
+<div class='act'><b>益田 · 商场质优店 P0 淘宝消耗 ¥164→¥800（ROI 7.31 红利）；P1 客单 ¥18.4→¥22、毛利率 17.5%→22%</b><br>💎</div>
+<div class='act'><b>子固路 · 潜力店 P0 P2 16.9%→19%（菜单+价格带）；P1 老客占比 37.6%→42%（复购券）</b><br>🚀</div>
+<div class='act'><b>万科 · 稳健店 P1 美团消耗+30%（ROI 7.54 最优）；P2 到手率 61.7%→63%</b><br>🛡️</div>
+<div class='act'><b>印象城 · 稳健店 P1 下午茶 22.6%→25%（套餐）；P2 周末供给强化</b><br>🏠</div>
+<h2>全店共性动作</h2>
+<div class='act'><b>客单价提升</b>（P1）<br><20元占比 34-65%→≤40%；引入 20-30 元套餐，客单→¥25+</div>
+<div class='act'><b>补贴结构谈判</b>（P2）<br>商户承担 77%→对标行业 22.9%，与平台谈分担</div>
+<div class='act'><b>老客复购</b>（P1）<br>老客占比 35-45%→≥45%；会员体系+复购券</div>
+<h2>待验证假设（A/B 验证）</h2>
+<div class='act' style='background:#F2F7F2;border-left-color:#2ECC71'>假设①：<20元单品替换为 20-30 元套餐，客单可提升至 ¥25+ —— 需 A/B 测试（P1）</div>
+<div class='act' style='background:#F2F7F2;border-left-color:#2ECC71'>假设②：商户补贴 40%+→30%，订单降幅 <10% 可接受 —— 需试点（P2）</div>
+<div class='act' style='background:#F2F7F2;border-left-color:#2ECC71'>假设③：科兴周末唤醒券将周末/工作日 0.68→0.85 —— 需 2 周测试（P2）</div>
+</div>
+
+<div class="section" id="glos">
+<h2>名词解释</h2>
+<div class="glossary">
+<b>到手率</b> = 收入 ÷ (营业额 ÷ 1.35)，平台抽佣+补贴后商家实收比例。<br>
+<b>毛利率</b> = (收入 − 成本) ÷ 收入；成本 = (商品原价 ÷ 1.35) × 45%。<br>
+<b>P1 进店率</b> = 进店 ÷ 曝光（≥7%）；<b>P2 下单率</b> = 下单 ÷ 进店（≥17%）。<br>
+<b>客单价</b> = 实付 ÷ 订单（≥¥30）。<br>
+<b>流量质量指数</b> = P2 ÷ P1：&gt;3.0 优质 / 2.0-3.0 正常 / &lt;2.0 泛流量。<br>
+<b>商户承担率</b> = 商家成本 ÷ 活动总补贴；行业平台补贴均值约 22.9%。<br>
+<b>案例</b>：营业额 ¥10,000 → 还原 ¥7,407 → 收入 ¥4,500 → 到手率 60.8%。<br>
+<b>数据窗口</b>：路径1/4 = 8月1-13日；路径2/3 = 5-7月订单明细。
+</div>
+</div>
+<div class="foot">煌上煌 5 店 8 月经营分析报告 v7 · 2026-08-15 · ECharts 动态图表 · 自包含</div>
+</div>
+<script><script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<!-- 备用CDN: https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js --></script>
+<script>
+const OPTS = {"funnel": {"title": {"text": "流量漏斗（5店合计 · 8月）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "item", "formatter": "{b}: {c}"}, "series": [{"type": "funnel", "left": "12%", "width": "70%", "sort": "descending", "gap": 4, "label": {"formatter": "{b} {c}", "fontSize": 13}, "data": [{"name": "曝光 118,667", "value": 118667}, {"name": "进店 9,039", "value": 9039}, {"name": "下单 1,822", "value": 1822}], "color": ["#0078D4", "#FF8C00", "#107C10"]}]}, "newold": {"title": {"text": "新老客结构：下单贡献（8月）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis"}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["新客下单", "老客下单"], "top": 5, "textStyle": {"fontSize": 10}}, "xAxis": {"type": "category", "data": ["万科", "子固路", "印象城", "科兴", "益田"]}, "yAxis": {"type": "value", "name": "单"}, "series": [{"name": "新客下单", "type": "bar", "data": [221, 175, 357, 191, 147], "itemStyle": {"color": "#FF6B35"}}, {"name": "老客下单", "type": "bar", "data": [167, 112, 210, 117, 125], "itemStyle": {"color": "#FFD100"}}]}, "decomp": {"title": {"text": "增长三要素分解（订单环比 = 曝光×P1×P2）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis"}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["曝光贡献%", "P1进店贡献%", "P2下单贡献%"], "top": 5}, "xAxis": {"type": "value", "name": "%"}, "yAxis": {"type": "category", "data": ["益田", "科兴", "印象城", "子固路", "万科"]}, "series": [{"name": "曝光贡献%", "type": "bar", "data": [11.7, 40.9, 22.1, 43.5, 18.3], "itemStyle": {"color": "#0078D4"}}, {"name": "P1进店贡献%", "type": "bar", "data": [-20.0, -25.8, -20.2, -9.5, -17.7], "itemStyle": {"color": "#D13438"}}, {"name": "P2下单贡献%", "type": "bar", "data": [47.7, 80.8, 31.9, 36.5, 26.0], "itemStyle": {"color": "#107C10"}}]}, "quality": {"title": {"text": "流量质量指数（P2÷P1）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis"}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["7月", "8月", "优质线3.0", "正常线2.0"], "top": 5}, "xAxis": {"type": "category", "data": ["万科", "子固路", "印象城", "科兴", "益田"]}, "yAxis": {"type": "value"}, "series": [{"name": "7月", "type": "bar", "data": [1.4, 1.42, 1.48, 1.41, 2.41], "itemStyle": {"color": "#B0BEC5"}}, {"name": "8月", "type": "bar", "data": [{"value": 2.14, "label": {"show": true, "position": "top", "formatter": "+53%", "color": "#107C10", "fontSize": 10}}, {"value": 2.14, "label": {"show": true, "position": "top", "formatter": "+51%", "color": "#107C10", "fontSize": 10}}, {"value": 2.45, "label": {"show": true, "position": "top", "formatter": "+65%", "color": "#107C10", "fontSize": 10}}, {"value": 3.43, "label": {"show": true, "position": "top", "formatter": "+144%", "color": "#107C10", "fontSize": 10}}, {"value": 4.45, "label": {"show": true, "position": "top", "formatter": "+85%", "color": "#107C10", "fontSize": 10}}], "itemStyle": {"color": "#0078D4"}, "label": {"show": true, "position": "top", "fontSize": 9, "rotate": 0, "formatter": "{c}", "color": "#1F2937"}}, {"type": "line", "data": [3.0, 3.0, 3.0, 3.0, 3.0], "name": "优质线3.0", "silent": true, "lineStyle": {"type": "dashed", "color": "#2ECC71"}, "symbol": "none"}, {"type": "line", "data": [2.0, 2.0, 2.0, 2.0, 2.0], "name": "正常线2.0", "silent": true, "lineStyle": {"type": "dashed", "color": "#F5A623"}, "symbol": "none"}]}, "band": {"title": {"text": "价格带分布（按实付，5-7月订单明细）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["<20元", "20-30", "30-40", "40+"], "textStyle": {"fontSize": 10}, "top": 0}, "xAxis": {"type": "category", "data": ["万科", "子固路", "印象城", "科兴", "益田"]}, "yAxis": {"type": "value", "name": "%", "max": 100}, "series": [{"name": "<20元", "type": "bar", "stack": "t", "data": [41.7, 34.1, 37.6, 51.5, 65.4], "itemStyle": {"color": "#D13438"}}, {"name": "20-30", "type": "bar", "stack": "t", "data": [31.5, 32.1, 32.1, 26.8, 21.4], "itemStyle": {"color": "#FF6B35"}}, {"name": "30-40", "type": "bar", "stack": "t", "data": [15.3, 19.4, 18.4, 12.5, 7.8], "itemStyle": {"color": "#8E44AD"}}, {"name": "40+", "type": "bar", "stack": "t", "data": [11.4, 14.5, 11.8, 9.3, 5.5], "itemStyle": {"color": "#107C10"}}]}, "period": {"title": {"text": "时段分布（5-7月订单明细）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["早餐", "午餐", "下午茶", "晚餐", "夜宵"], "textStyle": {"fontSize": 10}, "top": 0}, "xAxis": {"type": "category", "data": ["万科", "子固路", "印象城", "科兴", "益田"]}, "yAxis": {"type": "value", "name": "%", "max": 100}, "series": [{"name": "早餐", "type": "bar", "stack": "t", "data": [1.2, 8.1, 2.1, 0.1, 1.9], "itemStyle": {"color": "#FFC107"}}, {"name": "午餐", "type": "bar", "stack": "t", "data": [31.1, 23.7, 31.9, 35.2, 31.3], "itemStyle": {"color": "#0078D4"}}, {"name": "下午茶", "type": "bar", "stack": "t", "data": [20.0, 19.8, 22.6, 16.1, 15.5], "itemStyle": {"color": "#8E44AD"}}, {"name": "晚餐", "type": "bar", "stack": "t", "data": [38.6, 30.8, 36.7, 33.5, 42.7], "itemStyle": {"color": "#D13438"}}, {"name": "夜宵", "type": "bar", "stack": "t", "data": [8.8, 17.0, 6.3, 15.1, 8.4], "itemStyle": {"color": "#37474F"}}]}, "weekend": {"title": {"text": "周末基因：日均订单（周末/工作日）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis"}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["工作日日均", "周末日均"], "top": 5}, "xAxis": {"type": "category", "data": ["万科", "子固路", "印象城", "科兴", "益田"]}, "yAxis": {"type": "value"}, "series": [{"name": "工作日日均", "type": "bar", "data": [30.3, 23.6, 43.8, 26.9, 22.0], "itemStyle": {"color": "#0078D4"}}, {"name": "周末日均", "type": "bar", "data": [{"value": 31.8, "label": {"show": true, "position": "insideTop", "formatter": "1.05", "color": "#fff", "fontSize": 9}}, {"value": 21.5, "label": {"show": true, "position": "insideTop", "formatter": "0.91", "color": "#fff", "fontSize": 9}}, {"value": 49.8, "label": {"show": true, "position": "insideTop", "formatter": "1.14", "color": "#fff", "fontSize": 9}}, {"value": 18.2, "label": {"show": true, "position": "insideTop", "formatter": "0.68", "color": "#fff", "fontSize": 9}}, {"value": 19.2, "label": {"show": true, "position": "insideTop", "formatter": "0.88", "color": "#fff", "fontSize": 9}}], "itemStyle": {"color": "#FFD100"}}]}, "radar": {"title": {"text": "KPI 雷达（五项归一化）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {}, "legend": {"data": ["万科", "子固路", "印象城", "科兴", "益田"], "top": 5, "textStyle": {"fontSize": 10}}, "radar": {"indicator": [{"name": "订单"}, {"name": "净G"}, {"name": "客单"}, {"name": "P1"}, {"name": "P2"}]}, "series": [{"type": "radar", "data": [{"name": "万科", "value": [400.0, 8332.4, 24.15, 8.98, 19.18]}, {"name": "子固路", "value": [298.0, 7118.7, 27.47, 7.88, 16.89]}, {"name": "印象城", "value": [593.0, 13766.0, 27.13, 7.69, 18.82]}, {"name": "科兴", "value": [315.0, 5889.7, 22.3, 7.04, 24.1]}, {"name": "益田", "value": [275.0, 3977.1, 18.41, 5.95, 26.51]}]}]}, "gmvpie": {"title": {"text": "营收贡献结构（净G占比）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "item", "formatter": "{b}: {d}%"}, "series": [{"type": "pie", "radius": ["38%", "65%"], "center": ["50%", "55%"], "label": {"formatter": "{b} {d}%"}, "data": [{"name": "万科", "value": 8332.0}, {"name": "子固路", "value": 7119.0}, {"name": "印象城", "value": 13766.0}, {"name": "科兴", "value": 5890.0}, {"name": "益田", "value": 3977.0}]}]}, "daily": {"title": {"text": "5店 8月日订单趋势（8/1-8/13）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis"}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["万科", "子固路", "印象城", "科兴", "益田"], "top": 5, "textStyle": {"fontSize": 10}}, "xAxis": {"type": "category", "data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}, "yAxis": {"type": "value", "name": "日订单"}, "series": [{"name": "万科", "type": "line", "smooth": true, "data": [22, 22, 29, 27, 33, 28, 28, 46, 37, 36, 31, 31, 30]}, {"name": "子固路", "type": "line", "smooth": true, "data": [17, 19, 14, 20, 24, 22, 35, 24, 26, 32, 25, 19, 21]}, {"name": "印象城", "type": "line", "smooth": true, "data": [45, 42, 35, 49, 52, 53, 39, 60, 52, 48, 47, 39, 32]}, {"name": "科兴", "type": "line", "smooth": true, "data": [17, 21, 17, 18, 20, 31, 26, 16, 19, 23, 34, 36, 37]}, {"name": "益田", "type": "line", "smooth": true, "data": [14, 19, 33, 14, 15, 28, 25, 24, 20, 16, 27, 19, 21]}]}, "actpen": {"title": {"text": "活动渗透率（5-7月订单明细）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis"}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["活动订单", "无活动"], "top": 5, "textStyle": {"fontSize": 10}}, "xAxis": {"type": "category", "data": ["万科", "子固路", "印象城", "科兴", "益田"]}, "yAxis": {"type": "value"}, "series": [{"name": "活动订单", "type": "bar", "stack": "a", "data": [{"value": 2104, "label": {"show": true, "position": "top", "formatter": "97%", "color": "#D13438", "fontSize": 10}}, {"value": 1406, "label": {"show": true, "position": "top", "formatter": "98%", "color": "#D13438", "fontSize": 10}}, {"value": 3053, "label": {"show": true, "position": "top", "formatter": "98%", "color": "#D13438", "fontSize": 10}}, {"value": 903, "label": {"show": true, "position": "top", "formatter": "100%", "color": "#D13438", "fontSize": 10}}, {"value": 1169, "label": {"show": true, "position": "top", "formatter": "99%", "color": "#D13438", "fontSize": 10}}], "itemStyle": {"color": "#FF6B35"}}, {"name": "无活动", "type": "bar", "stack": "a", "data": [59, 30, 66, 4, 15], "itemStyle": {"color": "#CFD8DC"}}]}, "subsidy": {"title": {"text": "活动补贴结构：商户 vs 平台（5-7月）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis"}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["商户承担", "平台承担"], "top": 5, "textStyle": {"fontSize": 10}}, "xAxis": {"type": "category", "data": ["万科", "子固路", "印象城", "科兴", "益田"]}, "yAxis": {"type": "value", "name": "元"}, "series": [{"name": "商户承担", "type": "bar", "stack": "s", "data": [36371.0, 25830.0, 61302.0, 16238.0, 21773.0], "itemStyle": {"color": "#D13438"}}, {"name": "平台承担", "type": "bar", "stack": "s", "data": [{"value": 11392.0, "label": {"show": true, "position": "top", "formatter": "商户75%", "color": "#D13438", "fontSize": 10}}, {"value": 8185.0, "label": {"show": true, "position": "top", "formatter": "商户75%", "color": "#D13438", "fontSize": 10}}, {"value": 16315.0, "label": {"show": true, "position": "top", "formatter": "商户78%", "color": "#D13438", "fontSize": 10}}, {"value": 5063.0, "label": {"show": true, "position": "top", "formatter": "商户76%", "color": "#D13438", "fontSize": 10}}, {"value": 5110.0, "label": {"show": true, "position": "top", "formatter": "商户81%", "color": "#D13438", "fontSize": 10}}], "itemStyle": {"color": "#0078D4"}}]}, "types": {"title": {"text": "活动类型补贴分布（5-7月）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis"}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["商户补贴", "平台补贴"], "top": 5}, "xAxis": {"type": "value"}, "yAxis": {"type": "category", "data": ["爆单红包", "商品活动", "减配送费", "店铺满减", "门店新客立减", "吃货红包", "大额吃货红包"]}, "series": [{"name": "商户补贴", "type": "bar", "stack": "t", "data": [25578.0, 9685.0, 8298.0, 1861.0, 505.0, 0.0, 0.0], "itemStyle": {"color": "#D13438"}}, {"name": "平台补贴", "type": "bar", "stack": "t", "data": [11738.0, 0.0, 852.0, 153.0, 0.0, 301.0, 0.0], "itemStyle": {"color": "#0078D4"}, "label": {"show": true, "position": "right", "formatter": "{c} 元"}}]}, "subquad": {"title": {"text": "补贴效率矩阵：金额 × 商户承担率", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"formatter": "{b}: ¥{c0} / 商户承担{c1}%"}, "xAxis": {"type": "value", "name": "补贴金额(元)"}, "yAxis": {"type": "value", "name": "商户承担率%", "max": 110}, "series": [{"type": "scatter", "symbolSize": 16, "markLine": {"silent": true, "data": [{"yAxis": 85}, {"yAxis": 60}], "label": {"formatter": "{c}", "fontSize": 10}}, "data": [{"name": "爆单红包", "value": [37316.0, 68.5], "label": {"show": true, "formatter": "{b}", "position": "top", "fontSize": 9}}, {"name": "商品活动", "value": [9685.0, 100.0], "label": {"show": true, "formatter": "{b}", "position": "top", "fontSize": 9}}, {"name": "减配送费", "value": [9150.0, 90.7], "label": {"show": true, "formatter": "{b}", "position": "top", "fontSize": 9}}, {"name": "店铺满减", "value": [2014.0, 92.4], "label": {"show": true, "formatter": "{b}", "position": "top", "fontSize": 9}}, {"name": "门店新客立减", "value": [505.0, 100.0], "label": {"show": true, "formatter": "{b}", "position": "top", "fontSize": 9}}, {"name": "吃货红包", "value": [301.0, 0.0], "label": {"show": true, "formatter": "{b}", "position": "top", "fontSize": 9}}, {"name": "大额吃货红包", "value": [0.0, 0.0], "label": {"show": true, "formatter": "{b}", "position": "top", "fontSize": 9}}]}]}, "adroi": {"title": {"text": "广告平台 ROI 分化（8月，基准=6）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis"}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["美团ROI", "淘宝ROI"], "top": 5, "textStyle": {"fontSize": 10}}, "xAxis": {"type": "category", "data": ["万科", "子固路", "印象城", "科兴", "益田"]}, "yAxis": {"type": "value"}, "markLine": {"data": [{"yAxis": 6}]}, "series": [{"name": "美团ROI", "type": "bar", "data": [7.54, 5.06, 7.62, 4.66, 4.76], "itemStyle": {"color": "#FFD100"}}, {"name": "淘宝ROI", "type": "bar", "data": [3.3, 4.19, 5.12, 5.7, 7.31], "itemStyle": {"color": "#FF6B35"}, "markLine": {"silent": true, "data": [{"yAxis": 6}], "lineStyle": {"color": "#107C10", "type": "dashed"}, "label": {"formatter": "基准6"}}}]}, "adscatter": {"title": {"text": "广告消耗 vs ROI：钱效匹配", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"formatter": "{b}: 消耗¥{c0} / ROI {c1}"}, "xAxis": {"type": "value", "name": "消耗(元)"}, "yAxis": {"type": "value", "name": "ROI"}, "series": [{"type": "scatter", "symbolSize": 18, "data": [{"name": "万科·美", "value": [414.0, 7.54], "itemStyle": {"color": "#FFD100"}}, {"name": "万科·淘", "value": [564.0, 3.3], "itemStyle": {"color": "#FF6B35"}}, {"name": "子固路·美", "value": [521.0, 5.06], "itemStyle": {"color": "#FFD100"}}, {"name": "子固路·淘", "value": [664.0, 4.19], "itemStyle": {"color": "#FF6B35"}}, {"name": "印象城·美", "value": [518.0, 7.62], "itemStyle": {"color": "#FFD100"}}, {"name": "印象城·淘", "value": [1406.0, 5.12], "itemStyle": {"color": "#FF6B35"}}, {"name": "科兴·美", "value": [999.0, 4.66], "itemStyle": {"color": "#FFD100"}}, {"name": "科兴·淘", "value": [374.0, 5.7], "itemStyle": {"color": "#FF6B35"}}, {"name": "益田·美", "value": [1015.0, 4.76], "itemStyle": {"color": "#FFD100"}}, {"name": "益田·淘", "value": [164.0, 7.31], "itemStyle": {"color": "#FF6B35"}}], "label": {"show": true, "formatter": "{b}", "position": "top", "fontSize": 9}, "markLine": {"silent": true, "data": [{"yAxis": 6}], "lineStyle": {"color": "#107C10", "type": "dashed"}, "label": {"formatter": "基准6"}}}]}, "adconsume": {"title": {"text": "广告消耗结构（8月，元）", "left": "center", "textStyle": {"fontSize": 14, "color": "#1F2937"}}, "tooltip": {"trigger": "axis"}, "grid": {"left": 60, "right": 30, "top": 45, "bottom": 35}, "color": ["#C8102E", "#C9A063", "#0078D4", "#107C10", "#8E44AD"], "legend": {"data": ["美团消耗", "淘宝消耗"], "top": 5, "textStyle": {"fontSize": 10}}, "xAxis": {"type": "category", "data": ["万科", "子固路", "印象城", "科兴", "益田"]}, "yAxis": {"type": "value"}, "series": [{"name": "美团消耗", "type": "bar", "data": [414.0, 521.0, 518.0, 999.0, 1015.0], "itemStyle": {"color": "#FFD100"}}, {"name": "淘宝消耗", "type": "bar", "data": [564.0, 664.0, 1406.0, 374.0, 164.0], "itemStyle": {"color": "#FF6B35"}}]}};
+Object.keys(OPTS).forEach(id => {
+  const el = document.getElementById('c_' + id);
+  if (el) { const ch = echarts.init(el); ch.setOption(OPTS[id]); window.addEventListener('resize', () => ch.resize()); }
+});
+const secs = ['p0','m1','m2','m3','m4','m5','glos'];
+const links = document.querySelectorAll('#toc a');
+window.addEventListener('scroll', () => {
+  let cur = 'p0';
+  for (const id of secs) { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 140) cur = id; }
+  links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+});
+document.querySelectorAll('th').forEach((th, i) => {
+  th.addEventListener('click', () => {
+    const tb = th.closest('table'); const rows = [...tb.querySelectorAll('tbody tr')];
+    const idx = i; const dir = tb.dataset.dir === 'asc' ? -1 : 1; tb.dataset.dir = dir === -1 ? 'asc' : 'desc';
+    rows.sort((a, b) => {
+      const av = parseFloat((a.children[idx]?.textContent || '').replace(/[¥%,]/g, '')) || 0;
+      const bv = parseFloat((b.children[idx]?.textContent || '').replace(/[¥%,]/g, '')) || 0;
+      return (av - bv) * dir;
+    });
+    rows.forEach(r => tb.appendChild(r));
+  });
+});
+</script>
+</body>
+</html>
