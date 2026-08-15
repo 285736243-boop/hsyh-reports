@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>5门店单店深度诊断报告</title>
+<script src="chart.umd.min.js"></script><script src="datalabels.min.js"></script>
+<script>Chart.register(ChartDataLabels);window.addEventListener('DOMContentLoaded',function(){if(typeof renderCharts==='function')renderCharts();});</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:PingFang SC,Microsoft YaHei,sans-serif;background:#f5f6fa;color:#2c3e50;line-height:1.7}
+.header{background:linear-gradient(135deg,#C41E3A,#8B0000);color:#fff;padding:22px;text-align:center}
+.header h1{font-size:1.6em}.header .sub{font-size:.78em;opacity:.85}
+.container{max-width:1400px;margin:0 auto;padding:12px}
+.store-card{background:#fff;border-radius:10px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden}
+.sc-header{padding:12px 16px;color:#fff;display:flex;justify-content:space-between;align-items:center}
+.sc-header h2{font-size:1.1em}.sc-header .rank{font-size:.75em;opacity:.9}
+.sc-body{padding:14px}
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:10px}
+.sc-kpi{text-align:center;padding:8px;border-radius:6px;background:#f8f9fa}
+.sc-kpi .v{font-size:1.2em;font-weight:700}.sc-kpi .l{font-size:.65em;color:#7f8c8d}
+.sc-diag{border-radius:6px;padding:10px;margin-bottom:8px;font-size:.78em;line-height:1.6}
+.sc-diag.g{background:#e8f5e9;border-left:3px solid #27ae60}
+.sc-diag.r{background:#fef5f5;border-left:3px solid #e74c3c}
+.sc-diag.b{background:#e3f2fd;border-left:3px solid #1565c0}
+.sc-diag h5{font-size:.85em;margin-bottom:3px}
+.sc-tbl{overflow-x:auto;font-size:.72em;margin-bottom:8px}
+.sc-tbl table{width:100%;border-collapse:collapse}
+.sc-tbl th{background:#f1f1f5;padding:5px;text-align:left;border-bottom:1px solid #ddd}
+.sc-tbl td{padding:5px;border-bottom:1px solid #eee}
+.green{color:#27ae60}.red{color:#e74c3c}.orange{color:#e67e22}
+.c2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chart-box{background:#fff;border-radius:8px;padding:8px;box-shadow:0 1px 4px rgba(0,0,0,.03)}
+.chart-box h4{font-size:.78em;margin-bottom:3px;color:#34495e}
+.badge{display:inline-block;padding:1px 6px;border-radius:6px;font-size:.65em;font-weight:600}
+.bg{background:#def7ec;color:#046c4e}.br{background:#fde8e8;color:#C41E3A}.bb{background:#e1effe;color:#1e429f}
+.footer{text-align:center;padding:14px;color:#888;font-size:.65em}
+</style></head><body>
+<div class="header"><h1>5门店单店活动深度诊断报告</h1>
+<div class="sub">路径2+3取数 | 已过滤已取消+无效 | 一店一策精准诊断</div></div><div class="container">
+<div class="store-card"><div class="sc-header" style="background:#3498db"><h2>印象城</h2><div class="rank">5月排1 | 6月排1 | 7月排1</div></div><div class="sc-body"><div class="sc-grid">
+<div class="sc-kpi"><div class="l">5月GMV</div><div class="v">42,923</div></div>
+<div class="sc-kpi"><div class="l">6月GMV</div><div class="v">49,990</div></div>
+<div class="sc-kpi"><div class="l">7月GMV</div><div class="v">53,005</div></div>
+<div class="sc-kpi"><div class="l">5->7增速</div><div class="v green">+23%</div></div>
+<div class="sc-kpi"><div class="l">7月ROI</div><div class="v orange">1.34</div></div>
+<div class="sc-kpi"><div class="l">7月客单价</div><div class="v">31.46</div></div>
+<div class="sc-kpi"><div class="l">7月订单数</div><div class="v">1,685</div></div>
+<div class="sc-kpi"><div class="l">补贴增速</div><div class="v green">+16%</div></div>
+</div><div class="sc-tbl"><table><tr><th>平台</th><th>GMV</th><th>ROI</th><th>占比</th></tr>
+<tr><td>美团</td><td>65,023</td><td class="green">1.86</td><td>45%</td></tr>
+<tr><td>淘宝</td><td>80,895</td><td class="">1.05</td><td>55%</td></tr></table></div><div class="sc-diag g"><h5>优势</h5><p>GMV增速23%稳增;ROI=1.34良好;客单价1.34健康</p></div>
+<div class="sc-diag r"><h5>劣势</h5><p>-</p></div>
+<div class="sc-diag b"><h5>优化建议</h5><p><b>保持当前策略</b></p></div></div></div><div class="store-card"><div class="sc-header" style="background:#e74c3c"><h2>地铁万科</h2><div class="rank">5月排2 | 6月排4 | 7月排3</div></div><div class="sc-body"><div class="sc-grid">
+<div class="sc-kpi"><div class="l">5月GMV</div><div class="v">39,055</div></div>
+<div class="sc-kpi"><div class="l">6月GMV</div><div class="v">31,041</div></div>
+<div class="sc-kpi"><div class="l">7月GMV</div><div class="v">38,406</div></div>
+<div class="sc-kpi"><div class="l">5->7增速</div><div class="v red">-2%</div></div>
+<div class="sc-kpi"><div class="l">7月ROI</div><div class="v orange">1.33</div></div>
+<div class="sc-kpi"><div class="l">7月客单价</div><div class="v">30.95</div></div>
+<div class="sc-kpi"><div class="l">7月订单数</div><div class="v">1,241</div></div>
+<div class="sc-kpi"><div class="l">补贴增速</div><div class="v green">-6%</div></div>
+</div><div class="sc-tbl"><table><tr><th>平台</th><th>GMV</th><th>ROI</th><th>占比</th></tr>
+<tr><td>美团</td><td>54,774</td><td class="">1.47</td><td>50%</td></tr>
+<tr><td>淘宝</td><td>53,729</td><td class="">1.15</td><td>50%</td></tr></table></div><div class="sc-diag g"><h5>优势</h5><p>ROI=1.33良好;客单价1.33健康</p></div>
+<div class="sc-diag r"><h5>劣势</h5><p>GMV增速-2%滞后</p></div>
+<div class="sc-diag b"><h5>优化建议</h5><p><b>追加新客立减+高峰日投放</b></p></div></div></div><div class="store-card"><div class="sc-header" style="background:#27ae60"><h2>子固路</h2><div class="rank">5月排3 | 6月排5 | 7月排5</div></div><div class="sc-body"><div class="sc-grid">
+<div class="sc-kpi"><div class="l">5月GMV</div><div class="v">28,262</div></div>
+<div class="sc-kpi"><div class="l">6月GMV</div><div class="v">24,722</div></div>
+<div class="sc-kpi"><div class="l">7月GMV</div><div class="v">28,972</div></div>
+<div class="sc-kpi"><div class="l">5->7增速</div><div class="v green">+3%</div></div>
+<div class="sc-kpi"><div class="l">7月ROI</div><div class="v orange">1.25</div></div>
+<div class="sc-kpi"><div class="l">7月客单价</div><div class="v">30.76</div></div>
+<div class="sc-kpi"><div class="l">7月订单数</div><div class="v">942</div></div>
+<div class="sc-kpi"><div class="l">补贴增速</div><div class="v green">-1%</div></div>
+</div><div class="sc-tbl"><table><tr><th>平台</th><th>GMV</th><th>ROI</th><th>占比</th></tr>
+<tr><td>美团</td><td>42,292</td><td class="">1.26</td><td>52%</td></tr>
+<tr><td>淘宝</td><td>39,664</td><td class="">1.18</td><td>48%</td></tr></table></div><div class="sc-diag g"><h5>优势</h5><p>客单价1.25健康</p></div>
+<div class="sc-diag r"><h5>劣势</h5><p>GMV增速3%滞后;ROI仅1.25偏低</p></div>
+<div class="sc-diag b"><h5>优化建议</h5><p><b>追加新客立减+高峰日投放 + 削减支付红包30%</b></p></div></div></div><div class="store-card"><div class="sc-header" style="background:#e67e22"><h2>南山科兴</h2><div class="rank">5月排5 | 6月排2 | 7月排2</div></div><div class="sc-body"><div class="sc-grid">
+<div class="sc-kpi"><div class="l">5月GMV</div><div class="v">4,742</div></div>
+<div class="sc-kpi"><div class="l">6月GMV</div><div class="v">42,283</div></div>
+<div class="sc-kpi"><div class="l">7月GMV</div><div class="v">40,086</div></div>
+<div class="sc-kpi"><div class="l">5->7增速</div><div class="v green">+745%</div></div>
+<div class="sc-kpi"><div class="l">7月ROI</div><div class="v green">1.47</div></div>
+<div class="sc-kpi"><div class="l">7月客单价</div><div class="v">31.71</div></div>
+<div class="sc-kpi"><div class="l">7月订单数</div><div class="v">1,264</div></div>
+<div class="sc-kpi"><div class="l">补贴增速</div><div class="v green">+603%</div></div>
+</div><div class="sc-tbl"><table><tr><th>平台</th><th>GMV</th><th>ROI</th><th>占比</th></tr>
+<tr><td>美团</td><td>65,581</td><td class="green">1.56</td><td>75%</td></tr>
+<tr><td>淘宝</td><td>21,530</td><td class="">1.01</td><td>25%</td></tr></table></div><div class="sc-diag g"><h5>优势</h5><p>GMV增速745%增长强劲;ROI=1.47领先;客单价1.47健康</p></div>
+<div class="sc-diag r"><h5>劣势</h5><p>-</p></div>
+<div class="sc-diag b"><h5>优化建议</h5><p><b>保持当前策略</b></p></div></div></div><div class="store-card"><div class="sc-header" style="background:#8e44ad"><h2>南山益田</h2><div class="rank">5月排4 | 6月排3 | 7月排4</div></div><div class="sc-body"><div class="sc-grid">
+<div class="sc-kpi"><div class="l">5月GMV</div><div class="v">21,337</div></div>
+<div class="sc-kpi"><div class="l">6月GMV</div><div class="v">34,119</div></div>
+<div class="sc-kpi"><div class="l">7月GMV</div><div class="v">36,263</div></div>
+<div class="sc-kpi"><div class="l">5->7增速</div><div class="v green">+70%</div></div>
+<div class="sc-kpi"><div class="l">7月ROI</div><div class="v orange">1.21</div></div>
+<div class="sc-kpi"><div class="l">7月客单价</div><div class="v">27.45</div></div>
+<div class="sc-kpi"><div class="l">7月订单数</div><div class="v">1,321</div></div>
+<div class="sc-kpi"><div class="l">补贴增速</div><div class="v green">+69%</div></div>
+</div><div class="sc-tbl"><table><tr><th>平台</th><th>GMV</th><th>ROI</th><th>占比</th></tr>
+<tr><td>美团</td><td>68,704</td><td class="">1.37</td><td>75%</td></tr>
+<tr><td>淘宝</td><td>23,015</td><td class="red">0.87</td><td>25%</td></tr></table></div><div class="sc-diag g"><h5>优势</h5><p>GMV增速70%增长强劲</p></div>
+<div class="sc-diag r"><h5>劣势</h5><p>ROI仅1.21偏低;客单价仅27.45;淘宝ROI仅0.87远低美团1.37</p></div>
+<div class="sc-diag b"><h5>优化建议</h5><p><b>削减支付红包30% + 提高满减门槛至30 + 淘宝端削减低效活动</b></p></div></div></div><div class="store-card"><div class="sc-header" style="background:#C41E3A"><h2>5店对比总览</h2><div class="rank">一图看清差距</div></div><div class="sc-body"><div class="c2"><div class="chart-box"><h4>GMV月度对比</h4><canvas id="gmvChart" style="max-height:250px"></canvas></div><div class="chart-box"><h4>ROI月度对比</h4><canvas id="roiChart" style="max-height:250px"></canvas></div></div></div></div><div class="footer">V4.3 单店诊断 | 路径2+3取数 | 一店一策 | 2026-08-11</div></div><script>function renderCharts(){// GMV对比
+(function(){var c=document.getElementById("gmvChart");if(!c)return;c=c.getContext("2d");
+new Chart(c,{type:"bar",data:{labels:["5\u6708", "6\u6708", "7\u6708"],datasets:[{label:"印象城",data:[42922.64, 49989.92, 53005.01],backgroundColor:"#3498db",borderRadius:4},{label:"地铁万科",data:[39055.02, 31041.3, 38406.22],backgroundColor:"#e74c3c",borderRadius:4},{label:"子固路",data:[28261.56, 24721.71, 28972.1],backgroundColor:"#27ae60",borderRadius:4},{label:"南山科兴",data:[4742.25, 42282.55, 40086.19],backgroundColor:"#e67e22",borderRadius:4},{label:"南山益田",data:[21337.15, 34118.87, 36262.96],backgroundColor:"#8e44ad",borderRadius:4}']}},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:"GMV"}}},plugins:{legend:{position:"bottom"},datalabels:{anchor:"end",align:"end",color:"#2c3e50",font:{size:8},formatter:function(v){return(v/10000).toFixed(1)+"万"}}}}}});}})();
+// ROI对比
+(function(){var c=document.getElementById("roiChart");if(!c)return;c=c.getContext("2d");
+new Chart(c,{type:"line",data:{labels:["5月","6月","7月"],datasets:[{label:"印象城",data:[1.25, 1.32, 1.34],borderColor:"#3498db",borderWidth:2.5,tension:.3,pointRadius:4,fill:false,datalabels:{display:false}},{label:"地铁万科",data:[1.27, 1.26, 1.33],borderColor:"#e74c3c",borderWidth:2.5,tension:.3,pointRadius:4,fill:false,datalabels:{display:false}},{label:"子固路",data:[1.2, 1.2, 1.25],borderColor:"#27ae60",borderWidth:2.5,tension:.3,pointRadius:4,fill:false,datalabels:{display:false}},{label:"南山科兴",data:[1.22, 1.32, 1.47],borderColor:"#e67e22",borderWidth:2.5,tension:.3,pointRadius:4,fill:false,datalabels:{display:false}},{label:"南山益田",data:[1.2, 1.17, 1.21],borderColor:"#8e44ad",borderWidth:2.5,tension:.3,pointRadius:4,fill:false,datalabels:{display:false}}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:"ROI"}}},plugins:{legend:{position:"bottom"}}}}}});}})();
+}</script></body></html>
