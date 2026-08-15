@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>煌上煌数据分析业务架构导览 V1</title>
+<style>
+:root{--bg:#0f1419;--card:#1a2129;--line:#2a343f;--text:#dce3ea;--dim:#8b98a5;--brand:#c41e3a;--brand2:#e74c3c;--blue:#58a6ff;--green:#3fb950;--orange:#f39c12;--purple:#a371f7}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Microsoft YaHei",-apple-system,sans-serif;line-height:1.65;padding:32px 20px 80px}
+.wrap{max-width:1100px;margin:0 auto}
+.header{text-align:center;padding:28px 0 22px;border-bottom:2px solid var(--line);margin-bottom:30px}
+.header h1{font-size:1.9em;letter-spacing:2px}
+.header h1 span{color:var(--brand2);font-size:.55em;vertical-align:middle;margin-left:8px}
+.header .sub{color:var(--dim);margin-top:8px;font-size:.92em}
+.header .badge{display:inline-block;background:rgba(88,166,255,.15);color:var(--blue);border:1px solid rgba(88,166,255,.3);border-radius:20px;padding:2px 14px;font-size:.75em;margin-top:8px}
+.quick-nav{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;flex-wrap:wrap;gap:8px 16px}
+.quick-nav .qn-title{color:var(--dim);font-size:.78em;width:100%;margin-bottom:4px;letter-spacing:1px}
+.quick-nav a{color:var(--blue);text-decoration:none;font-size:.85em;padding:4px 0;border-bottom:1px solid transparent;transition:border-color .2s}
+.quick-nav a:hover{border-bottom-color:var(--blue)}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 20px;margin-bottom:24px;display:flex;flex-wrap:wrap;gap:6px 18px}
+.toc .toc-title{color:var(--dim);font-size:.72em;letter-spacing:1px;width:100%;margin-bottom:2px}
+.toc a{color:var(--text);text-decoration:none;font-size:.82em;opacity:.7;transition:opacity .2s}
+.toc a:hover{opacity:1;color:var(--blue)}
+h2{font-size:1.25em;margin:34px 0 14px;padding-left:12px;border-left:4px solid var(--brand);color:#fff;scroll-margin-top:16px}
+h3{font-size:1.02em;margin:18px 0 8px;color:var(--blue);scroll-margin-top:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.72em;margin-right:6px;vertical-align:middle}
+.t-brand{background:rgba(231,76,60,.15);color:#ff8a8a;border:1px solid rgba(231,76,60,.4)}
+.t-blue{background:rgba(88,166,255,.12);color:#8cc5ff;border:1px solid rgba(88,166,255,.35)}
+.t-green{background:rgba(63,185,80,.12);color:#7ee2a0;border:1px solid rgba(63,185,80,.35)}
+.t-purple{background:rgba(163,113,247,.12);color:#c4a8ff;border:1px solid rgba(163,113,247,.35)}
+.t-orange{background:rgba(243,156,18,.12);color:#ffd08a;border:1px solid rgba(243,156,18,.35)}
+table{width:100%;border-collapse:collapse;font-size:.88em;margin-top:8px}
+th{background:#232d38;text-align:left;padding:8px 12px;color:#fff;font-weight:600;border:1px solid var(--line)}
+td{padding:7px 12px;border:1px solid var(--line);vertical-align:top}
+td.c,.mono{font-family:Consolas,"Courier New",monospace;background:#0d1117;border-radius:4px;padding:1px 8px;color:#9ecbff;font-size:.88em;display:inline-block}
+td.c{background:transparent;padding:0 4px;display:inline}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+.layers{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.layer{border-radius:10px;padding:14px 18px;border:1px solid var(--line);position:relative}
+.layer .lt{font-size:.78em;letter-spacing:1px;color:var(--dim);margin-bottom:6px;text-transform:uppercase}
+.layer .items{display:flex;flex-wrap:wrap;gap:8px}
+.layer .item{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:.85em}
+.layer .item b{color:#fff}
+.layer .item small{display:block;color:var(--dim);font-size:.75em}
+.l0{background:linear-gradient(135deg,rgba(243,156,18,.08),rgba(243,156,18,.02));border-color:rgba(243,156,18,.3)}
+.l1{background:linear-gradient(135deg,rgba(88,166,255,.10),rgba(88,166,255,.02));border-color:rgba(88,166,255,.3)}
+.l2{background:linear-gradient(135deg,rgba(163,113,247,.10),rgba(163,113,247,.02));border-color:rgba(163,113,247,.3)}
+.l3{background:linear-gradient(135deg,rgba(63,185,80,.10),rgba(63,185,80,.02));border-color:rgba(63,185,80,.3)}
+.l4{background:linear-gradient(135deg,rgba(231,76,60,.10),rgba(231,76,60,.02));border-color:rgba(231,76,60,.3)}
+.arrow{text-align:center;color:var(--dim);font-size:.8em;padding:2px 0}
+.note{color:var(--dim);font-size:.82em;margin-top:8px}
+.note-imp{color:var(--orange);font-size:.85em;margin-top:6px;padding:8px 12px;background:rgba(243,156,18,.06);border-radius:6px;border-left:3px solid var(--orange)}
+.footer{text-align:center;color:var(--dim);font-size:.78em;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}
+@media print{
+  body{background:#fff;color:#222;padding:8px}
+  .quick-nav,.toc,.footer{display:none}
+  .card,.layer{border:1px solid #bbb;background:#fff}
+  .layer .item,.mono{background:#f5f5f5;border:1px solid #ccc;color:#222}
+  th{background:#eee;color:#222}
+  h2{color:#000;border-left-color:#c41e3a}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+<h1>煌上煌数据分析业务架构导览<span>V1</span></h1>
+<div class="sub">数据源 → 标准化 → 口径体系 → 分析域 → 交付物 → 发布运营 ｜ 美团 × 淘宝闪购 双平台外卖分析全链路</div>
+<div class="badge">📅 基准：2026-08-14 · 数据快照（5-7月）· 与《OpenClaw助手底层架构导览 V1.2》L4 层对应</div>
+</div>
+
+<div class="quick-nav">
+<div class="qn-title">🚀 快速导航 · 按环节找入口</div>
+<a href="#nav-data">🗄️ 数据源在哪</a>
+<a href="#nav-cal">🧮 口径规则</a>
+<a href="#nav-dim">📐 分析维度</a>
+<a href="#nav-report">📊 报告家族</a>
+<a href="#nav-publish">🌐 发布运营</a>
+<a href="#nav-qa">✅ 质量保障</a>
+</div>
+
+<div class="toc">
+<div class="toc-title">📑 本文目录</div>
+<a href="#s1">一、总体架构图（5 层）</a>
+<a href="#s2">二、数据源与标准化</a>
+<a href="#s3">三、口径体系</a>
+<a href="#s4">四、分析维度与方法</a>
+<a href="#s5">五、交付物家族</a>
+<a href="#s6">六、发布与运营</a>
+<a href="#s7">七、质量保障</a>
+<a href="#s8">八、数据流实例</a>
+</div>
+
+<h2 id="s1">一、总体架构图（自底向上 5 层）</h2>
+<div class="note-imp"><strong>⚠️ 阅读前提：</strong> 这是一张"业务版图"——5 层各管一段，数据从下往上流动，每次分析任务都会走完至少 4 层。</div>
+<div class="layers">
+<div class="layer l4">
+<div class="lt">L4 发布运营层 · 让结论被看见、被使用</div>
+<div class="items">
+<div class="item"><b>GitHub Pages 报告集</b><small>hsyh-reports · 索引页+子目录</small></div>
+<div class="item"><b>版本管理</b><small>V1→V2→V3 禁止覆盖旧版</small></div>
+<div class="item"><b>Edge 交付</b><small>自包含HTML · 打印PDF · 手机可看</small></div>
+<div class="item"><b>Power BI 服务</b><small>模型刷新 · 看板共享</small></div>
+</div>
+</div>
+<div class="arrow">▲ 发布 / ▼ 反馈</div>
+<div class="layer l3">
+<div class="lt">L3 交付物层 · 分析结论的"产品化"</div>
+<div class="items">
+<div class="item"><b>合并月报 V2</b><small>12章17图 · 利润v2口径</small></div>
+<div class="item"><b>诊断报告 V13</b><small>8大模块 · 5级漏斗</small></div>
+<div class="item"><b>促销定稿版</b><small>14章 · ROI矩阵</small></div>
+<div class="item"><b>活动看板 V5/V6</b><small>可视化驾驶舱</small></div>
+<div class="item"><b>Power BI 4月15.pbix</b><small>10表77+度量值7关系</small></div>
+</div>
+</div>
+<div class="arrow">▲ 产出 / ▼ 指令</div>
+<div class="layer l2">
+<div class="lt">L2 分析计算层 · 方法论驱动的分析域</div>
+<div class="items">
+<div class="item"><b>四大维度</b><small>分公司/平台/投放层级/加盟直营</small></div>
+<div class="item"><b>方法框架</b><small>五层金字塔 · Z型布局 · 三阶推导 · 五段式</small></div>
+<div class="item"><b>分析模型</b><small>OSM/UJM/RFM/人货场 · 四大模型</small></div>
+<div class="item"><b>归因拆解</b><small>流量/客单/新老客/时段/平台/活动/产品</small></div>
+<div class="item"><b>计算环境</b><small>Python .venv · pandas/plotly/seaborn</small></div>
+</div>
+</div>
+<div class="arrow">▲ 分析 / ▼ 取数</div>
+<div class="layer l1">
+<div class="lt">L1 口径资产层 · 全团队共用的"计算宪法"</div>
+<div class="items">
+<div class="item"><b>36列模板</b><small>120列→36列 统一表头</small></div>
+<div class="item"><b>利润 v2</b><small>÷1.35×45% · 收入=营业收入</small></div>
+<div class="item"><b>ROI 口径</b><small>分摊GMV÷实际补贴(平台+商家)</small></div>
+<div class="item"><b>自然vs付费</b><small>四公式</small></div>
+<div class="item"><b>过滤规则</b><small>取消/无效订单剔除</small></div>
+</div>
+</div>
+<div class="arrow">▲ 标准化 / ▼ 原始数据</div>
+<div class="layer l0">
+<div class="lt">L0 数据源层 · 双平台原始数据</div>
+<div class="items">
+<div class="item"><b>美团外卖</b><small>CSV(GBK) · 86-91列 · 5-7月</small></div>
+<div class="item"><b>淘宝闪购</b><small>XLSX · 124列 · 5-7月</small></div>
+<div class="item"><b>订单明细</b><small>美团6CSV+淘宝3XLSX · 17,826单</small></div>
+<div class="item"><b>广告数据</b><small>美团22列 · 淘宝19列 · 2,137条</small></div>
+<div class="item"><b>映射表</b><small>门店ID C编码↔平台ID · 2,277行</small></div>
+</div>
+</div>
+</div>
+
+<h2 id="s2">二、数据源与标准化</h2>
+<div class="card" id="nav-data">
+<h3>2.1 四大数据路径（根目录：D:\邓超今\临时数据源\OneDrive\桌面\双平台数据\）</h3>
+<table>
+<tr><th>路径</th><th>位置</th><th>用途</th><th>可分析维度</th></tr>
+<tr><td class="c">路径1 外卖数据</td><td class="c">外卖数据\</td><td>外卖运营分析（唯一入口）</td><td>曝光/转化/订单/实付/客单/新老客/评分</td></tr>
+<tr><td class="c">路径2 订单明细</td><td class="c">外卖数据\美团外卖和淘宝闪外卖订单明细\</td><td>仅活动分析</td><td>活动GMV/补贴/订单数/商品/标签</td></tr>
+<tr><td class="c">路径3 活动明细表</td><td class="c">同路径2 Sheet「活动明细表_二层_活动粒度」</td><td>仅活动分析</td><td>活动类型ROI/金额/平台承担/商家承担</td></tr>
+<tr><td class="c">路径4 广告数据</td><td class="c">广告数据\</td><td>广告分析（唯一入口）</td><td>广告ROI/点击率/消耗/投放效果</td></tr>
+</table>
+<div class="note">辅助文件：双平台广告信息.xlsx → Sheet「门店平台信息」（C编码↔平台ID 映射，2,277行）。<b>职责边界：运营分析只用路径1，活动分析只用路径2+3，广告分析只用路径4，禁止混用。</b></div>
+</div>
+<div class="card">
+<h3>2.2 标准化：36 列模板（跨平台统一）</h3>
+<div class="grid">
+<div><span class="tag t-blue">统一命名</span><b>36 列</b><div class="note">美团/淘宝原始 ~120 列 → 只保留 36 列（日期/门店/收入/补贴/转化/新老客/评分…），未列出全部屏蔽</div></div>
+<div><span class="tag t-blue">数据来源</span><b>附加列</b><div class="note">美团行、淘宝行互相填空；加「数据来源」列（美团外卖/淘宝闪购）</div></div>
+<div><span class="tag t-blue">关键映射</span><b>门店ID</b><div class="note">统一 C 编码（C14793/C14906/C15002/C15009/C15019）↔ 美团「门店id」/淘宝「门店编号」</div></div>
+<div><span class="tag t-blue">评分</span><b>双平台口径</b><div class="note">美团「近30日日均商家评分」(5分制) / 淘宝「店铺评分」+「店铺分」快照(100分制)</div></div>
+</div>
+</div>
+
+<h2 id="s3">三、口径体系（L1 计算宪法）</h2>
+<div class="card" id="nav-cal">
+<h3>3.1 核心计算公式（2026-08-14 版本）</h3>
+<table>
+<tr><th>口径项</th><th>公式 / 规则</th><th>状态</th></tr>
+<tr><td>利润 v2</td><td>门店零售价=商品原价÷1.35 → 成本=零售价×0.45 → 收入=营业收入 → 利润=收入−成本，毛利率=利润/收入</td><td><span class="tag t-green">最新</span></td></tr>
+<tr><td>实际补贴</td><td>= 平台承担 + 商家承担（NOT 活动总金额）</td><td><span class="tag t-green">已固化</span></td></tr>
+<tr><td>活动 ROI</td><td>= 分摊GMV ÷ 该活动实际补贴；分摊GMV=订单GMV×活动补贴/订单总补贴（防一单多活动重复算）</td><td><span class="tag t-green">已固化</span></td></tr>
+<tr><td>整体 ROI</td><td>= 有效订单GMV ÷ 全部实际补贴 = 515,335/401,178 = 1.28</td><td><span class="tag t-green">已固化</span></td></tr>
+<tr><td>订单过滤</td><td>「订单状态_统一」含 已取消|无效订单 → 全部剔除，不参与任何计算</td><td><span class="tag t-green">强制</span></td></tr>
+<tr><td>自然vs付费</td><td>自然曝光=曝光−曝光提升；自然订单=有效订单−订单提升；自然实付=平台GMV−广告交易额</td><td><span class="tag t-green">四公式</span></td></tr>
+<tr><td>下单率</td><td>= 有效订单 ÷ 入店次数（美团14.24% / 淘宝6.60%）</td><td><span class="tag t-blue">自洽口径</span></td></tr>
+<tr><td>商家净收入</td><td>= 分摊GMV − 商家承担补贴 = 205,186；扣补贴后毛利=净收入×毛利率28.6% = 58,683</td><td><span class="tag t-blue">促销口径</span></td></tr>
+</table>
+</div>
+
+<h2 id="s4">四、分析维度与方法</h2>
+<div class="card" id="nav-dim">
+<h3>4.1 四大分析维度（每次分析必须全覆盖）</h3>
+<table>
+<tr><th>维度</th><th>取值</th><th>典型问题</th></tr>
+<tr><td class="c">分公司</td><td>江西 / 广东 / 陕西 / 浙江 / 重庆</td><td>哪个分公司最赚钱？ROI 排名？</td></tr>
+<tr><td class="c">平台</td><td>美团外卖 vs 淘宝闪购</td><td>平台效率差异？补贴结构对比？</td></tr>
+<tr><td class="c">投放层级</td><td>总部 vs 门店</td><td>总部ROI(7.16) vs 门店ROI(5.31) 谁高效？</td></tr>
+<tr><td class="c">加盟/直营</td><td>直营 / 加盟</td><td>两种模式盈利差异？</td></tr>
+</table>
+</div>
+<div class="card">
+<h3>4.2 方法论工具箱</h3>
+<div class="grid">
+<div><span class="tag t-purple">框架</span><b>五层维度金字塔</b><div class="note">实体→业务→组织→时间→度量值</div></div>
+<div><span class="tag t-purple">布局</span><b>Z型视觉流</b><div class="note">6KPI卡→趋势+占比→对比+排名→明细表</div></div>
+<div><span class="tag t-purple">推导</span><b>三阶分析</b><div class="note">描述(What)→诊断(Why)→建议(What Next)</div></div>
+<div><span class="tag t-purple">结构</span><b>五段式结论</b><div class="note">摘要→洞察→根因→建议→展望</div></div>
+<div><span class="tag t-purple">评分</span><b>洞察优先级</b><div class="note">影响×0.4+可执行×0.3+置信×0.2+时效×0.1</div></div>
+<div><span class="tag t-purple">模型</span><b>OSM/UJM/RFM/人货场</b><div class="note">四大模型 + 联动组合拳</div></div>
+</div>
+</div>
+
+<h2 id="s5">五、交付物家族</h2>
+<div class="card" id="nav-report">
+<table>
+<tr><th>交付物</th><th>最新版本</th><th>规格</th><th>关键内容</th></tr>
+<tr><td>合并分析月报</td><td class="c">V2（2026-08-14）</td><td>12章 17图 63KB</td><td>经营月报：GMV+44.3%真相、利润v2、P0/P1行动、评分健康度</td></tr>
+<tr><td>5门店诊断方案</td><td class="c">V13</td><td>8大模块</td><td>5级漏斗、ROI分级、5套提升方案</td></tr>
+<tr><td>促销活动报告</td><td class="c">定稿版</td><td>14章 257KB</td><td>增长归因、活动评级、平台热力、客单分层</td></tr>
+<tr><td>活动看板</td><td class="c">V5/V6</td><td>HTML驾驶舱</td><td>活动ROI可视化、交互筛选</td></tr>
+<tr><td>驾驶舱方案</td><td class="c">2026-08-05</td><td>5页架构</td><td>广告效果概览→平台对比→分公司→趋势→明细</td></tr>
+<tr><td>Power BI 模型</td><td class="c">4月15.pbix</td><td>10表 77+度量值 7关系</td><td>全Import模式，时间偏移优化（月份对1月）</td></tr>
+</table>
+<div class="note">⚠️ 版本管理铁律（2026-08-14）：有更新必须出新版本文件（V1→V2→V3…），禁止覆盖旧版；标题同步标注版本号+变更点；生成脚本输出路径同步更新。</div>
+</div>
+
+<h2 id="s6">六、发布与运营</h2>
+<div class="card" id="nav-publish">
+<h3>6.1 发布链路</h3>
+<table>
+<tr><th>环节</th><th>方式</th><th>说明</th></tr>
+<tr><td>① 报告生成</td><td class="c">report_parts/ + merge_report.py</td><td>部件化→合并→结构校验（canvas/div/table平衡）</td></tr>
+<tr><td>② 数值校验</td><td class="c">verify_numbers.py</td><td>83 项断言全 PASS（GMV/订单/补贴/利润/ROI/漏斗/时段）</td></tr>
+<tr><td>③ 渲染验证</td><td class="c">Edge headless probe</td><td>DOM注入确认 Chart.js 实例数=canvas 数（17/17）</td></tr>
+<tr><td>④ 本地交付</td><td class="c">指定生成文件存放\</td><td>中文文件名 + 版本号，Edge 打开，右下角打印PDF</td></tr>
+<tr><td>⑤ 联网发布</td><td class="c">deploy-hsyh-pages.ps1（需 ghp_ token）</td><td>报告集站点：https://285736243-boop.github.io/hsyh-reports/</td></tr>
+</table>
+</div>
+<div class="card">
+<h3>6.2 报告集站点结构（hsyh-reports-site/）</h3>
+<div class="grid">
+<div><span class="tag t-orange">索引</span><b>index.html</b><div class="note">报告总索引页</div></div>
+<div><span class="tag t-orange">子目录</span><b>r01-r06</b><div class="note">漏斗/顾客结构/时段/价格分层/活动补贴矩阵</div></div>
+<div><span class="tag t-orange">专题</span><b>diagnosis-v13 / promo-plan-final / monthly-report-v2</b><div class="note">诊断/促销/月报专题</div></div>
+<div><span class="tag t-orange">看板</span><b>activity-dashboard-v5/v6</b><div class="note">活动驾驶舱</div></div>
+</div>
+</div>
+
+<h2 id="s7">七、质量保障链</h2>
+<div class="card" id="nav-qa">
+<div class="grid">
+<div><span class="tag t-green">① 数值</span><b>交叉自洽</b><div class="note">GMV 四口径（门店/平台/月度/客单分层）合计完全相等 = 515,335</div></div>
+<div><span class="tag t-green">② 断言</span><b>83 项</b><div class="note">自动化断言：任一口径矛盾即 FAIL（当前全 PASS）</div></div>
+<div><span class="tag t-green">③ 渲染</span><b>无头验证</b><div class="note">Edge headless + DOM probe，图表真实渲染才算过</div></div>
+<div><span class="tag t-green">④ 交付</span><b>deliver-check</b><div class="note">交付前自检全绿（R9），无 np残留/无CDN依赖</div></div>
+</div>
+<div class="note" style="margin-top:10px">历史教训沉淀：活动解析正则坑（金额虚高653K）、numpy.float64 污染JSON、f-string拼JS花括号转义、中文文件名分享损坏 → 全部已写入 MEMORY.md 可复用经验。</div>
+</div>
+
+<h2 id="s8">八、数据流实例（月报任务全链路）</h2>
+<div class="card">
+<table>
+<tr><th>环节</th><th>层</th><th>实际动作</th><th>产出</th></tr>
+<tr><td>① 取数</td><td><span class="tag t-orange">L0</span></td><td>Python 读美团3CSV(GBK) + 淘宝3XLSX → 过滤5店</td><td>门店级 943 行数据</td></tr>
+<tr><td>② 标准化</td><td><span class="tag t-blue">L1</span></td><td>36列映射、订单过滤（剔除取消/无效）、跨平台补空</td><td>统一口径数据</td></tr>
+<tr><td>③ 计算</td><td><span class="tag t-purple">L2</span></td><td>GMV/补贴/ROI 四口径交叉、利润v2、客单分层、时段聚合、评分提取</td><td>78+ 关键指标</td></tr>
+<tr><td>④ 产出</td><td><span class="tag t-green">L3</span></td><td>part0-6 部件化 → merge_report.py 合并 → 12章17图</td><td>月报 V2（63KB）</td></tr>
+<tr><td>⑤ 验证</td><td><span class="tag t-green">L3</span></td><td>verify_numbers.py 83断言 + Edge probe 17/17</td><td>全绿交付</td></tr>
+<tr><td>⑥ 发布</td><td><span class="tag t-red">L4</span></td><td>指定目录交付 + （待 token）GitHub Pages</td><td>老大哥验收</td></tr>
+</table>
+<div class="note">关键洞察从"数"到"结论"的跳跃点：① 评分健康度（印象城4.5限流预警）② 利润v2（益田毛利率8%三重垫底）③ 增长真相（58%增量靠新店）——这就是 L1 口径 × L2 方法 × L3 产品的合力。</div>
+</div>
+
+<div class="footer">
+煌上煌数据分析业务架构导览 V1 ｜ 与《OpenClaw助手底层架构导览 V1.2》互为补充（前者=引擎，本卷=业务版图）｜ 数据快照 2026-08-14 ｜ 自包含 HTML · Edge 打开 · 可打印PDF
+</div>
+</div>
+</body>
+</html>
