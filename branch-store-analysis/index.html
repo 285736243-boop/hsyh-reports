@@ -21,6 +21,9 @@
   .tl { text-align: left; }
   tr:hover td { background: #f0f7ff; }
   .pct { color: #8b949e; font-size: 11px; }
+  .red { color: #cf222e; font-weight: 700; }
+  .yellow { color: #bf8700; font-weight: 700; }
+  .insight.red { border-left-color: #cf222e; }
   .insight { background: #fff; border-left: 4px solid #cf222e; border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.08); font-size: 13px; }
   .insight.good { border-left-color: #1a7f37; }
   .insight.warn { border-left-color: #bf8700; }
@@ -29,7 +32,7 @@
 <body>
 <div class="wrap">
 <h1>门店明细 × 分公司维度 分析总结</h1>
-<div class="sub">数据：在用门店明细 1,970 条 × C门店库匹配分公司 ｜ 2026-08-16 ｜ 分公司维度新增</div>
+<div class="sub">数据：在用门店明细 1,970 条 × C门店库匹配分公司 ｜ 2026-08-16 ｜ 分公司维度 + 回复率（07/01-08/14 评价 16,420 条）</div>
 
 
 <div class="kpis">
@@ -51,6 +54,7 @@
       <td>534</td>
       <td>231,132</td>
       <td>3.54</td>
+      <td class="yellow"><b>63.4</b>% <span class="pct">(5196/8197)</span></td>
       <td>227 <span class="pct">43%</span></td>
       <td>429 <span class="pct">59%</span></td>
       <td class="tl">口味不佳(52)、份量不足(43)、其他/无法归类(42)</td>
@@ -60,6 +64,7 @@
       <td>217</td>
       <td>132,973</td>
       <td>3.76</td>
+      <td><b>75.6</b>% <span class="pct">(3480/4602)</span></td>
       <td>141 <span class="pct">65%</span></td>
       <td>205 <span class="pct">28%</span></td>
       <td class="tl">其他/无法归类(26)、份量不足(23)、口味不佳(21)</td>
@@ -69,6 +74,7 @@
       <td>45</td>
       <td>9,247</td>
       <td>3.92</td>
+      <td><b>75.0</b>% <span class="pct">(767/1022)</span></td>
       <td>12 <span class="pct">27%</span></td>
       <td>25 <span class="pct">3%</span></td>
       <td class="tl">份量不足(3)、其他/无法归类(2)、口味不佳(2)</td>
@@ -78,6 +84,7 @@
       <td>30</td>
       <td>17,952</td>
       <td>4.07</td>
+      <td><b>76.3</b>% <span class="pct">(1088/1426)</span></td>
       <td>19 <span class="pct">63%</span></td>
       <td>35 <span class="pct">5%</span></td>
       <td class="tl">口味不佳(6)、份量不足、价格/性价比(3)、其他/无法归类(2)</td>
@@ -87,6 +94,7 @@
       <td>17</td>
       <td>3,141</td>
       <td>3.15</td>
+      <td class="red"><b>39.0</b>% <span class="pct">(71/182)</span></td>
       <td>8 <span class="pct">47%</span></td>
       <td>8 <span class="pct">1%</span></td>
       <td class="tl">口味不佳(2)、口味不佳、食材不新鲜(1)、份量不足、价格/性价比(1)</td>
@@ -96,6 +104,7 @@
       <td>13</td>
       <td>10,523</td>
       <td>3.59</td>
+      <td><b>87.5</b>% <span class="pct">(706/807)</span></td>
       <td>7 <span class="pct">54%</span></td>
       <td>24 <span class="pct">3%</span></td>
       <td class="tl">其他/无法归类(3)、份量不足(1)、口味不佳(1)</td>
@@ -103,15 +112,18 @@
 </table>
 <div class="sub">差评清单门店 % = 在差评清单门店 ÷ 唯一门店 ｜ 差评数 % = 该分公司差评数 ÷ 全部差评数</div>
 
-<h2>② 分公司 × 平台 在用记录分布</h2>
+<h2>② 分公司 × 平台 在用记录分布 + 回复率</h2>
 <table>
-<tr><th>分公司</th><th>美团</th><th>淘宝</th><th>京东</th><th>合计</th></tr>
-<tr><td><b>江西公司</b></td><td>505</td><td>410</td><td>206</td><td>1121</td></tr><tr><td><b>广东公司</b></td><td>212</td><td>191</td><td>167</td><td>570</td></tr><tr><td><b>陕西公司</b></td><td>42</td><td>36</td><td>28</td><td>106</td></tr><tr><td><b>浙江公司</b></td><td>30</td><td>25</td><td>21</td><td>76</td></tr><tr><td><b>重庆公司</b></td><td>17</td><td>13</td><td>9</td><td>39</td></tr><tr><td><b>创新专项部</b></td><td>13</td><td>13</td><td>5</td><td>31</td></tr>
+<tr><th>分公司</th><th>美团记录</th><th>美团回复率</th><th>淘宝记录</th><th>淘宝回复率</th><th>京东记录</th><th>京东回复率</th><th>合计</th></tr>
+<tr><td><b>江西公司</b></td><td>505</td><td><span class="yellow"><b>63.2</b>%</span></td><td>410</td><td><span class="yellow"><b>65.6</b>%</span></td><td>206</td><td><span class="red"><b>1.4</b>%</span></td><td>1121</td></tr><tr><td><b>广东公司</b></td><td>212</td><td><span><b>79.4</b>%</span></td><td>191</td><td><span class="yellow"><b>69.8</b>%</span></td><td>167</td><td><span class="red"><b>1.0</b>%</span></td><td>570</td></tr><tr><td><b>陕西公司</b></td><td>42</td><td><span><b>78.6</b>%</span></td><td>36</td><td><span class="yellow"><b>68.0</b>%</span></td><td>28</td><td><span class="red"><b>0.0</b>%</span></td><td>106</td></tr><tr><td><b>浙江公司</b></td><td>30</td><td><span><b>82.2</b>%</span></td><td>25</td><td><span class="yellow"><b>67.2</b>%</span></td><td>21</td><td><span class="red"><b>0.0</b>%</span></td><td>76</td></tr><tr><td><b>重庆公司</b></td><td>17</td><td><span class="red"><b>37.8</b>%</span></td><td>13</td><td><span class="red"><b>50.0</b>%</span></td><td>9</td><td>-</td><td>39</td></tr><tr><td><b>创新专项部</b></td><td>13</td><td><span><b>82.4</b>%</span></td><td>13</td><td><span><b>96.9</b>%</span></td><td>5</td><td><span class="red"><b>0.0</b>%</span></td><td>31</td></tr>
 </table>
+<div class="sub">回复率 = 商家已回复评价 ÷ 该平台评价总数（数据：评价 07/01-08/14，共 16,420 条，整体回复率 69.8%）</div>
 
 <h2>③ 核心洞察</h2>
-<div class="insight warn"><b>江西公司 = 基本盘，也是差评重灾区</b>：在用记录 1,121 条（57%）、订单 23.1 万（58%），但差评数 429 条占全部差评 60%，227 家门店在差评清单（占江西门店 43%）。口味不佳（52）> 份量不足（43）是江西主要客诉。</div>
-<div class="insight warn"><b>广东公司 = 第二大盘，差评率偏高</b>：记录 570 条、订单 13.3 万，评分均值 3.76 中游；141 家门店在差评清单（65%），"其他/无法归类"问题最多（26），需细分归类后再定整改动作。</div>
+<div class="insight warn"><b>江西公司 = 基本盘，也是差评重灾区</b>：在用记录 1,121 条（57%）、订单 23.1 万（58%），但差评数 429 条占全部差评 60%，227 家门店在差评清单（占江西门店 43%）。口味不佳（52）> 份量不足（43）是江西主要客诉。<b>回复率 63.4% 也低于整体（69.8%）</b>，差评多 + 回复慢 = 口碑双重失血。</div>
+<div class="insight red"><b>重庆公司 = 体量小但评分垫底 + 回复率最低</b>：仅 17 家门店、订单 3,141，评分均值 3.15 全部分公司最低；<b>回复率仅 39.0%（美团 37.8%）</b>，8 家门店在差评清单（47%）。口味不佳+食材不新鲜是特色问题，且几乎不回复评价，需优先整改。</div>
+<div class="insight warn"><b>京东渠道回复几乎为 0</b>：各分公司京东回复率 0-1.4%（广东 1.0%、江西 1.4%），京东评价 198 条仅 2 条有回复，需排查京东商家后台回复机制是否开通。</div>
+<div class="insight"><b>广东公司 = 第二大盘，差评率偏高</b>：记录 570 条、订单 13.3 万，评分均值 3.76 中游；141 家门店在差评清单（65%），"其他/无法归类"问题最多（26），需细分归类后再定整改动作。回复率 75.6% 尚可。</div>
 <div class="insight"><b>重庆公司 = 体量小但评分垫底</b>：仅 17 家门店、订单 3,141，评分均值 3.15 全部分公司最低，8 家门店在差评清单（47%）。口味不佳+食材不新鲜是特色问题，优先排查供应链/出品。</div>
 <div class="insight good"><b>浙江公司 = 口碑标杆</b>：评分均值 4.07 最高，差评 35 条仅占 5%，30 家门店仅 19 家在清单但单店差评少，可作为门店管理标杆复制。</div>
 <div class="insight"><b>陕西公司 = 评分良好但需防下滑</b>：评分 3.92 第二高，差评 25 条；主要问题是份量不足（3），属可快速整改项。</div>
@@ -120,8 +132,9 @@
 <h2>④ 建议动作</h2>
 <table>
 <tr><th>优先级</th><th>分公司</th><th>动作</th></tr>
-<tr><td>P0</td><td>江西</td><td>口味标准化（52 条口味客诉）：复核卤制工艺/出品温度；份量管控（43 条）：称重抽检</td></tr>
-<tr><td>P0</td><td>重庆</td><td>全链条排查食材新鲜度；评分 3.15 门店逐店复盘，必要时关停整改</td></tr>
+<tr><td>P0</td><td>重庆</td><td>全链条排查食材新鲜度；评分 3.15 门店逐店复盘；<b>回复率 39% 垫底，先建立评价回复机制</b></td></tr>
+<tr><td>P0</td><td>京东全渠道</td><td><b>回复率 0-1.4%</b>：开通/确认京东商家后台评价回复功能，纳入每日回复巡检</td></tr>
+<tr><td>P0</td><td>江西</td><td>口味标准化（52 条口味客诉）：复核卤制工艺/出品温度；份量管控（43 条）：称重抽检；回复率提升至 75%+</td></tr>
 <tr><td>P1</td><td>广东</td><td>"其他/无法归类"26 条重新归类，先搞清楚真实问题再整改</td></tr>
 <tr><td>P1</td><td>江西/广东</td><td>差评清单门店按周跟踪整改闭环（复用 416 家整改清单机制）</td></tr>
 <tr><td>P2</td><td>京东 27 家</td><td>补录 C 门店映射，纳入分公司统一管理</td></tr>
