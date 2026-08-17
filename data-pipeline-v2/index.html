@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>取数路径与计算逻辑清单 V2（20260817）</title>
+<style>
+  body { font-family: "Microsoft YaHei", sans-serif; margin: 0; padding: 24px 16px; background: #f5f7fa; color: #222; }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 24px; margin: 0 0 8px; }
+  h2 { font-size: 18px; margin: 28px 0 10px; border-left: 4px solid #0969da; padding-left: 10px; }
+  h3 { font-size: 15px; margin: 18px 0 8px; color: #0969da; }
+  p { font-size: 13px; line-height: 1.7; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.08); font-size: 12.5px; margin: 10px 0 16px; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+  th { background: #1f2328; color: #fff; font-weight: 600; }
+  tr:hover td { background: #f0f7ff; }
+  .li { font-size: 13px; line-height: 1.8; padding-left: 8px; border-left: 2px solid #d0d7de; margin: 4px 0; }
+  .quote { background: #fff8c5; border-radius: 6px; padding: 10px 14px; font-size: 13px; margin: 8px 0; }
+  .code { background: #0d1117; color: #e6edf3; border-radius: 8px; padding: 14px; font-family: Consolas, monospace; font-size: 12px; overflow-x: auto; }
+  hr { border: none; border-top: 1px solid #d0d7de; margin: 20px 0; }
+  a { color: #0969da; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>取数路径与计算逻辑明细清单 V2（2026-08-17）</h1>
+<div class="quote">覆盖：门店明细 × 分公司 × 最新评分评价 × 差评匹配 × 回复率 × 27家京东补录</div>
+<div class="quote">入口：https://285736243-boop.github.io/hsyh-reports/branch-store-analysis/</div>
+<div class="quote">配套脚本：scripts/merge_store_detail.py、tmp/branch_analysis.py、tmp/reply_rate_v2.py、tmp/refill_jd27.py、tmp/reviews_list.py</div>
+<hr>
+<h2>一、取数路径总览（数据源清单）</h2>
+<table><tr><th>环节</th><th>文件</th><th>目录</th><th>关键列</th></tr>
+<tr><td>① 门店明细基础</td><td>门店店数精准统计_20260816.xlsx（在用门店C补全 sheet）</td><td>指定生成文件存放</td><td>平台/门店id/门店名称/有效订单/C门店ID</td></tr>
+<tr><td>② 最新店铺评分</td><td>门店聚合_三平台评分_20260716-0814.xlsx（全量聚合 sheet）</td><td>指定生成文件存放</td><td>平台/平台ID/最新评分</td></tr>
+<tr><td>③ 最新评价-美团</td><td>评价_全部门店_20260801_20260814_hshzq_2026-08-15+08_40_47.csv</td><td>双平台数据\外卖评价\美团外卖（**GB18030**）</td><td>门店id/评价时间/总体评分/商品评分/评价内容/商家回复</td></tr>
+<tr><td>③ 最新评价-淘宝</td><td>评价下载_20260801至20260814_全部门店_5264083043_20260815103002805.xlsx</td><td>双平台数据\外卖评价\淘宝闪购</td><td>门店ID/评价时间/总体评分/评价内容/回复内容</td></tr>
+<tr><td>③ 最新评价-京东</td><td>2026-07-01-08-14.xls（200行，**表头第2行，xlrd 读**）</td><td>双平台数据\外卖评价\京东到家\京东评价数据</td><td>门店ID/评价时间/商品评分/评价内容/商家回复</td></tr>
+<tr><td>④ 差评整改清单</td><td>外卖评价_门店级差评整改清单.xlsx（8-15，416家）</td><td>指定生成文件存放</td><td>平台/门店名称/差评数/平均评分/原因分布/主要问题/整改建议</td></tr>
+<tr><td>⑤ 分公司档案</td><td>store-info-master.csv（9,725 家）</td><td>workspace\hsyh-reports-site\store-info-master</td><td>门店ID(C)/分公司/战区/省区/京东秒送id/美团id/饿了么id</td></tr>
+<tr><td>⑥ 评价统一表</td><td>外卖评价_统一表.csv（16,222 条）</td><td>workspace\output</td><td>平台/门店名称/评价内容/商家回复/**是否回复**</td></tr>
+</table>
+<hr>
+<h2>二、核心计算逻辑（逐环节）</h2>
+<h3>1. 门店明细基础（在用口径）</h3>
+<div class="li">取「在用门店C补全」全部行 = **在用（有订单）1970 条**（美团819/淘宝688/京东463）</div>
+<div class="li">主键 = `平台 + 平台ID`；C门店ID 清洗（去空白/零宽字符 ​‌‍﻿）</div>
+<div class="li">唯一实体 884 家 = 店数精准统计表内置（引用不重算）</div>
+<h3>2. 分公司匹配（V2 新增，⑤×①，键=C门店ID）</h3>
+<div class="li">C门店库 9,725 家，含**分公司/战区/省区/加盟直营/门店分类**维度</div>
+<div class="li">门店明细按 C门店ID left join C库 → 分公司归属</div>
+<div class="li">**匹配率 1970/1970（100%）**：原 27 条京东未匹配，已通过「京东秒送id」补录（见第5节）</div>
+<h3>3. 最新店铺评分（①×②，键=平台+平台ID）</h3>
+<div class="li">聚合表按 平台+平台ID 去重后 left join → 命中 1,940 条</div>
+<div class="li">口径 = 平台官方「最新评分」（店铺分，非单条评价分）</div>
+<h3>4. 最新评价评分 + 内容（①×③，键=平台+平台ID）</h3>
+<div class="li">每店每平台取**最新 1 条有内容评价** → 共 727 条（美团426/淘宝247/京东54）</div>
+<div class="li">美团兜底：总体评分为空 → 用商品评分</div>
+<div class="li">京东：Excel 日期数字用 `unit=D, origin=1899-12-30` 转 datetime；排除"此用户未填写评价内容"占位</div>
+<h3>5. 27 家京东补录 C门店ID（V2 新增，关键修复）</h3>
+<div class="li">问题：27 条京东门店明细 C门店ID = "-"（按名称反查 C库 0 命中）</div>
+<div class="li">解法：从「三平台有效门店_含C门店ID_20260716-0814.xlsx」取京东**平台门店id** → 与 C库「**京东秒送id**」列直接匹配 → **27/27 全部命中**</div>
+<div class="li">补录后分公司分布：江西 +14、广东 +6、陕西 +3、浙江 +2、重庆 +2；未匹配 **0**</div>
+<div class="li">教训：京东门店匹配必须走 ID 直查（京东秒送id=平台id），名称反查因全角括号/空格/子品牌后缀差异必失败</div>
+<h3>6. 差评整改清单匹配（①×④，键=平台+门店名称）</h3>
+<div class="li">平台名映射：淘宝闪购→淘宝；命中判定：`在差评清单 = 清单差评数非空` → **414 条**</div>
+<div class="li">带出：清单差评数/平均评分/原因分布/主要问题/整改建议</div>
+<div class="li">416 家中 2 家未命中（名称/平台差异）</div>
+<h3>7. 回复率（V2 新增，⑥，键=平台+门店名称）</h3>
+<div class="li">**美团+淘宝**：外卖评价_统一表.csv（16,222 条）→ 列「是否回复」（True=商家已回复）</div>
+<div class="li">**京东**：老 xls 读「商家回复」列非空即已回复（198 条评价仅 2 条回复）</div>
+<div class="li">门店级回复率 → 按分公司聚合：`回复率 = 已回复评价 ÷ 评价总数`</div>
+<div class="li">整体回复率 **69.8%**（16,420 条评价：统一表 16,222 + 京东 198）</div>
+<div class="li">匹配分公司 16,236/16,420（98.9%）</div>
+<h3>8. 评价内容清单（V2 新增）</h3>
+<div class="li">从门店明细取 727 条有内容评价（评分红≤2/黄=3 标色）→ 网页可搜索 + Excel 全量</div>
+<div class="li">Excel 含：分公司/战区/平台/门店/评分/评价内容/在差评清单/主要问题/整改建议</div>
+<hr>
+<h2>三、关键统计口径（V2）</h2>
+<table>
+<tr><th>指标</th><th>数值</th><th>计算方式</th></tr>
+<tr><td>在用记录</td><td>1,970</td><td>在用门店C补全行数</td></tr>
+<tr><td>唯一实体</td><td>884</td><td>店数精准统计表内置</td></tr>
+<tr><td>分公司匹配</td><td>1,970/1,970（100%）</td><td>C门店ID join C库（27家已补录）</td></tr>
+<tr><td>有评分</td><td>1,940</td><td>最新店铺评分非空</td></tr>
+<tr><td>有评价内容</td><td>727</td><td>最新评价内容非空</td></tr>
+<tr><td>在差评清单</td><td>414</td><td>清单差评数非空</td></tr>
+<tr><td>差评合计</td><td>726</td><td>清单差评数求和</td></tr>
+<tr><td>评分均值</td><td>3.64</td><td>有评分门店店铺评分均值</td></tr>
+<tr><td>整体回复率</td><td>69.8%</td><td>已回复 11,465 ÷ 评价 16,420</td></tr>
+<tr><td>分公司分布</td><td>江西1135/广东576/陕西109/浙江78/重庆41/创新31</td><td>C门店ID join C库</td></tr>
+</table>
+<hr>
+<h2>四、分公司回复率（V2 核心结论）</h2>
+<table>
+<tr><th>分公司</th><th>回复率</th><th>评价数</th><th>备注</th></tr>
+<tr><td>创新专项部</td><td>87.5%</td><td>807</td><td>最高</td></tr>
+<tr><td>浙江</td><td>76.3%</td><td>1,426</td><td>口碑标杆</td></tr>
+<tr><td>广东</td><td>75.6%</td><td>4,602</td><td>中游</td></tr>
+<tr><td>陕西</td><td>75.0%</td><td>1,022</td><td>中游</td></tr>
+<tr><td>江西</td><td>63.4%</td><td>8,197</td><td>低于整体🔴</td></tr>
+<tr><td>重庆</td><td>39.0%</td><td>182</td><td>垫底🔴</td></tr>
+<tr><td>京东全渠道</td><td>0-1.4%</td><td>198</td><td>疑似未开通回复🔴</td></tr>
+</table>
+<hr>
+<h2>五、已知口径边界</h2>
+<div class="li">1. **在用 vs 全量**：明细用「在用（有订单）」；差评清单是「全量（含沉默店）」416 家 → 命中 414 条</div>
+<div class="li">2. **每店每平台只取 1 条最新有内容评价**，非全量</div>
+<div class="li">3. **两种评分含义不同**：最新店铺评分=平台官方店分（聚合表）；最新评价评分=单条评价分</div>
+<div class="li">4. **京东评价文件仅 200 行商品级评价**，覆盖门店少（54 条命中）</div>
+<div class="li">5. **回复率口径**：美团/淘宝=「是否回复」标记（平台导出）；京东=「商家回复」列非空；京东可能因后台未开通回复而全空</div>
+<div class="li">6. **差评匹配键是平台+门店名称**（无ID），名称写法差异会漏（当前漏 2 家）</div>
+<hr>
+<p>*生成时间：2026-08-17 11:55 · 数据源：双平台数据\外卖评价 + 指定生成文件存放 + store-info-master.csv*</p>
+</div>
+</body>
+</html>
