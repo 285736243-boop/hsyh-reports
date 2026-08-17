@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>煌上煌 8 月广告数据分析（双平台）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  body { font-family: "Microsoft YaHei", sans-serif; margin: 0; padding: 24px 16px; background: #f5f7fa; color: #222; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  .sub { color: #666; font-size: 13px; margin-bottom: 20px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 12px; margin-bottom: 24px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  .kpi .v { font-size: 22px; font-weight: 700; color: #1f2328; }
+  .kpi .l { font-size: 12px; color: #666; margin-top: 4px; }
+  .kpi .d { font-size: 12px; margin-top: 4px; }
+  .up { color: #1a7f37; } .down { color: #cf222e; }
+  h2 { font-size: 18px; margin: 28px 0 10px; border-left: 4px solid #0969da; padding-left: 10px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px,1fr)); gap: 14px; }
+  .card { background: #fff; border-radius: 10px; padding: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  .chart { width: 100%; height: 320px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.08); font-size: 13px; margin-bottom: 10px; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+  th { background: #1f2328; color: #fff; font-weight: 600; }
+  tr:hover td { background: #f0f7ff; }
+  .hl { background: #fff8c5; }
+  .note { font-size: 12px; color: #888; margin-top: 6px; }
+  .findings { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  .findings li { margin-bottom: 8px; font-size: 14px; line-height: 1.7; }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; margin-right: 6px; }
+  .tag.good { background: #dafbe1; color: #1a7f37; } .tag.bad { background: #ffebe9; color: #cf222e; } .tag.warn { background: #fff8c5; color: #9a6700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>煌上煌 8 月广告数据分析 <span style="font-size:13px;color:#0969da">（美团 + 淘宝闪购 · 双平台）</span></h1>
+<div class="sub">数据窗口：2026-08-01 ~ 08-14（14天） ｜ 对比基准：7月全月 31 天 ｜ 口径：ROI = 订单交易额 ÷ 推广消费 ｜ 数据源：双平台广告门店维度明细</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="v ">¥172,426</div><div class="l">8月1-14日推广消费</div><div class="d">日均 ¥12,316 <span class='down'>-3.9% vs 7月日均</span></div></div>
+  <div class="kpi"><div class="v ">5.43</div><div class="l">8月整体 ROI</div><div class="d">7月 5.46 <span class='down'>-0.5%</span></div></div>
+  <div class="kpi"><div class="v ">¥935,613</div><div class="l">8月订单交易额</div><div class="d">日均 ¥66,830 <span class='down'>-4.5% vs 7月</span></div></div>
+  <div class="kpi"><div class="v ">20,809</div><div class="l">8月订单提升数</div><div class="d">日均 1,486 <span class='down'>-5.2% vs 7月</span></div></div>
+  <div class="kpi"><div class="v ">¥0.86</div><div class="l">单次进店成本</div><div class="d">7月 ¥0.86</div></div>
+  <div class="kpi"><div class="v ">10.3%</div><div class="l">进店→订单转化率</div><div class="d">7月 10.6%</div></div>
+</div>
+
+<h2>① 平台对比：美团 vs 淘宝</h2>
+<div class="cards"><div class="card"><div id="c_plat" class="chart"></div></div></div>
+<table>
+<tr><th>平台</th><th>8月消费</th><th>7月消费</th><th>8月占比</th><th>8月ROI</th><th>7月ROI</th><th>8月进店转化</th><th>7月进店转化</th><th>8月单次进店成本</th></tr>
+<tr><td>美团</td><td>133,345</td><td>325,130</td><td>77.3%</td><td>5.62</td><td>5.49</td><td>11.05%</td><td>10.97%</td><td>0.92</td></tr>
+<tr><td>淘宝</td><td>39,081</td><td>72,049</td><td>22.7%</td><td>4.77</td><td>5.30</td><td>8.52%</td><td>9.23%</td><td>0.70</td></tr>
+<tr><td>合计</td><td>172,426</td><td>397,179</td><td>100.0%</td><td>5.43</td><td>5.46</td><td>10.34%</td><td>10.57%</td><td>0.86</td></tr>
+
+</table>
+<div class="note">💡 美团占消费 77.3%，ROI 5.62 高于淘宝 4.77；淘宝 ROI 环比下滑（5.30→4.77，-10%）。</div>
+
+<h2>② 分公司对比（8月 vs 7月）</h2>
+<div class="cards"><div class="card"><div id="c_br" class="chart"></div></div></div>
+<table>
+<tr><th>分公司</th><th>8月消费</th><th>7月消费</th><th>8月占比</th><th>日均消费变化</th><th>8月ROI</th><th>7月ROI</th><th>8月订单</th></tr>
+<tr><td>江西</td><td>67,973</td><td>163,780</td><td>39.4%</td><td>-8.102109348889108%</td><td>5.64</td><td>6.03</td><td>8,912</td></tr>
+<tr><td>广东</td><td>61,294</td><td>136,287</td><td>35.5%</td><td>-0.41373684500826124%</td><td>5.94</td><td>5.72</td><td>7,555</td></tr>
+<tr><td>其他</td><td>39,885</td><td>85,922</td><td>23.1%</td><td>2.7871707772415766%</td><td>4.45</td><td>4.23</td><td>4,061</td></tr>
+<tr><td>浙江</td><td>2,633</td><td>7,945</td><td>1.5%</td><td>-26.605466810729794%</td><td>3.23</td><td>3.61</td><td>199</td></tr>
+<tr><td>陕西</td><td>641</td><td>3,245</td><td>0.4%</td><td>-56.28645926666928%</td><td>4.25</td><td>2.78</td><td>82</td></tr>
+
+</table>
+<div class="note">💡 江西+广东合计占 74.9%；广东 ROI 5.94 已超江西 5.64；浙江 ROI 3.23 / 陕西 4.25 效率偏低。</div>
+
+<h2>③ 投放层级：总部 vs 门店</h2>
+<div class="cards"><div class="card"><div id="c_lv" class="chart"></div></div></div>
+<table>
+<tr><th>层级</th><th>8月消费</th><th>7月消费</th><th>8月占比</th><th>8月ROI</th><th>7月ROI</th><th>8月单次进店成本</th></tr>
+<tr><td>总部</td><td>44,422</td><td>96,956</td><td>25.8%</td><td>5.63</td><td>5.99</td><td>0.67</td></tr>
+<tr><td>门店</td><td>128,004</td><td>300,223</td><td>74.2%</td><td>5.36</td><td>5.29</td><td>0.95</td></tr>
+<tr><td>合计</td><td>172,426</td><td>397,179</td><td>100.0%</td><td>5.43</td><td>5.46</td><td>0.86</td></tr>
+
+</table>
+<div class="note">💡 门店投放占 74.2%；总部 ROI 5.63 仍高于门店 5.36，但差距较 7 月（5.99 vs 5.29）收窄。</div>
+
+<h2>④ 平台 × 分公司</h2>
+<div class="cards"><div class="card"><div id="c_pxb" class="chart"></div></div></div>
+<table>
+<tr><th>平台·分公司</th><th>消费</th><th>交易额</th><th>订单</th><th>ROI</th></tr>
+<tr><td>淘宝·其他</td><td>10,513</td><td>58,150</td><td>1,378</td><td>5.53</td></tr>
+<tr><td>淘宝·广东</td><td>8,846</td><td>29,914</td><td>830</td><td>3.38</td></tr>
+<tr><td>淘宝·江西</td><td>19,024</td><td>95,954</td><td>2,505</td><td>5.04</td></tr>
+<tr><td>淘宝·浙江</td><td>636</td><td>1,844</td><td>49</td><td>2.90</td></tr>
+<tr><td>淘宝·陕西</td><td>62</td><td>378</td><td>13</td><td>6.11</td></tr>
+<tr><td>美团·其他</td><td>29,372</td><td>119,219</td><td>2,683</td><td>4.06</td></tr>
+<tr><td>美团·广东</td><td>52,449</td><td>334,061</td><td>6,725</td><td>6.37</td></tr>
+<tr><td>美团·江西</td><td>48,949</td><td>287,093</td><td>6,407</td><td>5.87</td></tr>
+<tr><td>美团·浙江</td><td>1,998</td><td>6,655</td><td>150</td><td>3.33</td></tr>
+<tr><td>美团·陕西</td><td>579</td><td>2,345</td><td>69</td><td>4.05</td></tr>
+
+</table>
+
+<h2>⑤ 推广产品效率</h2>
+<div class="cards"><div class="card"><div id="c_prod" class="chart"></div></div></div>
+<table>
+<tr><th>平台</th><th>推广产品</th><th>消费</th><th>交易额</th><th>订单</th><th>ROI</th><th>单次进店成本</th></tr>
+<tr><td>美团</td><td>点金推广</td><td>61,395</td><td>322,526</td><td>6,835</td><td>5.25</td><td>0.74</td></tr>
+<tr><td>美团</td><td>营销魔方</td><td>30,383</td><td>192,416</td><td>3,690</td><td>6.33</td><td>0.66</td></tr>
+<tr><td>淘宝</td><td>斗金推广</td><td>27,790</td><td>124,716</td><td>3,184</td><td>4.49</td><td>0.67</td></tr>
+<tr><td>美团</td><td>流量助手</td><td>17,110</td><td>83,393</td><td>1,829</td><td>4.87</td><td>1.23</td></tr>
+<tr><td>美团</td><td>津贴联盟</td><td>10,994</td><td>105,730</td><td>2,369</td><td>9.62</td><td>0.00</td></tr>
+<tr><td>淘宝</td><td>推广魔方-单店版</td><td>9,440</td><td>50,432</td><td>1,205</td><td>5.34</td><td>0.78</td></tr>
+<tr><td>美团</td><td>赏金联盟</td><td>9,411</td><td>37,910</td><td>1,024</td><td>4.03</td><td>0.00</td></tr>
+<tr><td>淘宝</td><td>推广魔方-连锁版（推广场景）</td><td>1,806</td><td>11,067</td><td>385</td><td>6.13</td><td>0.76</td></tr>
+<tr><td>美团</td><td>铂金展位</td><td>1,666</td><td>1,890</td><td>47</td><td>1.13</td><td>3.72</td></tr>
+<tr><td>美团</td><td>超级流量卡</td><td>1,548</td><td>3,172</td><td>71</td><td>2.05</td><td>1.63</td></tr>
+<tr><td>美团</td><td>金字招牌</td><td>660</td><td>0</td><td>0</td><td>0.00</td><td>0.00</td></tr>
+<tr><td>美团</td><td>拼好饭</td><td>88</td><td>2,335</td><td>169</td><td>26.55</td><td>0.12</td></tr>
+<tr><td>美团</td><td>袋鼠店长</td><td>83</td><td>0</td><td>0</td><td>0.00</td><td>0.00</td></tr>
+<tr><td>淘宝</td><td>优享大牌-曝光付费</td><td>45</td><td>24</td><td>1</td><td>0.54</td><td>1.29</td></tr>
+<tr><td>美团</td><td>应用市场</td><td>9</td><td>0</td><td>0</td><td>0.00</td><td>0.00</td></tr>
+
+</table>
+<div class="note">💡 营销魔方 ROI 6.33 最优；铂金展位 1.13、超级流量卡 2.05、金字招牌 0（659.81 元零产出）为低效项。</div>
+
+<h2>⑥ 美团营销场景</h2>
+<table>
+<tr><th>场景</th><th>消费</th><th>交易额</th><th>订单</th><th>ROI</th><th>进店转化</th></tr>
+<tr><td>未标记</td><td>102,963</td><td>556,957</td><td>12,344</td><td>5.41</td><td>12.45%</td></tr>
+<tr><td>目标自定义</td><td>28,429</td><td>181,803</td><td>3,454</td><td>6.40</td><td>7.76%</td></tr>
+<tr><td>稳定转化</td><td>1,230</td><td>6,895</td><td>153</td><td>5.61</td><td>20.93%</td></tr>
+<tr><td>新客多</td><td>488</td><td>2,386</td><td>50</td><td>4.89</td><td>8.88%</td></tr>
+<tr><td>菜品加速</td><td>155</td><td>145</td><td>4</td><td>0.93</td><td>3.85%</td></tr>
+<tr><td>老客促活</td><td>81</td><td>1,187</td><td>29</td><td>14.57</td><td>34.12%</td></tr>
+
+</table>
+<div class="note">💡 目标自定义场景消费 2.84 万、ROI 6.40 最高效；老客促活 ROI 14.57（量小）；菜品加速 0.93 低效。</div>
+
+<h2>⑦ 每日趋势（8月1-14日）</h2>
+<div class="cards"><div class="card"><div id="c_daily" class="chart"></div></div></div>
+
+<h2>⑧ 门店 Top20（8月消费）</h2>
+<table>
+<tr><th>#</th><th>门店</th><th>平台</th><th>消费</th><th>交易额</th><th>订单</th><th>ROI</th><th>进店转化</th></tr>
+<tr><td>1</td><td>煌上煌酱鸭·鸭脖·卤味(直属大儒世家国光店)</td><td>淘宝</td><td>1,984</td><td>8,794</td><td>172</td><td>4.43</td><td>7.88%</td></tr>
+<tr><td>2</td><td>煌上煌酱鸭(罗湖区向西店)</td><td>美团</td><td>1,962</td><td>10,506</td><td>194</td><td>5.36</td><td>11.92%</td></tr>
+<tr><td>3</td><td>煌上煌酱鸭（赣州万象城金街店）</td><td>美团</td><td>1,952</td><td>14,317</td><td>347</td><td>7.33</td><td>26.39%</td></tr>
+<tr><td>4</td><td>煌上煌酱鸭（五和店·卤味·小吃·下午茶)</td><td>美团</td><td>1,899</td><td>13,697</td><td>287</td><td>7.21</td><td>26.04%</td></tr>
+<tr><td>5</td><td>煌上煌酱鸭(赛拉维店)</td><td>美团</td><td>1,797</td><td>6,787</td><td>153</td><td>3.78</td><td>12.47%</td></tr>
+<tr><td>6</td><td>煌上煌酱鸭（流塘店）</td><td>美团</td><td>1,780</td><td>8,057</td><td>159</td><td>4.53</td><td>11.51%</td></tr>
+<tr><td>7</td><td>煌上煌酱鸭(万科星城店)</td><td>淘宝</td><td>1,776</td><td>4,142</td><td>94</td><td>2.33</td><td>5.47%</td></tr>
+<tr><td>8</td><td>煌上煌酱鸭（红谷大道华润店）</td><td>美团</td><td>1,771</td><td>6,734</td><td>140</td><td>3.80</td><td>11.28%</td></tr>
+<tr><td>9</td><td>煌上煌酱鸭(九江德安联盛快乐城店)</td><td>美团</td><td>1,638</td><td>7,821</td><td>203</td><td>4.78</td><td>15.8%</td></tr>
+<tr><td>10</td><td>煌上煌酱鸭（新村店）</td><td>美团</td><td>1,572</td><td>10,688</td><td>210</td><td>6.80</td><td>14.85%</td></tr>
+<tr><td>11</td><td>煌上煌热卤(印象城店)</td><td>淘宝</td><td>1,536</td><td>7,465</td><td>229</td><td>4.86</td><td>13.92%</td></tr>
+<tr><td>12</td><td>煌上煌酱鸭（南宁安吉万达店）</td><td>美团</td><td>1,487</td><td>5,450</td><td>133</td><td>3.67</td><td>13.37%</td></tr>
+<tr><td>13</td><td>煌上煌酱鸭（世贸天城店）</td><td>美团</td><td>1,463</td><td>7,378</td><td>141</td><td>5.04</td><td>7.82%</td></tr>
+<tr><td>14</td><td>煌上煌酱鸭（龙华大浪店）</td><td>美团</td><td>1,441</td><td>9,450</td><td>203</td><td>6.56</td><td>16.42%</td></tr>
+<tr><td>15</td><td>煌上煌酱鸭(宝安区翻身路店)</td><td>美团</td><td>1,398</td><td>6,111</td><td>126</td><td>4.37</td><td>16.45%</td></tr>
+<tr><td>16</td><td>煌上煌酱鸭（直属长安一号店）</td><td>美团</td><td>1,377</td><td>10,243</td><td>203</td><td>7.44</td><td>27.73%</td></tr>
+<tr><td>17</td><td>煌上煌酱鸭(福田华强北中航路店)</td><td>美团</td><td>1,344</td><td>5,079</td><td>110</td><td>3.78</td><td>14.25%</td></tr>
+<tr><td>18</td><td>煌上煌酱鸭(广州天河车陂店)</td><td>美团</td><td>1,304</td><td>6,391</td><td>145</td><td>4.90</td><td>14.46%</td></tr>
+<tr><td>19</td><td>煌上煌酱鸭（直属大儒世家国光店•鸭脖•卤味鸭头）</td><td>美团</td><td>1,283</td><td>5,693</td><td>101</td><td>4.44</td><td>8.7%</td></tr>
+<tr><td>20</td><td>煌上煌酱鸭(福田水围店)</td><td>美团</td><td>1,259</td><td>9,617</td><td>174</td><td>7.64</td><td>22.17%</td></tr>
+
+</table>
+
+<h2>⑨ 结论与建议</h2>
+<div class="findings">
+<ul>
+<li><span class="tag good">稳健</span><b>整体平稳：</b>8月上半月消费 ¥172,426（日均 ¥12,316，-3.9% vs 7月），ROI 5.43 与 7 月（5.46）基本持平，进店成本稳定在 ¥0.86。</li>
+<li><span class="tag warn">平台分化</span><b>美团效率更优：</b>美团 ROI 5.62（7月 5.49）＞ 淘宝 4.77（7月 5.30，-10%）。淘宝斗金推广（占淘宝 71% 消费）ROI 仅 4.49，是淘宝整体效率拖累主因。</li>
+<li><span class="tag good">区域</span><b>广东反超江西：</b>广东 ROI 5.94（7月 5.72）反超江西 5.64（7月 6.03）；江西曝光大（2,250,887）但进店转化 10.0% 低于广东 11.4%。</li>
+<li><span class="tag bad">低效项</span><b>建议停/减：</b>美团·铂金展位（ROI 1.13）、美团·超级流量卡（ROI 2.05）、美团·金字招牌（ROI 0.00） 合计消费 ¥3,874，ROI 均低于 2.5，建议暂停或收缩预算。</li>
+<li><span class="tag good">加码项</span><b>建议加投：</b>营销魔方（ROI 6.33）、目标自定义场景（ROI 6.40）、津贴联盟（ROI 9.62）——需注意津贴联盟/赏金联盟无进店数据，按订单口径验证后再加量。</li>
+<li><span class="tag warn">层级</span><b>总部效率仍高：</b>总部 ROI 5.63 &gt; 门店 5.36，且总部单次进店成本仅 ¥0.67，可小幅向总部计划倾斜（当前仅占 25.8%）。</li>
+<li><span class="tag warn">门店</span><b>Top 门店 ROI 偏低：</b>消费最高的 大儒世家国光店（淘宝）ROI 仅 4.43；白云地下商场店 ROI 0.92、万科星城店 2.33 需单独诊断（定向/出价/门店流量承接）。</li>
+</ul>
+</div>
+
+<div class="note" style="margin-top:16px">数据说明：8月数据截至 08-14（美团 08-01~13 总部+子公司+门店 + 08-14 单日；淘宝 08-01~13 + 08-14 单日）；7月为全月 31 天。ROI 口径=订单交易额÷推广消费；日均对比按各自天数折算。美团津贴联盟/赏金联盟/金字招牌等无曝光进店明细，ROI 按订单交易额口径。生成时间：2026-08-17。</div>
+</div>
+
+<script>
+const DATA = {"plat": {"names": ["美团", "淘宝"], "cons8": [133345.24, 39080.67], "cons7": [325130.01, 72048.99], "roi8": [5.62, 4.77], "roi7": [5.49, 5.3]}, "br": {"names": ["江西", "广东", "其他", "浙江", "陕西"], "cons8": [67972.56, 61294.29, 39885.11, 2633.42, 640.53], "cons7": [163780.33, 136286.94, 85922.23, 7944.93, 3244.57], "roi8": [5.64, 5.94, 4.45, 3.23, 4.25], "roi7": [6.03, 5.72, 4.23, 3.61, 2.78]}, "lv": {"names": ["总部", "门店"], "cons8": [44421.5, 128004.41], "cons7": [96956.39, 300222.61], "roi8": [5.63, 5.36], "roi7": [5.99, 5.29]}, "prod": {"names": ["美团·点金推广", "美团·营销魔方", "淘宝·斗金推广", "美团·流量助手", "美团·津贴联盟", "淘宝·推广魔方-单店版", "美团·赏金联盟", "淘宝·推广魔方-连锁版（推广场景）"], "cons": [61395.01, 30382.72, 27790.02, 17109.57, 10993.9, 9439.8, 9410.6, 1805.85], "roi": [5.25, 6.33, 4.49, 4.87, 9.62, 5.34, 4.03, 6.13]}, "daily": {"dates": ["08-01 00:00:00", "08-02 00:00:00", "08-03 00:00:00", "08-04 00:00:00", "08-05 00:00:00", "08-06 00:00:00", "08-07 00:00:00", "08-08 00:00:00", "08-09 00:00:00", "08-10 00:00:00", "08-11 00:00:00", "08-12 00:00:00", "08-13 00:00:00", "08-14 00:00:00"], "cons": [9975.05, 10098.36, 9023.57, 9275.57, 9690.74, 11591.18, 14726.39, 15731.53, 16485.94, 13211.78, 13497.79, 13280.58, 12962.68, 12874.75], "trans": [54193.44, 57911.01, 46339.4, 47933.62, 50823.06, 64229.82, 81041.14, 98973.15, 93218.93, 68168.86, 66770.13, 68019.89, 68753.16, 69237.6], "roi": [5.43, 5.73, 5.14, 5.17, 5.24, 5.54, 5.5, 6.29, 5.65, 5.16, 4.95, 5.12, 5.3, 5.38]}, "pxb": {"names": ["淘宝·其他", "淘宝·广东", "淘宝·江西", "淘宝·浙江", "淘宝·陕西", "美团·其他", "美团·广东", "美团·江西", "美团·浙江", "美团·陕西"], "cons": [10513.33, 8845.63, 19024.01, 635.82, 61.88, 29371.78, 52448.66, 48948.55, 1997.6, 578.65], "roi": [5.53, 3.38, 5.04, 2.9, 6.11, 4.06, 6.37, 5.87, 3.33, 4.05]}};
+function mk(id, opt) { const c = echarts.init(document.getElementById(id)); c.setOption(opt); window.addEventListener('resize', () => c.resize()); }
+
+mk('c_plat', {
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['8月消费', '7月消费', '8月ROI'] },
+  xAxis: { type: 'category', data: DATA.plat.names },
+  yAxis: [{ type: 'value', name: '消费(元)' }, { type: 'value', name: 'ROI', max: 8 }],
+  series: [
+    { name: '8月消费', type: 'bar', data: DATA.plat.cons8, itemStyle: { color: '#0969da' } },
+    { name: '7月消费', type: 'bar', data: DATA.plat.cons7, itemStyle: { color: '#b6c8e0' } },
+    { name: '8月ROI', type: 'line', yAxisIndex: 1, data: DATA.plat.roi8, itemStyle: { color: '#cf222e' } }
+  ]
+});
+
+mk('c_br', {
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['8月消费', '7月消费', '8月ROI'] },
+  xAxis: { type: 'category', data: DATA.br.names },
+  yAxis: [{ type: 'value', name: '消费(元)' }, { type: 'value', name: 'ROI', max: 8 }],
+  series: [
+    { name: '8月消费', type: 'bar', data: DATA.br.cons8, itemStyle: { color: '#0969da' } },
+    { name: '7月消费', type: 'bar', data: DATA.br.cons7, itemStyle: { color: '#b6c8e0' } },
+    { name: '8月ROI', type: 'line', yAxisIndex: 1, data: DATA.br.roi8, itemStyle: { color: '#cf222e' } }
+  ]
+});
+
+mk('c_lv', {
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['8月消费', '7月消费', '8月ROI'] },
+  xAxis: { type: 'category', data: DATA.lv.names },
+  yAxis: [{ type: 'value', name: '消费(元)' }, { type: 'value', name: 'ROI', max: 8 }],
+  series: [
+    { name: '8月消费', type: 'bar', data: DATA.lv.cons8, itemStyle: { color: '#0969da' } },
+    { name: '7月消费', type: 'bar', data: DATA.lv.cons7, itemStyle: { color: '#b6c8e0' } },
+    { name: '8月ROI', type: 'line', yAxisIndex: 1, data: DATA.lv.roi8, itemStyle: { color: '#cf222e' } }
+  ]
+});
+
+mk('c_pxb', {
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['消费', 'ROI'] },
+  xAxis: { type: 'category', data: DATA.pxb.names, axisLabel: { rotate: 30 } },
+  yAxis: [{ type: 'value', name: '消费(元)' }, { type: 'value', name: 'ROI', max: 8 }],
+  series: [
+    { name: '消费', type: 'bar', data: DATA.pxb.cons, itemStyle: { color: '#0969da' } },
+    { name: 'ROI', type: 'line', yAxisIndex: 1, data: DATA.pxb.roi, itemStyle: { color: '#cf222e' } }
+  ]
+});
+
+mk('c_prod', {
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['消费', 'ROI'] },
+  xAxis: { type: 'category', data: DATA.prod.names, axisLabel: { rotate: 25 } },
+  yAxis: [{ type: 'value', name: '消费(元)' }, { type: 'value', name: 'ROI' }],
+  series: [
+    { name: '消费', type: 'bar', data: DATA.prod.cons, itemStyle: { color: '#0969da' } },
+    { name: 'ROI', type: 'line', yAxisIndex: 1, data: DATA.prod.roi, itemStyle: { color: '#cf222e' } }
+  ]
+});
+
+mk('c_daily', {
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['消费', '交易额', 'ROI'] },
+  xAxis: { type: 'category', data: DATA.daily.dates },
+  yAxis: [{ type: 'value', name: '金额(元)' }, { type: 'value', name: 'ROI', max: 12 }],
+  series: [
+    { name: '消费', type: 'bar', data: DATA.daily.cons, itemStyle: { color: '#0969da' } },
+    { name: '交易额', type: 'line', data: DATA.daily.trans, itemStyle: { color: '#1a7f37' } },
+    { name: 'ROI', type: 'line', yAxisIndex: 1, data: DATA.daily.roi, itemStyle: { color: '#cf222e' } }
+  ]
+});
+</script>
+</body>
+</html>
