@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>煌上煌外卖评价整改月报 · 2026年8月第3周</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Microsoft YaHei',sans-serif;background:#f5f6f8;color:#222;padding-bottom:40px}
+.banner{background:linear-gradient(135deg,#7a1f1f,#a83232);color:#fff;padding:26px 32px}
+.banner h1{font-size:25px;margin-bottom:6px}
+.banner .meta{font-size:13px;opacity:.92}
+.banner .tag{display:inline-block;background:rgba(255,255,255,.18);border-radius:12px;padding:2px 10px;margin-right:6px;font-size:12px}
+.tabs{display:flex;gap:8px;padding:12px 32px;background:#fff;border-bottom:1px solid #e3e3e3;position:sticky;top:0;z-index:9;flex-wrap:wrap}
+.tab-btn{padding:7px 16px;border:1px solid #d0d0d0;background:#fff;border-radius:20px;cursor:pointer;font-size:14px}
+.tab-btn.active{background:#7a1f1f;color:#fff;border-color:#7a1f1f}
+.panel{display:none;padding:18px 32px;max-width:1200px;margin:0 auto}
+.panel.active{display:block}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0}
+.kpi{background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.kpi .v{font-size:25px;font-weight:700;color:#7a1f1f}
+.kpi .v.red{color:#cf222e}.kpi .v.green{color:#1a7f37}.kpi .v.org{color:#c77b1e}
+.kpi .l{font-size:12px;color:#666;margin-top:4px}
+.kpi .s{font-size:11px;color:#999;margin-top:2px}
+.card{background:#fff;border-radius:10px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.card h3{font-size:15px;color:#7a1f1f;margin-bottom:10px;border-left:4px solid #7a1f1f;padding-left:8px}
+.card .step{display:inline-block;background:#7a1f1f;color:#fff;border-radius:50%;width:20px;height:20px;text-align:center;line-height:20px;font-size:12px;margin-right:6px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:900px){.two-col{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:7px 9px;border-bottom:1px solid #eee;text-align:left}
+th{background:#faf3f3;color:#7a1f1f;white-space:nowrap}
+td.l{max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+td.red{color:#cf222e;font-weight:700}td.org{color:#c77b1e;font-weight:700}td.green{color:#1a7f37;font-weight:700}
+.bar-row{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+.bar-label{width:120px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;background:#f0f0f0;border-radius:4px;height:17px}
+.bar{height:17px;border-radius:4px}
+.bar-val{width:40px;font-weight:700}
+.trend{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.trend-item{background:#fff;border-radius:10px;padding:12px 18px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.06);min-width:150px}
+.trend .tv{font-size:26px;font-weight:700;color:#333}
+.trend .tv span{font-size:13px;font-weight:400;color:#888}
+.trend .tv.red{color:#cf222e}.trend .tv.green{color:#1a7f37}
+.trend .tl{font-size:12px;color:#555;margin-top:3px}
+.trend .ts{font-size:11px;color:#999}
+.trend-arrow{font-size:24px;color:#aaa}
+.goal li{margin:7px 0;font-size:14px}
+.cta{background:#fdf6ec;border:1px solid #e8c98a}
+.cta b{color:#7a1f1f}
+.legend{font-size:12px;color:#888;margin-top:6px}
+.empty{color:#999;font-size:13px}
+</style></head><body>
+<div class="banner">
+  <h1>🍗 煌上煌外卖评价整改月报</h1>
+  <div class="meta" style="margin-bottom:8px">2026年8月第3周（W3）｜数据截止 2026-08-17｜差评口径 &lt;3 分</div>
+  <div><span class="tag">累计差评 780 条</span><span class="tag">本周新增 50 条</span><span class="tag">416 店整改任务</span><span class="tag">三平台口径</span></div>
+</div>
+<div class="tabs">
+  <button class="tab-btn active" data-tab="all">总部总览</button>
+  <button class='tab-btn' data-tab='江西'>江西</button><button class='tab-btn' data-tab='广东'>广东</button><button class='tab-btn' data-tab='浙江'>浙江</button><button class='tab-btn' data-tab='陕西'>陕西</button><button class='tab-btn' data-tab='重庆'>重庆</button>
+</div>
+
+<section class="panel active" id="tab-all">
+  <div class="kpis">
+    <div class='kpi'><div class='v red'>780</div><div class='l'>累计差评</div><div class="s">7/1-8/17</div></div>
+    <div class='kpi'><div class='v red'>50</div><div class='l'>本周新增差评</div><div class="s">8/15-17 共3天</div></div>
+    <div class='kpi'><div class='v '>13.1%</div><div class='l'>整体差评率</div><div class="s">有评分样本口径</div></div>
+    <div class='kpi'><div class='v '>70.6%</div><div class='l'>商家回复率</div><div class="s">目标 90%</div></div>
+    <div class='kpi'><div class='v red'>65</div><div class='l'>食安红线</div><div class="s">卫生/异物/变质</div></div>
+    <div class='kpi'><div class='v org'>0%</div><div class='l'>整改完成率</div><div class="s">本周启动跟踪</div></div>
+  </div>
+  <div class="card"><h3><span class="step">1</span>本周新增差评（8/15-17）· 趋势对比</h3><div class='trend'>
+  <div class='trend-item'><div class='tv'>270<span>条</span></div><div class='tl'>上期 8/1-14（14天）</div><div class='ts'>日均 19.3 条</div></div>
+  <div class='trend-arrow'>➜</div>
+  <div class='trend-item'><div class='tv red'>50<span>条</span></div><div class='tl'>本周 8/15-17（3天）</div><div class='ts'>日均 16.7 条</div></div>
+  <div class='trend-item'><div class='tv green'>▼ 13.5%</div><div class='tl'>日均变化</div><div class='ts'>改善</div></div>
+</div>
+    <div class="legend">美团 13 条 / 淘宝 33 条 / 京东 4 条｜日均 16.7 条 vs 上期 19.3 条（改善 13.5%）</div>
+  </div>
+  <div class="two-col">
+    <div class="card"><h3><span class="step">2</span>本周新增差评原因 Top8</h3><div class='bar-row'><span class='bar-label'>未命中/其他</span><div class='bar-track'><div class='bar' style='width:100%;background:#cf222e'></div></div><span class='bar-val'>13</span></div><div class='bar-row'><span class='bar-label'>口味</span><div class='bar-track'><div class='bar' style='width:77%;background:#cf222e'></div></div><span class='bar-val'>10</span></div><div class='bar-row'><span class='bar-label'>份量/价格</span><div class='bar-track'><div class='bar' style='width:38%;background:#cf222e'></div></div><span class='bar-val'>5</span></div><div class='bar-row'><span class='bar-label'>卫生类</span><div class='bar-track'><div class='bar' style='width:31%;background:#cf222e'></div></div><span class='bar-val'>4</span></div><div class='bar-row'><span class='bar-label'>质量类</span><div class='bar-track'><div class='bar' style='width:31%;background:#cf222e'></div></div><span class='bar-val'>4</span></div><div class='bar-row'><span class='bar-label'>质量类+口味</span><div class='bar-track'><div class='bar' style='width:23%;background:#cf222e'></div></div><span class='bar-val'>3</span></div><div class='bar-row'><span class='bar-label'>份量/价格+口味</span><div class='bar-track'><div class='bar' style='width:15%;background:#cf222e'></div></div><span class='bar-val'>2</span></div><div class='bar-row'><span class='bar-label'>餐具缺失</span><div class='bar-track'><div class='bar' style='width:15%;background:#cf222e'></div></div><span class='bar-val'>2</span></div></div>
+    <div class="card"><h3><span class="step">2</span>本周新增差评样例</h3>
+      <table><thead><tr><th>平台</th><th>评价内容</th><th>原因</th></tr></thead><tbody><tr><td>美团</td><td class='l'>虚假宣传，量太少了都吃不饱，图片放一大盘。你早说量这么少我都不会点。</td><td>份量/价格</td></tr><tr><td>美团</td><td class='l'>#价格没优势 #味道不好 </td><td>份量/价格+口味</td></tr><tr><td>美团</td><td class='l'> 餐具都不给，找了客服，客服还联系不上商家，这是炒饭还是手抓饭？</td><td>餐具缺失</td></tr><tr><td>美团</td><td class='l'>难吃</td><td>口味</td></tr><tr><td>美团</td><td class='l'>送两份鸭脖，什么意思？还不提前说没有了那就是有有你送两份鸭脖</td><td>未命中/其他</td></tr><tr><td>美团</td><td class='l'>鸭肉炒饭，请问鸭肉呢？</td><td>未命中/其他</td></tr><tr><td>美团</td><td class='l'>#味道不好 之前都会给几块肉，现在就给一小块，而且饭还那么软，跟吃粥一样</td><td>口味</td></tr><tr><td>美团</td><td class='l'>饭半生不熟，鸭块发霉了</td><td>卫生类</td></tr><tr><td>美团</td><td class='l'>不好吃</td><td>口味</td></tr><tr><td>美团</td><td class='l'>手撕鸡三块边角料</td><td>选料/部位差</td></tr><tr><td>美团</td><td class='l'> 老板你开玩笑呢？卖的预制菜，包装都不拆，里面就这？一点胃口都没有，我都不想说了，真的拉，建议不要买</td><td>预制菜/非现制</td></tr><tr><td>美团</td><td class='l'>#味道不好 #分量太小 </td><td>份量/价格+口味</td></tr></tbody></table></div>
+  </div>
+  <div class="two-col">
+    <div class="card"><h3><span class="step">3</span>累计原因大归类 Top8（780条）</h3><div class='bar-row'><span class='bar-label'>口味不佳</span><div class='bar-track'><div class='bar' style='width:100%;background:#7a1f1f'></div></div><span class='bar-val'>148</span></div><div class='bar-row'><span class='bar-label'>其他/无法归类</span><div class='bar-track'><div class='bar' style='width:93%;background:#7a1f1f'></div></div><span class='bar-val'>138</span></div><div class='bar-row'><span class='bar-label'>份量不足</span><div class='bar-track'><div class='bar' style='width:58%;background:#7a1f1f'></div></div><span class='bar-val'>86</span></div><div class='bar-row'><span class='bar-label'>口味不佳、食材不新鲜</span><div class='bar-track'><div class='bar' style='width:28%;background:#7a1f1f'></div></div><span class='bar-val'>41</span></div><div class='bar-row'><span class='bar-label'>错发/漏发</span><div class='bar-track'><div class='bar' style='width:26%;background:#7a1f1f'></div></div><span class='bar-val'>39</span></div><div class='bar-row'><span class='bar-label'>食材不新鲜</span><div class='bar-track'><div class='bar' style='width:24%;background:#7a1f1f'></div></div><span class='bar-val'>36</span></div><div class='bar-row'><span class='bar-label'>份量不足、口味不佳</span><div class='bar-track'><div class='bar' style='width:13%;background:#7a1f1f'></div></div><span class='bar-val'>19</span></div><div class='bar-row'><span class='bar-label'>卫生/异物</span><div class='bar-track'><div class='bar' style='width:13%;background:#7a1f1f'></div></div><span class='bar-val'>19</span></div></div>
+    <div class="card"><h3><span class="step">3</span>匹配子类 Top8（回复话术指引）</h3><div class='bar-row'><span class='bar-label'>不好吃/口味不合</span><div class='bar-track'><div class='bar' style='width:100%;background:#1a7f37'></div></div><span class='bar-val'>195</span></div><div class='bar-row'><span class='bar-label'>未写原因/无内容</span><div class='bar-track'><div class='bar' style='width:73%;background:#1a7f37'></div></div><span class='bar-val'>143</span></div><div class='bar-row'><span class='bar-label'>份量少/缺斤少两</span><div class='bar-track'><div class='bar' style='width:68%;background:#1a7f37'></div></div><span class='bar-val'>132</span></div><div class='bar-row'><span class='bar-label'>不新鲜/变质</span><div class='bar-track'><div class='bar' style='width:58%;background:#1a7f37'></div></div><span class='bar-val'>114</span></div><div class='bar-row'><span class='bar-label'>辣度问题</span><div class='bar-track'><div class='bar' style='width:10%;background:#1a7f37'></div></div><span class='bar-val'>20</span></div><div class='bar-row'><span class='bar-label'>异物/毛发</span><div class='bar-track'><div class='bar' style='width:10%;background:#1a7f37'></div></div><span class='bar-val'>19</span></div><div class='bar-row'><span class='bar-label'>没给手套/单据</span><div class='bar-track'><div class='bar' style='width:9%;background:#1a7f37'></div></div><span class='bar-val'>17</span></div><div class='bar-row'><span class='bar-label'>没看备注</span><div class='bar-track'><div class='bar' style='width:7%;background:#1a7f37'></div></div><span class='bar-val'>14</span></div></div>
+  </div>
+  <div class="card"><h3><span class="step">4</span>分公司整改矩阵（责任到分公司）</h3>
+    <table><thead><tr><th>分公司</th><th>整改门店</th><th>差评数</th><th>平均评分</th><th>美团</th><th>淘宝</th><th>京东</th><th>差评占比</th></tr></thead>
+    <tbody><tr><td><b>江西公司</b></td><td>226</td><td>428</td><td class='red'>1.21</td><td>68</td><td>0</td><td>0</td><td>59%</td></tr><tr><td><b>广东公司</b></td><td>142</td><td>208</td><td class='red'>1.17</td><td>58</td><td>0</td><td>0</td><td>28%</td></tr><tr><td><b>浙江公司</b></td><td>19</td><td>35</td><td class='red'>1.21</td><td>4</td><td>0</td><td>0</td><td>5%</td></tr><tr><td><b>陕西公司</b></td><td>14</td><td>27</td><td class='red'>1.40</td><td>8</td><td>0</td><td>0</td><td>4%</td></tr><tr><td><b>重庆公司</b></td><td>8</td><td>8</td><td class='red'>1.12</td><td>6</td><td>0</td><td>0</td><td>1%</td></tr></tbody></table>
+    <div class="legend">江西+广东 = 整改主战场（368 店 / 88% 差评）｜验证标准：差评数下降 &amp; 评分回升 ≥3.0</div>
+  </div>
+  <div class="card"><h3><span class="step">5</span>整改动作库 TOP10（可直接下发）</h3>
+    <table><thead><tr><th>#</th><th>整改动作</th><th>涉及门店</th></tr></thead>
+    <tbody><tr><td>1</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td><td>85</td></tr><tr><td>2</td><td class='l'>内容杂 → 逐条人工复核处理</td><td>77</td></tr><tr><td>3</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检</td><td>72</td></tr><tr><td>4</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准；新鲜度问题 → 当日鲜售/现卤现卖，冷藏链路排查，过期报损</td><td>16</td></tr><tr><td>5</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；价格感知贵 → 套餐设计/小份引流款，突出分量展示</td><td>15</td></tr><tr><td>6</td><td class='l'>出餐错漏 → 出餐核对SOP+打包双人复核，备注必读</td><td>14</td></tr><tr><td>7</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td><td>12</td></tr><tr><td>8</td><td class='l'>价格感知贵 → 套餐设计/小份引流款，突出分量展示</td><td>11</td></tr><tr><td>9</td><td class='l'>新鲜度问题 → 当日鲜售/现卤现卖，冷藏链路排查，过期报损</td><td>11</td></tr><tr><td>10</td><td class='l'>食安红线 → 立即门店追责+后厨卫生专项+平台申诉举证</td><td>11</td></tr></tbody></table>
+  </div>
+  <div class="card cta"><b>本周行动：</b>①下发 5 分公司周报（江西 226 店/广东 142 店/浙江 19 店/陕西 14 店/重庆 8 店）②本周新增 50 条差评逐条核实整改③中央厨房落地三项标准（统一卤制/克重/出餐SOP）④下周验证整改完成率，未整改门店升级预警</div>
+</section>
+
+<section class='panel' id='tab-江西'>
+  <div class='kpis'>
+    <div class='kpi'><div class='v red'>428</div><div class='l'>本司差评总数</div><div class="s">整改任务</div></div>
+    <div class='kpi'><div class='v '>226</div><div class='l'>整改门店数</div></div>
+    <div class='kpi'><div class='v red'>1.21</div><div class='l'>差评平均分</div></div>
+    <div class='kpi'><div class='v '>68</div><div class='l'>美团门店</div></div><div class='kpi'><div class='v '>0</div><div class='l'>淘宝门店</div></div><div class='kpi'><div class='v '>0</div><div class='l'>京东门店</div></div>
+  </div>
+  <div class='two-col'>
+    <div class='card'><h3>本司主要问题 TOP5</h3><div class='bar-row'><span class='bar-label'>口味不佳</span><div class='bar-track'><div class='bar' style='width:100%;background:#c77b1e'></div></div><span class='bar-val'>101</span></div><div class='bar-row'><span class='bar-label'>份量不足</span><div class='bar-track'><div class='bar' style='width:93%;background:#c77b1e'></div></div><span class='bar-val'>94</span></div><div class='bar-row'><span class='bar-label'>其他/无法归类</span><div class='bar-track'><div class='bar' style='width:90%;background:#c77b1e'></div></div><span class='bar-val'>91</span></div><div class='bar-row'><span class='bar-label'>价格/性价比</span><div class='bar-track'><div class='bar' style='width:16%;background:#c77b1e'></div></div><span class='bar-val'>16</span></div><div class='bar-row'><span class='bar-label'>份量不足、价格/性价比</span><div class='bar-track'><div class='bar' style='width:13%;background:#c77b1e'></div></div><span class='bar-val'>13</span></div></div>
+    <div class='card'><h3>整改目标（本周）</h3><ul class='goal'>
+      <li>差评数下降 ≥20%</li><li><span class='red'>差评均分 &lt;1.5 门店本周必须处理</span></li>
+      <li>食安类 24h 平台申诉 + 门店追责</li><li>责任人按 7/15/30 天填报验证时间</li></ul></div>
+  </div>
+  <div class='card'><h3>本司门店整改清单 TOP12（全量见 Excel）</h3>
+    <table><thead><tr><th>#</th><th>门店名称</th><th>平台</th><th>差评数</th><th>平均评分</th><th>主要问题</th><th>整改建议</th></tr></thead><tbody><tr><td>2</td><td class='l'>煌上煌酱鸭（樟树时代广场店）</td><td>美团</td><td>8</td><td class='red'>1.12</td><td class='l'>份量不足</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检</td></tr><tr><td>3</td><td class='l'>煌上煌酱鸭(经开榴云路店)</td><td>淘宝闪购</td><td>7</td><td class='red'>1.14</td><td class='l'>其他/无法归类</td><td class='l'>内容杂 → 逐条人工复核处理</td></tr><tr><td>6</td><td class='l'>煌上煌酱鸭（赣州公务员小区店）</td><td>美团</td><td>6</td><td class='red'>1.00</td><td class='l'>份量不足、包装/撒漏、错发/漏发、服务/售后</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；包装撒漏 → 升级防漏包装+封口</td></tr><tr><td>7</td><td class='l'>煌上煌酱鸭(直属新建总店)</td><td>淘宝闪购</td><td>6</td><td class='red'>1.00</td><td class='l'>其他/无法归类</td><td class='l'>内容杂 → 逐条人工复核处理</td></tr><tr><td>8</td><td class='l'>煌上煌酱鸭(金沙店)</td><td>淘宝闪购</td><td>6</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>9</td><td class='l'>煌上煌酱鸭(直属八一广场店)</td><td>淘宝闪购</td><td>6</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>10</td><td class='l'>煌上煌酱鸭(红谷十二庭店)</td><td>淘宝闪购</td><td>5</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>11</td><td class='l'>煌上煌匠鸭(宜春万载店)</td><td>淘宝闪购</td><td>5</td><td class='red'>1.20</td><td class='l'>份量不足</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检</td></tr><tr><td>14</td><td class='l'>煌上煌酱鸭（金山路店）</td><td>美团</td><td>5</td><td class='red'>1.00</td><td class='l'>份量不足</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检</td></tr><tr><td>15</td><td class='l'>煌上煌酱鸭(直属吉安金鹏花园店)</td><td>淘宝闪购</td><td>5</td><td class='org'>1.60</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>16</td><td class='l'>煌上煌酱鸭(直属东湖店)</td><td>淘宝闪购</td><td>5</td><td class='red'>1.20</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>17</td><td class='l'>煌上煌酱鸭(红谷大道华润店)</td><td>淘宝闪购</td><td>5</td><td class='red'>1.20</td><td class='l'>价格/性价比</td><td class='l'>价格感知贵 → 套餐设计/小份引流款，突出分量展示</td></tr></tbody></table></div>
+  <div class='card cta'><b>本周行动：</b>逐店落实整改 → 填报【责任人+验证时间】→ 下周自动验证（差评下降/评分≥3.0）→ 未整改升级预警</div>
+</section>
+<section class='panel' id='tab-广东'>
+  <div class='kpis'>
+    <div class='kpi'><div class='v red'>208</div><div class='l'>本司差评总数</div><div class="s">整改任务</div></div>
+    <div class='kpi'><div class='v '>142</div><div class='l'>整改门店数</div></div>
+    <div class='kpi'><div class='v red'>1.17</div><div class='l'>差评平均分</div></div>
+    <div class='kpi'><div class='v '>58</div><div class='l'>美团门店</div></div><div class='kpi'><div class='v '>0</div><div class='l'>淘宝门店</div></div><div class='kpi'><div class='v '>0</div><div class='l'>京东门店</div></div>
+  </div>
+  <div class='two-col'>
+    <div class='card'><h3>本司主要问题 TOP5</h3><div class='bar-row'><span class='bar-label'>其他/无法归类</span><div class='bar-track'><div class='bar' style='width:100%;background:#c77b1e'></div></div><span class='bar-val'>45</span></div><div class='bar-row'><span class='bar-label'>份量不足</span><div class='bar-track'><div class='bar' style='width:89%;background:#c77b1e'></div></div><span class='bar-val'>40</span></div><div class='bar-row'><span class='bar-label'>口味不佳</span><div class='bar-track'><div class='bar' style='width:73%;background:#c77b1e'></div></div><span class='bar-val'>33</span></div><div class='bar-row'><span class='bar-label'>口味不佳、食材不新鲜</span><div class='bar-track'><div class='bar' style='width:29%;background:#c77b1e'></div></div><span class='bar-val'>13</span></div><div class='bar-row'><span class='bar-label'>份量不足、口味不佳</span><div class='bar-track'><div class='bar' style='width:20%;background:#c77b1e'></div></div><span class='bar-val'>9</span></div></div>
+    <div class='card'><h3>整改目标（本周）</h3><ul class='goal'>
+      <li>差评数下降 ≥20%</li><li><span class='red'>差评均分 &lt;1.5 门店本周必须处理</span></li>
+      <li>食安类 24h 平台申诉 + 门店追责</li><li>责任人按 7/15/30 天填报验证时间</li></ul></div>
+  </div>
+  <div class='card'><h3>本司门店整改清单 TOP12（全量见 Excel）</h3>
+    <table><thead><tr><th>#</th><th>门店名称</th><th>平台</th><th>差评数</th><th>平均评分</th><th>主要问题</th><th>整改建议</th></tr></thead><tbody><tr><td>4</td><td class='l'>煌上煌酱鸭(福海桥头地铁店)</td><td>淘宝闪购</td><td>7</td><td class='red'>1.29</td><td class='l'>其他/无法归类</td><td class='l'>内容杂 → 逐条人工复核处理</td></tr><tr><td>27</td><td class='l'>煌上煌手撕酱鸭(坪山沙博店)</td><td>美团</td><td>4</td><td class='org'>1.50</td><td class='l'>份量不足</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检</td></tr><tr><td>37</td><td class='l'>煌上煌酱鸭(东莞长盛广场店)</td><td>淘宝闪购</td><td>3</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>40</td><td class='l'>煌上煌酱鸭(佛山玉器街店)</td><td>美团</td><td>3</td><td class='red'>1.00</td><td class='l'>份量不足</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检</td></tr><tr><td>42</td><td class='l'>煌上煌酱鸭（惠州时尚公园店）</td><td>美团</td><td>3</td><td class='org'>1.67</td><td class='l'>份量不足</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检</td></tr><tr><td>45</td><td class='l'>煌上煌酱鸭(华为湖岸花园店)</td><td>淘宝闪购</td><td>3</td><td class='red'>1.00</td><td class='l'>其他/无法归类</td><td class='l'>内容杂 → 逐条人工复核处理</td></tr><tr><td>46</td><td class='l'>煌上煌酱鸭·卤味·鸭脖·小吃(创业花园专卖店)</td><td>淘宝闪购</td><td>3</td><td class='red'>1.00</td><td class='l'>口味不佳、卫生/异物、包装/撒漏</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准；食安红线 → 立即门店</td></tr><tr><td>47</td><td class='l'>煌上煌酱鸭(金色领域广场店)</td><td>淘宝闪购</td><td>3</td><td class='red'>1.33</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>50</td><td class='l'>煌上煌酱鸭(蛇口工业七路店)</td><td>淘宝闪购</td><td>3</td><td class='red'>1.00</td><td class='l'>份量不足、口味不佳</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；口味不稳/偏咸偏辣 → 统一卤制</td></tr><tr><td>55</td><td class='l'>煌上煌酱鸭(卤味·酒料·棉湖店)</td><td>美团</td><td>3</td><td class='red'>1.33</td><td class='l'>份量不足、口味不佳、价格/性价比</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；口味不稳/偏咸偏辣 → 统一卤制</td></tr><tr><td>56</td><td class='l'>煌上煌酱鸭(卤味·西乡步行街店)</td><td>淘宝闪购</td><td>3</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>65</td><td class='l'>煌上煌酱鸭(揭阳揭西棉湖专卖店)</td><td>淘宝闪购</td><td>3</td><td class='red'>1.33</td><td class='l'>其他/无法归类</td><td class='l'>内容杂 → 逐条人工复核处理</td></tr></tbody></table></div>
+  <div class='card cta'><b>本周行动：</b>逐店落实整改 → 填报【责任人+验证时间】→ 下周自动验证（差评下降/评分≥3.0）→ 未整改升级预警</div>
+</section>
+<section class='panel' id='tab-浙江'>
+  <div class='kpis'>
+    <div class='kpi'><div class='v red'>35</div><div class='l'>本司差评总数</div><div class="s">整改任务</div></div>
+    <div class='kpi'><div class='v '>19</div><div class='l'>整改门店数</div></div>
+    <div class='kpi'><div class='v red'>1.21</div><div class='l'>差评平均分</div></div>
+    <div class='kpi'><div class='v '>4</div><div class='l'>美团门店</div></div><div class='kpi'><div class='v '>0</div><div class='l'>淘宝门店</div></div><div class='kpi'><div class='v '>0</div><div class='l'>京东门店</div></div>
+  </div>
+  <div class='two-col'>
+    <div class='card'><h3>本司主要问题 TOP5</h3><div class='bar-row'><span class='bar-label'>口味不佳</span><div class='bar-track'><div class='bar' style='width:100%;background:#c77b1e'></div></div><span class='bar-val'>10</span></div><div class='bar-row'><span class='bar-label'>份量不足、价格/性价比</span><div class='bar-track'><div class='bar' style='width:70%;background:#c77b1e'></div></div><span class='bar-val'>7</span></div><div class='bar-row'><span class='bar-label'>其他/无法归类</span><div class='bar-track'><div class='bar' style='width:50%;background:#c77b1e'></div></div><span class='bar-val'>5</span></div><div class='bar-row'><span class='bar-label'>份量不足、食材不新鲜</span><div class='bar-track'><div class='bar' style='width:40%;background:#c77b1e'></div></div><span class='bar-val'>4</span></div><div class='bar-row'><span class='bar-label'>份量不足</span><div class='bar-track'><div class='bar' style='width:20%;background:#c77b1e'></div></div><span class='bar-val'>2</span></div></div>
+    <div class='card'><h3>整改目标（本周）</h3><ul class='goal'>
+      <li>差评数下降 ≥20%</li><li><span class='red'>差评均分 &lt;1.5 门店本周必须处理</span></li>
+      <li>食安类 24h 平台申诉 + 门店追责</li><li>责任人按 7/15/30 天填报验证时间</li></ul></div>
+  </div>
+  <div class='card'><h3>本司门店整改清单 TOP12（全量见 Excel）</h3>
+    <table><thead><tr><th>#</th><th>门店名称</th><th>平台</th><th>差评数</th><th>平均评分</th><th>主要问题</th><th>整改建议</th></tr></thead><tbody><tr><td>21</td><td class='l'>煌上煌酱鸭(北苑之心店)</td><td>淘宝闪购</td><td>4</td><td class='red'>1.25</td><td class='l'>份量不足、食材不新鲜</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；新鲜度问题 → 当日鲜售/现卤现</td></tr><tr><td>54</td><td class='l'>煌上煌酱鸭(义乌城北苏杭情店)</td><td>淘宝闪购</td><td>3</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>58</td><td class='l'>煌上煌酱鸭(直属杭州城西银泰店)</td><td>淘宝闪购</td><td>3</td><td class='red'>1.33</td><td class='l'>份量不足、价格/性价比</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；价格感知贵 → 套餐设计/小份引</td></tr><tr><td>59</td><td class='l'>煌上煌酱鸭(杭州江晖路地铁店)</td><td>淘宝闪购</td><td>3</td><td class='red'>1.33</td><td class='l'>其他/无法归类</td><td class='l'>内容杂 → 逐条人工复核处理</td></tr><tr><td>62</td><td class='l'>煌上煌酱鸭(温州桥下恒达广场店)</td><td>淘宝闪购</td><td>3</td><td class='red'>1.00</td><td class='l'>份量不足、价格/性价比</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；价格感知贵 → 套餐设计/小份引</td></tr><tr><td>111</td><td class='l'>煌上煌酱鸭(五角场万达店)</td><td>淘宝闪购</td><td>2</td><td class='org'>1.50</td><td class='l'>其他/无法归类</td><td class='l'>内容杂 → 逐条人工复核处理</td></tr><tr><td>142</td><td class='l'>煌上煌酱鸭(莲花路汇金店)</td><td>淘宝闪购</td><td>2</td><td class='red'>1.00</td><td class='l'>口味不佳、价格/性价比</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准；价格感知贵 → 套餐设</td></tr><tr><td>143</td><td class='l'>煌上煌酱鸭(苏州科技城星悦里店)</td><td>淘宝闪购</td><td>2</td><td class='org'>1.50</td><td class='l'>份量不足、口味不佳</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；口味不稳/偏咸偏辣 → 统一卤制</td></tr><tr><td>159</td><td class='l'>煌上煌酱鸭(直属合肥步行街店)</td><td>淘宝闪购</td><td>2</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>164</td><td class='l'>煌上煌酱鸭(温州黄龙店)</td><td>淘宝闪购</td><td>2</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>183</td><td class='l'>煌上煌酱鸭（鸭货·卤味·李村乐客城店）</td><td>美团</td><td>1</td><td class='red'>1.00</td><td class='l'>份量不足、卫生/异物、价格/性价比</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；食安红线 → 立即门店追责+后厨</td></tr><tr><td>202</td><td class='l'>煌上煌酱鸭(温州瑞安林贾路店)</td><td>淘宝闪购</td><td>1</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr></tbody></table></div>
+  <div class='card cta'><b>本周行动：</b>逐店落实整改 → 填报【责任人+验证时间】→ 下周自动验证（差评下降/评分≥3.0）→ 未整改升级预警</div>
+</section>
+<section class='panel' id='tab-陕西'>
+  <div class='kpis'>
+    <div class='kpi'><div class='v red'>27</div><div class='l'>本司差评总数</div><div class="s">整改任务</div></div>
+    <div class='kpi'><div class='v '>14</div><div class='l'>整改门店数</div></div>
+    <div class='kpi'><div class='v red'>1.4</div><div class='l'>差评平均分</div></div>
+    <div class='kpi'><div class='v '>8</div><div class='l'>美团门店</div></div><div class='kpi'><div class='v '>0</div><div class='l'>淘宝门店</div></div><div class='kpi'><div class='v '>0</div><div class='l'>京东门店</div></div>
+  </div>
+  <div class='two-col'>
+    <div class='card'><h3>本司主要问题 TOP5</h3><div class='bar-row'><span class='bar-label'>份量不足</span><div class='bar-track'><div class='bar' style='width:100%;background:#c77b1e'></div></div><span class='bar-val'>9</span></div><div class='bar-row'><span class='bar-label'>其他/无法归类</span><div class='bar-track'><div class='bar' style='width:78%;background:#c77b1e'></div></div><span class='bar-val'>7</span></div><div class='bar-row'><span class='bar-label'>份量不足、价格/性价比、口味不佳</span><div class='bar-track'><div class='bar' style='width:33%;background:#c77b1e'></div></div><span class='bar-val'>3</span></div><div class='bar-row'><span class='bar-label'>口味不佳</span><div class='bar-track'><div class='bar' style='width:33%;background:#c77b1e'></div></div><span class='bar-val'>3</span></div><div class='bar-row'><span class='bar-label'>份量不足、口味不佳</span><div class='bar-track'><div class='bar' style='width:22%;background:#c77b1e'></div></div><span class='bar-val'>2</span></div></div>
+    <div class='card'><h3>整改目标（本周）</h3><ul class='goal'>
+      <li>差评数下降 ≥20%</li><li><span class='red'>差评均分 &lt;1.5 门店本周必须处理</span></li>
+      <li>食安类 24h 平台申诉 + 门店追责</li><li>责任人按 7/15/30 天填报验证时间</li></ul></div>
+  </div>
+  <div class='card'><h3>本司门店整改清单 TOP12（全量见 Excel）</h3>
+    <table><thead><tr><th>#</th><th>门店名称</th><th>平台</th><th>差评数</th><th>平均评分</th><th>主要问题</th><th>整改建议</th></tr></thead><tbody><tr><td>5</td><td class='l'>煌上煌酱鸭（草堂店）</td><td>美团</td><td>6</td><td class='red'>1.17</td><td class='l'>份量不足</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检</td></tr><tr><td>12</td><td class='l'>煌上煌·卤味(大连庄河万达店)</td><td>淘宝闪购</td><td>5</td><td class='red'>1.40</td><td class='l'>其他/无法归类</td><td class='l'>内容杂 → 逐条人工复核处理</td></tr><tr><td>72</td><td class='l'>煌上煌（卤味·炒饭·民主广场店）</td><td>美团</td><td>3</td><td class='red'>1.00</td><td class='l'>份量不足、价格/性价比、口味不佳</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；价格感知贵 → 套餐设计/小份引</td></tr><tr><td>88</td><td class='l'>煌上煌酱鸭（德化新街店）</td><td>美团</td><td>2</td><td class='org'>1.50</td><td class='l'>份量不足、口味不佳</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；口味不稳/偏咸偏辣 → 统一卤制</td></tr><tr><td>118</td><td class='l'>煌上煌酱鸭（乐尚天地店）</td><td>美团</td><td>2</td><td class='org'>1.50</td><td class='l'>份量不足</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检</td></tr><tr><td>175</td><td class='l'>煌上煌·卤味(沈北万达店)</td><td>淘宝闪购</td><td>1</td><td class='org'>2.00</td><td class='l'>食材不新鲜</td><td class='l'>新鲜度问题 → 当日鲜售/现卤现卖，冷藏链路排查，过期报损</td></tr><tr><td>246</td><td class='l'>煌上煌酱鸭(北一路万达店)</td><td>淘宝闪购</td><td>1</td><td class='org'>2.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>292</td><td class='l'>煌上煌酱鸭•炒饭•鸭脖•卤菜(草堂店)</td><td>淘宝闪购</td><td>1</td><td class='org'>2.00</td><td class='l'>其他/无法归类</td><td class='l'>内容杂 → 逐条人工复核处理</td></tr><tr><td>294</td><td class='l'>煌上煌酱鸭（炒饭•鸭脖•卤菜）草堂店(草堂店)</td><td>淘宝闪购</td><td>1</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>315</td><td class='l'>煌上煌酱鸭(河南郑州祥和居店)</td><td>美团</td><td>1</td><td class='org'>2.00</td><td class='l'>份量不足、价格/性价比</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；价格感知贵 → 套餐设计/小份引</td></tr><tr><td>334</td><td class='l'>煌上煌酱鸭(中山路民主广场店)</td><td>淘宝闪购</td><td>1</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>361</td><td class='l'>煌上煌酱鸭（农科路酒吧街店）</td><td>美团</td><td>1</td><td class='red'>1.00</td><td class='l'>其他/无法归类</td><td class='l'>内容杂 → 逐条人工复核处理</td></tr></tbody></table></div>
+  <div class='card cta'><b>本周行动：</b>逐店落实整改 → 填报【责任人+验证时间】→ 下周自动验证（差评下降/评分≥3.0）→ 未整改升级预警</div>
+</section>
+<section class='panel' id='tab-重庆'>
+  <div class='kpis'>
+    <div class='kpi'><div class='v red'>8</div><div class='l'>本司差评总数</div><div class="s">整改任务</div></div>
+    <div class='kpi'><div class='v '>8</div><div class='l'>整改门店数</div></div>
+    <div class='kpi'><div class='v red'>1.12</div><div class='l'>差评平均分</div></div>
+    <div class='kpi'><div class='v '>6</div><div class='l'>美团门店</div></div><div class='kpi'><div class='v '>0</div><div class='l'>淘宝门店</div></div><div class='kpi'><div class='v '>0</div><div class='l'>京东门店</div></div>
+  </div>
+  <div class='two-col'>
+    <div class='card'><h3>本司主要问题 TOP5</h3><div class='bar-row'><span class='bar-label'>口味不佳</span><div class='bar-track'><div class='bar' style='width:100%;background:#c77b1e'></div></div><span class='bar-val'>2</span></div><div class='bar-row'><span class='bar-label'>份量不足、口味不佳、错发/漏发</span><div class='bar-track'><div class='bar' style='width:50%;background:#c77b1e'></div></div><span class='bar-val'>1</span></div><div class='bar-row'><span class='bar-label'>份量不足、价格/性价比</span><div class='bar-track'><div class='bar' style='width:50%;background:#c77b1e'></div></div><span class='bar-val'>1</span></div><div class='bar-row'><span class='bar-label'>其他/无法归类</span><div class='bar-track'><div class='bar' style='width:50%;background:#c77b1e'></div></div><span class='bar-val'>1</span></div><div class='bar-row'><span class='bar-label'>包装/撒漏</span><div class='bar-track'><div class='bar' style='width:50%;background:#c77b1e'></div></div><span class='bar-val'>1</span></div></div>
+    <div class='card'><h3>整改目标（本周）</h3><ul class='goal'>
+      <li>差评数下降 ≥20%</li><li><span class='red'>差评均分 &lt;1.5 门店本周必须处理</span></li>
+      <li>食安类 24h 平台申诉 + 门店追责</li><li>责任人按 7/15/30 天填报验证时间</li></ul></div>
+  </div>
+  <div class='card'><h3>本司门店整改清单 TOP12（全量见 Excel）</h3>
+    <table><thead><tr><th>#</th><th>门店名称</th><th>平台</th><th>差评数</th><th>平均评分</th><th>主要问题</th><th>整改建议</th></tr></thead><tbody><tr><td>256</td><td class='l'>煌上煌酱鸭(贵州毕节沃尔玛店)</td><td>淘宝闪购</td><td>1</td><td class='red'>1.00</td><td class='l'>包装/撒漏</td><td class='l'>包装撒漏 → 升级防漏包装+封口贴，汤类单独加固</td></tr><tr><td>405</td><td class='l'>煌上煌酱鸭（炒饭·卤味·小吃·兴义大润发店）</td><td>美团</td><td>1</td><td class='org'>2.00</td><td class='l'>份量不足、价格/性价比</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；价格感知贵 → 套餐设计/小份引</td></tr><tr><td>406</td><td class='l'>煌上煌酱鸭（炒饭·卤味·小吃·双江景丽新城店)</td><td>美团</td><td>1</td><td class='red'>1.00</td><td class='l'>服务/售后</td><td class='l'>服务响应差 → 差评24h内回复+售后补偿SOP</td></tr><tr><td>407</td><td class='l'>煌上煌酱鸭（炒饭·卤味·小吃·安顺德胜花园店）</td><td>美团</td><td>1</td><td class='red'>1.00</td><td class='l'>口味不佳、食材不新鲜</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准；新鲜度问题 → 当日鲜</td></tr><tr><td>408</td><td class='l'>煌上煌酱鸭（炒饭·卤味·小吃·安顺美食广场店）</td><td>美团</td><td>1</td><td class='red'>1.00</td><td class='l'>份量不足、口味不佳、错发/漏发</td><td class='l'>克重不达标 → 中央厨房统一克重标准+出餐称重抽检；口味不稳/偏咸偏辣 → 统一卤制</td></tr><tr><td>409</td><td class='l'>煌上煌酱鸭（炒饭·卤味·小吃·普定凯旋城店)</td><td>美团</td><td>1</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr><tr><td>415</td><td class='l'>煌上煌(双江锦丽新城店)</td><td>淘宝闪购</td><td>1</td><td class='red'>1.00</td><td class='l'>其他/无法归类</td><td class='l'>内容杂 → 逐条人工复核处理</td></tr><tr><td>416</td><td class='l'>煌上煌酱鸭（都匀万达店)</td><td>美团</td><td>1</td><td class='red'>1.00</td><td class='l'>口味不佳</td><td class='l'>口味不稳/偏咸偏辣 → 统一卤制标准+出锅时间，门店试吃校准</td></tr></tbody></table></div>
+  <div class='card cta'><b>本周行动：</b>逐店落实整改 → 填报【责任人+验证时间】→ 下周自动验证（差评下降/评分≥3.0）→ 未整改升级预警</div>
+</section>
+<script>
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById('tab-'+b.dataset.tab).classList.add('active');
+  };
+});
+</script>
+</body></html>
