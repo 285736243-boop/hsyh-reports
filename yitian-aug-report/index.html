@@ -3,79 +3,97 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>煌上煌·益田店 8月经营分析报告</title>
 <style>
+:root{--blue:#123B6E;--cyan:#0EA5E9;--amber:#F59E0B;--up:#10B981;--down:#EF4444;--dark:#17233D;--bg:#EEF2F8;--line:#DFE7F2;--mut:#8A94A6}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:radial-gradient(1200px 600px at 20% -10%,#3a1410 0%,#1c0d0a 45%,#120807 100%);color:#f3e6d0;min-height:100vh;padding-bottom:48px}
-.wrap{max-width:860px;margin:0 auto;padding:14px 14px 0}
-.hero{text-align:center;padding:26px 10px 18px;border-bottom:1px solid rgba(212,175,55,.25)}
-.hero .badge{display:inline-block;font-size:11px;letter-spacing:3px;color:#e8c468;border:1px solid rgba(232,196,104,.5);border-radius:20px;padding:3px 12px;margin-bottom:10px}
-.hero h1{font-size:23px;font-weight:800;letter-spacing:1px;background:linear-gradient(180deg,#f7e3b0,#d4af37);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero .sub{font-size:12px;color:#b99a6a;margin-top:7px}
-.hero .meta{font-size:11px;color:#8a7355;margin-top:5px}
-.sec{background:linear-gradient(180deg,rgba(60,25,18,.85),rgba(38,16,12,.85));border:1px solid rgba(212,175,55,.22);border-radius:14px;padding:14px;margin-top:14px}
-.shead{font-size:15px;font-weight:700;color:#f0d9a8;margin-bottom:10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.sicon{font-size:16px}
-.dim{font-size:11px;color:#9c8360;font-weight:400}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--dark);line-height:1.65;-webkit-text-size-adjust:100%;padding-bottom:40px}
+.wrap{max-width:900px;margin:0 auto;padding:12px}
+.brand{display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px 16px 0 0;padding:13px 18px;border:1px solid var(--line);border-bottom:none}
+.brand .logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#0B2A5B,#1557A8);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;letter-spacing:1px;flex-shrink:0;box-shadow:0 3px 8px rgba(18,59,110,.35)}
+.brand .bt{font-size:12px;color:var(--mut);line-height:1.5}
+.brand .bt b{font-size:14px;color:var(--blue);display:block}
+.hero{background:linear-gradient(135deg,#0B2A5B 0%,#1557A8 58%,#1E7FD4 130%);color:#fff;border-radius:0 0 16px 16px;padding:20px 22px;margin-bottom:14px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-40px;top:-40px;width:190px;height:190px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero h1{font-size:21px;letter-spacing:.5px;font-weight:800}
+.hero .sub{color:#C9DCF5;margin-top:5px;font-size:11.5px}
+.hero .meta{color:#8FB4E0;font-size:10.5px;margin-top:4px}
+.hero .oneline{font-size:12.5px;margin-top:12px;background:rgba(255,255,255,.1);padding:9px 13px;border-radius:10px;border-left:4px solid var(--amber);color:#EAF2FC}
+nav.toc{position:sticky;top:6px;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);z-index:99;display:flex;gap:6px;padding:9px 12px;border-radius:12px;box-shadow:0 3px 12px rgba(23,35,61,.08);margin-bottom:14px;flex-wrap:wrap;border:1px solid var(--line)}
+nav.toc a{padding:6px 12px;border-radius:18px;text-decoration:none;color:var(--blue);font-size:11.5px;font-weight:600;white-space:nowrap;border:1px solid transparent}
+nav.toc a:hover{background:var(--blue);color:#fff}
+.sec{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 16px 18px;margin-top:14px;box-shadow:0 1px 4px rgba(23,35,61,.04)}
+.shead{font-size:15px;font-weight:800;color:var(--blue);margin-bottom:10px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.shead:before{content:"";width:4px;height:16px;border-radius:2px;background:linear-gradient(180deg,var(--cyan),var(--blue))}
+.sicon{font-size:15px}
+.dim{font-size:11px;color:var(--mut);font-weight:400}
 .platk{margin-top:12px}
-.pkhead{font-size:13px;font-weight:700;color:#e8c468;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.pkhead{font-size:13px;font-weight:800;color:var(--blue);margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .pkicon{font-size:15px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
-.kpi{background:rgba(0,0,0,.28);border:1px solid rgba(212,175,55,.15);border-radius:10px;padding:9px 10px}
-.kl{font-size:10.5px;color:#b99a6a}
-.kv{font-size:17px;font-weight:800;color:#f7e3b0;margin-top:3px}
-.kd{font-size:10.5px;margin-top:2px;font-weight:700}
-.kd.up{color:#7ed6a5}.kd.down{color:#ff7d7d}.kd.flat{color:#9c8360}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
-.panel{background:rgba(0,0,0,.25);border-radius:10px;padding:8px}
-.pt{font-size:12px;font-weight:700;color:#e8c468;margin-bottom:4px}
-.pt2{font-size:10.5px;color:#b99a6a;margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.pempty{font-size:12px;color:#8a7355;padding:18px;text-align:center}
-svg.line{width:100%;height:110px;display:block}
-.l7{fill:none;stroke:#9a8f80;stroke-width:1.3;stroke-dasharray:4 3;opacity:.75}
-.l8{fill:none;stroke:#e0342c;stroke-width:2}
-.svgt{font-size:9.5px;fill:#f7e3b0;font-weight:700}
-.svgs{font-size:8.5px;fill:#8a7355}
-.lg7{color:#9a8f80}.lg8{color:#e0342c}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:9px}
+.kpi{background:#FBFCFE;border:1px solid var(--line);border-left:4px solid var(--cyan);border-radius:11px;padding:10px 11px}
+.kpi:nth-child(2){border-left-color:var(--amber)}
+.kpi:nth-child(3){border-left-color:#8B5CF6}
+.kpi:nth-child(4){border-left-color:#0D9488}
+.kpi:nth-child(5){border-left-color:#E11D48}
+.kl{font-size:10.5px;color:var(--mut)}
+.kv{font-size:18px;font-weight:800;color:var(--dark);margin-top:2px;font-variant-numeric:tabular-nums}
+.kd{font-size:10.5px;margin-top:2px;font-weight:800}
+.kd.up{color:var(--up)}.kd.down{color:var(--down)}.kd.flat{color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:10px}
+.panel{background:#FBFCFE;border:1px solid var(--line);border-radius:12px;padding:9px 10px}
+.pt{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:4px}
+.pt2{font-size:10.5px;color:var(--mut);margin-top:5px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pempty{font-size:12px;color:var(--mut);padding:16px;text-align:center}
+svg.line{width:100%;height:112px;display:block}
+.l7{fill:none;stroke:#A9B6C8;stroke-width:1.4;stroke-dasharray:4 3;opacity:.8}
+.l8{fill:none;stroke:var(--cyan);stroke-width:2.2}
+.svgt{font-size:9.5px;fill:var(--blue);font-weight:700}
+.svgs{font-size:8.5px;fill:var(--mut)}
+.lg7{color:#A9B6C8}.lg8{color:var(--cyan)}
 .tb{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
-.tb th{background:rgba(212,175,55,.16);color:#f0d9a8;font-weight:700;padding:6px 7px;text-align:left;font-size:11px;white-space:nowrap}
-.tb td{padding:6px 7px;border-bottom:1px solid rgba(212,175,55,.1);color:#efe0c2}
-.tb tr:nth-child(even) td{background:rgba(255,255,255,.02)}
-.tb .r{text-align:right;white-space:nowrap}
-.tb .b{font-weight:800;color:#f0d9a8}
-.tfoot td{background:rgba(212,175,55,.1);font-weight:800;color:#f7e3b0}
+.tb th{background:#EAF1FB;color:var(--blue);font-weight:800;padding:7px 8px;text-align:left;font-size:11px;white-space:nowrap}
+.tb td{padding:7px 8px;border-bottom:1px solid #EEF2F8;color:#2A3650}
+.tb tr:nth-child(even) td{background:#F8FAFE}
+.tb .r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tb .b{font-weight:800;color:var(--blue)}
+.tfoot td{background:var(--blue);color:#fff;font-weight:800}
+.tfoot td.b{color:#fff}
 .scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .ww td.r{min-width:150px}
 .barline{display:flex;align-items:center;gap:6px;margin:2px 0}
-.blabel{font-size:10px;color:#b99a6a;width:24px;flex:none}
-.btrack{flex:1;height:12px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden}
+.blabel{font-size:10px;color:var(--mut);width:24px;flex:none}
+.btrack{flex:1;height:12px;background:#EEF2F8;border-radius:6px;overflow:hidden}
 .bfill{height:100%;border-radius:6px}
-.b8{background:linear-gradient(90deg,#e0342c,#e8c468)}
-.b7{background:rgba(154,143,128,.55)}
-.bval{font-size:10.5px;color:#f0d9a8;width:74px;text-align:right;flex:none}
-.revgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
-.revcard{background:rgba(0,0,0,.25);border-radius:10px;padding:10px}
+.b8{background:linear-gradient(90deg,var(--cyan),#7DD3FC)}
+.b7{background:#C3CEDA}
+.bval{font-size:10.5px;color:var(--dark);width:76px;text-align:right;flex:none;font-variant-numeric:tabular-nums}
+.revgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(236px,1fr));gap:10px}
+.revcard{background:#FBFCFE;border:1px solid var(--line);border-radius:12px;padding:11px}
 .revhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.revplat{font-size:13px;font-weight:800;color:#e8c468}
-.revavg{font-size:15px;font-weight:800;color:#f7e3b0}
-.stars{font-style:normal;color:#e8c468;font-size:11px}
-.revnums{display:flex;gap:12px;font-size:11px;color:#b99a6a;margin-bottom:8px}
+.revplat{font-size:13px;font-weight:800;color:var(--blue)}
+.revavg{font-size:15px;font-weight:800;color:var(--dark);font-variant-numeric:tabular-nums}
+.stars{font-style:normal;color:var(--amber);font-size:11px}
+.revnums{display:flex;gap:12px;font-size:11px;color:var(--mut);margin-bottom:8px}
 .lowlist{display:flex;flex-direction:column;gap:6px}
-.lowitem{display:flex;gap:7px;align-items:flex-start;font-size:11.5px;line-height:1.45;background:rgba(224,52,44,.08);border-left:3px solid #e0342c;border-radius:0 6px 6px 0;padding:6px 8px}
-.lowdate{color:#8a7355;flex:none;font-size:10.5px}
-.lowstar{color:#ff7d7d;flex:none;font-weight:800;font-size:10.5px}
-.lowtxt{color:#efe0c2}
-.concl li{margin:7px 0 7px 18px;font-size:12.5px;line-height:1.6;color:#efe0c2}
-.concl .tag{display:inline-block;font-size:10px;font-weight:800;color:#1c0d0a;background:#e8c468;border-radius:4px;padding:1px 6px;margin-right:6px}
-.foot{text-align:center;font-size:10.5px;color:#8a7355;margin-top:18px;line-height:1.7}
-.jdnote{font-size:11px;color:#9c8360;background:rgba(0,0,0,.2);border-radius:8px;padding:8px 10px;margin-top:10px}
+.lowitem{display:flex;gap:7px;align-items:flex-start;font-size:11.5px;line-height:1.5;background:#FDF1F1;border-left:3px solid var(--down);border-radius:0 8px 8px 0;padding:6px 9px}
+.lowdate{color:var(--mut);flex:none;font-size:10.5px}
+.lowstar{color:var(--down);flex:none;font-weight:800;font-size:10.5px}
+.lowtxt{color:#33415E}
+.concl li{margin:8px 0 8px 0;font-size:12.5px;line-height:1.6;color:#2A3650;list-style:none;background:#F8FAFE;border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+.concl .tag{display:inline-block;font-size:10px;font-weight:800;color:#fff;background:var(--blue);border-radius:5px;padding:2px 7px;margin-right:7px;vertical-align:1px}
+.concl li:has(.tag){}
+.foot{text-align:center;font-size:10.5px;color:var(--mut);margin-top:18px;line-height:1.7}
+.jdnote{font-size:11px;color:#5B6B85;background:#F0F5FC;border:1px solid #D6E4F5;border-radius:10px;padding:9px 12px;margin-top:12px}
+@media(max-width:520px){.hero h1{font-size:18px}.kpis{grid-template-columns:repeat(2,1fr)}}
 </style></head><body><div class="wrap">
+<div class="brand"><div class="logo">煌上煌</div><div class="bt"><b>直属南山益田假日广场店 · C15019</b>深圳南山 · 直营专卖店 · 创新专项部运营二组</div></div>
 <div class="hero">
-<span class="badge">煌 上 煌 · 双 平 台 经 营 分 析</span>
 <h1>煌上煌·益田店 8月经营分析报告</h1>
-<div class="sub">直属南山益田假日广场店（C15019）· 深圳南山 · 直营专卖店 · 创新专项部运营二组</div>
-<div class="meta">数据源：路径1-5（运营/订单/活动/广告/评价）｜8月口径 8/1-17 环比 7月全月｜生成 2026-08-19</div>
+<div class="sub">数据源：路径1-5（运营 / 订单 / 活动 / 广告 / 评价）· 美团外卖 + 淘宝闪购</div>
+<div class="meta">8月口径 8/1-17（17天）环比 7月全月（31天）· 日均对比消除天数差 · 生成 2026-08-19</div>
 </div>
+<nav class="toc"><a href="#kpi">📊 一眼看懂</a><a href="#trend">📈 日度脉搏</a><a href="#ww">🗓 周末vs工作日</a><a href="#act">🎁 活动体检</a><a href="#ad">💰 广告引擎</a><a href="#rev">💬 口碑扫描</a><a href="#concl">💡 结论行动</a></nav>
 
-<div class="sec"><div class="shead"><span class="sicon">📈</span> 一眼看懂 <span class="dim">（双平台环比，日均口径消除天数差）</span></div>
+<div class="sec" id="kpi"><div class="shead"><span class="sicon">📈</span> 一眼看懂 <span class="dim">（双平台环比，日均口径消除天数差）</span></div>
 <div class="platk"><div class="pkhead"><span class="pkicon">🍔</span> 美团外卖 <span class="dim">（环比7月·日均口径）</span></div>
 <div class="kpis">
 <div class="kpi"><div class="kl">日均订单</div><div class="kv">13.0</div><div class="kd down">▼42.1%</div></div>
@@ -94,68 +112,68 @@ svg.line{width:100%;height:110px;display:block}
 <div class="jdnote">🛵 京东到家：两店 7/8月均无订单数据（本周期未开通/未导出），以下分析覆盖美团外卖 + 淘宝闪购。</div>
 </div>
 
-<div class="sec"><div class="shead"><span class="sicon">📊</span> 美团外卖 · 日度脉搏 <span class="dim">（7月31天 vs 8月1-17天，同轴对比）</span></div><div class="grid"><div class="panel"><div class="pt">订单量</div>
+<div class="sec" id="trend"><div class="shead"><span class="sicon">📊</span> 美团外卖 · 日度脉搏 <span class="dim">（7月31天 vs 8月1-17天，同轴对比）</span></div><div class="grid"><div class="panel"><div class="pt">订单量</div>
 <svg viewBox="0 0 340 118" preserveAspectRatio="none" class="line">
-<polyline points="8.0,41.7 18.3,64.3 28.7,50.7 39.0,28.1 49.3,39.4 59.7,32.6 70.0,48.5 80.3,53.0 90.7,39.4 101.0,55.2 111.3,37.2 121.7,48.5 132.0,43.9 142.3,41.7 152.7,32.6 163.0,28.1 173.3,57.5 183.7,53.0 194.0,46.2 204.3,57.5 214.7,50.7 225.0,73.3 235.3,75.5 245.7,68.8 256.0,68.8 266.3,62.0 276.7,82.3 287.0,82.3 297.3,80.1 307.7,75.5 318.0,62.0" class="l7"/>
-<polyline points="8.0,95.9 18.3,86.8 28.7,89.1 39.0,84.6 49.3,80.1 59.7,86.8 70.0,64.3 80.3,64.3 90.7,73.3 101.0,62.0 111.3,80.1 121.7,75.5 132.0,73.3 142.3,77.8 152.7,66.5 163.0,68.8 173.3,55.2" class="l8"/>
-<circle cx="173.3" cy="55.2" r="3" fill="#e8c468"/><text x="173.3" y="48.2" class="svgt">22.0</text>
+<polyline points="8.0,42.3 18.3,64.2 28.7,51.1 39.0,29.2 49.3,40.1 59.7,33.6 70.0,48.9 80.3,53.3 90.7,40.1 101.0,55.4 111.3,37.9 121.7,48.9 132.0,44.5 142.3,42.3 152.7,33.6 163.0,29.2 173.3,57.6 183.7,53.3 194.0,46.7 204.3,57.6 214.7,51.1 225.0,72.9 235.3,75.1 245.7,68.6 256.0,68.6 266.3,62.0 276.7,81.7 287.0,81.7 297.3,79.5 307.7,75.1 318.0,62.0" class="l7"/>
+<polyline points="8.0,94.8 18.3,86.1 28.7,88.2 39.0,83.9 49.3,79.5 59.7,86.1 70.0,64.2 80.3,64.2 90.7,72.9 101.0,62.0 111.3,79.5 121.7,75.1 132.0,72.9 142.3,77.3 152.7,66.4 163.0,68.6 173.3,55.4" class="l8"/>
+<circle cx="173.3" cy="55.4" r="3.2" fill="#F59E0B"/><text x="173.3" y="48.4" class="svgt">22.0</text>
 <text x="8" y="115" class="svgs">1日</text><text x="306" y="115" class="svgs">31日</text>
 </svg><div class="pt2"><span class="lg7">— 7月</span><span class="lg8">— 8月</span> <span class="dim">7月日均22.5 ｜ 8月日均13.0</span></div></div><div class="panel"><div class="pt">客单价(元)</div>
 <svg viewBox="0 0 340 118" preserveAspectRatio="none" class="line">
-<polyline points="8.0,82.2 18.3,95.5 28.7,76.8 39.0,90.8 49.3,83.4 59.7,83.3 70.0,90.3 80.3,90.2 90.7,92.3 101.0,81.1 111.3,79.8 121.7,90.3 132.0,82.0 142.3,92.7 152.7,90.1 163.0,95.9 173.3,88.4 183.7,85.2 194.0,88.2 204.3,90.3 214.7,85.6 225.0,83.3 235.3,72.4 245.7,63.7 256.0,80.1 266.3,72.0 276.7,84.8 287.0,89.1 297.3,83.1 307.7,50.7 318.0,80.1" class="l7"/>
-<polyline points="8.0,85.1 18.3,40.7 28.7,46.0 39.0,86.1 49.3,68.2 59.7,28.1 70.0,75.4 80.3,68.8 90.7,86.2 101.0,74.2 111.3,84.6 121.7,73.8 132.0,73.4 142.3,73.8 152.7,86.4 163.0,93.0 173.3,89.4" class="l8"/>
-<circle cx="173.3" cy="89.4" r="3" fill="#e8c468"/><text x="173.3" y="82.4" class="svgt">32</text>
+<polyline points="8.0,81.5 18.3,94.5 28.7,76.3 39.0,89.9 49.3,82.8 59.7,82.6 70.0,89.4 80.3,89.3 90.7,91.3 101.0,80.5 111.3,79.2 121.7,89.4 132.0,81.4 142.3,91.7 152.7,89.2 163.0,94.8 173.3,87.6 183.7,84.4 194.0,87.3 204.3,89.5 214.7,84.9 225.0,82.6 235.3,72.1 245.7,63.7 256.0,79.5 266.3,71.7 276.7,84.1 287.0,88.2 297.3,82.4 307.7,51.0 318.0,79.5" class="l7"/>
+<polyline points="8.0,84.3 18.3,41.3 28.7,46.5 39.0,85.4 49.3,68.0 59.7,29.2 70.0,74.9 80.3,68.6 90.7,85.5 101.0,73.8 111.3,83.9 121.7,73.4 132.0,73.1 142.3,73.4 152.7,85.6 163.0,92.1 173.3,88.6" class="l8"/>
+<circle cx="173.3" cy="88.6" r="3.2" fill="#F59E0B"/><text x="173.3" y="81.6" class="svgt">32</text>
 <text x="8" y="115" class="svgs">1日</text><text x="306" y="115" class="svgs">31日</text>
 </svg><div class="pt2"><span class="lg7">— 7月</span><span class="lg8">— 8月</span> <span class="dim">7月日均36.4 ｜ 8月日均44.2</span></div></div><div class="panel"><div class="pt">实付金额(元)</div>
 <svg viewBox="0 0 340 118" preserveAspectRatio="none" class="line">
-<polyline points="8.0,36.3 18.3,72.1 28.7,40.2 39.0,35.2 49.3,35.6 59.7,28.1 70.0,53.2 80.3,57.2 90.7,47.5 101.0,50.0 111.3,28.1 121.7,53.1 132.0,38.6 142.3,50.0 152.7,38.2 163.0,43.2 173.3,59.6 183.7,51.8 194.0,48.5 204.3,61.5 214.7,50.0 225.0,71.5 235.3,67.3 245.7,52.2 256.0,64.3 266.3,49.5 276.7,81.8 287.0,83.8 297.3,78.6 307.7,54.2 318.0,56.6" class="l7"/>
-<polyline points="8.0,95.9 18.3,70.1 28.7,76.2 39.0,84.7 49.3,71.0 59.7,65.4 70.0,55.2 80.3,49.8 90.7,73.4 101.0,51.4 111.3,79.4 121.7,68.1 132.0,65.1 142.3,71.0 152.7,66.7 163.0,73.9 173.3,58.5" class="l8"/>
-<circle cx="173.3" cy="58.5" r="3" fill="#e8c468"/><text x="173.3" y="51.5" class="svgt">711</text>
+<polyline points="8.0,37.1 18.3,71.8 28.7,40.9 39.0,36.0 49.3,36.4 59.7,29.2 70.0,53.5 80.3,57.4 90.7,48.0 101.0,50.4 111.3,29.2 121.7,53.4 132.0,39.3 142.3,50.4 152.7,39.0 163.0,43.8 173.3,59.7 183.7,52.2 194.0,48.9 204.3,61.5 214.7,50.4 225.0,71.2 235.3,67.2 245.7,52.5 256.0,64.2 266.3,49.9 276.7,81.2 287.0,83.1 297.3,78.1 307.7,54.5 318.0,56.8" class="l7"/>
+<polyline points="8.0,94.8 18.3,69.8 28.7,75.8 39.0,84.0 49.3,70.7 59.7,65.3 70.0,55.5 80.3,50.1 90.7,73.0 101.0,51.8 111.3,78.8 121.7,68.0 132.0,65.0 142.3,70.7 152.7,66.6 163.0,73.5 173.3,58.6" class="l8"/>
+<circle cx="173.3" cy="58.6" r="3.2" fill="#F59E0B"/><text x="173.3" y="51.6" class="svgt">711</text>
 <text x="8" y="115" class="svgs">1日</text><text x="306" y="115" class="svgs">31日</text>
 </svg><div class="pt2"><span class="lg7">— 7月</span><span class="lg8">— 8月</span> <span class="dim">7月日均796.7 ｜ 8月日均548.1</span></div></div><div class="panel"><div class="pt">曝光人数</div>
 <svg viewBox="0 0 340 118" preserveAspectRatio="none" class="line">
-<polyline points="8.0,75.6 18.3,93.8 28.7,64.3 39.0,63.6 49.3,34.6 59.7,49.2 70.0,28.1 80.3,46.7 90.7,57.4 101.0,62.8 111.3,57.0 121.7,57.7 132.0,53.5 142.3,43.7 152.7,57.7 163.0,44.8 173.3,67.9 183.7,52.4 194.0,51.6 204.3,69.4 214.7,66.8 225.0,72.5 235.3,66.6 245.7,75.1 256.0,64.4 266.3,43.0 276.7,73.9 287.0,74.1 297.3,81.6 307.7,68.4 318.0,52.0" class="l7"/>
-<polyline points="8.0,66.2 18.3,70.1 28.7,95.9 39.0,87.8 49.3,77.9 59.7,58.4 70.0,81.0 80.3,61.7 90.7,45.9 101.0,69.9 111.3,68.8 121.7,58.6 132.0,70.3 142.3,68.1 152.7,65.8 163.0,70.3 173.3,76.6" class="l8"/>
-<circle cx="173.3" cy="76.6" r="3" fill="#e8c468"/><text x="173.3" y="69.6" class="svgt">1,232.0</text>
+<polyline points="8.0,75.1 18.3,92.8 28.7,64.2 39.0,63.5 49.3,35.5 59.7,49.6 70.0,29.2 80.3,47.2 90.7,57.5 101.0,62.8 111.3,57.2 121.7,57.8 132.0,53.8 142.3,44.3 152.7,57.8 163.0,45.3 173.3,67.7 183.7,52.7 194.0,51.9 204.3,69.2 214.7,66.6 225.0,72.1 235.3,66.5 245.7,74.7 256.0,64.4 266.3,43.6 276.7,73.5 287.0,73.7 297.3,81.0 307.7,68.2 318.0,52.3" class="l7"/>
+<polyline points="8.0,66.1 18.3,69.9 28.7,94.8 39.0,87.0 49.3,77.4 59.7,58.6 70.0,80.4 80.3,61.7 90.7,46.5 101.0,69.6 111.3,68.6 121.7,58.7 132.0,70.1 142.3,67.9 152.7,65.7 163.0,70.1 173.3,76.1" class="l8"/>
+<circle cx="173.3" cy="76.1" r="3.2" fill="#F59E0B"/><text x="173.3" y="69.1" class="svgt">1,232.0</text>
 <text x="8" y="115" class="svgs">1日</text><text x="306" y="115" class="svgs">31日</text>
 </svg><div class="pt2"><span class="lg7">— 7月</span><span class="lg8">— 8月</span> <span class="dim">7月日均1,696.3 ｜ 8月日均1,414.1</span></div></div><div class="panel"><div class="pt">下单转化率</div>
 <svg viewBox="0 0 340 118" preserveAspectRatio="none" class="line">
-<polyline points="8.0,28.1 18.3,36.8 28.7,41.1 39.0,39.1 49.3,51.5 59.7,30.5 70.0,59.7 80.3,60.4 90.7,34.6 101.0,50.6 111.3,49.1 121.7,55.5 132.0,28.7 142.3,45.0 152.7,35.4 163.0,38.9 173.3,55.3 183.7,58.1 194.0,56.5 204.3,48.9 214.7,28.4 225.0,71.0 235.3,70.0 245.7,58.5 256.0,74.7 266.3,64.1 276.7,65.1 287.0,73.8 297.3,58.6 307.7,71.0 318.0,53.2" class="l7"/>
-<polyline points="8.0,95.9 18.3,82.6 28.7,82.2 39.0,65.1 49.3,70.5 59.7,76.6 70.0,54.8 80.3,56.2 90.7,69.1 101.0,45.0 111.3,64.3 121.7,66.4 132.0,56.8 142.3,74.9 152.7,57.2 163.0,60.8 173.3,34.3" class="l8"/>
-<circle cx="173.3" cy="34.3" r="3" fill="#e8c468"/><text x="173.3" y="27.299999999999997" class="svgt">33.8%</text>
+<polyline points="8.0,29.2 18.3,37.6 28.7,41.8 39.0,39.8 49.3,51.8 59.7,31.5 70.0,59.8 80.3,60.4 90.7,35.4 101.0,51.0 111.3,49.5 121.7,55.7 132.0,29.7 142.3,45.5 152.7,36.3 163.0,39.6 173.3,55.5 183.7,58.2 194.0,56.7 204.3,49.3 214.7,29.4 225.0,70.7 235.3,69.7 245.7,58.6 256.0,74.3 266.3,64.1 276.7,65.0 287.0,73.4 297.3,58.7 307.7,70.7 318.0,53.5" class="l7"/>
+<polyline points="8.0,94.8 18.3,82.0 28.7,81.6 39.0,65.0 49.3,70.3 59.7,76.2 70.0,55.0 80.3,56.4 90.7,68.9 101.0,45.5 111.3,64.2 121.7,66.3 132.0,57.0 142.3,74.5 152.7,57.4 163.0,60.9 173.3,35.2" class="l8"/>
+<circle cx="173.3" cy="35.2" r="3.2" fill="#F59E0B"/><text x="173.3" y="28.200000000000003" class="svgt">33.8%</text>
 <text x="8" y="115" class="svgs">1日</text><text x="306" y="115" class="svgs">31日</text>
 </svg><div class="pt2"><span class="lg7">— 7月</span><span class="lg8">— 8月</span> <span class="dim">7月日均0.3 ｜ 8月日均0.2</span></div></div></div></div><div class="sec"><div class="shead"><span class="sicon">📊</span> 淘宝闪购 · 日度脉搏 <span class="dim">（7月31天 vs 8月1-17天，同轴对比）</span></div><div class="grid"><div class="panel"><div class="pt">订单量</div>
 <svg viewBox="0 0 340 118" preserveAspectRatio="none" class="line">
-<polyline points="8.0,95.9 18.3,84.0 28.7,95.9 39.0,92.5 49.3,90.8 59.7,80.6 70.0,77.2 80.3,80.6 90.7,84.0 101.0,73.9 111.3,95.9 121.7,62.0 132.0,80.6 142.3,72.2 152.7,78.9 163.0,70.5 173.3,77.2 183.7,87.4 194.0,84.0 204.3,60.3 214.7,84.0 225.0,72.2 235.3,68.8 245.7,84.0 256.0,60.3 266.3,63.7 276.7,70.5 287.0,68.8 297.3,82.3 307.7,46.8 318.0,62.0" class="l7"/>
-<polyline points="8.0,87.4 18.3,78.9 28.7,55.2 39.0,87.4 49.3,85.7 59.7,63.7 70.0,68.8 80.3,70.5 90.7,77.2 101.0,84.0 111.3,65.4 121.7,78.9 132.0,75.5 142.3,28.1 152.7,43.4 163.0,63.7 173.3,40.0" class="l8"/>
-<circle cx="173.3" cy="40.0" r="3" fill="#e8c468"/><text x="173.3" y="33.0" class="svgt">42.0</text>
+<polyline points="8.0,94.8 18.3,83.3 28.7,94.8 39.0,91.5 49.3,89.9 59.7,80.0 70.0,76.8 80.3,80.0 90.7,83.3 101.0,73.5 111.3,94.8 121.7,62.0 132.0,80.0 142.3,71.8 152.7,78.4 163.0,70.2 173.3,76.8 183.7,86.6 194.0,83.3 204.3,60.4 214.7,83.3 225.0,71.8 235.3,68.6 245.7,83.3 256.0,60.4 266.3,63.6 276.7,70.2 287.0,68.6 297.3,81.7 307.7,47.2 318.0,62.0" class="l7"/>
+<polyline points="8.0,86.6 18.3,78.4 28.7,55.4 39.0,86.6 49.3,85.0 59.7,63.6 70.0,68.6 80.3,70.2 90.7,76.8 101.0,83.3 111.3,65.3 121.7,78.4 132.0,75.1 142.3,29.2 152.7,44.0 163.0,63.6 173.3,40.7" class="l8"/>
+<circle cx="173.3" cy="40.7" r="3.2" fill="#F59E0B"/><text x="173.3" y="33.7" class="svgt">42.0</text>
 <text x="8" y="115" class="svgs">1日</text><text x="306" y="115" class="svgs">31日</text>
 </svg><div class="pt2"><span class="lg7">— 7月</span><span class="lg8">— 8月</span> <span class="dim">7月日均20.1 ｜ 8月日均25.5</span></div></div><div class="panel"><div class="pt">客单价(元)</div>
 <svg viewBox="0 0 340 118" preserveAspectRatio="none" class="line">
-<polyline points="8.0,28.1 18.3,46.7 28.7,89.8 39.0,54.4 49.3,58.3 59.7,54.5 70.0,68.3 80.3,47.0 90.7,95.9 101.0,47.3 111.3,41.9 121.7,70.4 132.0,74.1 142.3,61.8 152.7,46.1 163.0,76.9 173.3,48.8 183.7,35.9 194.0,65.3 204.3,75.9 214.7,48.3 225.0,70.0 235.3,79.2 245.7,67.6 256.0,65.1 266.3,60.5 276.7,58.4 287.0,76.3 297.3,76.0 307.7,55.0 318.0,66.2" class="l7"/>
-<polyline points="8.0,61.9 18.3,38.1 28.7,82.8 39.0,84.3 49.3,76.4 59.7,55.6 70.0,66.9 80.3,72.4 90.7,48.3 101.0,60.8 111.3,57.8 121.7,74.3 132.0,45.6 142.3,89.3 152.7,85.0 163.0,80.9 173.3,79.0" class="l8"/>
-<circle cx="173.3" cy="79.0" r="3" fill="#e8c468"/><text x="173.3" y="72.0" class="svgt">16</text>
+<polyline points="8.0,29.2 18.3,47.1 28.7,89.0 39.0,54.7 49.3,58.4 59.7,54.7 70.0,68.1 80.3,47.5 90.7,94.8 101.0,47.8 111.3,42.5 121.7,70.1 132.0,73.7 142.3,61.8 152.7,46.6 163.0,76.4 173.3,49.2 183.7,36.7 194.0,65.2 204.3,75.5 214.7,48.7 225.0,69.8 235.3,78.7 245.7,67.5 256.0,65.0 266.3,60.6 276.7,58.5 287.0,75.9 297.3,75.6 307.7,55.2 318.0,66.1" class="l7"/>
+<polyline points="8.0,61.9 18.3,38.8 28.7,82.2 39.0,83.6 49.3,75.9 59.7,55.8 70.0,66.7 80.3,72.1 90.7,48.7 101.0,60.9 111.3,57.9 121.7,73.9 132.0,46.1 142.3,88.5 152.7,84.3 163.0,80.3 173.3,78.5" class="l8"/>
+<circle cx="173.3" cy="78.5" r="3.2" fill="#F59E0B"/><text x="173.3" y="71.5" class="svgt">16</text>
 <text x="8" y="115" class="svgs">1日</text><text x="306" y="115" class="svgs">31日</text>
 </svg><div class="pt2"><span class="lg7">— 7月</span><span class="lg8">— 8月</span> <span class="dim">7月日均18.7 ｜ 8月日均17.6</span></div></div><div class="panel"><div class="pt">实付金额(元)</div>
 <svg viewBox="0 0 340 118" preserveAspectRatio="none" class="line">
-<polyline points="8.0,86.0 18.3,72.9 28.7,95.9 39.0,85.9 49.3,84.6 59.7,70.8 70.0,71.5 80.3,68.4 90.7,86.9 101.0,59.4 111.3,88.2 121.7,55.4 132.0,77.1 142.3,63.0 152.7,65.8 163.0,67.5 173.3,64.5 183.7,74.8 194.0,78.2 204.3,56.5 214.7,73.4 225.0,66.4 235.3,66.8 245.7,78.9 256.0,50.7 266.3,52.3 276.7,59.6 287.0,65.5 297.3,79.5 307.7,28.1 318.0,53.2" class="l7"/>
-<polyline points="8.0,81.3 18.3,63.1 28.7,55.2 39.0,86.9 49.3,83.1 59.7,49.9 70.0,61.3 80.3,65.6 90.7,64.3 101.0,76.9 111.3,53.1 121.7,75.4 132.0,61.0 142.3,34.6 152.7,45.3 163.0,62.5 173.3,37.6" class="l8"/>
-<circle cx="173.3" cy="37.6" r="3" fill="#e8c468"/><text x="173.3" y="30.6" class="svgt">666</text>
+<polyline points="8.0,85.2 18.3,72.6 28.7,94.8 39.0,85.1 49.3,83.9 59.7,70.5 70.0,71.2 80.3,68.2 90.7,86.2 101.0,59.5 111.3,87.4 121.7,55.6 132.0,76.6 142.3,63.0 152.7,65.7 163.0,67.3 173.3,64.4 183.7,74.4 194.0,77.7 204.3,56.6 214.7,73.0 225.0,66.3 235.3,66.6 245.7,78.4 256.0,51.0 266.3,52.6 276.7,59.7 287.0,65.4 297.3,79.0 307.7,29.2 318.0,53.5" class="l7"/>
+<polyline points="8.0,80.7 18.3,63.1 28.7,55.4 39.0,86.1 49.3,82.5 59.7,50.2 70.0,61.3 80.3,65.5 90.7,64.2 101.0,76.5 111.3,53.3 121.7,75.0 132.0,61.1 142.3,35.4 152.7,45.8 163.0,62.5 173.3,38.3" class="l8"/>
+<circle cx="173.3" cy="38.3" r="3.2" fill="#F59E0B"/><text x="173.3" y="31.299999999999997" class="svgt">666</text>
 <text x="8" y="115" class="svgs">1日</text><text x="306" y="115" class="svgs">31日</text>
 </svg><div class="pt2"><span class="lg7">— 7月</span><span class="lg8">— 8月</span> <span class="dim">7月日均372.7 ｜ 8月日均438.3</span></div></div><div class="panel"><div class="pt">曝光人数</div>
 <svg viewBox="0 0 340 118" preserveAspectRatio="none" class="line">
-<polyline points="8.0,95.9 18.3,94.5 28.7,93.4 39.0,92.0 49.3,91.9 59.7,80.9 70.0,77.2 80.3,78.3 90.7,73.6 101.0,74.5 111.3,77.6 121.7,72.0 132.0,77.2 142.3,73.9 152.7,72.6 163.0,64.6 173.3,57.9 183.7,62.7 194.0,62.4 204.3,71.5 214.7,71.0 225.0,76.9 235.3,70.9 245.7,69.7 256.0,59.3 266.3,61.9 276.7,72.2 287.0,64.1 297.3,61.5 307.7,59.3 318.0,63.6" class="l7"/>
-<polyline points="8.0,82.9 18.3,80.2 28.7,92.8 39.0,90.1 49.3,53.2 59.7,71.7 70.0,69.6 80.3,71.9 90.7,73.9 101.0,78.2 111.3,84.4 121.7,86.4 132.0,84.9 142.3,80.7 152.7,65.1 163.0,48.5 173.3,28.1" class="l8"/>
-<circle cx="173.3" cy="28.1" r="3" fill="#e8c468"/><text x="173.3" y="21.1" class="svgt">2,870.0</text>
+<polyline points="8.0,94.8 18.3,93.5 28.7,92.4 39.0,91.1 49.3,91.0 59.7,80.3 70.0,76.7 80.3,77.8 90.7,73.3 101.0,74.1 111.3,77.1 121.7,71.7 132.0,76.7 142.3,73.5 152.7,72.2 163.0,64.5 173.3,58.0 183.7,62.7 194.0,62.4 204.3,71.2 214.7,70.7 225.0,76.4 235.3,70.6 245.7,69.4 256.0,59.4 266.3,61.9 276.7,71.9 287.0,64.1 297.3,61.5 307.7,59.4 318.0,63.6" class="l7"/>
+<polyline points="8.0,82.2 18.3,79.6 28.7,91.9 39.0,89.2 49.3,53.5 59.7,71.4 70.0,69.3 80.3,71.6 90.7,73.5 101.0,77.7 111.3,83.7 121.7,85.6 132.0,84.2 142.3,80.1 152.7,65.0 163.0,48.9 173.3,29.2" class="l8"/>
+<circle cx="173.3" cy="29.2" r="3.2" fill="#F59E0B"/><text x="173.3" y="22.2" class="svgt">2,870.0</text>
 <text x="8" y="115" class="svgs">1日</text><text x="306" y="115" class="svgs">31日</text>
 </svg><div class="pt2"><span class="lg7">— 7月</span><span class="lg8">— 8月</span> <span class="dim">7月日均1,481.7 ｜ 8月日均1,490.6</span></div></div><div class="panel"><div class="pt">下单转化率</div>
 <svg viewBox="0 0 340 118" preserveAspectRatio="none" class="line">
-<polyline points="8.0,85.7 18.3,73.8 28.7,88.6 39.0,79.4 49.3,74.6 59.7,60.6 70.0,68.3 80.3,70.0 90.7,84.9 101.0,78.9 111.3,95.9 121.7,65.2 132.0,83.6 142.3,79.4 152.7,87.3 163.0,78.8 173.3,84.3 183.7,92.9 194.0,94.7 204.3,62.7 214.7,84.3 225.0,75.4 235.3,80.0 245.7,87.8 256.0,69.7 266.3,78.4 276.7,86.5 287.0,80.5 297.3,86.0 307.7,61.8 318.0,56.4" class="l7"/>
-<polyline points="8.0,68.3 18.3,62.9 28.7,28.1 39.0,59.3 49.3,79.7 59.7,44.8 70.0,58.7 80.3,57.9 90.7,68.8 101.0,73.7 111.3,43.9 121.7,63.0 132.0,54.8 142.3,31.1 152.7,60.2 163.0,83.7 173.3,62.8" class="l8"/>
-<circle cx="173.3" cy="62.8" r="3" fill="#e8c468"/><text x="173.3" y="55.8" class="svgt">24.7%</text>
+<polyline points="8.0,85.0 18.3,73.4 28.7,87.8 39.0,78.8 49.3,74.2 59.7,60.7 70.0,68.1 80.3,69.8 90.7,84.2 101.0,78.4 111.3,94.8 121.7,65.1 132.0,82.9 142.3,78.9 152.7,86.5 163.0,78.2 173.3,83.6 183.7,91.9 194.0,93.7 204.3,62.6 214.7,83.6 225.0,75.0 235.3,79.4 245.7,87.0 256.0,69.5 266.3,77.9 276.7,85.7 287.0,79.9 297.3,85.3 307.7,61.8 318.0,56.6" class="l7"/>
+<polyline points="8.0,68.1 18.3,62.9 28.7,29.2 39.0,59.4 49.3,79.1 59.7,45.3 70.0,58.8 80.3,58.0 90.7,68.6 101.0,73.4 111.3,44.5 121.7,62.9 132.0,55.0 142.3,32.0 152.7,60.3 163.0,83.0 173.3,62.8" class="l8"/>
+<circle cx="173.3" cy="62.8" r="3.2" fill="#F59E0B"/><text x="173.3" y="55.8" class="svgt">24.7%</text>
 <text x="8" y="115" class="svgs">1日</text><text x="306" y="115" class="svgs">31日</text>
 </svg><div class="pt2"><span class="lg7">— 7月</span><span class="lg8">— 8月</span> <span class="dim">7月日均0.2 ｜ 8月日均0.3</span></div></div></div></div>
-<div class="sec"><div class="shead"><span class="sicon">📅</span> 美团外卖 · 周末 vs 工作日 <span class="dim">（条：8月上/7月下，日均口径）</span></div>
+<div class="sec" id="ww"><div class="shead"><span class="sicon">📅</span> 美团外卖 · 周末 vs 工作日 <span class="dim">（条：8月上/7月下，日均口径）</span></div>
 <div class="scrollx"><table class="tb ww"><tr><th>指标</th><th>周末（8月 vs 7月）</th><th>工作日（8月 vs 7月）</th></tr><tr><td>日均订单</td><td class="r"><div class="barline"><span class="blabel">8月</span><div class="btrack"><div class="bfill b8" style="width:51%"></div></div><span class="bval">12.8</span></div>
 <div class="barline"><span class="blabel">7月</span><div class="btrack"><div class="bfill b7" style="width:100%"></div></div><span class="bval">25.2</span></div></td><td class="r"><div class="barline"><span class="blabel">8月</span><div class="btrack"><div class="bfill b8" style="width:61%"></div></div><span class="bval">13.1</span></div>
 <div class="barline"><span class="blabel">7月</span><div class="btrack"><div class="bfill b7" style="width:100%"></div></div><span class="bval">21.5</span></div></td></tr><tr><td>客单价(元)</td><td class="r"><div class="barline"><span class="blabel">8月</span><div class="btrack"><div class="bfill b8" style="width:100%"></div></div><span class="bval">41</span></div>
@@ -178,13 +196,13 @@ svg.line{width:100%;height:110px;display:block}
 <div class="barline"><span class="blabel">7月</span><div class="btrack"><div class="bfill b7" style="width:100%"></div></div><span class="bval">1,472.1</span></div></td></tr><tr><td>转化率</td><td class="r"><div class="barline"><span class="blabel">8月</span><div class="btrack"><div class="bfill b8" style="width:100%"></div></div><span class="bval">22.8%</span></div>
 <div class="barline"><span class="blabel">7月</span><div class="btrack"><div class="bfill b7" style="width:71%"></div></div><span class="bval">16.3%</span></div></td><td class="r"><div class="barline"><span class="blabel">8月</span><div class="btrack"><div class="bfill b8" style="width:100%"></div></div><span class="bval">28.5%</span></div>
 <div class="barline"><span class="blabel">7月</span><div class="btrack"><div class="bfill b7" style="width:63%"></div></div><span class="bval">18.0%</span></div></td></tr></table></div></div>
-<div class="sec"><div class="shead"><span class="sicon">🎁</span> 美团 · 活动 8 类体检 <span class="dim">（8月订单 221 单，环比7月 697 单）</span></div>
+<div class="sec" id="act"><div class="shead"><span class="sicon">🎁</span> 美团 · 活动 8 类体检 <span class="dim">（8月订单 221 单，环比7月 697 单）</span></div>
 <table class="tb"><tr><th>活动类型</th><th>活动数</th><th>平台承担(元)</th><th>商家承担(元)</th><th>合计(元)</th><th>占比</th></tr><tr><td>支付红包</td><td class="r">201</td><td class="r">981.50</td><td class="r">2,120.00</td><td class="r b">3,101.50</td><td class="r">63.6%</td></tr><tr><td>减配送费</td><td class="r">223</td><td class="r">64.76</td><td class="r">834.62</td><td class="r b">899.38</td><td class="r">18.4%</td></tr><tr><td>商品折扣/特价</td><td class="r">243</td><td class="r">0.00</td><td class="r">538.67</td><td class="r b">538.67</td><td class="r">11.0%</td></tr><tr><td>店铺满减</td><td class="r">44</td><td class="r">0.00</td><td class="r">158.00</td><td class="r b">158.00</td><td class="r">3.2%</td></tr><tr><td>门店新客立减</td><td class="r">39</td><td class="r">0.00</td><td class="r">117.00</td><td class="r b">117.00</td><td class="r">2.4%</td></tr><tr><td>精准营销</td><td class="r">14</td><td class="r">0.00</td><td class="r">60.00</td><td class="r b">60.00</td><td class="r">1.2%</td></tr><tr><td>平台津贴</td><td class="r">1</td><td class="r">4.00</td><td class="r">0.00</td><td class="r b">4.00</td><td class="r">0.1%</td></tr><tr class="tfoot"><td>合计</td><td class="r">765</td><td class="r">1,050.26</td><td class="r">3,828.29</td><td class="r b">4,878.55</td><td class="r">100%</td></tr></table></div><div class="sec"><div class="shead"><span class="sicon">🎁</span> 淘宝 · 活动 8 类体检 <span class="dim">（8月订单 434 单，环比7月 624 单）</span></div>
 <table class="tb"><tr><th>活动类型</th><th>活动数</th><th>平台承担(元)</th><th>商家承担(元)</th><th>合计(元)</th><th>占比</th></tr><tr><td>支付红包</td><td class="r">582</td><td class="r">1,588.40</td><td class="r">3,118.50</td><td class="r b">4,706.90</td><td class="r">46.2%</td></tr><tr><td>商品折扣/特价</td><td class="r">514</td><td class="r">0.00</td><td class="r">3,181.56</td><td class="r b">3,181.56</td><td class="r">31.3%</td></tr><tr><td>减配送费</td><td class="r">433</td><td class="r">363.80</td><td class="r">1,371.30</td><td class="r b">1,735.10</td><td class="r">17.0%</td></tr><tr><td>门店新客立减</td><td class="r">91</td><td class="r">0.00</td><td class="r">273.00</td><td class="r b">273.00</td><td class="r">2.7%</td></tr><tr><td>其它</td><td class="r">66</td><td class="r">98.87</td><td class="r">45.00</td><td class="r b">143.87</td><td class="r">1.4%</td></tr><tr><td>店铺满减</td><td class="r">21</td><td class="r">0.00</td><td class="r">114.00</td><td class="r b">114.00</td><td class="r">1.1%</td></tr><tr><td>神券红包</td><td class="r">18</td><td class="r">16.57</td><td class="r">8.00</td><td class="r b">24.57</td><td class="r">0.2%</td></tr><tr class="tfoot"><td>合计</td><td class="r">1725</td><td class="r">2,067.64</td><td class="r">8,111.36</td><td class="r b">10,179.00</td><td class="r">100%</td></tr></table></div>
-<div class="sec"><div class="shead"><span class="sicon">💰</span> 美团 · 广告投放 <span class="dim">（7月 vs 8月）</span></div>
+<div class="sec" id="ad"><div class="shead"><span class="sicon">💰</span> 美团 · 广告投放 <span class="dim">（7月 vs 8月）</span></div>
 <table class="tb"><tr><th>指标</th><th>8月(8/1-17)</th><th>7月(全月)</th></tr><tr><td>推广消费(元)</td><td class="r">1,466</td><td class="r">7,097</td></tr><tr><td>曝光提升(次)</td><td class="r">26,826</td><td class="r">47,310</td></tr><tr><td>订单提升(单)</td><td class="r">145</td><td class="r">553</td></tr><tr><td>订单交易额(元)</td><td class="r">6,709</td><td class="r">21,530</td></tr><tr><td>ROI(交易额/消费)</td><td class="r b">4.58</td><td class="r">3.03</td></tr></table><div class="pt2">8月产品结构（消费→交易额→ROI）</div><table class="tb"><tr><th>推广产品</th><th>消费(元)</th><th>订单交易额(元)</th><th>ROI</th></tr><tr><td>流量助手</td><td class="r">664.03</td><td class="r">1,546.33</td><td class="r">2.33</td></tr><tr><td>点金推广</td><td class="r">95.45</td><td class="r">520.21</td><td class="r">5.45</td></tr><tr><td>营销魔方</td><td class="r">706.93</td><td class="r">4,455.80</td><td class="r">6.30</td></tr><tr><td>超级流量卡</td><td class="r">0.00</td><td class="r">187.03</td><td class="r">-</td></tr></table></div><div class="sec"><div class="shead"><span class="sicon">💰</span> 淘宝 · 广告投放 <span class="dim">（7月 vs 8月）</span></div>
 <table class="tb"><tr><th>指标</th><th>8月(8/1-17)</th><th>7月(全月)</th></tr><tr><td>推广消费(元)</td><td class="r">410</td><td class="r">613</td></tr><tr><td>曝光提升(次)</td><td class="r">13,477</td><td class="r">16,556</td></tr><tr><td>订单提升(单)</td><td class="r">117</td><td class="r">149</td></tr><tr><td>订单交易额(元)</td><td class="r">2,414</td><td class="r">3,259</td></tr><tr><td>ROI(交易额/消费)</td><td class="r b">5.89</td><td class="r">5.31</td></tr></table></div>
-<div class="sec"><div class="shead"><span class="sicon">💬</span> 口碑扫描 <span class="dim">（8月评价，低分≤3星明细）</span></div><div class="revgrid"><div class="revcard">
+<div class="sec" id="rev"><div class="shead"><span class="sicon">💬</span> 口碑扫描 <span class="dim">（8月评价，低分≤3星明细）</span></div><div class="revgrid"><div class="revcard">
 <div class="revhead"><span class="revplat">美团外卖</span><span class="revavg">4.50 <i class="stars">★★★★⯨</i></span></div>
 <div class="revnums"><span>评价 10 条</span><span>好评率 90%</span><span>差评 1 条</span></div>
 <div class="lowlist"><div class="lowitem"><span class="lowdate">08/14</span><span class="lowstar">1星</span><span class="lowtxt">鸭肠一股腥味，而且干巴巴的，怎么也不像新鲜鸭肠当天现做的。</span></div></div>
@@ -194,8 +212,8 @@ svg.line{width:100%;height:110px;display:block}
 <div class="lowlist"><div class="lowitem"><span class="lowdate">08/06</span><span class="lowstar">1星</span><span class="lowtxt">怎么不配餐具啊老板😭</span></div></div>
 </div></div></div>
 
-<div class="sec concl"><div class="shead"><span class="sicon">💡</span> 结论与行动建议</div>
+<div class="sec concl" id="concl"><div class="shead"><span class="sicon">💡</span> 结论与行动建议</div>
 <ol><li><span class="tag">订单</span>美团日均 13.0 单 vs 7月 22.5 单（-42.1%）；淘宝日均 25.5 单 vs 20.1 单（+26.8%）。</li><li><span class="tag">客单</span>美团客单价 44.2 元（+21.6%）；淘宝 17.6 元（-5.8%）。</li><li><span class="tag">转化</span>美团下单转化率 19.8%（7月 26.2%）；淘宝 26.5%（7月 17.5%）。</li><li><span class="tag">广告</span>美团投放 1,466 元 ROI 4.58（7月 7,097 元 ROI 3.03）；淘宝投放 410 元 ROI 5.89（7月 613 元 ROI 5.31）。</li><li><span class="tag">口碑</span>美团评价 10 条 均分 4.50 差评 1 条；淘宝评价 18 条 均分 4.61 差评 1 条。</li><li><span class="tag">警示</span>美团订单日均 13.0 单较7月 22.5 单明显下滑（-42.1%），但客单价逆势提升至 44.2 元——结构上更像"低价引流单减少、高客单留存单占比上升"，需确认是否因活动档位调整或新客减少导致，避免误判为单纯衰退。</li><li><span class="tag">建议</span>淘宝广告 8月仅投 410 元但 ROI 达 5.89（7月 5.31），预算明显未吃满——建议追加投放，优先在周末高峰时段加码。</li><li><span class="tag">建议</span>美团差评指向"鸭肠腥味/干柴"（8/14）与淘宝"不配餐具"（8/6）：前者涉及卤味核心品质，建议后端试味把关；后者属成本极低的体验优化，立即补配餐具即可消除差评源。</li><li><span class="tag">口径</span>本报告 8月仅覆盖 8/1-17（与数据导出进度一致），月度环比已统一按日均口径对比；8/18 起数据将在下期报告延续。</li></ol></div>
 
-<div class="foot">煌上煌·益田店 8月经营分析｜数据截止 2026-08-17｜口径：8月=8/1-17（17天），7月=全月（31天）<br/>路径1 运营 / 路径2 订单 / 路径3 活动 / 路径4 广告 / 路径5 评价</div>
+<div class="foot">煌上煌·益田店 8月经营分析｜数据截止 2026-08-17｜路径1 运营 / 路径2 订单 / 路径3 活动 / 路径4 广告 / 路径5 评价<br/>本报告为网页版交付，手机端优先适配</div>
 </div></body></html>
