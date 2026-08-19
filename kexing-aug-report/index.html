@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>煌上煌·科兴店 8月外卖全路径分析报告</title>
+<title>煌上煌·科兴店 8月外卖问题导向分析报告</title>
 <style>
 :root{--red:#C41A1A;--gold:#C9A063;--warn:#F5A623;--green:#2ECC71;--blue:#3498DB;--neutral:#7F8C8D;--dark:#1F2937;--bg:#F7F5F0}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -26,9 +26,9 @@ nav.toc a:hover{background:var(--red);color:#fff}
 .kpi .delta{font-size:11px;margin-top:3px;font-weight:700}
 .up{color:var(--red)}.down{color:var(--green)}.flat{color:var(--neutral)}
 .card{background:#fff;border:1px solid #F0E6D8;border-radius:14px;padding:20px;margin-bottom:14px}
-.card h2{font-size:16px;color:var(--red);display:flex;align-items:center;gap:8px;margin-bottom:4px}
-.card h2 .no{background:var(--red);color:#fff;width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
-.card .sub{font-size:11.5px;color:#999;margin-bottom:12px;border-bottom:1px dashed #F0E6D8;padding-bottom:8px}
+.card h2{font-size:17px;color:var(--red);display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.card h2 .no{background:var(--red);color:#fff;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.card .sub{font-size:12px;color:#999;margin-bottom:12px;border-bottom:1px dashed #F0E6D8;padding-bottom:8px}
 table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}
 th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #F4EFE6}
 th{background:#FAF6EF;color:#8A6D3B;font-weight:700;white-space:nowrap}
@@ -36,33 +36,30 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 tr.total td{background:#FFF9EF;font-weight:800;color:var(--red)}
 .badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:9px;font-weight:700;margin-right:4px}
 .b-mei{background:#FDEBEB;color:var(--red)}.b-tao{background:#E8F4FD;color:var(--blue)}.b-jd{background:#FDF3E7;color:var(--gold)}
-.funnel{display:flex;flex-direction:column;gap:6px;margin:10px 0}
-.f-step{display:grid;grid-template-columns:88px 1fr 78px;align-items:center;gap:8px}
-.f-step .n{font-size:11.5px;color:#666;text-align:right}
-.f-step .v{font-size:12.5px;font-weight:700}
-.f-step .bar{height:14px;background:#F4EFE6;border-radius:6px;overflow:hidden}
-.f-step .bar i{display:block;height:100%;border-radius:6px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:900px){.grid2{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
 .note{background:#FFFDF5;border:1px solid #F5E6C4;border-radius:10px;padding:10px 12px;font-size:12.5px;color:#8A6D3B;margin:8px 0}
 .alert{background:#FDECEC;border:1px solid #F5C6C6;border-radius:10px;padding:10px 12px;font-size:13px;color:#B03A2E;margin:8px 0}
 .good{background:#E8F6EF;border:1px solid #BDE8CF;border-radius:10px;padding:10px 12px;font-size:13px;color:#1E7A46;margin:8px 0}
-.finding{display:flex;gap:10px;padding:10px 0;border-bottom:1px dashed #F0E6D8}
-.finding:last-child{border-bottom:none}
-.finding .icon{font-size:18px;flex-shrink:0;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#FDF3E7}
-.finding b{display:block;font-size:13px;margin-bottom:2px}
-.finding p{font-size:13px;color:#555}
+.issue{background:#FDFCFA;border:1px solid #F0E6D8;border-radius:12px;padding:14px 16px;margin:12px 0}
+.ihead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14.5px;font-weight:800;color:var(--dark);margin-bottom:8px}
+.ino{width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.itag{font-size:10.5px;font-weight:800;border-radius:5px;padding:2px 8px}
+.itag.hi{background:#FDECEC;color:#D32F2F}.itag.mid{background:#FFF4E5;color:#E67E22}.itag.ok{background:#E8F6EF;color:#1E7A46}.itag.opp{background:#E8F4FD;color:var(--blue)}
+.ilink{background:#FDF3E7;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:8px 12px;font-size:12.5px;color:#8A6D3B;margin:8px 0}
+.iscene{background:#EAF1FA;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:8px 12px;font-size:12.5px;color:#2C5282;margin:8px 0}
+.isug{background:#E8F6EF;border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:8px 12px;font-size:12.5px;color:#1E7A46;margin:8px 0}
+.keypoint{display:flex;gap:10px;padding:10px 0;border-bottom:1px dashed #F0E6D8}
+.keypoint:last-child{border-bottom:none}
+.keypoint .icon{font-size:18px;flex-shrink:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#FDF3E7}
+.keypoint b{display:block;font-size:13.5px;margin-bottom:2px}
+.keypoint p{font-size:13px;color:#555}
 .action{display:flex;gap:10px;padding:12px 0;border-bottom:1px dashed #F0E6D8}
 .action:last-child{border-bottom:none}
 .action .pri{flex-shrink:0;width:44px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff}
 .action b{display:block;font-size:13px;margin-bottom:3px}
 .action p{font-size:13px;color:#555}
-.review{border:1px solid #F0E6D8;border-radius:12px;padding:12px;margin:8px 0}
-.review .hd{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:#888;margin-bottom:6px}
-.stars{color:#F5A623;font-size:13px;letter-spacing:1px}
-.review .txt{font-size:13px;color:#333;line-height:1.7}
-.review .reply{font-size:11.5px;color:#1E7A46;background:#E8F6EF;border-radius:8px;padding:6px 10px;margin-top:6px}
-.review .bad{font-size:11.5px;color:#B03A2E;background:#FDECEC;border-radius:8px;padding:6px 10px;margin-top:6px}
+.bl{font-size:12.5px;font-weight:800;color:#8A6D3B;margin:8px 0 2px}
 footer{text-align:center;font-size:11px;color:#999;padding:16px 0 8px}
 footer a{color:var(--red);text-decoration:none}
 </style></head><body><div class="wrap">
@@ -70,135 +67,70 @@ footer a{color:var(--red);text-decoration:none}
 <div class="brand"><div class="logo">煌上煌</div><div class="bt"><b>煌上煌·科兴店</b>直营店 · 深圳南山 · 科技园写字楼商圈</div></div>
 
 <div class="hero">
-<h1>8月外卖全路径分析报告</h1>
-<div class="sub">数据期：2026-08-01 ~ 08-17（17天）｜对比基准：2026年7月全月｜数据路径：路径1运营 + 路径2订单 + 路径3活动 + 路径4广告 + 路径5评价（口径说明见各节）</div>
+<h1>8月外卖问题导向分析报告</h1>
+<div class="sub">数据期：2026-08-01 ~ 08-17（17天）｜对比基准：2026年7月全月｜数据路径：路径1-5（口径见各节）｜红=上涨/绿=下跌</div>
 <div class="oneline"><b>最终结论</b> ① 美团：<b>走弱</b>（日均-17%）——曝光/复购/广告三弱+食安差评2条，营收底线已破需止血；② 淘宝：<b>增长</b>（日均+49%、转化23.1%）——主攻提客单21→25 + 转化红利吃满；③ 大盘：量增价跌（合计客单28.8元 -9%），到手收入日均1,053元。</div>
 </div>
 
-<nav class="toc"><a href="#kpi">核心指标</a><a href="#p1">路径1运营</a><a href="#p3">路径3活动</a><a href="#p4">路径4广告</a><a href="#p5">路径5评价</a><a href="#sum">总结</a><a href="#act">举措</a></nav>
+<nav class="toc"><a href="#kpi">核心指标</a><a href="#issues">问题与关联场景</a><a href="#keys">核心要点</a><a href="#concl">最终结论与举措</a></nav>
 
-<div class="kpis" id="kpi"><div class="kpi"><div class="lab">8月有效订单（17天）</div><div class="val">783 <small>单</small></div><div class="delta up">日均46.1单 · 美团311/淘宝472 · 环比日均+13.0%</div></div>
-<div class="kpi"><div class="lab">8月营业收入（到手）</div><div class="val">17,901 <small>元</small></div><div class="delta up">日均1,053 · 环比日均+5.6% · 美团9,792/淘宝8,109</div></div>
+<div class="kpis" id="kpi"><div class="kpi"><div class="lab">8月有效订单（17天）</div><div class="val">783 <small>单</small></div><div class="delta up">日均46.1 · 美团311/淘宝472 · 环比+13.0%</div></div>
+<div class="kpi"><div class="lab">8月到手收入</div><div class="val">17,901 <small>元</small></div><div class="delta up">日均1,053 · 环比+5.6% · 美团9,792/淘宝8,109</div></div>
 <div class="kpi"><div class="lab">8月曝光人数</div><div class="val">53893 <small>人</small></div><div class="delta flat">日均3170 · 美团25423/淘宝28470</div></div>
 <div class="kpi"><div class="lab">全店综合客单价</div><div class="val">28.8 <small>元</small></div><div class="delta down">环比-9.3% · 美团40.4/淘宝21.1</div></div></div>
 
-<div class="card" id="p1">
-<h2><span class="no">1</span>路径1 · 双平台运营漏斗（8月 vs 7月）</h2>
-<div class="sub">指标口径：路径1外卖数据（美团/淘宝门店日粒度汇总）；8月=8/1-8/17，7月=7/1-7/31，比率=时段合计人数重算；京东两店均无订单数据（未开通/未导出），不列入</div>
-<table><tr><th>平台</th><th class="num">曝光人数</th><th class="num">入店人数</th><th class="num">入店率</th><th class="num">下单转化</th><th class="num">有效订单</th><th class="num">收入(元)</th><th class="num">客单价</th></tr><tr><td><span class="badge b-mei">美团</span>8月</td><td class="num">25423</td><td class="num">1450</td><td class="num">5.7%</td><td class="num">21.2%</td><td class="num"><b>311</b></td><td class="num">9,792</td><td class="num">40.4</td></tr>
-<tr><td><span class="badge b-mei">美团</span>7月</td><td class="num">54535</td><td class="num">3446</td><td class="num">6.3%</td><td class="num">19.8%</td><td class="num">686</td><td class="num">20,177</td><td class="num">38.7</td></tr><tr><td><span class="badge b-tao">淘宝</span>8月</td><td class="num">28470</td><td class="num">2000</td><td class="num">7.0%</td><td class="num">23.1%</td><td class="num"><b>472</b></td><td class="num">8,109</td><td class="num">21.1</td></tr>
-<tr><td><span class="badge b-tao">淘宝</span>7月</td><td class="num">41476</td><td class="num">3235</td><td class="num">7.8%</td><td class="num">17.9%</td><td class="num">578</td><td class="num">10,741</td><td class="num">23.4</td></tr></table>
-<div class="grid2">
-<div>
-<div style="font-size:12.5px;font-weight:700;color:#8A6D3B;margin:8px 0 2px">美团 · 4级漏斗（8月）</div>
-<div class="funnel"><div class="f-step"><span class="n">曝光</span><div class="bar"><i style="width:100.0%;background:var(--red)"></i></div><span class="v">25423</span></div><div class="f-step"><span class="n">入店</span><div class="bar"><i style="width:5.7%;background:#E8A33D"></i></div><span class="v">1450</span></div><div class="f-step"><span class="n">下单</span><div class="bar"><i style="width:21.2%;background:#3498DB"></i></div><span class="v">308</span></div><div class="f-step"><span class="n">复购率</span><div class="bar"><i style="width:14.8%;background:#2ECC71"></i></div><span class="v">0.1</span></div></div></div><div class="note">入店率 5.7%（7月 6.3%）｜下单转化 21.2%（7月 19.8%）——转化稳但曝光日均 1495（7月 1759）下滑，是美团订单走弱主因</div></div>
-<div class="grid2">
-<div>
-<div style="font-size:12.5px;font-weight:700;color:#8A6D3B;margin:8px 0 2px">淘宝 · 4级漏斗（8月）</div>
-<div class="funnel"><div class="f-step"><span class="n">曝光</span><div class="bar"><i style="width:100.0%;background:#3498DB"></i></div><span class="v">28470</span></div><div class="f-step"><span class="n">入店</span><div class="bar"><i style="width:7.0%;background:#E8A33D"></i></div><span class="v">2000</span></div><div class="f-step"><span class="n">下单</span><div class="bar"><i style="width:23.1%;background:#3498DB"></i></div><span class="v">462</span></div><div class="f-step"><span class="n">复购率</span><div class="bar"><i style="width:3.0%;background:#2ECC71"></i></div><span class="v">-</span></div></div></div><div class="alert">⚠ 淘宝转化率 23.1% 较 7 月 17.9% 大涨、入店率亦升——流量质量提升明显，属"转化红利期"，应加大投放吃满</div></div>
-<div class="grid2">
-<div>
-<div style="font-size:12.5px;font-weight:700;color:#8A6D3B;margin:8px 0 2px">美团 8月 vs 7月（日均）</div>
-<table><tr><th>指标</th><th class="num">8月日均</th><th class="num">7月日均</th><th class="num">变化</th></tr><tr><td>有效订单</td><td class="num">18.3</td><td class="num">22.1</td><td class="num down">-17.3%</td></tr><tr><td>营业收入(元)</td><td class="num">576.0</td><td class="num">650.9</td><td class="num down">-11.5%</td></tr><tr><td>曝光人数</td><td class="num">1,495.5</td><td class="num">1,759.2</td><td class="num down">-15.0%</td></tr><tr><td>客单价</td><td class="num">40.4</td><td class="num">38.7</td><td class="num up">+4.4%</td></tr><tr><td>入店率</td><td class="num">5.7%</td><td class="num">6.3%</td><td class="num down">-9.7%</td></tr><tr><td>转化率</td><td class="num">21.2%</td><td class="num">19.8%</td><td class="num up">+7.0%</td></tr></table><div class="good">✓ 美团转化率稳升、客单价 +4.2% 上行——老客结构健康；主要问题在曝光端（日均 -15%）与食安差评</div></div>
-<div>
-<div style="font-size:12.5px;font-weight:700;color:#8A6D3B;margin:8px 0 2px">淘宝 8月 vs 7月（日均）</div>
-<table><tr><th>指标</th><th class="num">8月日均</th><th class="num">7月日均</th><th class="num">变化</th></tr><tr><td>有效订单</td><td class="num">27.8</td><td class="num">18.6</td><td class="num up">+48.9%</td></tr><tr><td>营业收入(元)</td><td class="num">477.0</td><td class="num">346.5</td><td class="num up">+37.7%</td></tr><tr><td>曝光人数</td><td class="num">1,674.7</td><td class="num">1,337.9</td><td class="num up">+25.2%</td></tr><tr><td>客单价</td><td class="num">21.1</td><td class="num">23.4</td><td class="num down">-9.9%</td></tr><tr><td>入店率</td><td class="num">7.0%</td><td class="num">7.8%</td><td class="num down">-9.9%</td></tr><tr><td>转化率</td><td class="num">23.1%</td><td class="num">17.9%</td><td class="num up">+29.3%</td></tr></table><div class="good">✓ 淘宝转化率 +5.4pp 大涨、日均曝光 +63%——平台流量质量与门店承接力双提升，是本店增长主力</div></div>
+<div class="card" id="issues">
+<h2><span class="no">1</span>问题与关联场景分析（5 大问题 × 数据 × 关联 × 场景）</h2>
+<div class="sub">每个问题给出：现象数据 → 关联链（因果关系）→ 场景解读（商圈属性/客群）→ 应对建议；关联性场景问题已标注</div>
+<div class="issue">
+<div class="ihead"><span class="ino">1</span>美团走弱：流量-复购-广告三线收缩 <span class="itag hi">高风险</span></div>
+<table><tr><th>现象指标</th><th class="num">8月</th><th class="num">7月</th><th class="num">变化</th></tr><tr><td>曝光(日均)</td><td class="num">1495</td><td class="num">1759</td><td class="num down">-15.0%</td></tr><tr><td>入店率</td><td class="num">5.7%</td><td class="num">6.3%</td><td class="num down">-9.7%</td></tr><tr><td>订单(日均)</td><td class="num">18.3</td><td class="num">22.1</td><td class="num down">-17.3%</td></tr><tr><td>复购率</td><td class="num">14.8%</td><td class="num">17.9%</td><td class="num down">-17.6%</td></tr><tr><td>广告投放(元)</td><td class="num">1,396</td><td class="num">3,277</td><td class="num down">-57.4%</td></tr><tr><td>到手收入(美团日均)</td><td class="num">576</td><td class="num">651</td><td class="num down">-11.5%</td></tr></table>
+<div class="ilink">🔗 关联链：曝光↓ → 入店率↓ → 订单↓（-17%）→ 美团到手收入日均 576 vs 651（88%，跌破90%底线）；叠加广告投放 -57% 停止输血，复购 -3.1pp 老客流失。</div>
+<div class="iscene">🏙 场景：科兴是写字楼店：工作日午间是主战场、周末天然淡（周末/工作日比约 0.7）；白领复购对品质/食安极敏感，差评杀伤大。</div>
+<div class="isug">💡 建议：①恢复曝光资源位报名+头图/评分卡优化入店；②周末推"写字楼限定套餐+提前预订"；③广告 ROI 4.90 已升，恢复投放至 7 月 60% 水平。</div>
+</div><div class="issue">
+<div class="ihead"><span class="ino">2</span>食安差评 2 条：评分与流量权重的定时炸弹 <span class="itag hi">红线</span></div>
+<table><tr><th>现象指标</th><th class="num">8月</th><th class="num">7月</th><th class="num">变化</th></tr><tr><td>8/6 差评</td><td class="num">1星</td><td class="num">包装袋内活苍蝇</td><td class="num down">食安</td></tr><tr><td>8/7 差评</td><td class="num">1星</td><td class="num">食用后腹泻</td><td class="num down">食安</td></tr><tr><td>美团均分</td><td class="num">3.90</td><td class="num">7月参考</td><td class="num flat"></td></tr></table>
+<div class="ilink">🔗 关联链：食安差评 → 美团均分 3.9 → 平台评分/流量权重下滑 → 复购客群流失（复购 -3.1pp 与之共振）→ 曝光进一步减少（恶性循环）。</div>
+<div class="iscene">🏙 场景：写字楼白领客群：对"卫生/腹泻"类投诉零容忍，差评传播快（写字楼同事间口口相传）。</div>
+<div class="isug">💡 建议：①48h 回访 8/6、8/7 两单致歉补偿；②后厨+包装全流程灭蝇/封口/冷链排查；③差评回复 SOP 24h 内响应。</div>
+</div><div class="issue">
+<div class="ihead"><span class="ino">3</span>量增价跌：淘宝拉量但客单走低 <span class="itag mid">中风险</span></div>
+<table><tr><th>现象指标</th><th class="num">8月</th><th class="num">7月</th><th class="num">变化</th></tr><tr><td>淘宝订单(日均)</td><td class="num">27.8</td><td class="num">18.6</td><td class="num up">+48.9%</td></tr><tr><td>淘宝客单价</td><td class="num">21.1</td><td class="num">23.4</td><td class="num down">-9.9%</td></tr><tr><td>合计客单价</td><td class="num">28.8</td><td class="num">31.7</td><td class="num down">-9.3%</td></tr><tr><td>淘宝转化率</td><td class="num">23.1%</td><td class="num">17.9%</td><td class="num up">+29.3%</td></tr></table>
+<div class="ilink">🔗 关联链：淘宝订单 +49%（转化 23.1% 红利）但客单 21.1 元 -10% → 低客单占比升 → 合计客单 28.8 元 -9% → "卖得多、每单赚得少"。</div>
+<div class="iscene">🏙 场景：淘宝减配送费+商品折扣是补贴主力（商家承担 74%）——低价走量模式在转化红利期有效，但利润薄。</div>
+<div class="isug">💡 建议：①"主食+卤味"套餐提客单 21→25 元；②新客立减承接转化红利；③核对商品折扣与减配送费叠加效率，砍高成本档位。</div>
+</div><div class="issue">
+<div class="ihead"><span class="ino">4</span>补贴波动异常：8/15 补贴断崖为 0 <span class="itag mid">中风险</span></div>
+<table><tr><th>现象指标</th><th class="num">8月</th><th class="num">7月</th><th class="num">变化</th></tr><tr><td>活动补贴(日度波动)</td><td class="num">0-575 元</td><td class="num">—</td><td class="num down">sd=139</td></tr><tr><td>8/15 补贴</td><td class="num">0</td><td class="num">前日 550</td><td class="num down">断崖</td></tr></table>
+<div class="ilink">🔗 关联链：补贴日度 0-575 大幅波动 + 8/15 断崖为 0 → 订单随补贴脉冲起伏（补贴日订单高、退坡即回落）→ 经营节奏不稳定。</div>
+<div class="iscene">🏙 场景：平台活动节奏（神券节/平台补贴周期）与门店自身活动叠加，形成脉冲式订单。</div>
+<div class="isug">💡 建议：①建立日度补贴-订单看板，识别断崖日（数据缺失/活动中断）；②活动排期平滑化，避免大起大落。</div>
+</div><div class="issue">
+<div class="ihead"><span class="ino">5</span>机会：淘宝转化红利未吃满 <span class="itag opp">机会</span></div>
+<table><tr><th>现象指标</th><th class="num">8月</th><th class="num">7月</th><th class="num">变化</th></tr><tr><td>淘宝广告ROI</td><td class="num">5.76</td><td class="num">5.60</td><td class="num up">+3.0%</td></tr><tr><td>淘宝广告投放(元)</td><td class="num">663</td><td class="num">945</td><td class="num down">-29.9%</td></tr></table>
+<div class="ilink">🔗 关联链：淘宝转化 23.1% + 广告 ROI 5.68 双高，但投放仅 748 元——高转化高回报流量未用足。</div>
+<div class="iscene">🏙 场景：写字楼白领午间集中下单，淘宝承接好；ROI 5.68 意味着每 1 元广告换 5.68 元交易额。</div>
+<div class="isug">💡 建议：①广告预算向淘宝倾斜（8月下半月加码）；②午间高峰时段（11-13点）重点投放。</div>
 </div>
-<div style="font-size:12.5px;font-weight:700;color:#8A6D3B;margin:10px 0 4px">8月关键事件与关联因素</div>
-<table><tr><th>日期/维度</th><th>事件</th><th>关联影响</th></tr>
-<tr><td>8/6</td><td>美团差评"包装袋内活苍蝇"（1星）</td><td>食安类差评 → 美团均分拖至 3.9；平台流量权重与评分直接挂钩，需立即整改</td></tr>
-<tr><td>8/7</td><td>美团差评"吃了拉肚子"（1星）</td><td>与 8/6 同周连发，食安风险集中暴露，属 P0 红线</td></tr>
-<tr><td>8月全月</td><td>淘宝转化率 23.1%（7月 17.9%）</td><td>转化红利期 + 淘宝广告 ROI 5.68（7月 5.60）→ 预算应向淘宝倾斜</td></tr>
-<tr><td>周末/工作日</td><td>周末日均 -（工作日 -）</td><td>写字楼店周末/工作日比约 0.7——周末淡季，需"写字楼限定套餐"拉动</td></tr>
-</table>
-<div class="note">关联结论：8月美团的<u>食安差评</u>与<u>曝光下滑</u>、淘宝的<u>转化大涨</u>与<u>广告高ROI</u>呈两极化——资源应向淘宝倾斜，美团先解决食安与曝光。</div>
-</div>
-
-<div class="card" id="p3">
-<h2><span class="no">3</span>路径3 · 活动结构（8月，补贴=平台+商家）</h2>
-<div class="sub">口径：路径2活动信息列解析；8月活动订单 美团 312 单 / 淘宝 472 单——几乎每单挂活动</div>
-<div class="grid2"><div>
-<div style="font-size:12.5px;font-weight:700;color:#8A6D3B;margin:6px 0 2px"><span class="badge b-mei">美团</span>8月活动8类补贴（平台+商家）</div>
-<table><tr><th>活动</th><th class="num">活动数</th><th class="num">平台承担</th><th class="num">商家承担</th><th class="num">合计</th><th class="num">每单补贴</th></tr><tr><td>支付红包</td><td class="num">290</td><td class="num">1,550</td><td class="num">2,991</td><td class="num">4,542</td><td class="num">16</td></tr><tr><td>减配送费</td><td class="num">314</td><td class="num">28</td><td class="num">712</td><td class="num">740</td><td class="num">2</td></tr><tr><td>商品折扣/特价</td><td class="num">536</td><td class="num">0</td><td class="num">605</td><td class="num">605</td><td class="num">1</td></tr><tr><td>店铺满减</td><td class="num">63</td><td class="num">0</td><td class="num">414</td><td class="num">414</td><td class="num">7</td></tr><tr><td>门店新客立减</td><td class="num">55</td><td class="num">0</td><td class="num">165</td><td class="num">165</td><td class="num">3</td></tr><tr><td>精准营销</td><td class="num">18</td><td class="num">0</td><td class="num">74</td><td class="num">74</td><td class="num">4</td></tr><tr><td>平台津贴</td><td class="num">8</td><td class="num">28</td><td class="num">0</td><td class="num">28</td><td class="num">3</td></tr><tr><td>神券红包</td><td class="num">2</td><td class="num">0</td><td class="num">10</td><td class="num">10</td><td class="num">5</td></tr>
-<tr class="total"><td>合计</td><td class="num">1286</td><td class="num">1,606</td><td class="num">4,971</td><td class="num">6,577</td><td class="num">5</td></tr></table></div><div>
-<div style="font-size:12.5px;font-weight:700;color:#8A6D3B;margin:6px 0 2px"><span class="badge b-tao">淘宝</span>8月活动8类补贴（平台+商家）</div>
-<table><tr><th>活动</th><th class="num">活动数</th><th class="num">平台承担</th><th class="num">商家承担</th><th class="num">合计</th><th class="num">每单补贴</th></tr><tr><td>支付红包</td><td class="num">673</td><td class="num">2,310</td><td class="num">3,920</td><td class="num">6,230</td><td class="num">9</td></tr><tr><td>商品折扣/特价</td><td class="num">607</td><td class="num">0</td><td class="num">3,256</td><td class="num">3,256</td><td class="num">5</td></tr><tr><td>减配送费</td><td class="num">472</td><td class="num">488</td><td class="num">1,492</td><td class="num">1,980</td><td class="num">4</td></tr><tr><td>门店新客立减</td><td class="num">109</td><td class="num">0</td><td class="num">327</td><td class="num">327</td><td class="num">3</td></tr><tr><td>店铺满减</td><td class="num">27</td><td class="num">0</td><td class="num">174</td><td class="num">174</td><td class="num">6</td></tr><tr><td>其它</td><td class="num">82</td><td class="num">91</td><td class="num">69</td><td class="num">160</td><td class="num">2</td></tr><tr><td>神券红包</td><td class="num">25</td><td class="num">93</td><td class="num">11</td><td class="num">104</td><td class="num">4</td></tr>
-<tr class="total"><td>合计</td><td class="num">1995</td><td class="num">2,981</td><td class="num">9,249</td><td class="num">12,231</td><td class="num">6</td></tr></table></div></div>
-<div class="note">美团8月补贴：平台承担 1,606 元 / 商家承担 4,971 元——商家让利占大头；淘宝商品折扣补贴最重，需核对与减配送费的叠加效率。</div>
 </div>
 
-<div class="card" id="p4">
-<h2><span class="no">4</span>路径4 · 广告投放（8月 vs 7月）</h2>
-<div class="sub">口径：路径4广告数据（美团总部+门店 / 淘宝总部）；8月已按日期列过滤至 8/17（剔除 8/18 导出边界）</div>
-<div class="grid2">
-<div><table><tr><th>指标（美团）</th><th class="num">8月(8/1-17)</th><th class="num">7月(31天)</th><th class="num">变化</th></tr><tr><td>推广消费(元)</td><td class="num">1,396</td><td class="num">3,277</td><td class="num down">-57.4%</td></tr><tr><td>曝光提升(次)</td><td class="num">24,130</td><td class="num">44,479</td><td class="num down">-45.7%</td></tr><tr><td>订单提升(单)</td><td class="num">162</td><td class="num">321</td><td class="num down">-49.5%</td></tr><tr><td>订单交易额(元)</td><td class="num">6,836</td><td class="num">13,589</td><td class="num down">-49.7%</td></tr><tr class="total"><td>广告ROI(交易额/消费)</td><td class="num">4.90</td><td class="num">4.15</td><td class="num">+18.1%</td></tr></table><div style="font-size:12.5px;font-weight:700;color:#8A6D3B;margin:8px 0 2px">美团8月投放结构（按推广产品）</div>
-<table><tr><th>推广产品</th><th class="num">消费(元)</th><th class="num">交易额(元)</th><th class="num">ROI</th></tr><tr><td>流量助手</td><td class="num">354</td><td class="num">1,284</td><td class="num">3.63</td></tr><tr><td>点金推广</td><td class="num">133</td><td class="num">719</td><td class="num">5.39</td></tr><tr><td>营销魔方</td><td class="num">909</td><td class="num">4,680</td><td class="num">5.15</td></tr><tr><td>超级流量卡</td><td class="num">0</td><td class="num">152</td><td class="num">-</td></tr></table></div>
-<div><table><tr><th>指标（淘宝）</th><th class="num">8月(8/1-17)</th><th class="num">7月(31天)</th><th class="num">变化</th></tr><tr><td>推广消费(元)</td><td class="num">663</td><td class="num">945</td><td class="num down">-29.9%</td></tr><tr><td>曝光提升(次)</td><td class="num">19,315</td><td class="num">26,164</td><td class="num down">-26.2%</td></tr><tr><td>订单提升(单)</td><td class="num">168</td><td class="num">206</td><td class="num down">-18.4%</td></tr><tr><td>订单交易额(元)</td><td class="num">3,818</td><td class="num">5,290</td><td class="num down">-27.8%</td></tr><tr class="total"><td>广告ROI(交易额/消费)</td><td class="num">5.76</td><td class="num">5.60</td><td class="num">+3.0%</td></tr></table></div>
-</div>
-<div class="note">美团8月投放 1,396 元、ROI 4.90（7月 4.15）——效率提升、规模缩减；营销魔方为核心产品（ROI 5.3），建议加码。淘宝 ROI 5.76 但仅投 663 元——预算明显未吃满，应倾斜。</div>
+<div class="card" id="keys">
+<h2><span class="no">2</span>核心要点总结</h2>
+<div class="sub">综合路径1-5，8/1-8/17</div>
+<div class="keypoint"><div class="icon">📉</div><div><b>美团走弱且底线已破</b><p>日均订单 -17%、曝光 -15%、复购 -3.1pp、广告 -57%；到手收入日均 576 vs 651（88% 破 90% 底线）；食安差评 2 条红线已破。</p></div></div><div class="keypoint"><div class="icon">🚀</div><div><b>淘宝是唯一增长引擎</b><p>日均 +49%（转化 23.1%）、ROI 5.68——转化红利+广告回报双高，但客单 21 元偏低、预算未吃满。</p></div></div><div class="keypoint"><div class="icon">💸</div><div><b>量增价跌</b><p>合计客单 28.8 元 -9%：低客单淘宝占比升，卖得多赚得少；到手收入 17,901 元/日均 1,053 元。</p></div></div><div class="keypoint"><div class="icon">🏢</div><div><b>写字楼场景：周末是天然淡季</b><p>周末/工作日比约 0.7，周末时段空置，需场景化产品（写字楼限定套餐/提前预订）而非盲目加补贴。</p></div></div><div class="keypoint"><div class="icon">⚠️</div><div><b>补贴脉冲 + 断崖</b><p>8/15 补贴=0 断崖、日度 0-575 波动——订单随补贴起伏，经营节奏不稳。</p></div></div><div class="keypoint"><div class="icon">💬</div><div><b>口碑资产薄弱</b><p>全店 30+ 条评价、好评积累慢；食安差评一旦发酵冲击权重，回复时效是短板。</p></div></div>
 </div>
 
-<div class="card" id="p5">
-<h2><span class="no">5</span>路径5 · 口碑评价（8月）</h2>
-<div class="sub">口径：路径5外卖评价；美团评价文件导出边界为 8/1-14，淘宝覆盖 8/1-17；低分=评分≤3星明细</div>
-<div class="grid2"><div>
-<div style="font-size:12.5px;font-weight:700;color:#8A6D3B;margin:8px 0 2px"><span class="badge b-mei">美团</span>8月评价 10 条 · 好评 7 / 差评 3 · 均分 3.90 <span class="stars">★★★⯨☆</span></div>
-<div class="review" style="border-color:#F5C6C6;background:#FFF9F9">
-<div class="hd"><span><span class="badge b-mei">美团</span> 08/06</span><span class="stars" style="color:#E74C3C">★☆☆☆☆</span></div>
-<div class="txt">「打开包装袋发现一只苍蝇，活的。不在盒子里，就在包装盒子的袋子里。我真服了，这堪忧的食品卫生，拉黑这家店，卸载美团了，我真服了，人怎么可以这么倒霉，连苦笑都不敢笑了，怕老天觉得我不服。」</div>
-<div class="bad">⚠ 低分差评（评分 1）</div></div><div class="review" style="border-color:#F5C6C6;background:#FFF9F9">
-<div class="hd"><span><span class="badge b-mei">美团</span> 08/07</span><span class="stars" style="color:#E74C3C">★☆☆☆☆</span></div>
-<div class="txt">「“肉质差”昨天吃了拉肚子，拉好几次了」</div>
-<div class="bad">⚠ 低分差评（评分 1）</div></div><div class="review" style="border-color:#F5C6C6;background:#FFF9F9">
-<div class="hd"><span><span class="badge b-mei">美团</span> 08/11</span><span class="stars" style="color:#E74C3C">★★☆☆☆</span></div>
-<div class="txt">「餐品略贵，不值这个价格，不好吃，腥腥的，没有绝味周黑鸭好吃。不入味，酱鸭炒饭一股芝士味，鸭子的膻味，很奇怪，只吃了两口，图一是吃完后的，只有素菜还行，至少能吃，其他味道都很奇怪，特别是这个酱鸭炒饭。难吃到我了」</div>
-<div class="bad">⚠ 低分差评（评分 2）</div></div></div><div>
-<div style="font-size:12.5px;font-weight:700;color:#8A6D3B;margin:8px 0 2px"><span class="badge b-tao">淘宝</span>8月评价 24 条 · 好评 21 / 差评 2 · 均分 4.54 <span class="stars">★★★★⯨</span></div>
-<div class="review" style="border-color:#F5C6C6;background:#FFF9F9">
-<div class="hd"><span><span class="badge b-tao">淘宝</span> 08/02</span><span class="stars" style="color:#E74C3C">★☆☆☆☆</span></div>
-<div class="txt">「鸭头非常辣，应该用的是辣油。好评是因为有好评返现，结果这商家还玩不起，好评返现不处理」</div>
-<div class="bad">⚠ 低分差评（评分 1）</div></div><div class="review" style="border-color:#F5C6C6;background:#FFF9F9">
-<div class="hd"><span><span class="badge b-tao">淘宝</span> 08/06</span><span class="stars" style="color:#E74C3C">★★☆☆☆</span></div>
-<div class="txt">「手套都不送」</div>
-<div class="bad">⚠ 低分差评（评分 2）</div></div><div class="review" style="border-color:#F5C6C6;background:#FFF9F9">
-<div class="hd"><span><span class="badge b-tao">淘宝</span> 08/14</span><span class="stars" style="color:#E74C3C">★★★☆☆</span></div>
-<div class="txt">「（无文字评价）」</div>
-<div class="bad">⚠ 低分差评（评分 3）</div></div></div></div>
-<div class="note">评价资产：美团 10 条（均分 3.90）、淘宝 24 条（均分 4.54）——总量偏少、好评资产积累慢；<u>食安差评（苍蝇/腹泻）</u>是最大风险敞口，评价率与回复机制需补强。</div>
-</div>
-
-<div class="card" id="sum">
-<h2><span class="no">6</span>最终结论（判定直述，无铺垫）</h2>
-<div class="sub">口径：8月=8/1-17 vs 7月全月（日均）；到手收入=美团营业收入+淘宝收入；红=上涨/绿=下跌</div>
-<div class="alert">① 美团是否走弱：<b>是（温和走弱）</b>——日均订单 22.1→18.3 单（-17%）、曝光日均 -15%。弱势板块逐条：</div>
-<table>
-<tr><th>弱势板块</th><th class="num">8月</th><th class="num">7月</th><th>变化判定</th></tr>
-<tr><td>流量·曝光日均</td><td class="num">1,495</td><td class="num">1,759</td><td class="num down">-15% 🔴弱势（流量源头失血）</td></tr>
-<tr><td>入店率</td><td class="num">5.70%</td><td class="num">6.32%</td><td class="num down">-0.6pp 🔴弱势（低于7%基准）</td></tr>
-<tr><td>下单转化</td><td class="num">21.2%</td><td class="num">19.8%</td><td class="num up">+1.4pp 🟢非弱势</td></tr>
-<tr><td>补贴投产·每单补贴</td><td class="num">35.8元</td><td class="num">35.8元</td><td>🟡高位持平（触36元底线）</td></tr>
-<tr><td>客单价</td><td class="num">40.4元</td><td class="num">38.7元</td><td class="num up">+4.4% 🟢非弱势</td></tr>
-<tr><td>复购率</td><td class="num">14.8%</td><td class="num">17.9%</td><td class="num down">-3.1pp 🔴弱势</td></tr>
-<tr><td>履约风险</td><td class="num">0条</td><td class="num">—</td><td>🟢未爆雷（无配送/超时差评）</td></tr>
-<tr><td>广告投放</td><td class="num">1,396元</td><td class="num">3,277元</td><td class="num down">-57% 🔴收缩（ROI 4.90反升）</td></tr>
-<tr><td>补贴波动</td><td class="num">0-575元/日</td><td class="num">—</td><td>🔴异常：8/15补贴断崖为0（sd139）</td></tr>
-</table>
-<div class="note">逐条结论：美团真正的弱势=流量端（曝光/入店率）＋复购下滑＋广告投放收缩＋补贴波动异常；客单价与下单转化反而是强项，不属弱势。</div>
-<div class="alert">② 食安差评：<b>2 条</b>（8/6 包装袋内活苍蝇、8/7 食用后腹泻）——涉事产品未在差评注明，已按食安红线立项（P0）。</div>
-<div class="note">③ 名词直白解释：<b>量增价跌</b>=订单总量涨（淘宝日均 +49% 拉动）但低客单（淘宝21元）占比升 → 双平台合计客单价 28.8 元（-9%），卖得多了、每单赚得少了；<b>吃转化</b>=淘宝转化率已 23.1% 高位，把“进来就下单”的流量用广告/承接兑现成订单；<b>到手收入</b>=平台抽佣/配送结算后真正进门店的钱（美团营业收入+淘宝收入=17,901 元，日均 1,053 元）。</div>
-<div class="good">④ 淘宝主攻目标：①客单价 21→25 元（套餐化组合）；②转化红利吃满——广告预算向淘宝倾斜（ROI 5.68 &gt; 美团 4.90）；③周末写字楼时段补量（周末/工作日比约 0.7）。</div>
-<div class="alert">⑤ 美团三条底线（现状对照）：<b>补贴ROI底线</b>每单补贴≤36元（现 35.8 触线，超 40 砍活动档位）；<b>口碑履约底线</b>食安/履约差评 0 容忍（现已有 2 条食安差评，红线已破，24h 整改+回访）；<b>营收大盘底线</b>日均到手收入≥7月 90%（美团口径 576/651=88%，已破线需止血）。</div>
-</div>
-
-<div class="card" id="act">
-<h2><span class="no">7</span>整改举措（按优先级）</h2>
-<div class="sub">目标：淘宝吃转化、美团守底线</div>
-<div class="action"><div class="pri" style="background:#D32F2F">P0</div><div><b>食安红线整改（苍蝇/腹泻差评）</b><p>①48小时内回访 8/6、8/7 两单顾客并致歉补偿；②后厨+出餐包装全流程排查（灭蝇/封口/冷链）；③美团差评回复机制补位，杜绝差评裸奔。</p></div></div><div class="action"><div class="pri" style="background:#D32F2F">P0</div><div><b>美团曝光止跌 + 周末时段激活</b><p>①头图/招牌菜/评分卡优化提升入店率；②周末推"写字楼限定套餐+提前预订"，把周末/工作日比 0.7 拉回 0.9+；③曝光日均 -15% 需恢复活动资源位报名。</p></div></div><div class="action"><div class="pri" style="background:#E67E22">P1</div><div><b>淘宝预算倾斜吃满转化红利</b><p>①8月下半月广告预算向淘宝倾斜（ROI 5.68 vs 美团 5.00）；②转化率 23.1% 红利期叠加"新客立减/首单券"承接；③低客单 21 元结构：设计"主食+卤味"套餐提客单。</p></div></div><div class="action"><div class="pri" style="background:#E67E22">P1</div><div><b>活动效率瘦身</b><p>①按"每单补贴"排序砍高成本活动（美团支付红包商家承担 6-14 元/单）；②核对商品折扣与减配送费的叠加效率；③美团营销魔方 ROI 5.3 加码。</p></div></div><div class="action"><div class="pri" style="background:#2ECC71">P2</div><div><b>口碑资产积累</b><p>①美团"评价返券"机制扩大投放引导晒图好评；②好评模板化回复+差评 24h SOP；③评价率 2% 提升至 5%+。</p></div></div>
+<div class="card" id="concl">
+<h2><span class="no">3</span>最终结论与整改举措</h2>
+<div class="sub">结论判定直述 · 底线对照 · 举措按优先级</div>
+<div class="note">底线对照：补贴每单 35.8 元（≤36 触线）｜食安差评 0 容忍（已破 2 条）｜美团到手收入 88%（<90% 已破线）——三条底线破了两条，8月下半月以"止血+吃转化"为纲。</div>
+<div class="action"><div class="pri" style="background:#D32F2F">P0</div><div><b>食安红线整改</b><p>①48h 回访 8/6、8/7 差评单致歉补偿；②后厨+包装全流程排查（灭蝇/封口/冷链）；③差评 24h 响应 SOP。</p></div></div><div class="action"><div class="pri" style="background:#D32F2F">P0</div><div><b>美团止跌：曝光恢复 + 复购修复</b><p>①恢复活动资源位报名、头图/评分卡优化；②复购 -3.1pp：评价返券+会员回访；③广告恢复至 7 月 60% 投放。</p></div></div><div class="action"><div class="pri" style="background:#E67E22">P1</div><div><b>淘宝吃转化 + 提客单</b><p>①预算向淘宝倾斜（ROI 5.68）；②套餐化提客单 21→25；③午间高峰投放。</p></div></div><div class="action"><div class="pri" style="background:#E67E22">P1</div><div><b>补贴节奏平滑 + 效率瘦身</b><p>①补贴-订单日度看板识别断崖；②按每单补贴砍高成本档位；③8/15 断崖日排查数据缺失/活动中断。</p></div></div><div class="action"><div class="pri" style="background:#2ECC71">P2</div><div><b>口碑资产积累</b><p>①评价返券扩大投放；②好评模板回复+邀评；③评价率→5%。</p></div></div>
 </div>
 
 <footer>
 <p>煌上煌外卖数据分析 · 科兴店专项报告 ｜ 数据路径1-5 ｜ 生成 2026-08-20</p>
-<p>数据口径：8月=8/1-8/17（8/18-19未导出）；美团评价文件仅至8/14；金额单位元；红=上涨/绿=下跌（中国习惯）</p>
+<p>数据口径：8月=8/1-17（8/18-19未导出）；美团评价文件仅至8/14；到手收入=美团营业收入+淘宝收入；金额单位元</p>
 <p><a href="https://285736243-boop.github.io/hsyh-reports/">← 返回报告总览</a></p>
 </footer>
 
