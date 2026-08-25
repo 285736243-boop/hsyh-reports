@@ -27,30 +27,30 @@ tr:hover td { background:#fafbfc; }
 </head>
 <body><div class="wrap">
 <h1>外卖平台×分公司 同期对比分析</h1>
-<div class="meta">数据窗口：8/1-24 vs 7/1-24（同期 24 天）｜生成时间：2026-08-25 20:00<br>
+<div class="meta">数据窗口：8/1-24 vs 7/1-24（同期 24 天）｜生成时间：2026-08-25 22:08<br>
 口径：营业收入 = 美团「营业收入」/ 淘宝「收入」；订单 = 有效订单；客单价 = 顾客实付 ÷ 订单<br>
+分公司口径（老大哥 2026-08-25 定稿）：分公司≠省份，按门店库 store-info-master「分公司」字段，仅 5 大公司（江西/广东/陕西/浙江/重庆）<br>
 数据源：双平台数据（8/24 新档）｜脚本：relu_company_agg.py ｜部署：gen_company_html.py + deploy_company.py</div>
 
-<div class="hl"><b>核心结论：</b>大盘温和增长，增长全靠淘宝（+11.0%）拉动；美团量降价升持平。
-<b style="color:#c0392b">浙江、陕西双平台齐跌</b>（-13%/-19%）最需专项诊断；福建（+20.7%）、辽宁（+21.6%）双平台大涨为增长贡献点。
-江西（321.5万，+5.0%）基本盘稳、淘宝拉动。京东无省份字段，分公司维度待补。</div>
+<div class="hl"><b>核心结论：</b>大盘持平，增长靠淘宝拉动（+9.9%）。<b>江西公司</b> 360.2万（+4.6%）基本盘最大；广东公司 213.5万（-0.2%）稳。<br>
+<b style="color:#c0392b">浙江公司双平台齐跌</b>（-9.7%/-8.2%）最需专项诊断；陕西公司（+10.5%/+11.9%）双平台齐涨；重庆公司体量小但淘宝 +18.8%。京东无分公司映射字段，待补。</div>
 
 <div class="card"><h2>一、平台合计</h2>
 <table><thead><tr><th>平台</th><th>营收本月</th><th>营收上月</th><th>营收环比</th><th>订单本月</th><th>订单上月</th><th>订单环比</th><th>客单价本月</th><th>客单价上月</th></tr></thead>
 <tbody>
 <tr>
             <td class="plat">美团外卖</td>
-            <td>¥4,187,633</td><td>¥4,182,619</td>
-            <td class="up">+0.1%</td>
-            <td>134,437.0</td><td>137,221.0</td>
+            <td>¥4,106,973</td><td>¥4,105,293</td>
+            <td class="up">+0.0%</td>
+            <td>131,710.0</td><td>134,333.0</td>
             <td class="down">-2.0%</td>
             <td>¥40</td><td>¥39</td></tr>
 <tr>
             <td class="plat">淘宝闪购</td>
-            <td>¥2,183,418</td><td>¥1,967,525</td>
-            <td class="up">+11.0%</td>
-            <td>79,752.0</td><td>72,760.0</td>
-            <td class="up">+9.6%</td>
+            <td>¥2,099,529</td><td>¥1,910,581</td>
+            <td class="up">+9.9%</td>
+            <td>75,529.0</td><td>70,034.0</td>
+            <td class="up">+7.8%</td>
             <td>¥32</td><td>¥32</td></tr>
 </tbody></table></div>
 
@@ -58,198 +58,46 @@ tr:hover td { background:#fafbfc; }
 <table><thead><tr><th>分公司</th><th>美团本月</th><th>美团上月</th><th>美团环比</th><th>淘宝本月</th><th>淘宝上月</th><th>淘宝环比</th><th>合计本月</th><th>合计环比</th></tr></thead>
 <tbody>
 <tr>
-            <td class="plat">上海</td>
-            <td>¥30,584</td><td>¥32,267</td>
-            <td class="down">-5.2%</td>
-            <td>¥39,057</td><td>¥38,328</td>
+            <td class="plat">江西公司</td>
+            <td>¥2,237,986</td><td>¥2,195,658</td>
             <td class="up">+1.9%</td>
-            <td>¥69,641</td>
-            <td class="down">-1.4%</td></tr>
+            <td>¥1,364,269</td><td>¥1,215,989</td>
+            <td class="up">+12.2%</td>
+            <td>¥3,602,255</td>
+            <td class="up">+5.6%</td></tr>
 <tr>
-            <td class="plat">云南</td>
-            <td>¥6,562</td><td>¥7,140</td>
-            <td class="down">-8.1%</td>
-            <td>¥1,967</td><td>¥2,583</td>
-            <td class="down">-23.8%</td>
-            <td>¥8,529</td>
-            <td class="down">-12.3%</td></tr>
+            <td class="plat">广东公司</td>
+            <td>¥1,588,147</td><td>¥1,620,249</td>
+            <td class="down">-2.0%</td>
+            <td>¥547,091</td><td>¥500,119</td>
+            <td class="up">+9.4%</td>
+            <td>¥2,135,238</td>
+            <td class="up">+0.7%</td></tr>
 <tr>
-            <td class="plat">内蒙古</td>
-            <td>¥147</td><td>¥925</td>
-            <td class="down">-84.1%</td>
-            <td>¥0</td><td>¥0</td>
-            <td class="up">—</td>
-            <td>¥147</td>
-            <td class="down">-84.1%</td></tr>
+            <td class="plat">陕西公司</td>
+            <td>¥94,250</td><td>¥85,322</td>
+            <td class="up">+10.5%</td>
+            <td>¥43,828</td><td>¥39,166</td>
+            <td class="up">+11.9%</td>
+            <td>¥138,078</td>
+            <td class="up">+10.9%</td></tr>
 <tr>
-            <td class="plat">北京</td>
-            <td>¥7,511</td><td>¥7,293</td>
-            <td class="up">+3.0%</td>
-            <td>¥5,343</td><td>¥4,424</td>
-            <td class="up">+20.8%</td>
-            <td>¥12,854</td>
-            <td class="up">+9.7%</td></tr>
-<tr>
-            <td class="plat">吉林</td>
-            <td>¥3,025</td><td>¥3,899</td>
-            <td class="down">-22.4%</td>
-            <td>¥662</td><td>¥1,107</td>
-            <td class="down">-40.2%</td>
-            <td>¥3,688</td>
-            <td class="down">-26.3%</td></tr>
-<tr>
-            <td class="plat">安徽</td>
-            <td>¥13,142</td><td>¥12,742</td>
-            <td class="up">+3.1%</td>
-            <td>¥6,151</td><td>¥5,247</td>
-            <td class="up">+17.2%</td>
-            <td>¥19,292</td>
-            <td class="up">+7.2%</td></tr>
-<tr>
-            <td class="plat">山东</td>
-            <td>¥5,567</td><td>¥5,213</td>
-            <td class="up">+6.8%</td>
-            <td>¥393</td><td>¥1,230</td>
-            <td class="down">-68.1%</td>
-            <td>¥5,959</td>
-            <td class="down">-7.5%</td></tr>
-<tr>
-            <td class="plat">山西</td>
-            <td>¥0</td><td>¥0</td>
-            <td class="up">—</td>
-            <td>¥164</td><td>¥339</td>
-            <td class="down">-51.5%</td>
-            <td>¥164</td>
-            <td class="down">-51.5%</td></tr>
-<tr>
-            <td class="plat">广东</td>
-            <td>¥1,478,757</td><td>¥1,520,825</td>
-            <td class="down">-2.8%</td>
-            <td>¥538,403</td><td>¥484,600</td>
-            <td class="up">+11.1%</td>
-            <td>¥2,017,160</td>
-            <td class="up">+0.6%</td></tr>
-<tr>
-            <td class="plat">广西</td>
-            <td>¥76,836</td><td>¥72,878</td>
-            <td class="up">+5.4%</td>
-            <td>¥12,377</td><td>¥12,697</td>
-            <td class="down">-2.5%</td>
-            <td>¥89,212</td>
-            <td class="up">+4.3%</td></tr>
-<tr>
-            <td class="plat">江苏</td>
-            <td>¥7,001</td><td>¥7,754</td>
+            <td class="plat">浙江公司</td>
+            <td>¥148,808</td><td>¥164,807</td>
             <td class="down">-9.7%</td>
-            <td>¥6,282</td><td>¥6,099</td>
-            <td class="up">+3.0%</td>
-            <td>¥13,283</td>
-            <td class="down">-4.1%</td></tr>
+            <td>¥136,723</td><td>¥148,895</td>
+            <td class="down">-8.2%</td>
+            <td>¥285,531</td>
+            <td class="down">-9.0%</td></tr>
 <tr>
-            <td class="plat">江西</td>
-            <td>¥1,993,919</td><td>¥1,975,121</td>
-            <td class="up">+1.0%</td>
-            <td>¥1,220,797</td><td>¥1,086,203</td>
-            <td class="up">+12.4%</td>
-            <td>¥3,214,716</td>
-            <td class="up">+5.0%</td></tr>
-<tr>
-            <td class="plat">河北</td>
-            <td>¥475</td><td>¥253</td>
-            <td class="up">+88.2%</td>
-            <td>¥0</td><td>¥0</td>
-            <td class="up">—</td>
-            <td>¥475</td>
-            <td class="up">+88.2%</td></tr>
-<tr>
-            <td class="plat">河南</td>
-            <td>¥13,347</td><td>¥11,220</td>
-            <td class="up">+19.0%</td>
-            <td>¥5,873</td><td>¥2,370</td>
-            <td class="up">+147.8%</td>
-            <td>¥19,220</td>
-            <td class="up">+41.4%</td></tr>
-<tr>
-            <td class="plat">浙江</td>
-            <td>¥96,090</td><td>¥110,312</td>
-            <td class="down">-12.9%</td>
-            <td>¥84,841</td><td>¥97,990</td>
-            <td class="down">-13.4%</td>
-            <td>¥180,930</td>
-            <td class="down">-13.1%</td></tr>
-<tr>
-            <td class="plat">海南</td>
-            <td>¥59,745</td><td>¥59,663</td>
-            <td class="up">+0.1%</td>
-            <td>¥17,136</td><td>¥15,716</td>
-            <td class="up">+9.0%</td>
-            <td>¥76,881</td>
-            <td class="up">+2.0%</td></tr>
-<tr>
-            <td class="plat">湖北</td>
-            <td>¥961</td><td>¥674</td>
-            <td class="up">+42.7%</td>
-            <td>¥397</td><td>¥474</td>
-            <td class="down">-16.3%</td>
-            <td>¥1,358</td>
-            <td class="up">+18.3%</td></tr>
-<tr>
-            <td class="plat">湖南</td>
-            <td>¥49,083</td><td>¥52,410</td>
-            <td class="down">-6.3%</td>
-            <td>¥26,911</td><td>¥31,231</td>
-            <td class="down">-13.8%</td>
-            <td>¥75,995</td>
-            <td class="down">-9.1%</td></tr>
-<tr>
-            <td class="plat">甘肃</td>
-            <td>¥1,211</td><td>¥1,470</td>
-            <td class="down">-17.6%</td>
-            <td>¥272</td><td>¥493</td>
-            <td class="down">-44.7%</td>
-            <td>¥1,484</td>
-            <td class="down">-24.4%</td></tr>
-<tr>
-            <td class="plat">福建</td>
-            <td>¥242,874</td><td>¥208,181</td>
-            <td class="up">+16.7%</td>
-            <td>¥177,638</td><td>¥140,201</td>
-            <td class="up">+26.7%</td>
-            <td>¥420,512</td>
-            <td class="up">+20.7%</td></tr>
-<tr>
-            <td class="plat">贵州</td>
-            <td>¥32,262</td><td>¥32,117</td>
-            <td class="up">+0.4%</td>
-            <td>¥5,652</td><td>¥3,830</td>
-            <td class="up">+47.6%</td>
-            <td>¥37,913</td>
-            <td class="up">+5.5%</td></tr>
-<tr>
-            <td class="plat">辽宁</td>
-            <td>¥52,675</td><td>¥41,608</td>
-            <td class="up">+26.6%</td>
-            <td>¥26,751</td><td>¥23,702</td>
-            <td class="up">+12.9%</td>
-            <td>¥79,426</td>
-            <td class="up">+21.6%</td></tr>
-<tr>
-            <td class="plat">陕西</td>
-            <td>¥14,274</td><td>¥17,614</td>
-            <td class="down">-19.0%</td>
-            <td>¥6,157</td><td>¥7,717</td>
-            <td class="down">-20.2%</td>
-            <td>¥20,430</td>
-            <td class="down">-19.3%</td></tr>
-<tr>
-            <td class="plat">黑龙江</td>
-            <td>¥1,583</td><td>¥1,041</td>
-            <td class="up">+52.1%</td>
-            <td>¥194</td><td>¥945</td>
-            <td class="down">-79.4%</td>
-            <td>¥1,778</td>
-            <td class="down">-10.5%</td></tr>
+            <td class="plat">重庆公司</td>
+            <td>¥37,781</td><td>¥39,257</td>
+            <td class="down">-3.8%</td>
+            <td>¥7,619</td><td>¥6,412</td>
+            <td class="up">+18.8%</td>
+            <td>¥45,401</td>
+            <td class="down">-0.6%</td></tr>
 </tbody></table>
-<div class="note">注：合计 = 美团 + 淘宝营收；京东无省份字段（仅城市），分公司维度待补。重庆 8 月暂无美团/淘宝门店数据（0 营收）。</div>
+<div class="note">注：合计 = 美团 + 淘宝营收；分公司 = 门店库 5 大公司（江西/广东/陕西/浙江/重庆），非省份；未命中门店库 id 的门店不纳入。京东无分公司映射字段（仅城市），待补。</div>
 </div>
 </div></body></html>
