@@ -27,13 +27,13 @@ tr:hover td { background:#fafbfc; }
 </head>
 <body><div class="wrap">
 <h1>外卖平台×分公司 同期对比分析</h1>
-<div class="meta">数据窗口：8/1-24 vs 7/1-24（同期 24 天）｜生成时间：2026-08-25 22:08<br>
-口径：营业收入 = 美团「营业收入」/ 淘宝「收入」；订单 = 有效订单；客单价 = 顾客实付 ÷ 订单<br>
+<div class="meta">数据窗口：8/1-24 vs 7/1-24（同期 24 天）｜生成时间：2026-08-25 22:23<br>
+口径：营业收入 = 美团「营业收入」/ 淘宝「收入」/ 京东「收入」；订单 = 有效订单；客单价 = 顾客实付 ÷ 订单<br>
 分公司口径（老大哥 2026-08-25 定稿）：分公司≠省份，按门店库 store-info-master「分公司」字段，仅 5 大公司（江西/广东/陕西/浙江/重庆）<br>
-数据源：双平台数据（8/24 新档）｜脚本：relu_company_agg.py ｜部署：gen_company_html.py + deploy_company.py</div>
+数据源：三平台数据（8/24 新档）｜脚本：relu_company_agg.py ｜部署：gen_company_html.py + deploy_company.py</div>
 
-<div class="hl"><b>核心结论：</b>大盘持平，增长靠淘宝拉动（+9.9%）。<b>江西公司</b> 360.2万（+4.6%）基本盘最大；广东公司 213.5万（-0.2%）稳。<br>
-<b style="color:#c0392b">浙江公司双平台齐跌</b>（-9.7%/-8.2%）最需专项诊断；陕西公司（+10.5%/+11.9%）双平台齐涨；重庆公司体量小但淘宝 +18.8%。京东无分公司映射字段，待补。</div>
+<div class="hl"><b>核心结论：</b>大盘持平，增长靠淘宝（+9.9%）与京东（+6.6%）拉动。<b>江西公司</b> 369.2万（+4.6%）基本盘最大；广东公司 222.1万（+0.7%）稳。<br>
+<b style="color:#c0392b">浙江公司美团/淘宝齐跌</b>（-9.7%/-8.2%）最需专项诊断；陕西公司双平台齐涨（+10.5%/+11.9%）；京东体量小但订单 +20%，客单价回落（34.5→31.0）需关注。</div>
 
 <div class="card"><h2>一、平台合计</h2>
 <table><thead><tr><th>平台</th><th>营收本月</th><th>营收上月</th><th>营收环比</th><th>订单本月</th><th>订单上月</th><th>订单环比</th><th>客单价本月</th><th>客单价上月</th></tr></thead>
@@ -52,52 +52,69 @@ tr:hover td { background:#fafbfc; }
             <td>75,529.0</td><td>70,034.0</td>
             <td class="up">+7.8%</td>
             <td>¥32</td><td>¥32</td></tr>
+<tr>
+            <td class="plat">京东秒送</td>
+            <td>¥187,107</td><td>¥175,567</td>
+            <td class="up">+6.6%</td>
+            <td>7,617.0</td><td>6,349.0</td>
+            <td class="up">+20.0%</td>
+            <td>¥31</td><td>¥35</td></tr>
 </tbody></table></div>
 
-<div class="card"><h2>二、分公司明细（美团 × 淘宝）</h2>
-<table><thead><tr><th>分公司</th><th>美团本月</th><th>美团上月</th><th>美团环比</th><th>淘宝本月</th><th>淘宝上月</th><th>淘宝环比</th><th>合计本月</th><th>合计环比</th></tr></thead>
+<div class="card"><h2>二、分公司明细（美团 × 淘宝 × 京东）</h2>
+<table><thead><tr><th>分公司</th><th>美团本月</th><th>美团环比</th><th>淘宝本月</th><th>淘宝环比</th><th>京东本月</th><th>京东环比</th><th>三平台合计本月</th><th>合计环比</th></tr></thead>
 <tbody>
 <tr>
             <td class="plat">江西公司</td>
-            <td>¥2,237,986</td><td>¥2,195,658</td>
+            <td>¥2,237,986</td>
             <td class="up">+1.9%</td>
-            <td>¥1,364,269</td><td>¥1,215,989</td>
+            <td>¥1,364,269</td>
             <td class="up">+12.2%</td>
-            <td>¥3,602,255</td>
-            <td class="up">+5.6%</td></tr>
+            <td>¥89,630</td>
+            <td class="up">+14.8%</td>
+            <td>¥3,691,885</td>
+            <td class="up">+5.8%</td></tr>
 <tr>
             <td class="plat">广东公司</td>
-            <td>¥1,588,147</td><td>¥1,620,249</td>
+            <td>¥1,588,147</td>
             <td class="down">-2.0%</td>
-            <td>¥547,091</td><td>¥500,119</td>
+            <td>¥547,091</td>
             <td class="up">+9.4%</td>
-            <td>¥2,135,238</td>
+            <td>¥85,314</td>
+            <td class="down">-0.3%</td>
+            <td>¥2,220,551</td>
             <td class="up">+0.7%</td></tr>
 <tr>
             <td class="plat">陕西公司</td>
-            <td>¥94,250</td><td>¥85,322</td>
+            <td>¥94,250</td>
             <td class="up">+10.5%</td>
-            <td>¥43,828</td><td>¥39,166</td>
+            <td>¥43,828</td>
             <td class="up">+11.9%</td>
-            <td>¥138,078</td>
-            <td class="up">+10.9%</td></tr>
+            <td>¥5,257</td>
+            <td class="down">-4.1%</td>
+            <td>¥143,335</td>
+            <td class="up">+10.3%</td></tr>
 <tr>
             <td class="plat">浙江公司</td>
-            <td>¥148,808</td><td>¥164,807</td>
+            <td>¥148,808</td>
             <td class="down">-9.7%</td>
-            <td>¥136,723</td><td>¥148,895</td>
+            <td>¥136,723</td>
             <td class="down">-8.2%</td>
-            <td>¥285,531</td>
-            <td class="down">-9.0%</td></tr>
+            <td>¥4,912</td>
+            <td class="up">+9.6%</td>
+            <td>¥290,443</td>
+            <td class="down">-8.7%</td></tr>
 <tr>
             <td class="plat">重庆公司</td>
-            <td>¥37,781</td><td>¥39,257</td>
+            <td>¥37,781</td>
             <td class="down">-3.8%</td>
-            <td>¥7,619</td><td>¥6,412</td>
+            <td>¥7,619</td>
             <td class="up">+18.8%</td>
-            <td>¥45,401</td>
-            <td class="down">-0.6%</td></tr>
+            <td>¥1,994</td>
+            <td class="up">+2.5%</td>
+            <td>¥47,394</td>
+            <td class="down">-0.5%</td></tr>
 </tbody></table>
-<div class="note">注：合计 = 美团 + 淘宝营收；分公司 = 门店库 5 大公司（江西/广东/陕西/浙江/重庆），非省份；未命中门店库 id 的门店不纳入。京东无分公司映射字段（仅城市），待补。</div>
+<div class="note">注：合计 = 美团 + 淘宝 + 京东营收；分公司 = 门店库 5 大公司（江西/广东/陕西/浙江/重庆），非省份；未命中门店库 id 的门店不纳入（京东门店id 去 .0 后缀匹配门店库京东秒送id）。</div>
 </div>
 </div></body></html>
