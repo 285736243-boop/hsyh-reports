@@ -1,797 +1,1593 @@
 <!DOCTYPE html>
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>热卤项目5店外卖经营分析</title>
+
 <style>
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
 body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #f5f6fa; color: #333; }
+
 .header { background: linear-gradient(135deg, #c8102e 0%, #8f0f24 100%); color: #fff; padding: 24px 32px; }
+
 .header h1 { font-size: 24px; font-weight: 700; }
+
 .header .sub { opacity: .85; margin-top: 6px; font-size: 13px; }
+
 .kpis { display: flex; gap: 16px; padding: 20px 32px 0; }
+
 .kpi { flex: 1; background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+
 .kpi-label { color: #888; font-size: 13px; }
+
 .kpi-val { font-size: 20px; font-weight: 700; margin: 6px 0; }
+
 .kpi-delta { font-size: 14px; }
+
 .container { padding: 0 32px 40px; }
+
 .section { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.08); margin-top: 20px; overflow: hidden; }
+
 .section-title { font-size: 17px; font-weight: 700; padding: 14px 20px; border-bottom: 2px solid #c8102e; color: #c8102e; }
+
 .section-title .hint { font-size: 12px; color: #999; font-weight: 400; margin-left: 10px; }
+
 .summary { padding: 12px 20px; font-size: 13px; color: #555; background: #fffdf5; border-top: 1px dashed #eee; }
+
 .summary ul { padding-left: 20px; }
+
 .summary li { margin: 4px 0; }
+
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
 th { background: #fafafa; color: #555; padding: 10px 8px; text-align: left; white-space: nowrap; border-bottom: 1px solid #eee; position: sticky; top: 0; }
+
 td { padding: 9px 8px; border-bottom: 1px solid #f2f2f2; white-space: nowrap; }
+
 tr:hover td { background: #fff9f9; }
+
 .tag { padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+
 .tag.美团 { background: #ffe9a8; color: #8a6d00; }
+
 .tag.淘宝 { background: #ffe0e6; color: #c8102e; }
+
 .tag.京东 { background: #d8e6ff; color: #1a56c8; }
+
 .up { color: #c8102e; font-weight: 600; }
+
 .down { color: #0a8f3c; font-weight: 600; }
+
 .muted { color: #bbb; }
+
 .sub { font-size: 11px; color: #999; }
+
 .act { white-space: normal; min-width: 160px; color: #555; }
+
 .small { white-space: normal; min-width: 200px; max-width: 340px; }
+
 .status { background: #fff4e5; color: #b26a00; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+
 .bad { color: #c8102e; }
+
 .settle td { background: #f7f7f7 !important; color: #aaa; }
+
 .settle-tag { background: #eee; color: #999; padding: 1px 6px; border-radius: 3px; font-size: 11px; margin-left: 4px; }
+
 .filter-bar { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.08); margin-top: 16px; padding: 14px 20px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
 .filter-bar label { font-size: 13px; color: #555; font-weight: 600; }
+
 .filter-bar select, .filter-bar input { padding: 7px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; }
+
 .filter-bar .btn { padding: 7px 16px; background: #c8102e; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
+
 .filter-bar .btn:hover { background: #a00d25; }
+
 .filter-bar .count { font-size: 12px; color: #999; }
+
 .hidden { display: none !important; }
+
 .pivot-hd { text-align: center; font-size: 11px; padding: 6px 2px; }
+
 .pivot-hd .wd { color: #bbb; font-size: 10px; }
+
 .pivot-0 { color: #eee; text-align: center; }
+
 .pivot-real { background: #ffe3e8; color: #c8102e; text-align: center; font-weight: 700; font-size: 11px; }
+
 .pivot-fake { background: #f0f0f0; color: #aaa; text-align: center; font-size: 11px; }
+
 .pivot-bad { background: #ffd9d9; color: #c8102e; text-align: center; font-weight: 700; font-size: 11px; }
+
 .evname { display: block; }
+
 .evfake { color: #bbb; }
+
 .ev-date-hd td { background: #fdf2f4; color: #c8102e; font-weight: 700; font-size: 13px; padding: 8px 12px; border-bottom: 1px solid #f5d5da; }
+
 .plat-sub td { background: #faf7f0; font-weight: 600; }
+
 .plat-total td { background: #fdf2f4; font-weight: 700; color: #c8102e; border-top: 2px solid #c8102e; }
+
 .cat-tag { background: #f0f0f0; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+
 .actions { padding: 16px 20px; }
+
 .actions li { margin: 8px 0; font-size: 13.5px; line-height: 1.6; }
+
 .date-bar { background:#fff; border-radius:10px; box-shadow:0 1px 4px rgba(0,0,0,.08); margin-top:16px; padding:14px 20px; }
+
 @media print { .filter-bar, .date-bar { display: none; } }
 
+
+
 /* ==== V12优化补丁(2026-08-27) ==== */
+
 .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid #eee;border-radius:8px;margin:8px 0}
+
 .tbl-wrap table{min-width:680px;margin:0}
+
 .tbl-wrap th{position:sticky;top:0;z-index:2}
+
 td:empty::after{content:"无数据";color:#bbb;font-size:12px}
+
 .topnav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);box-shadow:0 2px 8px rgba(0,0,0,.08);padding:8px 32px;display:flex;flex-wrap:wrap;gap:6px;border-bottom:2px solid #c8102e}
+
 .topnav a{font-size:12px;color:#555;text-decoration:none;padding:4px 10px;border-radius:14px;border:1px solid #ddd;white-space:nowrap}
+
 .topnav a:hover{color:#c8102e;border-color:#c8102e}
+
 .topnav a.active{background:#c8102e;color:#fff;border-color:#c8102e}
+
 @media(max-width:768px){.topnav{padding:6px 12px}.topnav a{font-size:11px;padding:3px 8px}}
 
+
+
 .flt-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;padding:8px 14px;background:#f7f7f9;border:1px solid #e5e5e8;border-radius:8px}
+
 .flt-btn{padding:4px 12px;border-radius:14px;border:1px solid #ddd;background:#fff;color:#555;font-size:12px;cursor:pointer;line-height:1.4}
+
 .flt-btn:hover{border-color:#c8102e;color:#c8102e}
+
 .flt-btn.flt-on{background:#c8102e;color:#fff;border-color:#c8102e}
+
 .flt-lb{font-size:13px;font-weight:700;color:#555;margin-left:14px}
+
 .flt-bar .flt-lb:first-child{margin-left:0}
+
 .flt-note{font-size:12px;color:#999;margin-left:auto}
+
 @media(max-width:768px){.flt-bar{gap:4px}.flt-btn{padding:3px 9px;font-size:11px}.flt-note{display:none}}
+
 </style>
+
 </head>
+
 <body>
+
 <nav class="topnav" id="topnav"><a href="#sec-store" data-sec="sec-store">核心对比</a><a href="#sec-week" data-sec="sec-week">自然周</a><a href="#sec-time" data-sec="sec-time">时段对比</a><a href="#sec-ev2" data-sec="sec-ev2">关键事件</a><a href="#sec-ad" data-sec="sec-ad">广告</a><a href="#sec-act" data-sec="sec-act">促销</a><a href="#sec-find" data-sec="sec-find">发现</a><a href="#sec-rev" data-sec="sec-rev">评价</a><a href="#sec-revp" data-sec="sec-revp">差评透视</a><a href="#sec-revdet" data-sec="sec-revdet">差评明细</a><a href="#sec-evp" data-sec="sec-evp">异常透视</a><a href="#sec-ev" data-sec="sec-ev">异常明细</a><a href="#sec-action" data-sec="sec-action">行动清单</a><a href="#sec-pos" data-sec="sec-pos">POS</a></nav>
+
 <div class="header">
+
   <h1>🏪 热卤项目5店外卖经营分析</h1>
+
   <div class="sub">V12 版｜KPI口径：到手率=路径1收入÷营销中台_门店商品流水明细报表拣货金额 · 支出费用率=营销中台费用÷拣货金额（全5店）｜促销8类效果 + 每项结论｜数据源：路径1 外卖数据(美团/淘宝/京东) + 路径6 POS(5店)｜核心数据更新至 8/26｜更新时间 2026-08-27 11:44</div>
+
 </div>
+
 <div id="kpi-row" class="kpis"><div class='kpi'><div class='kpi-label'>订单</div><div class='kpi-val'>4,848 → 5,919</div><div class="kpi-delta"><span class="up">+22.1%</span></div></div><div class='kpi'><div class='kpi-label'>收入(元)</div><div class='kpi-val'>109,113 → 136,460</div><div class="kpi-delta"><span class="up">+25.1%</span></div></div><div class='kpi'><div class='kpi-label'>交易额(元)</div><div class='kpi-val'>145,491 → 171,130</div><div class="kpi-delta"><span class="up">+17.6%</span></div></div><div class='kpi'><div class='kpi-label'>曝光</div><div class='kpi-val'>349,978 → 405,899</div></div><div class='kpi'><div class='kpi-label'>客单价(元)</div><div class='kpi-val'>30 → 29</div></div></div>
+
 <div class="container">
 
+
+
   
+
 <div class="flt-bar" id="flt-bar">
+
   <span class="flt-lb">门店：</span>
+
   <button class="flt-btn flt-on" data-store="">全部</button>
+
   <button class="flt-btn" data-store="万科">万科</button>
+
   <button class="flt-btn" data-store="子固路">子固路</button>
+
   <button class="flt-btn" data-store="印象城">印象城</button>
+
   <button class="flt-btn" data-store="科兴">科兴</button>
+
   <button class="flt-btn" data-store="益田">益田</button>
+
   <span class="flt-lb">平台：</span>
+
   <button class="flt-btn flt-on" data-plat="">全部</button>
+
   <button class="flt-btn" data-plat="美团">美团</button>
+
   <button class="flt-btn" data-plat="淘宝">淘宝</button>
+
   <button class="flt-btn" data-plat="京东">京东</button>
+
   <span class="flt-note">按钮联动筛选：KPI / 门店表 / 平台表 / POS（门店聚合·平台切换）</span>
+
 </div>
+
+
 
 <div class="date-bar" id="date-bar">
+
     <label style="font-size:13px;font-weight:700;color:#555;">📅 自定义时间对比：</label>
+
     <label style="font-size:13px;color:#555;">本月</label>
+
     <input type="number" id="d-start" min="1" max="31" value="1" style="width:60px;"> 号
+
     <label>至</label>
+
     <input type="number" id="d-end" min="1" max="31" value="23" style="width:60px;"> 号
+
     <span style="color:#999;font-size:12px;">（自动对比上月同日期段，如选 1-7 号即对比上月 1-7 号）</span>
+
     <button class="btn" id="btn-apply">应用对比</button> <span id="date-info" style="font-size:12px;color:#c8102e;font-weight:600;"></span>
+
     <button class="btn" style="background:#888;" id="btn-reset2">重置 1-23</button>
+
   </div>
+
+
 
   <div class="filter-bar" id="global-filter">
+
     <label>🔍 视图：</label>
+
     <select id="f-dim">
+
       <option value="period">核心对比（自定义时间）</option>
+
       <option value="week">自然周对比（按周分组）</option>
+
     </select>
+
     <label>门店：</label>
+
     <select id="f-store"><option value="">全部门店</option><option>万科</option><option>子固路</option><option>印象城</option><option>科兴</option><option>益田</option></select>
+
     <label>平台：</label>
+
     <select id="f-plat"><option value="">全部平台</option><option>美团</option><option>淘宝</option><option>京东</option></select>
+
     <button class="btn" id="btn-reset">重置筛选</button>
+
     <span class="count" id="filter-count"></span>
+
   </div>
+
+
 
   <div class="section" id="sec-pos">
+
     <div class="section-title">🏬 POS 经营表（路径6 · 仅5店）<span class="hint">POS销售额=拣货金额 · 成本额=POS销售额×0.45 · 毛利=路径1门店收入−成本额 · 费用率=POS费用支出÷POS销售额</span></div>
+
     <div class="tbl-wrap"><table id="pos-table"><thead><tr><th>门店</th><th>7月销售额</th><th>7月成本额</th><th>7月毛利</th><th>8月销售额</th><th>8月成本额</th><th>8月毛利</th><th>8月费用率</th><th>合计销售额</th></tr></thead><tbody><!-- JS 渲染 --></tbody></table></div>
+
     <div class="summary"><b>📝 POS 口径说明：</b>路径6 仅限 5 店（万科/子固路/印象城/科兴/益田），禁止关联其他门店，唯一允许关联=路径1门店收入；数据源=营销中台日汇总（拣货金额列）；毛利=路径1收入−成本额（8月=8/1-23，7月=全月）。</div>
+
   </div>
+
+
 
   <div class="section" id="sec-store">
+
     <div class="section-title">🏢 门店聚合核心指标环比<span class="hint">每店=美团+淘宝+京东全部平台合计 · 时间随上方自定义对比变化</span></div>
+
     <div class="tbl-wrap"><table id="store-table"><thead><tr><th>门店</th><th>订单</th><th>收入</th><th>交易额</th><th>曝光</th><th>流量(入店)</th><th>入店率</th><th>转化率</th><th>新客</th><th>老客</th><th>客单价</th><th>到手率</th></tr></thead><tbody><!-- JS 渲染 --></tbody></table></div>
+
     <div class="summary"><b>📝 分析总结：</b><div id="dyn-summary-body"><span class="muted">按上方按钮筛选后自动生成</span></div></div>
+
   </div>
+
+
 
   <div class="section" id="sec-plat">
+
     <div class="section-title">🏪 门店×平台核心指标环比<span class="hint">每店按 美团/淘宝/京东 拆开 · 指标同门店聚合表 · 含小计/总计 · 时间随上方自定义对比变化</span></div>
+
     <div class="tbl-wrap"><table id="plat-table"><thead><tr><th>门店</th><th>平台</th><th>订单</th><th>收入</th><th>交易额</th><th>曝光</th><th>流量(入店)</th><th>入店率</th><th>转化率</th><th>新客</th><th>老客</th><th>客单价</th><th>到手率</th></tr></thead><tbody><!-- JS 渲染 --></tbody></table></div>
+
     <div class="summary"><b>📝 结论：</b>平台结构剧变：<b>淘宝订单占比 64%（+52%）已超美团（34%，-19%）</b>，收入 53% vs 46%；增长完全由淘宝补贴驱动，美团基本盘收缩（仅印象城正增长）。</div>
+
   </div>
+
+
 
   <div class="section" id="sec-ev2">
+
     <div class="section-title">📌 8月关键事件与结论<span class="hint">核心事件 + 数据表现 + 结论 · 每项可追溯</span></div>
+
     <div class="tbl-wrap"><table><thead><tr><th>日期/期间</th><th>门店/范围</th><th>事件</th><th>数据表现</th><th>结论</th></tr></thead><tbody><tr><td><b>8/15</b></td><td>全店</td><td>补贴归零/转负（14条）</td><td>平台补贴→0 或负数</td><td class='act'>结算节点+退款冲正，非真实下滑（假异常已置灰，口径校准）</td></tr><tr><td><b>8/6-8/7</b></td><td>科兴</td><td>食安红线：苍蝇+腹泻差评</td><td>差评 1星×2</td><td class='act'>P0：涉事批次下架+当日鲜售+出餐检查 SOP，48h 整改反馈</td></tr><tr><td><b>8/13</b></td><td>印象城</td><td>食安：鸭锁骨酸掉</td><td>差评 1星</td><td class='act'>P0：卤制品当日鲜售，剩余批次下架</td></tr><tr><td><b>8月</b></td><td>益田·美团</td><td>订单 -50%、老客 -59%</td><td>510→253 单；222→92 老客</td><td class='act'>最惨店：广告停投后无替代引流，流量塌方；P0 美团老客召回+转化修复（26.2→19.9%）</td></tr><tr><td><b>8月</b></td><td>科兴·美团</td><td>订单 -20%、曝光收缩</td><td>455→365 单；曝光 -15%</td><td class='act'>流量端萎缩+食安双压；拉新优先</td></tr><tr><td><b>8月</b></td><td>全店·淘宝</td><td>订单普涨 +29%~+106%</td><td>补贴 +73% 驱动；支付红包 +137%</td><td class='act'>补贴驱动型：ROI 0.92 跌破 1，退坡即回落，非自然增长</td></tr><tr><td><b>8月</b></td><td>全店·美团</td><td>老客腰斩</td><td>-20%~-59%（益田最重）</td><td class='act'>复购崩塌：P1 老客定向券+支付红包谈判（商家扛 67%）</td></tr><tr><td><b>8月</b></td><td>京东</td><td>仅万科有量，其余 3 店 0 单</td><td>万科 60→93 单；印象城 14→10</td><td class='act'>近停摆：运营优先级最低，万科可保留，遗留差评先回复</td></tr><tr><td><b>8月</b></td><td>广告</td><td>投放回暖</td><td>美团 8/1-23 合计 7,619 元、淘宝 6,614 元（含 8/20-23 增量）</td><td class='act'>低基数恢复中：按 ROI 分级加投高ROI产品（营销魔方/流量助手）</td></tr><tr><td><b>8月</b></td><td>淘宝差评</td><td>缺斤少两/手套集中</td><td>8/1、8/9、8/15 多条 1-2星</td><td class='act'>P1：克重抽检+餐具 SOP，差评 2h 回复</td></tr></tbody></table></div>
+
   </div>
+
+
 
   <div class="section" id="sec-week">
+
     <div class="section-title">📅 自然周对比表<span class="hint">按自然周（周一~周日）分组 · 已备注对比时间 · 周环比=本周vs上周订单</span></div>
+
     <div class="tbl-wrap"><table id="week-table"><thead><tr><th>平台</th><th>自然周</th><th>对比时间</th><th>天数</th><th>订单</th><th>日均订单</th><th>收入</th><th>交易额</th><th>客单价</th><th>曝光</th><th>新客</th><th>老客</th><th>周环比(订单)</th></tr></thead><tbody><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td><b>W27</b></td><td class='small'>06/29 - 07/05（仅5天）</td><td>5</td><td>546</td><td>109.2</td><td>12,505.2</td><td>18,569.0</td><td>34.0</td><td>32,359</td><td>346</td><td>196</td><td><span class="muted">-</span></td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td><b>W28</b></td><td class='small'>07/06 - 07/12（完整周）</td><td>7</td><td>719</td><td>102.7</td><td>18,216.8</td><td>25,681.9</td><td>35.7</td><td>52,379</td><td>441</td><td>273</td><td><span class="up">+31.7%</span></td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td><b>W29</b></td><td class='small'>07/13 - 07/19（完整周）</td><td>7</td><td>743</td><td>106.1</td><td>19,063.2</td><td>26,766.6</td><td>36.0</td><td>53,061</td><td>440</td><td>287</td><td><span class="up">+3.3%</span></td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td><b>W31</b></td><td class='small'>07/27 - 08/02（仅2天）</td><td>2</td><td>175</td><td>87.5</td><td>5,585.7</td><td>6,984.0</td><td>39.9</td><td>12,529</td><td>118</td><td>61</td><td><span class="down">-76.4%</span></td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td><b>W32</b></td><td class='small'>08/03 - 08/09（完整周）</td><td>7</td><td>583</td><td>83.3</td><td>18,827.7</td><td>24,579.2</td><td>42.2</td><td>45,671</td><td>385</td><td>187</td><td><span class="up">+233.1%</span></td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td><b>W33</b></td><td class='small'>08/10 - 08/16（完整周）</td><td>7</td><td>574</td><td>82.0</td><td>17,970.0</td><td>23,667.1</td><td>41.2</td><td>47,793</td><td>351</td><td>206</td><td><span class="down">-1.5%</span></td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td><b>W34</b></td><td class='small'>08/17 - 08/23（仅3天）</td><td>3</td><td>286</td><td>95.3</td><td>8,113.6</td><td>10,634.0</td><td>37.2</td><td>19,094</td><td>186</td><td>97</td><td><span class="down">-50.2%</span></td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td><b>W27</b></td><td class='small'>06/29 - 07/05（仅5天）</td><td>5</td><td>480</td><td>96.0</td><td>10,057.7</td><td>12,159.0</td><td>25.3</td><td>30,327</td><td>291</td><td>184</td><td><span class="muted">-</span></td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td><b>W28</b></td><td class='small'>07/06 - 07/12（完整周）</td><td>7</td><td>723</td><td>103.3</td><td>14,561.8</td><td>18,215.1</td><td>25.2</td><td>56,277</td><td>441</td><td>268</td><td><span class="up">+50.6%</span></td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td><b>W29</b></td><td class='small'>07/13 - 07/19（完整周）</td><td>7</td><td>778</td><td>111.1</td><td>15,317.2</td><td>18,835.3</td><td>24.2</td><td>60,074</td><td>514</td><td>251</td><td><span class="up">+7.6%</span></td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td><b>W31</b></td><td class='small'>07/27 - 08/02（仅2天）</td><td>2</td><td>238</td><td>119.0</td><td>5,448.0</td><td>6,385.9</td><td>26.8</td><td>13,789</td><td>139</td><td>91</td><td><span class="down">-69.4%</span></td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td><b>W32</b></td><td class='small'>08/03 - 08/09（完整周）</td><td>7</td><td>1,039</td><td>148.4</td><td>21,684.3</td><td>25,229.2</td><td>24.3</td><td>67,544</td><td>605</td><td>403</td><td><span class="up">+336.6%</span></td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td><b>W33</b></td><td class='small'>08/10 - 08/16（完整周）</td><td>7</td><td>1,201</td><td>171.6</td><td>22,413.8</td><td>27,508.2</td><td>22.9</td><td>69,023</td><td>689</td><td>473</td><td><span class="up">+15.6%</span></td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td><b>W34</b></td><td class='small'>08/17 - 08/23（仅3天）</td><td>3</td><td>531</td><td>177.0</td><td>9,326.8</td><td>11,796.3</td><td>22.2</td><td>36,100</td><td>313</td><td>212</td><td><span class="down">-55.8%</span></td></tr><tr data-plat='京东'><td><span class='tag 京东'>京东</span></td><td><b>W27</b></td><td class='small'>06/29 - 07/05（仅5天）</td><td>5</td><td>9</td><td>1.8</td><td>249.6</td><td>269.5</td><td>29.9</td><td>973</td><td>0</td><td>0</td><td><span class="muted">-</span></td></tr><tr data-plat='京东'><td><span class='tag 京东'>京东</span></td><td><b>W28</b></td><td class='small'>07/06 - 07/12（完整周）</td><td>7</td><td>4</td><td>0.6</td><td>78.9</td><td>99.3</td><td>24.8</td><td>1,458</td><td>0</td><td>0</td><td><span class="down">-55.6%</span></td></tr><tr data-plat='京东'><td><span class='tag 京东'>京东</span></td><td><b>W29</b></td><td class='small'>07/13 - 07/19（完整周）</td><td>7</td><td>8</td><td>1.1</td><td>102.1</td><td>113.3</td><td>14.2</td><td>1,490</td><td>0</td><td>0</td><td><span class="up">+100.0%</span></td></tr><tr data-plat='京东'><td><span class='tag 京东'>京东</span></td><td><b>W31</b></td><td class='small'>07/27 - 08/02（仅2天）</td><td>2</td><td>19</td><td>9.5</td><td>43.8</td><td>64.7</td><td>3.4</td><td>595</td><td>0</td><td>0</td><td><span class="up">+137.5%</span></td></tr><tr data-plat='京东'><td><span class='tag 京东'>京东</span></td><td><b>W32</b></td><td class='small'>08/03 - 08/09（完整周）</td><td>7</td><td>27</td><td>3.9</td><td>181.1</td><td>238.2</td><td>8.8</td><td>2,528</td><td>0</td><td>0</td><td><span class="up">+42.1%</span></td></tr><tr data-plat='京东'><td><span class='tag 京东'>京东</span></td><td><b>W33</b></td><td class='small'>08/10 - 08/16（完整周）</td><td>7</td><td>11</td><td>1.6</td><td>160.1</td><td>198.3</td><td>18.0</td><td>1,804</td><td>0</td><td>0</td><td><span class="down">-59.3%</span></td></tr><tr data-plat='京东'><td><span class='tag 京东'>京东</span></td><td><b>W34</b></td><td class='small'>08/17 - 08/23（仅3天）</td><td>3</td><td>3</td><td>1.0</td><td>63.2</td><td>68.8</td><td>22.9</td><td>686</td><td>0</td><td>0</td><td><span class="down">-72.7%</span></td></tr></tbody></table></div>
+
     <div class="summary"><b>📝 分析总结：</b>美团 W28（7/6-12）为 7 月峰值周（订单 719），W31（7/27-8/2，仅 2 天数据）后 W32 起恢复完整周；美团客单价 W27→W33 由 34.0 升至 42.2（+24%），量跌价升趋势延续。</div>
+
   </div>
+
+
 
   <div class="section" id="sec-time">
+
     <div class="section-title">🕐 时段对比表（工作日 vs 周末）</div>
-    <div class="tbl-wrap"><table id="time-table"><thead><tr><th rowspan="2">门店</th><th rowspan="2">平台</th><th colspan="2">工作日</th><th colspan="2">周末</th></tr><tr><th>订单 7月→8月</th><th>客单 8月</th><th>订单 7月→8月</th><th>客单 8月</th></tr></thead><tbody><tr data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td>272→235<br><span class="sub"><span class="down">-13.6%</span></span></td><td>37.4</td><td>141→179<br><span class="sub"><span class="up">+27.0%</span></span></td><td>40.9</td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td>379→497<br><span class="sub"><span class="up">+31.1%</span></span></td><td>23.8</td><td>163→280<br><span class="sub"><span class="up">+71.8%</span></span></td><td>24.7</td></tr><tr data-store='万科' data-plat='京东'><td>万科</td><td><span class='tag 京东'>京东</span></td><td>13→38<br><span class="sub"><span class="up">+192.3%</span></span></td><td>11.3</td><td>14→23<br><span class="sub"><span class="up">+64.3%</span></span></td><td>10.0</td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td>240→197<br><span class="sub"><span class="down">-17.9%</span></span></td><td>31.0</td><td>122→139<br><span class="sub"><span class="up">+13.9%</span></span></td><td>34.7</td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td>231→370<br><span class="sub"><span class="up">+60.2%</span></span></td><td>26.9</td><td>99→202<br><span class="sub"><span class="up">+104.0%</span></span></td><td>28.5</td></tr><tr data-store='子固路' data-plat='京东'><td>子固路</td><td><span class='tag 京东'>京东</span></td><td>0→1<br><span class="sub"><span class="muted">-</span></span></td><td>29.4</td><td>0→6<br><span class="sub"><span class="muted">-</span></span></td><td>6.9</td></tr><tr data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td>329→327<br><span class="sub"><span class="down">-0.6%</span></span></td><td>45.5</td><td>145→180<br><span class="sub"><span class="up">+24.1%</span></span></td><td>42.4</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>583→668<br><span class="sub"><span class="up">+14.6%</span></span></td><td>25.6</td><td>223→445<br><span class="sub"><span class="up">+99.6%</span></span></td><td>27.3</td></tr><tr data-store='印象城' data-plat='京东'><td>印象城</td><td><span class='tag 京东'>京东</span></td><td>1→0<br><span class="sub"><span class="down">-100.0%</span></span></td><td>-</td><td>0→1<br><span class="sub"><span class="muted">-</span></span></td><td>20.0</td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>412→301<br><span class="sub"><span class="down">-26.9%</span></span></td><td>40.1</td><td>120→176<br><span class="sub"><span class="up">+46.7%</span></span></td><td>37.3</td></tr><tr data-store='科兴' data-plat='淘宝'><td>科兴</td><td><span class='tag 淘宝'>淘宝</span></td><td>271→475<br><span class="sub"><span class="up">+75.3%</span></span></td><td>20.7</td><td>91→206<br><span class="sub"><span class="up">+126.4%</span></span></td><td>21.6</td></tr><tr data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td>415→220<br><span class="sub"><span class="down">-47.0%</span></span></td><td>39.8</td><td>167→120<br><span class="sub"><span class="down">-28.1%</span></span></td><td>38.5</td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>326→423<br><span class="sub"><span class="up">+29.8%</span></span></td><td>16.7</td><td>91→210<br><span class="sub"><span class="up">+130.8%</span></span></td><td>17.8</td></tr></tbody></table></div>
+
+    <div class="tbl-wrap"><table id="time-table"><thead><tr><th rowspan="2">门店</th><th rowspan="2">平台</th><th colspan="2">工作日</th><th colspan="2">周末</th></tr><tr><th>订单 7月→8月</th><th>客单 8月</th><th>订单 7月→8月</th><th>客单 8月</th></tr></thead><tbody><tr data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td>272→235<br><span class="sub"><span class="down">-13.6%</span></span></td><td>37.4</td><td>141→179<br><span class="sub"><span class="up">+27.0%</span></span></td><td>40.9</td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td>379→497<br><span class="sub"><span class="up">+31.1%</span></span></td><td>23.8</td><td>163→280<br><span class="sub"><span class="up">+71.8%</span></span></td><td>24.7</td></tr><tr data-store='万科' data-plat='京东'><td>万科</td><td><span class='tag 京东'>京东</span></td><td>13→38<br><span class="sub"><span class="up">+192.3%</span></span></td><td>11.3</td><td>14→23<br><span class="sub"><span class="up">+64.3%</span></span></td><td>10.0</td></tr><tr class="plat-sub" data-store="万科"><td><b>万科</b></td><td><b>小计</b></td><td>664→770<br><span class="sub"><span class="up">+16.0%</span></span></td><td>27.3</td><td>318→482<br><span class="sub"><span class="up">+51.6%</span></span></td><td>30.0</td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td>240→197<br><span class="sub"><span class="down">-17.9%</span></span></td><td>31.0</td><td>122→139<br><span class="sub"><span class="up">+13.9%</span></span></td><td>34.7</td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td>231→370<br><span class="sub"><span class="up">+60.2%</span></span></td><td>26.9</td><td>99→202<br><span class="sub"><span class="up">+104.0%</span></span></td><td>28.5</td></tr><tr data-store='子固路' data-plat='京东'><td>子固路</td><td><span class='tag 京东'>京东</span></td><td>0→1<br><span class="sub"><span class="muted">-</span></span></td><td>29.4</td><td>0→6<br><span class="sub"><span class="muted">-</span></span></td><td>6.9</td></tr><tr class="plat-sub" data-store="子固路"><td><b>子固路</b></td><td><b>小计</b></td><td>471→568<br><span class="sub"><span class="up">+20.6%</span></span></td><td>28.3</td><td>221→347<br><span class="sub"><span class="up">+57.0%</span></span></td><td>30.6</td></tr><tr data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td>329→327<br><span class="sub"><span class="down">-0.6%</span></span></td><td>45.5</td><td>145→180<br><span class="sub"><span class="up">+24.1%</span></span></td><td>42.4</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>583→668<br><span class="sub"><span class="up">+14.6%</span></span></td><td>25.6</td><td>223→445<br><span class="sub"><span class="up">+99.6%</span></span></td><td>27.3</td></tr><tr data-store='印象城' data-plat='京东'><td>印象城</td><td><span class='tag 京东'>京东</span></td><td>1→0<br><span class="sub"><span class="down">-100.0%</span></span></td><td>-</td><td>0→1<br><span class="sub"><span class="muted">-</span></span></td><td>20.0</td></tr><tr class="plat-sub" data-store="印象城"><td><b>印象城</b></td><td><b>小计</b></td><td>913→995<br><span class="sub"><span class="up">+9.0%</span></span></td><td>32.1</td><td>368→626<br><span class="sub"><span class="up">+70.1%</span></span></td><td>31.6</td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>412→301<br><span class="sub"><span class="down">-26.9%</span></span></td><td>40.1</td><td>120→176<br><span class="sub"><span class="up">+46.7%</span></span></td><td>37.3</td></tr><tr data-store='科兴' data-plat='淘宝'><td>科兴</td><td><span class='tag 淘宝'>淘宝</span></td><td>271→475<br><span class="sub"><span class="up">+75.3%</span></span></td><td>20.7</td><td>91→206<br><span class="sub"><span class="up">+126.4%</span></span></td><td>21.6</td></tr><tr class="plat-sub" data-store="科兴"><td><b>科兴</b></td><td><b>小计</b></td><td>683→776<br><span class="sub"><span class="up">+13.6%</span></span></td><td>28.2</td><td>211→382<br><span class="sub"><span class="up">+81.0%</span></span></td><td>28.8</td></tr><tr data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td>415→220<br><span class="sub"><span class="down">-47.0%</span></span></td><td>39.8</td><td>167→120<br><span class="sub"><span class="down">-28.1%</span></span></td><td>38.5</td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>326→423<br><span class="sub"><span class="up">+29.8%</span></span></td><td>16.7</td><td>91→210<br><span class="sub"><span class="up">+130.8%</span></span></td><td>17.8</td></tr><tr class="plat-sub" data-store="益田"><td><b>益田</b></td><td><b>小计</b></td><td>741→643<br><span class="sub"><span class="down">-13.2%</span></span></td><td>24.6</td><td>258→330<br><span class="sub"><span class="up">+27.9%</span></span></td><td>25.3</td></tr><tr class="plat-total"><td colspan="2"><b>5店 合计</b></td><td><b>3,472→3,752<br><span class="sub"><span class="up">+8.1%</span></span></b></td><td><b>28.5</b></td><td><b>1,376→2,167<br><span class="sub"><span class="up">+57.5%</span></span></b></td><td><b>29.7</b></td></tr></tbody></table></div>
+
     <div class="summary"><b>📝 分析总结：</b>多数门店周末日均订单低于工作日（卤味办公场景属性）；周末客单价普遍更低，可上高客单套餐提升周末价值。</div>
+
   </div>
+
+
 
   <div class="section" id="sec-ad">
+
     <div class="section-title">📈 广告投放效果表<span class="hint">消费/ROI/曝光/入店/订单提升 + 8月产品拆分</span></div>
+
     <div class="tbl-wrap"><table id="ad-table"><thead><tr><th>门店</th><th>平台</th><th>推广消费 7→8</th><th>ROI 7→8</th><th>曝光提升 7→8</th><th>入店提升 7→8</th><th>订单提升 7→8</th></tr></thead><tbody><tr data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td>1,016</td><td><b>6.802</b></td><td>23,772</td><td>1,531</td><td>150</td><td class='small'>营销魔方 277<br>点金推广 2<br>流量助手 17<br>超级流量卡 0<br>赏金联盟 4</td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td>1,166</td><td><b>4.137</b></td><td>19,389</td><td>1,067</td><td>112</td><td class='small'></td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td>1,209</td><td><b>4.817</b></td><td>20,892</td><td>1,284</td><td>158</td><td class='small'>点金推广 20<br>营销魔方 237<br>津贴联盟 44<br>流量助手 38<br>赏金联盟 11<br>超级流量卡 0</td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td>1,365</td><td><b>3.876</b></td><td>20,129</td><td>1,190</td><td>125</td><td class='small'></td></tr><tr data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td>1,120</td><td><b>6.229</b></td><td>18,563</td><td>1,261</td><td>137</td><td class='small'>营销魔方 234<br>流量助手 105<br>超级流量卡 0</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>2,466</td><td><b>4.796</b></td><td>34,344</td><td>2,233</td><td>333</td><td class='small'></td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>2,229</td><td><b>4.724</b></td><td>37,741</td><td>1,523</td><td>250</td><td class='small'>营销魔方 482<br>点金推广 16<br>流量助手 125<br>超级流量卡 0</td></tr><tr data-store='科兴' data-plat='淘宝'><td>科兴</td><td><span class='tag 淘宝'>淘宝</span></td><td>994</td><td><b>4.954</b></td><td>24,586</td><td>1,202</td><td>204</td><td class='small'></td></tr><tr data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td>2,045</td><td><b>4.438</b></td><td>35,254</td><td>1,138</td><td>198</td><td class='small'>营销魔方 281<br>点金推广 23<br>流量助手 182<br>超级流量卡 0</td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>624</td><td><b>4.915</b></td><td>15,745</td><td>669</td><td>124</td><td class='small'></td></tr></tbody></table></div>
+
     <div class="summary"><b>📝 结论：</b>广告 8月近乎停投：美团 5店合计 10,636→395（<b>-96%</b>）、淘宝 3,007→399（<b>-87%</b>）——止损彻底，但需重启高ROI产品对冲自然流量下滑。</div>
+
   </div>
+
+
 
   <div class="section" id="sec-act">
+
     <div class="section-title">🎯 促销效果表（8类活动）<span class="hint">5店合计×平台×8类 · 7/1-23 vs 8/1-23 · 单均补贴=总补贴÷活动数 · 补贴ROI=订单实付÷总补贴</span></div>
+
     <div class="tbl-wrap"><table id="act-table"><thead><tr><th>平台</th><th>活动类型</th><th>活动数 7→8</th><th>平台承担 7→8</th><th>商家承担 7→8</th><th>总补贴 7→8</th><th>单均补贴8月</th><th>商家占比8月</th></tr></thead><tbody><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td>减配送费</td><td>2,023→1,978</td><td>70→1,812</td><td>6,516→10,212</td><td>6,586→12,024</td><td>6</td><td>84.9%</td><td><span class="down">-2.2%</span></td><td class='small'>-</td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td>商品折扣/特价</td><td>2,142→1,500</td><td>4→0</td><td>4,135→2,479</td><td>4,139→2,479</td><td>2</td><td>100.0%</td><td><span class="down">-30.0%</span></td><td class='small'>-</td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td>平台津贴</td><td>81→65</td><td>300→278</td><td>0→102</td><td>300→380</td><td>6</td><td>26.8%</td><td><span class="down">-19.8%</span></td><td class='small'>-</td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td>店铺满减</td><td>359→264</td><td>0→0</td><td>2,806→3,171</td><td>2,806→3,171</td><td>12</td><td>100.0%</td><td><span class="down">-26.5%</span></td><td class='small'>-</td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td>支付红包</td><td>1,884→1,745</td><td>10,211→9,070</td><td>19,560→19,372</td><td>29,771→28,442</td><td>16</td><td>68.1%</td><td><span class="down">-7.4%</span></td><td class='small'>-</td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td>神券红包</td><td>4→11</td><td>0→0</td><td>20→51</td><td>20→51</td><td>5</td><td>100.0%</td><td><span class="up">+175.0%</span></td><td class='small'>-</td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td>精准营销</td><td>159→137</td><td>54→118</td><td>393→334</td><td>447→452</td><td>3</td><td>73.9%</td><td><span class="down">-13.8%</span></td><td class='small'>-</td></tr><tr data-plat='美团'><td><span class='tag 美团'>美团</span></td><td>门店新客立减</td><td>636→582</td><td>0→0</td><td>636→950</td><td>636→950</td><td>2</td><td>100.0%</td><td><span class="down">-8.5%</span></td><td class='small'>-</td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td>减配送费</td><td>1,978→3,199</td><td>570→1,632</td><td>5,854→9,899</td><td>6,424→11,531</td><td>4</td><td>85.9%</td><td><span class="up">+61.7%</span></td><td class='small'>-</td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td>商品折扣/特价</td><td>1,798→2,833</td><td>0→0</td><td>8,730→15,396</td><td>8,730→15,396</td><td>5</td><td>100.0%</td><td><span class="up">+57.6%</span></td><td class='small'>-</td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td>店铺满减</td><td>203→205</td><td>43→418</td><td>1,165→3,675</td><td>1,208→4,092</td><td>20</td><td>89.8%</td><td><span class="up">+1.0%</span></td><td class='small'>-</td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td>支付红包</td><td>1,933→4,921</td><td>8,508→18,048</td><td>20,100→38,999</td><td>28,608→57,047</td><td>12</td><td>68.4%</td><td><span class="up">+154.6%</span></td><td class='small'>-</td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td>神券红包</td><td>618→251</td><td>564→309</td><td>1,035→352</td><td>1,599→661</td><td>3</td><td>53.2%</td><td><span class="down">-59.4%</span></td><td class='small'>-</td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td>精准营销</td><td>27→6</td><td>0→1</td><td>45→19</td><td>45→20</td><td>3</td><td>93.0%</td><td><span class="down">-77.8%</span></td><td class='small'>-</td></tr><tr data-plat='淘宝'><td><span class='tag 淘宝'>淘宝</span></td><td>门店新客立减</td><td>537→986</td><td>0→0</td><td>537→1,704</td><td>537→1,704</td><td>2</td><td>100.0%</td><td><span class="up">+83.6%</span></td><td class='small'>-</td></tr></tbody></table></div>
+
     <div class="summary"><b>📝 效果结论：</b><ul><li><b>美团＝缩量提效：</b>总补贴 -16%（44,705→37,750）、订单 2,016→1,722（-15%），补贴ROI 1.59→1.84 改善；支付红包仍占补贴 64%（单均 15.4 元偏高）、商家扛 67%，店铺满减单均 12 元次高——控本优先盯支付红包。</li><li><b>淘宝＝补贴驱动加深：</b>总补贴 +73%（47,150→81,680）换订单 +61%（1,981→3,187），但 ROI 1.04→0.92 跌破 1、商家扛 67%；支付红包 +137% 放量（单均 10.6 元）是主引擎，减配送费/商品折扣/新客立减同步 +58%~84%——增长依赖补贴，需评估盈利性。</li><li><b>总体：</b>8月促销总补贴 119,430 元（5店），淘宝占 68%——资源向淘宝倾斜但产出效率（ROI 0.92）反低于美团（1.84），结构错配。</li></ul></div>
+
   </div>
+
+
 
   <div class="section" id="sec-find">
+
     <div class="section-title">📊 分析总结 · 5大发现<span class="hint">平台结构剧变：淘宝订单收入双超美团 · 每项数据可追溯</span></div>
+
     <div class="actions"><ul><li><b>发现1｜大盘整体上行</b>——订单 4,848→5,919（<span class="up">+22.1%</span>）、收入 109,113→136,460（<span class="up">+25.1%</span>）、交易额 145,491→171,130；客单 30.0→28.9 元，量价齐升主要靠 8/20-23 增量拉动</li><li><b>发现2｜广告投放回暖但仍低基数</b>——8月（8/1-23）广告消费合计 14,233 元（美团 7,619 / 淘宝 6,614），5店美团 ROI 4.44~6.80、淘宝 ROI 3.88~4.95，科兴美团投放最高 2,229 元——建议按 ROI 分级加投高ROI产品</li><li><b>发现3｜口碑波动</b>——8月（8/1-23）评价 259 条、差评 22 条；差评集中在缺斤少两/包装/食安类，万科淘宝差评 5 条需优先处理；评价无评分项较多，需关注评价完整性</li><li><b>发现4｜促销补贴结构</b>——美团支付红包总补贴 28,442 元、商家占比 68.1%；减配送费商家占比 84.9%——补贴以商家承担为主，需评估 ROI</li><li><b>发现5｜时段结构</b>——工作日/周末订单与客单差异（见时段表）：周末客单普遍高于工作日，建议周末上高客单套餐+满减梯度，工作日做拉新引流</li></ul></div>
+
   </div>
+
+
 
   <div class="section" id="sec-rev">
+
     <div class="section-title">⭐ 评价监控表<span class="hint">好评/中评/差评/均分 · 7/1-23 vs 8/1-23</span></div>
+
     <div class="tbl-wrap"><table id="rev-table"><thead><tr><th>门店</th><th>平台</th><th>评价数 7→8</th><th>好评 7→8</th><th>中评 7→8</th><th>差评 7→8</th><th>均分 7→8</th></tr></thead><tbody><tr data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td>16</td><td>29</td><td>14→17</td><td>0→1</td><td><b>2→1</b></td><td>4.44→4.68</td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td>24</td><td>35</td><td>22→30</td><td>1→0</td><td><b>1→5</b></td><td>4.71→4.42</td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td>7</td><td>26</td><td>7→15</td><td>0→0</td><td><b>0→3</b></td><td>5.0→4.33</td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td>7</td><td>19</td><td>7→15</td><td>0→2</td><td><b>0→2</b></td><td>5.0→4.37</td></tr><tr data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td>9</td><td>6</td><td>8→4</td><td>1→0</td><td><b>0→1</b></td><td>4.67→4.2</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>41</td><td>37</td><td>39→31</td><td>1→3</td><td><b>1→3</b></td><td>4.73→4.46</td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>69</td><td>25</td><td>67→14</td><td>2→0</td><td><b>0→3</b></td><td>4.9→4.35</td></tr><tr data-store='科兴' data-plat='淘宝'><td>科兴</td><td><span class='tag 淘宝'>淘宝</span></td><td>18</td><td>31</td><td>16→28</td><td>0→1</td><td><b>2→2</b></td><td>4.61→4.65</td></tr><tr data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td>216</td><td>25</td><td>4→14</td><td>0→1</td><td><b>0→1</b></td><td>5.0→4.56</td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>12</td><td>26</td><td>10→25</td><td>0→0</td><td><b>2→1</b></td><td>4.42→4.73</td></tr></tbody></table></div>
+
     <div class="summary"><b>📝 结论：</b>评价率仅 4.4%（207/4,730）；淘宝差评 13 条最多（缺斤少两/手套/食安），美团 9 条，京东 1 条；科兴/印象城 2 起食安为红线。</div>
+
   </div>
+
+
 
   <div class="section" id="sec-revp">
+
     <div class="section-title">💬 8月差评日期透视表（评价大类）<span class="hint">日期在表头 · 单元格=当日差评大类 · 红底高亮</span></div>
+
     <div class="tbl-wrap"><table id="revp-table"><thead><tr><th>门店</th><th>平台</th><th class="pivot-hd">08/01<br><span class="wd">周末</span></th><th class="pivot-hd">08/02<br><span class="wd">周末</span></th><th class="pivot-hd">08/03<br><span class="wd">工作日</span></th><th class="pivot-hd">08/04<br><span class="wd">工作日</span></th><th class="pivot-hd">08/05<br><span class="wd">工作日</span></th><th class="pivot-hd">08/06<br><span class="wd">工作日</span></th><th class="pivot-hd">08/07<br><span class="wd">工作日</span></th><th class="pivot-hd">08/08<br><span class="wd">周末</span></th><th class="pivot-hd">08/09<br><span class="wd">周末</span></th><th class="pivot-hd">08/10<br><span class="wd">工作日</span></th><th class="pivot-hd">08/11<br><span class="wd">工作日</span></th><th class="pivot-hd">08/12<br><span class="wd">工作日</span></th><th class="pivot-hd">08/13<br><span class="wd">工作日</span></th><th class="pivot-hd">08/14<br><span class="wd">工作日</span></th><th class="pivot-hd">08/15<br><span class="wd">周末</span></th><th class="pivot-hd">08/16<br><span class="wd">周末</span></th><th class="pivot-hd">08/17<br><span class="wd">工作日</span></th><th class="pivot-hd">08/18<br><span class="wd">工作日</span></th><th class="pivot-hd">08/19<br><span class="wd">工作日</span></th><th>合计</th></tr></thead><tbody><tr data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260816 包装/餐具">包装/餐具</td><td class="pivot-bad" title="20260817 口味不佳">口味不佳</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>2</b></td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td class="pivot-bad" title="20260801 包装/餐具、卫生/食安">卫生/食安/包装/餐具</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260809 份量不足、份量不足">份量不足</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260815 包装/餐具">包装/餐具</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>5</b></td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260804 口味不佳、份量不足">口味不佳/份量不足</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260808 其它">其它</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>3</b></td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260805 口味不佳">口味不佳</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260809 选料/加工">选料/加工</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260811 卫生/食安">卫生/食安</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260817 其它">其它</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>4</b></td></tr><tr data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260817 份量不足">份量不足</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>1</b></td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260806 选料/加工、其它">其它/选料/加工</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260811 口味不佳">口味不佳</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260813 卫生/食安">卫生/食安</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260815 口味不佳">口味不佳</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260817 无有效信息">无信息</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>6</b></td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260806 卫生/食安">卫生/食安</td><td class="pivot-bad" title="20260807 卫生/食安">卫生/食安</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260811 卫生/食安">卫生/食安</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>3</b></td></tr><tr data-store='科兴' data-plat='淘宝'><td>科兴</td><td><span class='tag 淘宝'>淘宝</span></td><td class="pivot-0">·</td><td class="pivot-bad" title="20260802 口味不佳">口味不佳</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260806 包装/餐具">包装/餐具</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260814 无有效信息">无信息</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>3</b></td></tr><tr data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260814 卫生/食安">卫生/食安</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260819 其它">其它</td><td><b>2</b></td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-bad" title="20260806 服务/售后">服务/售后</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>1</b></td></tr></tbody></table></div>
+
     <div class="summary"><b>📝 分析总结：</b>8 月差评 30 条，Top 大类：卫生/食安(7)、口味不佳(6)、包装/餐具(4)、份量不足(4)；科兴 8/6 苍蝇+8/7 腹泻为食安红线，子固路 8/4 差评集中（口味+服务）。</div>
+
   </div>
+
+
 
   <div class="section" id="sec-revdet">
+
     <div class="section-title">💬 8月差评明细（含大类）</div>
+
     <div class="tbl-wrap"><table id="revdet-table"><thead><tr><th>门店</th><th>平台</th><th>评分</th><th>差评大类</th><th>评价内容</th></tr></thead><tbody><tr class='ev-date-hd'><td colspan='5'>📅 8/1（周末）</td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>2</b></td><td><span class='cat-tag'>包装/餐具</span></td><td class='small'>这么一大盒手撕鸭就给一个手套，是什么意思？</td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>2</b></td><td><span class='cat-tag'>卫生/食安</span></td><td class='small'>点了很多次了第一次差评，店员说送了个小鸭翅。这个很小很小的鸭翅全是毛，皮上一层毛、皮下还有一层硬毛，毛又深又硬又多又扎嘴，恶心坏了</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/2（周末）</td></tr><tr data-store='科兴' data-plat='淘宝'><td>科兴</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>1</b></td><td><span class='cat-tag'>口味不佳</span></td><td class='small'>鸭头非常辣，应该用的是辣油。好评是因为有好评返现，结果这商家还玩不起，好评返现不处理</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/4（工作日）</td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td><b class='bad'>1.0</b></td><td><span class='cat-tag'>口味不佳</span></td><td class='small'>“肉质差”“味道差”味道一般</td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td><b class='bad'>1.0</b></td><td><span class='cat-tag'>份量不足</span></td><td class='small'>给我少送了一个鸭掌 ，好难吃，酱鸭吃这一股塑料味，素菜没有味道，就是味同嚼蜡，联系商家，打电话过去直接挂断</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/5（工作日）</td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>3</b></td><td><span class='cat-tag'>口味不佳</span></td><td class='small'>我觉得这个鸭子一点也不符合我的口味，的鸭子会特别重…..而且这个腐竹也特别的硬….不知道是不是因为太商业化</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/6（工作日）</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>3</b></td><td><span class='cat-tag'>选料/加工</span></td><td class='small'>一整只鸭只有一只腿😥</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>3</b></td><td><span class='cat-tag'>其它</span></td><td class='small'>备注了鸭肫要切没有切，点的热卤鸭翅中送过来也是冰的</td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td><b class='bad'>1.0</b></td><td><span class='cat-tag'>卫生/食安</span></td><td class='small'>打开包装袋发现一只苍蝇，活的。不在盒子里，就在包装盒子的袋子里。我真服了，这堪忧的食品卫生，拉黑这家店，卸载美团了，我真服了，人怎么可以这么倒霉，连苦笑都不敢笑了，怕老天觉得我不服。</td></tr><tr data-store='科兴' data-plat='淘宝'><td>科兴</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>2</b></td><td><span class='cat-tag'>包装/餐具</span></td><td class='small'>手套都不送</td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>1</b></td><td><span class='cat-tag'>服务/售后</span></td><td class='small'>怎么不配餐具啊老板😭</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/7（工作日）</td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td><b class='bad'>1.0</b></td><td><span class='cat-tag'>卫生/食安</span></td><td class='small'>“肉质差”昨天吃了拉肚子，拉好几次了</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/8（周末）</td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td><b class='bad'>1.0</b></td><td><span class='cat-tag'>其它</span></td><td class='small'>龙虾坏的也不会回</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/9（周末）</td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>1</b></td><td><span class='cat-tag'>份量不足</span></td><td class='small'>一点素菜都缺斤少两，服了</td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>1</b></td><td><span class='cat-tag'>份量不足</span></td><td class='small'>缺斤少两差评</td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>1</b></td><td><span class='cat-tag'>选料/加工</span></td><td class='small'>是我肤浅了，猪舌，给我整个。也不切，咋吃啊😂</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/11（工作日）</td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>1</b></td><td><span class='cat-tag'>卫生/食安</span></td><td class='small'>味道特别无语，豆干豆干没入味，毛豆毛豆也没有味锁骨一股的鸭子味太腥了，感觉是卤料有问题不好吃不好吃</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>1</b></td><td><span class='cat-tag'>口味不佳</span></td><td class='small'>盗版煌上煌，难吃的很！</td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td><b class='bad'>2.0</b></td><td><span class='cat-tag'>卫生/食安</span></td><td class='small'>餐品略贵，不值这个价格，不好吃，腥腥的，没有绝味周黑鸭好吃。不入味，酱鸭炒饭一股芝士味，鸭子的膻味，很奇怪，只吃了两口，图一是吃完后的，只有素菜还行，至少能吃，其他味道都很奇怪，特别是这个酱鸭炒饭。难</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/13（工作日）</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>1</b></td><td><span class='cat-tag'>卫生/食安</span></td><td class='small'>鸭锁骨都已经酸掉了</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/14（工作日）</td></tr><tr data-store='科兴' data-plat='淘宝'><td>科兴</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>3</b></td><td><span class='cat-tag'>无有效信息</span></td><td class='small'>nan</td></tr><tr data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td><b class='bad'>1.0</b></td><td><span class='cat-tag'>卫生/食安</span></td><td class='small'>鸭肠一股腥味，而且干巴巴的，怎么也不像新鲜鸭肠当天现做的。</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/15（周末）</td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>1</b></td><td><span class='cat-tag'>包装/餐具</span></td><td class='small'>在选餐具的时候选了三份餐具，但是只给了一个手套这么抠门吗，连手套都给不起</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>1</b></td><td><span class='cat-tag'>口味不佳</span></td><td class='small'>太难吃了，还一股鸭骚味。</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/16（周末）</td></tr><tr data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td><b class='bad'>3.0</b></td><td><span class='cat-tag'>包装/餐具</span></td><td class='small'>打开包装发现掉了点牛肉在袋子里，盖子没盖紧，。。。</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/17（工作日）</td></tr><tr data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td><b class='bad'>1.0</b></td><td><span class='cat-tag'>口味不佳</span></td><td class='small'>好难吃，这个拌粉寡淡无味，牛肉又老还没入味?，怎么好意思做本土品牌的?</td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>3</b></td><td><span class='cat-tag'>其它</span></td><td class='small'>素菜里都是豆干腐竹和藕，没有木耳海带之类的。</td></tr><tr data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td><b class='bad'>1.0</b></td><td><span class='cat-tag'>份量不足</span></td><td class='small'>差评，我点的0元收藏的鸡尖和小肠都没给</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td><b class='bad'>3</b></td><td><span class='cat-tag'>无有效信息</span></td><td class='small'>还行</td></tr><tr class='ev-date-hd'><td colspan='5'>📅 8/19（工作日）</td></tr><tr data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td><b class='bad'>3.0</b></td><td><span class='cat-tag'>其它</span></td><td class='small'>一般，个人感觉，不是很新鲜</td></tr></tbody></table></div>
+
   </div>
+
+
 
   <div class="section" id="sec-evp">
+
     <div class="section-title">⚠️ 异常事件日期透视表<span class="hint">日期在表头 · 单元格=事件类型（灰字* = 结算假异常）</span></div>
+
     <div class="tbl-wrap"><table id="evp-table"><thead><tr><th>门店</th><th>平台</th><th class="pivot-hd">08/01<br><span class="wd">周末</span></th><th class="pivot-hd">08/02<br><span class="wd">周末</span></th><th class="pivot-hd">08/03<br><span class="wd">工作日</span></th><th class="pivot-hd">08/04<br><span class="wd">工作日</span></th><th class="pivot-hd">08/05<br><span class="wd">工作日</span></th><th class="pivot-hd">08/06<br><span class="wd">工作日</span></th><th class="pivot-hd">08/07<br><span class="wd">工作日</span></th><th class="pivot-hd">08/08<br><span class="wd">周末</span></th><th class="pivot-hd">08/09<br><span class="wd">周末</span></th><th class="pivot-hd">08/10<br><span class="wd">工作日</span></th><th class="pivot-hd">08/11<br><span class="wd">工作日</span></th><th class="pivot-hd">08/12<br><span class="wd">工作日</span></th><th class="pivot-hd">08/13<br><span class="wd">工作日</span></th><th class="pivot-hd">08/14<br><span class="wd">工作日</span></th><th class="pivot-hd">08/15<br><span class="wd">周末</span></th><th class="pivot-hd">08/16<br><span class="wd">周末</span></th><th class="pivot-hd">08/17<br><span class="wd">工作日</span></th><th class="pivot-hd">08/18<br><span class="wd">工作日</span></th><th class="pivot-hd">08/19<br><span class="wd">工作日</span></th><th>合计</th></tr></thead><tbody><tr data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260815 补贴(总活动),平台补贴,订单"><span class="evname evfake">补贴(总活动)*</span>/<span class="evname evfake">平台补贴*</span>/<span class="evname">订单</span></td><td class="pivot-real" title="20260816 平台补贴"><span class="evname">平台补贴</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>4</b></td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260805 曝光"><span class="evname">曝光</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260808 补贴(总活动),平台补贴,订单"><span class="evname">补贴(总活动)</span>/<span class="evname">平台补贴</span>/<span class="evname">订单</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-fake" title="20260815 平台补贴"><span class="evname evfake">平台补贴*</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>5</b></td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td class="pivot-0">·</td><td class="pivot-real" title="20260802 补贴(总活动),平台补贴"><span class="evname">补贴(总活动)</span>/<span class="evname">平台补贴</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-fake" title="20260815 补贴(总活动),平台补贴"><span class="evname evfake">补贴(总活动)*</span>/<span class="evname evfake">平台补贴*</span></td><td class="pivot-real" title="20260816 平台补贴,订单"><span class="evname">平台补贴</span>/<span class="evname">订单</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>6</b></td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260805 曝光,入店"><span class="evname">曝光</span>/<span class="evname">入店</span></td><td class="pivot-0">·</td><td class="pivot-real" title="20260807 补贴(总活动),平台补贴,订单"><span class="evname">补贴(总活动)</span>/<span class="evname">平台补贴</span>/<span class="evname">订单</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260814 补贴(总活动)"><span class="evname">补贴(总活动)</span></td><td class="pivot-fake" title="20260815 平台补贴"><span class="evname evfake">平台补贴*</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>7</b></td></tr><tr data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260807 补贴(总活动)"><span class="evname">补贴(总活动)</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260815 补贴(总活动),平台补贴,订单"><span class="evname evfake">补贴(总活动)*</span>/<span class="evname evfake">平台补贴*</span>/<span class="evname">订单</span></td><td class="pivot-real" title="20260816 平台补贴"><span class="evname">平台补贴</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>5</b></td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260808 补贴(总活动),平台补贴,订单"><span class="evname">补贴(总活动)</span>/<span class="evname">平台补贴</span>/<span class="evname">订单</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260814 补贴(总活动)"><span class="evname">补贴(总活动)</span></td><td class="pivot-fake" title="20260815 补贴(总活动),平台补贴"><span class="evname evfake">补贴(总活动)*</span>/<span class="evname evfake">平台补贴*</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260819 补贴(总活动),订单"><span class="evname">补贴(总活动)</span>/<span class="evname">订单</span></td><td><b>8</b></td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260808 订单"><span class="evname">订单</span></td><td class="pivot-real" title="20260809 补贴(总活动),订单"><span class="evname">补贴(总活动)</span>/<span class="evname">订单</span></td><td class="pivot-real" title="20260810 补贴(总活动),订单"><span class="evname">补贴(总活动)</span>/<span class="evname">订单</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260814 补贴(总活动),订单"><span class="evname">补贴(总活动)</span>/<span class="evname">订单</span></td><td class="pivot-fake" title="20260815 补贴(总活动),平台补贴"><span class="evname evfake">补贴(总活动)*</span>/<span class="evname evfake">平台补贴*</span></td><td class="pivot-real" title="20260816 平台补贴"><span class="evname">平台补贴</span></td><td class="pivot-0">·</td><td class="pivot-real" title="20260818 补贴(总活动)"><span class="evname">补贴(总活动)</span></td><td class="pivot-real" title="20260819 曝光"><span class="evname">曝光</span></td><td><b>12</b></td></tr><tr data-store='科兴' data-plat='淘宝'><td>科兴</td><td><span class='tag 淘宝'>淘宝</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260805 曝光"><span class="evname">曝光</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>1</b></td></tr><tr data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260803 曝光"><span class="evname">曝光</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260807 订单"><span class="evname">订单</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-fake" title="20260815 补贴(总活动),平台补贴"><span class="evname evfake">补贴(总活动)*</span>/<span class="evname evfake">平台补贴*</span></td><td class="pivot-real" title="20260816 平台补贴"><span class="evname">平台补贴</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>5</b></td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260803 平台补贴"><span class="evname">平台补贴</span></td><td class="pivot-real" title="20260804 补贴(总活动),平台补贴,订单"><span class="evname">补贴(总活动)</span>/<span class="evname">平台补贴</span>/<span class="evname">订单</span></td><td class="pivot-real" title="20260805 曝光"><span class="evname">曝光</span></td><td class="pivot-real" title="20260806 平台补贴"><span class="evname">平台补贴</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-real" title="20260814 补贴(总活动),平台补贴,订单"><span class="evname">补贴(总活动)</span>/<span class="evname">平台补贴</span>/<span class="evname">订单</span></td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td class="pivot-0">·</td><td><b>9</b></td></tr></tbody></table></div>
+
     <div class="summary"><b>📝 结论：</b>异常共 62 条：真实 48（补贴/曝光/订单波动为主）+ 结算假异常 14（8/15 退款冲正）；补贴类波动最多，其次曝光/订单。</div>
+
   </div>
+
+
 
   <div class="section" id="sec-ev">
+
     <div class="section-title">⚠️ 异常事件波动明细表<span class="hint">共 62 条（真实 48 / 结算假异常 14）· 日期分组置表头</span></div>
+
     <div class="tbl-wrap"><table id="ev-table"><thead><tr><th>门店</th><th>平台</th><th>事件类型</th><th>异常波动</th><th>环比</th><th>订单</th><th>收入</th><th>交易额</th><th>曝光</th><th>转化</th><th>新客</th><th>老客</th><th>关联业务动作</th><th>状态</th></tr></thead><tbody><tr class='ev-date-hd'><td colspan='14'>📅 8/2（周末）</td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td>补贴(总活动)</td><td>755→296</td><td><span class="down">-61.0%</span></td><td>14</td><td>356.9</td><td>486.7</td><td>1,180</td><td>13.6%</td><td>10</td><td>4</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td>平台补贴</td><td>181→75</td><td><span class="down">-59.0%</span></td><td>14</td><td>356.9</td><td>486.7</td><td>1,180</td><td>13.6%</td><td>10</td><td>4</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/3（工作日）</td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>平台补贴</td><td>94→166</td><td><span class="up">+77.0%</span></td><td>33</td><td>386.9</td><td>502.6</td><td>885</td><td>40.5%</td><td>19</td><td>13</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td>曝光</td><td>1,417→681</td><td><span class="down">-52.0%</span></td><td>7</td><td>318.2</td><td>440.8</td><td>681</td><td>12.3%</td><td>5</td><td>2</td><td class='act'>检查广告投放预算/时段/出价，曝光骤降或激增都需排查投放配置</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/4（工作日）</td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>补贴(总活动)</td><td>742→326</td><td><span class="down">-56.0%</span></td><td>14</td><td>132.2</td><td>209.8</td><td>970</td><td>26.3%</td><td>10</td><td>5</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>平台补贴</td><td>166→75</td><td><span class="down">-55.0%</span></td><td>14</td><td>132.2</td><td>209.8</td><td>970</td><td>26.3%</td><td>10</td><td>5</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>订单</td><td>33→14</td><td><span class="down">-58.0%</span></td><td>14</td><td>132.2</td><td>209.8</td><td>970</td><td>26.3%</td><td>10</td><td>5</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/5（工作日）</td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td>曝光</td><td>1,213→1,838</td><td><span class="up">+52.0%</span></td><td>33</td><td>583.1</td><td>646.5</td><td>1,838</td><td>19.1%</td><td>20</td><td>13</td><td class='act'>检查广告投放预算/时段/出价，曝光骤降或激增都需排查投放配置</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td>曝光</td><td>1,032→1,636</td><td><span class="up">+59.0%</span></td><td>24</td><td>613.5</td><td>702.5</td><td>1,636</td><td>15.3%</td><td>15</td><td>8</td><td class='act'>检查广告投放预算/时段/出价，曝光骤降或激增都需排查投放配置</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td>入店</td><td>83→150</td><td><span class="up">+81.0%</span></td><td>24</td><td>613.5</td><td>702.5</td><td>1,636</td><td>15.3%</td><td>15</td><td>8</td><td class='act'>检查门店评分/头图/菜单结构变化，配合曝光看流量质量</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>曝光</td><td>970→2,100</td><td><span class="up">+116.0%</span></td><td>15</td><td>172.1</td><td>244.4</td><td>2,100</td><td>17.0%</td><td>6</td><td>9</td><td class='act'>检查广告投放预算/时段/出价，曝光骤降或激增都需排查投放配置</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='科兴' data-plat='淘宝'><td>科兴</td><td><span class='tag 淘宝'>淘宝</span></td><td>曝光</td><td>722→2,164</td><td><span class="up">+200.0%</span></td><td>20</td><td>678.4</td><td>791.1</td><td>2,164</td><td>17.4%</td><td>11</td><td>9</td><td class='act'>检查广告投放预算/时段/出价，曝光骤降或激增都需排查投放配置</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/6（工作日）</td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>平台补贴</td><td>63→159</td><td><span class="up">+152.0%</span></td><td>28</td><td>435.2</td><td>552.2</td><td>1,533</td><td>32.9%</td><td>19</td><td>8</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/7（工作日）</td></tr><tr data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td>补贴(总活动)</td><td>434→725</td><td><span class="up">+67.0%</span></td><td>29</td><td>1,603.4</td><td>2,011.2</td><td>1,280</td><td>28.9%</td><td>20</td><td>8</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td>补贴(总活动)</td><td>564→905</td><td><span class="up">+60.0%</span></td><td>35</td><td>671.3</td><td>853.0</td><td>1,906</td><td>20.3%</td><td>18</td><td>13</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td>平台补贴</td><td>118→257</td><td><span class="up">+117.0%</span></td><td>35</td><td>671.3</td><td>853.0</td><td>1,906</td><td>20.3%</td><td>18</td><td>13</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td>订单</td><td>22→35</td><td><span class="up">+59.0%</span></td><td>35</td><td>671.3</td><td>853.0</td><td>1,906</td><td>20.3%</td><td>18</td><td>13</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td>订单</td><td>8→18</td><td><span class="up">+125.0%</span></td><td>18</td><td>532.2</td><td>760.1</td><td>1,106</td><td>24.6%</td><td>11</td><td>5</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/8（周末）</td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td>补贴(总活动)</td><td>726→1,176</td><td><span class="up">+62.0%</span></td><td>46</td><td>1,046.8</td><td>1,189.9</td><td>2,434</td><td>22.6%</td><td>25</td><td>20</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td>平台补贴</td><td>174→338</td><td><span class="up">+94.0%</span></td><td>46</td><td>1,046.8</td><td>1,189.9</td><td>2,434</td><td>22.6%</td><td>25</td><td>20</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td>订单</td><td>28→46</td><td><span class="up">+64.0%</span></td><td>46</td><td>1,046.8</td><td>1,189.9</td><td>2,434</td><td>22.6%</td><td>25</td><td>20</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>补贴(总活动)</td><td>1,097→1,921</td><td><span class="up">+75.0%</span></td><td>60</td><td>1,594.3</td><td>1,789.3</td><td>3,747</td><td>20.6%</td><td>37</td><td>22</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>平台补贴</td><td>255→446</td><td><span class="up">+75.0%</span></td><td>60</td><td>1,594.3</td><td>1,789.3</td><td>3,747</td><td>20.6%</td><td>37</td><td>22</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>订单</td><td>39→60</td><td><span class="up">+54.0%</span></td><td>60</td><td>1,594.3</td><td>1,789.3</td><td>3,747</td><td>20.6%</td><td>37</td><td>22</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>订单</td><td>17→32</td><td><span class="up">+88.0%</span></td><td>32</td><td>923.6</td><td>1,204.5</td><td>1,514</td><td>27.8%</td><td>24</td><td>8</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/9（周末）</td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>补贴(总活动)</td><td>575→264</td><td><span class="down">-54.0%</span></td><td>14</td><td>445.3</td><td>577.8</td><td>1,842</td><td>14.1%</td><td>12</td><td>2</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>订单</td><td>32→14</td><td><span class="down">-56.0%</span></td><td>14</td><td>445.3</td><td>577.8</td><td>1,842</td><td>14.1%</td><td>12</td><td>2</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/10（工作日）</td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>补贴(总活动)</td><td>264→513</td><td><span class="up">+94.0%</span></td><td>22</td><td>802.5</td><td>1,018.4</td><td>1,413</td><td>25.9%</td><td>13</td><td>9</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>订单</td><td>14→22</td><td><span class="up">+57.0%</span></td><td>22</td><td>802.5</td><td>1,018.4</td><td>1,413</td><td>25.9%</td><td>13</td><td>9</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/14（工作日）</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>补贴(总活动)</td><td>746→1,191</td><td><span class="up">+60.0%</span></td><td>47</td><td>992.1</td><td>1,204.9</td><td>3,161</td><td>18.7%</td><td>21</td><td>26</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td>补贴(总活动)</td><td>489→753</td><td><span class="up">+54.0%</span></td><td>26</td><td>687.7</td><td>782.5</td><td>1,912</td><td>15.9%</td><td>16</td><td>10</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>补贴(总活动)</td><td>512→1,279</td><td><span class="up">+150.0%</span></td><td>49</td><td>448.9</td><td>693.7</td><td>1,258</td><td>39.2%</td><td>25</td><td>22</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>平台补贴</td><td>138→209</td><td><span class="up">+51.0%</span></td><td>49</td><td>448.9</td><td>693.7</td><td>1,258</td><td>39.2%</td><td>25</td><td>22</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='益田' data-plat='淘宝'><td>益田</td><td><span class='tag 淘宝'>淘宝</span></td><td>订单</td><td>21→49</td><td><span class="up">+133.0%</span></td><td>49</td><td>448.9</td><td>693.7</td><td>1,258</td><td>39.2%</td><td>25</td><td>22</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>补贴(总活动)</td><td>281→550</td><td><span class="up">+96.0%</span></td><td>22</td><td>927.5</td><td>1,190.5</td><td>1,780</td><td>23.3%</td><td>15</td><td>6</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>订单</td><td>14→22</td><td><span class="up">+57.0%</span></td><td>22</td><td>927.5</td><td>1,190.5</td><td>1,780</td><td>23.3%</td><td>15</td><td>6</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/15（周末）</td></tr><tr class='settle' data-store='万科' data-plat='淘宝'><td>万科</td><td><span class='tag 淘宝'>淘宝</span></td><td>平台补贴 <span class='settle-tag'>结算假异常</span></td><td>197→354</td><td><span class="up">+80.0%</span></td><td>39</td><td>689.7</td><td>792.5</td><td>1,748</td><td>21.3%</td><td>14</td><td>23</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td>补贴(总活动) <span class='settle-tag'>结算假异常</span></td><td>262→0</td><td><span class="down">-100.0%</span></td><td>19</td><td>842.5</td><td>1,039.7</td><td>1,234</td><td>22.9%</td><td>14</td><td>5</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td>平台补贴 <span class='settle-tag'>结算假异常</span></td><td>51→-363</td><td><span class="down">-812.0%</span></td><td>19</td><td>842.5</td><td>1,039.7</td><td>1,234</td><td>22.9%</td><td>14</td><td>5</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td>订单</td><td>12→19</td><td><span class="up">+58.0%</span></td><td>19</td><td>842.5</td><td>1,039.7</td><td>1,234</td><td>22.9%</td><td>14</td><td>5</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>补贴(总活动) <span class='settle-tag'>结算假异常</span></td><td>1,191→1,867</td><td><span class="up">+57.0%</span></td><td>60</td><td>1,390.4</td><td>1,526.1</td><td>2,562</td><td>23.7%</td><td>33</td><td>22</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>平台补贴 <span class='settle-tag'>结算假异常</span></td><td>254→532</td><td><span class="up">+109.0%</span></td><td>60</td><td>1,390.4</td><td>1,526.1</td><td>2,562</td><td>23.7%</td><td>33</td><td>22</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td>补贴(总活动) <span class='settle-tag'>结算假异常</span></td><td>341→0</td><td><span class="down">-100.0%</span></td><td>21</td><td>786.8</td><td>1,027.9</td><td>1,666</td><td>20.6%</td><td>14</td><td>7</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td>平台补贴 <span class='settle-tag'>结算假异常</span></td><td>58→-416</td><td><span class="down">-817.0%</span></td><td>21</td><td>786.8</td><td>1,027.9</td><td>1,666</td><td>20.6%</td><td>14</td><td>7</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td>订单</td><td>13→21</td><td><span class="up">+62.0%</span></td><td>21</td><td>786.8</td><td>1,027.9</td><td>1,666</td><td>20.6%</td><td>14</td><td>7</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='子固路' data-plat='淘宝'><td>子固路</td><td><span class='tag 淘宝'>淘宝</span></td><td>平台补贴 <span class='settle-tag'>结算假异常</span></td><td>144→253</td><td><span class="up">+76.0%</span></td><td>32</td><td>643.1</td><td>801.4</td><td>1,794</td><td>19.7%</td><td>16</td><td>14</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td>补贴(总活动) <span class='settle-tag'>结算假异常</span></td><td>245→0</td><td><span class="down">-100.0%</span></td><td>7</td><td>205.3</td><td>261.7</td><td>1,215</td><td>7.7%</td><td>4</td><td>3</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td>平台补贴 <span class='settle-tag'>结算假异常</span></td><td>59→-116</td><td><span class="down">-298.0%</span></td><td>7</td><td>205.3</td><td>261.7</td><td>1,215</td><td>7.7%</td><td>4</td><td>3</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td>补贴(总活动) <span class='settle-tag'>结算假异常</span></td><td>268→0</td><td><span class="down">-100.0%</span></td><td>17</td><td>398.8</td><td>585.4</td><td>1,539</td><td>23.5%</td><td>12</td><td>4</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td>平台补贴 <span class='settle-tag'>结算假异常</span></td><td>49→-354</td><td><span class="down">-819.0%</span></td><td>17</td><td>398.8</td><td>585.4</td><td>1,539</td><td>23.5%</td><td>12</td><td>4</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>补贴(总活动) <span class='settle-tag'>结算假异常</span></td><td>550→0</td><td><span class="down">-100.0%</span></td><td>19</td><td>537.2</td><td>705.2</td><td>1,600</td><td>24.7%</td><td>12</td><td>6</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr class='settle' data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>平台补贴 <span class='settle-tag'>结算假异常</span></td><td>122→-354</td><td><span class="down">-389.0%</span></td><td>19</td><td>537.2</td><td>705.2</td><td>1,600</td><td>24.7%</td><td>12</td><td>6</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/16（周末）</td></tr><tr data-store='万科' data-plat='美团'><td>万科</td><td><span class='tag 美团'>美团</span></td><td>平台补贴</td><td>-363→74</td><td><span class="up">+120.0%</span></td><td>17</td><td>569.6</td><td>720.6</td><td>1,332</td><td>18.1%</td><td>13</td><td>4</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='印象城' data-plat='美团'><td>印象城</td><td><span class='tag 美团'>美团</span></td><td>平台补贴</td><td>-416→69</td><td><span class="up">+117.0%</span></td><td>20</td><td>494.6</td><td>669.0</td><td>1,446</td><td>17.9%</td><td>14</td><td>7</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td>平台补贴</td><td>-116→180</td><td><span class="up">+255.0%</span></td><td>20</td><td>456.2</td><td>577.8</td><td>1,227</td><td>11.9%</td><td>8</td><td>4</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='子固路' data-plat='美团'><td>子固路</td><td><span class='tag 美团'>美团</span></td><td>订单</td><td>7→20</td><td><span class="up">+186.0%</span></td><td>20</td><td>456.2</td><td>577.8</td><td>1,227</td><td>11.9%</td><td>8</td><td>4</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='益田' data-plat='美团'><td>益田</td><td><span class='tag 美团'>美团</span></td><td>平台补贴</td><td>-354→89</td><td><span class="up">+125.0%</span></td><td>16</td><td>303.5</td><td>475.7</td><td>1,411</td><td>21.9%</td><td>9</td><td>7</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>平台补贴</td><td>-354→119</td><td><span class="up">+134.0%</span></td><td>22</td><td>528.5</td><td>675.8</td><td>1,521</td><td>24.2%</td><td>14</td><td>8</td><td class='act'>核对平台结算/退款入账，确认补贴转负原因（退款冲抵）</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/18（工作日）</td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>补贴(总活动)</td><td>457→724</td><td><span class="up">+59.0%</span></td><td>27</td><td>776.7</td><td>1,035.7</td><td>1,246</td><td>34.2%</td><td>20</td><td>7</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr class='ev-date-hd'><td colspan='14'>📅 8/19（工作日）</td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>补贴(总活动)</td><td>782→1,369</td><td><span class="up">+75.0%</span></td><td>54</td><td>1,131.9</td><td>1,369.8</td><td>2,678</td><td>21.8%</td><td>30</td><td>22</td><td class='act'>核查活动档期/开关状态，确认是否为结算节点或活动暂停</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='印象城' data-plat='淘宝'><td>印象城</td><td><span class='tag 淘宝'>淘宝</span></td><td>订单</td><td>35→54</td><td><span class="up">+54.0%</span></td><td>54</td><td>1,131.9</td><td>1,369.8</td><td>2,678</td><td>21.8%</td><td>30</td><td>22</td><td class='act'>联动检查活动生效/下架、补贴力度、曝光变化，确认订单突变根因</td><td><span class='status'>待跟踪</span></td></tr><tr data-store='科兴' data-plat='美团'><td>科兴</td><td><span class='tag 美团'>美团</span></td><td>曝光</td><td>1,246→2,004</td><td><span class="up">+61.0%</span></td><td>27</td><td>711.8</td><td>934.7</td><td>2,004</td><td>23.7%</td><td>21</td><td>7</td><td class='act'>检查广告投放预算/时段/出价，曝光骤降或激增都需排查投放配置</td><td><span class='status'>待跟踪</span></td></tr></tbody></table></div>
+
   </div>
 
+
+
   <div class="section" id="sec-action">
+
     <div class="section-title">🚀 提升举措（整改优先级）</div>
+
     <div class="actions"><ul><li>【P0-食安红线】科兴（8/6苍蝇+8/7腹泻）、印象城（8/13锁骨酸掉）：涉事批次下架+当日鲜售+出餐检查 SOP，48h 内整改反馈</li><li>【P0-益田美团救急】订单 -50%（510→253）、老客 -59%：广告已停投无对冲，集中资源做美团老客召回券+转化修复（转化 26.2→19.9%）</li><li>【P1-淘宝补贴盈利性】补贴 +73%（47,150→81,680）驱动订单 +61% 但 ROI 1.04→0.92 跌破 1：压缩支付红包商家承担（商家扛 67%）、谈平台分担，评估单均 10.6 元/红包的产出</li><li>【P1-美团老客召回】5 店美团老客 -20%~-59%：支付红包商家承担 2k-9.3k/店谈判底稿，做老客定向券+复购活动</li><li>【P1-差评整改】卫生/食安、口味不佳、包装/餐具 为 Top 差评大类（共 30 条）：统一卤制标准（口味）、克重称重抽检（份量）、当日鲜售（食安），差评 2h 内回复</li><li>【P2-广告分级加投】8月广告回暖（美团 8/1-23 合计 7,619 元、淘宝 6,614 元，ROI 3.9~6.8）：按 ROI 分级加投美团营销魔方/流量助手等高ROI产品，持续对冲自然流量波动</li><li>【P2-京东处置】仅万科有量（93单），其余 3 店 0 单：万科保留运营，其余评估关停或降权，遗留差评先回复</li><li>【P2-时段运营】周末客单价普遍低于工作日：周末上高客单套餐+满减梯度，工作日做拉新引流</li></ul></div>
+
   </div>
+
+
 
   
 
+
+
 </div>
+
 <div class="footer">煌上煌外卖数据分析 · 热卤项目5店外卖经营分析 V12 · 数据源：路径1 外卖数据(美团/淘宝/京东) + 路径6 POS(5店)，核心数据更新至 8/26｜更新于 2026-08-27 11:44</div>
+
 <script>
+
 var DAY = {"美团": {"万科": [[20260701, 17.0, 483.73, 601.51, 1092, 93, 16, 10, 6], [20260702, 13.0, 253.15, 355.91, 950, 78, 15, 8, 7], [20260703, 15.0, 415.82, 512.53, 731, 61, 15, 7, 8], [20260704, 19.0, 489.75, 568.41, 1224, 93, 16, 9, 7], [20260705, 13.0, 420.61, 488.77, 1240, 91, 15, 5, 10], [20260706, 11.0, 252.2, 323.11, 1220, 81, 11, 5, 6], [20260707, 12.0, 330.47, 410.0, 1217, 86, 12, 9, 3], [20260708, 20.0, 650.78, 799.14, 1305, 86, 19, 11, 8], [20260709, 11.0, 245.56, 312.95, 1011, 73, 10, 4, 6], [20260710, 22.0, 612.8, 780.21, 1161, 93, 22, 8, 14], [20260711, 23.0, 908.7, 1084.76, 1497, 123, 24, 13, 11], [20260712, 24.0, 709.47, 806.64, 1381, 115, 24, 14, 10], [20260713, 18.0, 462.55, 603.26, 1465, 88, 16, 9, 7], [20260714, 19.0, 507.68, 650.58, 1569, 98, 19, 10, 9], [20260715, 11.0, 308.95, 404.14, 1368, 99, 11, 4, 7], [20260716, 16.0, 543.61, 679.06, 1247, 94, 16, 10, 6], [20260717, 21.0, 613.25, 768.88, 1131, 81, 21, 15, 6], [20260718, 29.0, 1005.83, 1100.1, 1589, 116, 27, 12, 15], [20260719, 33.0, 952.72, 1112.82, 1597, 144, 35, 22, 13], [20260720, 16.0, 377.78, 486.11, 1275, 92, 17, 9, 8], [20260721, 22.0, 635.65, 791.55, 1338, 90, 21, 12, 9], [20260722, 14.0, 519.5, 634.99, 1489, 82, 14, 9, 5], [20260723, 14.0, 572.96, 705.85, 768, 78, 17, 9, 8], [20260724, 22.0, 660.56, 806.49, 892, 76, 18, 11, 7], [20260725, 19.0, 1008.34, 1176.49, 921, 79, 22, 12, 10], [20260726, 19.0, 538.77, 650.65, 987, 84, 16, 10, 6], [20260727, 7.0, 284.79, 337.4, 1126, 71, 6, 4, 2], [20260728, 17.0, 505.32, 604.06, 1090, 79, 17, 9, 8], [20260729, 17.0, 637.56, 776.31, 674, 51, 15, 8, 7], [20260730, 13.0, 318.47, 380.9, 1160, 92, 11, 6, 5], [20260731, 21.0, 663.6, 805.39, 1155, 96, 20, 13, 7], [20260801, 23.0, 666.84, 760.19, 884, 83, 24, 10, 14], [20260802, 21.0, 655.21, 780.7, 803, 78, 21, 12, 9], [20260803, 14.0, 395.25, 473.1, 875, 67, 14, 7, 7], [20260804, 14.0, 503.07, 622.4, 876, 73, 13, 10, 3], [20260805, 13.0, 287.51, 351.6, 945, 56, 12, 7, 5], [20260806, 14.0, 390.68, 481.25, 856, 66, 14, 7, 7], [20260807, 14.0, 366.24, 491.28, 1070, 71, 14, 10, 4], [20260808, 20.0, 593.89, 758.83, 1227, 91, 20, 13, 7], [20260809, 22.0, 1193.61, 1526.96, 1400, 119, 22, 16, 6], [20260810, 17.0, 555.22, 713.14, 1339, 101, 16, 6, 10], [20260811, 14.0, 501.48, 630.32, 1164, 80, 14, 9, 5], [20260812, 16.0, 376.56, 483.88, 1061, 72, 14, 12, 2], [20260813, 18.0, 415.58, 506.86, 1135, 101, 17, 9, 8], [20260814, 12.0, 420.71, 530.94, 1106, 70, 12, 9, 3], [20260815, 19.0, 842.46, 1039.66, 1234, 83, 19, 14, 5], [20260816, 17.0, 569.61, 720.62, 1332, 94, 17, 13, 4], [20260817, 18.0, 868.66, 1079.01, 1085, 86, 19, 15, 4], [20260818, 25.0, 764.58, 911.9, 1166, 91, 24, 17, 7], [20260819, 13.0, 338.71, 428.05, 1443, 82, 13, 10, 3], [20260820, 14.0, 309.87, 358.42, 1161, 88, 14, 8, 6], [20260821, 19.0, 589.46, 719.46, 1836, 112, 19, 13, 6], [20260822, 23.0, 522.95, 616.7, 1779, 122, 23, 15, 8], [20260823, 34.0, 961.51, 1126.07, 1705, 143, 34, 27, 7], [20260824, 26.0, 652.34, 777.19, 2085, 123, 26, 17, 9], [20260825, 34.0, 1089.91, 1266.32, 2177, 115, 33, 22, 11], [20260826, 29.0, 744.16, 873.22, 2303, 121, 30, 19, 11]], "子固路": [[20260701, 12.0, 362.39, 480.08, 986, 81, 14, 8, 6], [20260702, 14.0, 326.91, 418.42, 777, 73, 13, 7, 6], [20260703, 8.0, 171.02, 245.45, 864, 58, 9, 4, 5], [20260704, 20.0, 539.3, 616.4, 1485, 121, 20, 14, 6], [20260705, 24.0, 550.0, 698.51, 1263, 108, 23, 14, 9], [20260706, 12.0, 260.47, 319.8, 935, 75, 9, 6, 3], [20260707, 16.0, 387.67, 481.3, 1211, 97, 16, 12, 4], [20260708, 18.0, 377.25, 489.25, 876, 79, 19, 14, 5], [20260709, 17.0, 368.88, 499.19, 1075, 68, 15, 13, 2], [20260710, 13.0, 370.91, 443.41, 1000, 78, 13, 8, 5], [20260711, 18.0, 455.31, 595.7, 1377, 117, 19, 12, 7], [20260712, 22.0, 713.9, 816.35, 1399, 127, 23, 11, 12], [20260713, 14.0, 469.43, 546.19, 1040, 68, 11, 8, 3], [20260714, 15.0, 378.47, 488.94, 1038, 78, 15, 10, 5], [20260715, 16.0, 334.49, 451.23, 1056, 75, 14, 10, 4], [20260716, 14.0, 330.73, 439.88, 1023, 74, 13, 6, 7], [20260717, 9.0, 239.71, 310.0, 805, 56, 9, 6, 3], [20260718, 16.0, 297.03, 391.67, 1230, 99, 16, 8, 8], [20260719, 22.0, 674.22, 796.91, 1390, 113, 23, 12, 11], [20260720, 12.0, 273.51, 348.99, 984, 73, 11, 5, 6], [20260721, 15.0, 360.51, 468.17, 1062, 87, 16, 14, 2], [20260722, 19.0, 373.47, 506.51, 1032, 93, 19, 16, 3], [20260723, 16.0, 501.41, 662.2, 899, 69, 16, 13, 3], [20260724, 12.0, 360.26, 465.7, 1032, 76, 13, 9, 4], [20260725, 18.0, 574.52, 655.22, 1246, 86, 19, 7, 12], [20260726, 11.0, 288.31, 321.05, 1194, 89, 9, 5, 4], [20260727, 16.0, 315.21, 412.84, 1188, 85, 14, 11, 3], [20260728, 13.0, 402.75, 527.79, 1041, 69, 12, 8, 4], [20260729, 16.0, 413.84, 538.75, 859, 84, 16, 12, 4], [20260730, 13.0, 274.79, 362.62, 1307, 88, 12, 9, 3], [20260731, 15.0, 499.94, 667.51, 1452, 90, 13, 10, 3], [20260801, 25.0, 784.79, 962.98, 1385, 122, 26, 17, 9], [20260802, 14.0, 356.85, 486.71, 1180, 103, 14, 10, 4], [20260803, 16.0, 376.72, 520.65, 1139, 67, 16, 9, 7], [20260804, 17.0, 423.56, 559.59, 1273, 88, 17, 13, 4], [20260805, 16.0, 347.2, 448.98, 1132, 87, 15, 9, 6], [20260806, 12.0, 230.37, 339.5, 1167, 99, 12, 9, 3], [20260807, 8.0, 291.66, 373.59, 1264, 99, 9, 6, 3], [20260808, 14.0, 276.42, 396.92, 1645, 112, 13, 9, 4], [20260809, 14.0, 579.6, 750.95, 1609, 108, 13, 10, 3], [20260810, 11.0, 280.25, 387.28, 1432, 85, 12, 10, 2], [20260811, 9.0, 200.97, 247.7, 1018, 61, 8, 4, 4], [20260812, 12.0, 283.09, 370.13, 1262, 86, 12, 9, 3], [20260813, 8.0, 260.3, 332.88, 1089, 81, 8, 6, 2], [20260814, 11.0, 243.97, 311.2, 1120, 85, 11, 7, 4], [20260815, 7.0, 205.29, 261.71, 1215, 91, 7, 4, 3], [20260816, 20.0, 456.18, 577.76, 1227, 101, 12, 8, 4], [20260817, 19.0, 369.88, 488.85, 954, 80, 18, 9, 9], [20260818, 12.0, 391.38, 522.31, 1025, 102, 13, 8, 5], [20260819, 15.0, 298.98, 373.98, 1221, 104, 14, 12, 2], [20260820, 15.0, 341.58, 463.57, 1055, 79, 15, 13, 2], [20260821, 16.0, 291.75, 364.54, 2082, 155, 16, 6, 10], [20260822, 20.0, 481.66, 599.79, 1965, 147, 19, 8, 11], [20260823, 25.0, 635.88, 793.34, 1928, 136, 25, 14, 11], [20260824, 27.0, 446.69, 599.25, 2152, 148, 27, 21, 6], [20260825, 19.0, 349.05, 407.58, 2063, 144, 19, 15, 4], [20260826, 33.0, 577.29, 709.53, 2491, 155, 32, 25, 7]], "印象城": [[20260701, 24.0, 606.94, 822.29, 1175, 87, 23, 17, 6], [20260702, 13.0, 338.19, 449.87, 923, 88, 13, 10, 3], [20260703, 14.0, 314.29, 419.48, 1008, 74, 14, 10, 4], [20260704, 18.0, 558.12, 718.63, 1350, 97, 18, 13, 5], [20260705, 31.0, 800.67, 1047.16, 1229, 104, 30, 23, 7], [20260706, 19.0, 417.56, 564.4, 804, 73, 20, 15, 5], [20260707, 19.0, 588.2, 797.83, 1306, 92, 19, 13, 6], [20260708, 26.0, 733.0, 981.24, 1143, 89, 27, 18, 9], [20260709, 14.0, 403.11, 543.06, 1075, 88, 13, 6, 7], [20260710, 30.0, 1130.44, 1516.32, 1419, 101, 30, 18, 12], [20260711, 18.0, 473.82, 617.98, 1588, 109, 18, 14, 4], [20260712, 24.0, 746.56, 924.84, 1385, 116, 23, 12, 11], [20260713, 19.0, 522.92, 689.86, 1273, 83, 19, 13, 6], [20260714, 10.0, 310.61, 422.59, 1260, 89, 10, 7, 3], [20260715, 26.0, 804.66, 1021.02, 1131, 98, 24, 18, 6], [20260716, 17.0, 480.71, 636.91, 1149, 80, 16, 11, 5], [20260717, 20.0, 479.11, 666.66, 1038, 80, 20, 13, 7], [20260718, 26.0, 932.51, 1181.11, 1537, 99, 24, 17, 7], [20260719, 28.0, 681.13, 881.94, 1584, 155, 29, 21, 8], [20260720, 22.0, 621.32, 774.73, 1108, 97, 22, 14, 8], [20260721, 22.0, 621.08, 820.57, 1201, 101, 21, 10, 11], [20260722, 12.0, 433.44, 540.87, 1136, 95, 11, 9, 2], [20260723, 22.0, 548.48, 761.42, 973, 99, 22, 13, 9], [20260724, 23.0, 727.43, 927.71, 858, 78, 25, 18, 7], [20260725, 22.0, 710.54, 886.92, 1216, 106, 20, 14, 6], [20260726, 23.0, 747.94, 890.9, 1291, 110, 23, 14, 9], [20260727, 22.0, 659.66, 893.88, 1061, 100, 23, 13, 10], [20260728, 21.0, 664.37, 852.82, 969, 86, 20, 12, 8], [20260729, 17.0, 602.17, 755.71, 1086, 80, 17, 13, 4], [20260730, 15.0, 384.83, 516.69, 1352, 82, 15, 12, 3], [20260731, 23.0, 693.32, 899.48, 1330, 80, 23, 12, 11], [20260801, 20.0, 679.27, 820.76, 1100, 99, 20, 16, 4], [20260802, 25.0, 905.19, 1157.08, 1296, 111, 26, 19, 7], [20260803, 20.0, 585.85, 767.42, 929, 91, 18, 15, 3], [20260804, 24.0, 629.11, 810.35, 1224, 92, 24, 17, 7], [20260805, 22.0, 578.04, 758.25, 1228, 103, 22, 11, 11], [20260806, 23.0, 594.02, 795.86, 1193, 100, 23, 15, 8], [20260807, 29.0, 1603.44, 2011.16, 1280, 97, 28, 20, 8], [20260808, 24.0, 689.38, 938.7, 1762, 132, 23, 13, 10], [20260809, 25.0, 1074.24, 1343.63, 1974, 144, 26, 12, 14], [20260810, 20.0, 576.49, 784.93, 1469, 110, 18, 15, 3], [20260811, 27.0, 933.04, 1233.95, 1338, 96, 27, 13, 14], [20260812, 26.0, 1263.61, 1620.59, 1142, 111, 26, 14, 12], [20260813, 22.0, 703.01, 945.24, 1392, 123, 23, 14, 9], [20260814, 13.0, 754.82, 936.58, 1152, 97, 12, 7, 5], [20260815, 21.0, 786.76, 1027.91, 1666, 102, 21, 14, 7], [20260816, 20.0, 494.58, 669.0, 1446, 117, 21, 14, 7], [20260817, 18.0, 486.13, 644.94, 1091, 75, 17, 12, 5], [20260818, 18.0, 595.94, 725.88, 1120, 80, 17, 7, 10], [20260819, 19.0, 761.21, 968.76, 1235, 87, 19, 12, 7], [20260820, 17.0, 527.85, 710.23, 1276, 88, 17, 15, 2], [20260821, 29.0, 889.65, 1157.73, 2074, 131, 29, 21, 8], [20260822, 23.0, 659.58, 826.07, 2253, 148, 23, 13, 10], [20260823, 22.0, 673.55, 855.4, 2575, 168, 21, 16, 5], [20260824, 28.0, 683.1, 830.98, 1795, 116, 28, 26, 2], [20260825, 36.0, 931.55, 1145.6, 2279, 162, 36, 28, 8], [20260826, 38.0, 967.17, 1165.99, 1925, 145, 37, 30, 7]], "科兴": [[20260701, 42.0, 732.77, 1356.24, 1143, 105, 42, 23, 19], [20260702, 40.0, 777.82, 1455.74, 1576, 105, 40, 24, 16], [20260703, 37.0, 769.47, 1188.16, 1623, 130, 37, 28, 9], [20260704, 21.0, 680.4, 832.95, 2048, 119, 21, 15, 6], [20260705, 18.0, 504.47, 626.82, 2053, 117, 19, 16, 3], [20260706, 22.0, 613.15, 746.01, 1609, 117, 21, 16, 5], [20260707, 29.0, 818.43, 1045.23, 2333, 149, 29, 19, 10], [20260708, 15.0, 304.9, 432.32, 1773, 110, 15, 11, 4], [20260709, 15.0, 426.73, 498.12, 1794, 99, 15, 11, 4], [20260710, 22.0, 714.25, 898.15, 1934, 106, 22, 17, 5], [20260711, 27.0, 869.03, 1078.59, 1786, 122, 26, 16, 10], [20260712, 14.0, 399.0, 499.3, 2083, 115, 16, 14, 2], [20260713, 20.0, 628.86, 793.26, 1600, 93, 19, 11, 8], [20260714, 22.0, 498.59, 637.01, 2035, 124, 21, 13, 8], [20260715, 25.0, 715.26, 931.48, 1994, 123, 25, 18, 7], [20260716, 18.0, 567.98, 752.62, 1903, 99, 18, 10, 8], [20260717, 28.0, 1003.23, 1218.84, 1680, 107, 27, 16, 11], [20260718, 19.0, 723.67, 837.32, 1946, 125, 19, 17, 2], [20260719, 21.0, 925.08, 1168.9, 2060, 131, 21, 15, 6], [20260720, 18.0, 545.32, 720.84, 1622, 118, 18, 13, 5], [20260721, 20.0, 583.75, 743.88, 1943, 89, 20, 18, 2], [20260722, 23.0, 621.81, 834.38, 1570, 93, 22, 18, 4], [20260723, 16.0, 664.8, 863.35, 1378, 95, 16, 8, 8], [20260724, 11.0, 469.37, 617.64, 1623, 104, 11, 7, 4], [20260725, 22.0, 770.12, 988.55, 1609, 119, 22, 16, 6], [20260726, 28.0, 845.43, 1078.05, 1969, 135, 28, 17, 11], [20260727, 15.0, 530.99, 661.4, 931, 63, 15, 10, 5], [20260728, 13.0, 432.19, 506.59, 1096, 76, 14, 10, 4], [20260729, 19.0, 522.83, 688.57, 1497, 103, 19, 13, 6], [20260730, 20.0, 663.28, 825.95, 2225, 119, 20, 10, 10], [20260731, 26.0, 854.33, 1047.38, 2099, 136, 26, 20, 6], [20260801, 19.0, 545.49, 694.22, 1774, 98, 20, 15, 5], [20260802, 16.0, 524.27, 645.74, 1161, 67, 16, 11, 5], [20260803, 16.0, 491.39, 640.33, 1246, 83, 16, 12, 4], [20260804, 10.0, 251.28, 312.17, 1103, 56, 9, 5, 4], [20260805, 15.0, 424.69, 537.94, 1353, 83, 15, 8, 7], [20260806, 19.0, 855.81, 1065.89, 1758, 89, 19, 15, 4], [20260807, 17.0, 596.34, 754.23, 1381, 92, 17, 11, 6], [20260808, 32.0, 923.57, 1204.51, 1514, 115, 32, 24, 8], [20260809, 14.0, 445.29, 577.83, 1842, 99, 14, 12, 2], [20260810, 22.0, 802.51, 1018.37, 1413, 85, 22, 13, 9], [20260811, 20.0, 542.41, 693.14, 1614, 91, 20, 12, 8], [20260812, 13.0, 462.51, 594.99, 1676, 74, 13, 5, 8], [20260813, 14.0, 370.58, 491.24, 1394, 84, 14, 10, 4], [20260814, 22.0, 927.52, 1190.48, 1780, 90, 21, 15, 6], [20260815, 19.0, 537.19, 705.2, 1600, 73, 18, 12, 6], [20260816, 22.0, 528.45, 675.81, 1521, 91, 22, 14, 8], [20260817, 21.0, 563.05, 773.73, 1293, 80, 20, 14, 6], [20260818, 27.0, 776.68, 1035.74, 1246, 79, 27, 20, 7], [20260819, 27.0, 711.81, 934.66, 2004, 118, 28, 21, 7], [20260820, 22.0, 487.7, 645.94, 2033, 109, 20, 12, 8], [20260821, 36.0, 1121.66, 1381.16, 3009, 157, 34, 23, 11], [20260822, 29.0, 767.74, 1028.3, 2043, 119, 29, 17, 12], [20260823, 25.0, 790.51, 1033.22, 2882, 172, 25, 13, 12], [20260824, 26.0, 602.63, 786.45, 2616, 123, 27, 18, 9], [20260825, 36.0, 769.47, 976.09, 2289, 127, 34, 24, 10], [20260826, 27.0, 608.51, 745.04, 2392, 149, 26, 20, 6]], "益田": [[20260701, 28.0, 582.42, 1048.02, 1261, 71, 26, 17, 9], [20260702, 18.0, 241.4, 503.53, 741, 55, 18, 9, 9], [20260703, 24.0, 556.49, 989.56, 1584, 78, 24, 16, 8], [20260704, 34.0, 481.79, 1065.15, 1603, 101, 32, 21, 11], [20260705, 29.0, 547.25, 1059.39, 2430, 111, 29, 18, 11], [20260706, 32.0, 556.94, 1172.91, 2013, 90, 32, 19, 13], [20260707, 25.0, 295.4, 791.58, 2616, 107, 24, 11, 13], [20260708, 23.0, 277.45, 729.78, 2085, 104, 23, 9, 14], [20260709, 29.0, 379.74, 877.75, 1780, 86, 29, 18, 11], [20260710, 22.0, 434.22, 839.17, 1626, 83, 22, 11, 11], [20260711, 30.0, 596.27, 1172.87, 1791, 103, 28, 21, 7], [20260712, 25.0, 394.28, 792.62, 1771, 107, 26, 12, 14], [20260713, 27.0, 453.74, 1013.69, 1891, 77, 28, 17, 11], [20260714, 28.0, 349.84, 839.46, 2170, 93, 27, 18, 9], [20260715, 32.0, 309.85, 1019.15, 1771, 93, 31, 13, 18], [20260716, 34.0, 319.85, 943.07, 2141, 107, 34, 13, 21], [20260717, 21.0, 355.47, 693.16, 1481, 86, 21, 13, 8], [20260718, 23.0, 391.52, 812.02, 1924, 95, 22, 8, 14], [20260719, 26.0, 489.92, 862.9, 1945, 109, 26, 16, 10], [20260720, 21.0, 304.81, 664.63, 1437, 77, 21, 9, 12], [20260721, 24.0, 459.59, 839.31, 1512, 63, 23, 12, 11], [20260722, 14.0, 385.7, 513.17, 1350, 75, 13, 9, 4], [20260723, 13.0, 382.72, 575.89, 1517, 73, 13, 4, 9], [20260724, 16.0, 585.08, 807.1, 1274, 61, 14, 9, 5], [20260725, 16.0, 441.95, 622.66, 1579, 102, 16, 12, 4], [20260726, 19.0, 582.44, 847.75, 2192, 93, 19, 9, 10], [20260727, 10.0, 233.01, 355.41, 1308, 50, 10, 4, 6], [20260728, 10.0, 197.64, 325.49, 1304, 56, 9, 5, 4], [20260729, 11.0, 281.98, 404.71, 1089, 48, 11, 11, 0], [20260730, 13.0, 562.27, 775.72, 1465, 75, 13, 8, 5], [20260731, 19.0, 499.42, 738.96, 1935, 75, 19, 8, 11], [20260801, 4.0, 96.25, 141.53, 1529, 65, 4, 2, 2], [20260802, 8.0, 371.55, 534.07, 1417, 66, 8, 6, 2], [20260803, 7.0, 318.22, 440.83, 681, 57, 7, 5, 2], [20260804, 9.0, 199.23, 311.74, 911, 45, 9, 6, 3], [20260805, 11.0, 382.75, 520.52, 1195, 57, 10, 6, 4], [20260806, 8.0, 435.07, 604.89, 1750, 54, 8, 7, 1], [20260807, 18.0, 532.2, 760.13, 1106, 65, 16, 11, 5], [20260808, 18.0, 593.03, 843.55, 1656, 75, 18, 15, 3], [20260809, 14.0, 368.92, 483.69, 2107, 77, 14, 10, 4], [20260810, 19.0, 558.2, 818.03, 1423, 62, 18, 9, 9], [20260811, 11.0, 251.22, 392.65, 1453, 54, 11, 6, 5], [20260812, 13.0, 405.55, 563.61, 1745, 67, 13, 6, 7], [20260813, 14.0, 384.98, 610.29, 1410, 59, 14, 9, 5], [20260814, 12.0, 372.6, 519.93, 1475, 77, 12, 8, 4], [20260815, 17.0, 398.77, 585.4, 1539, 68, 16, 12, 4], [20260816, 16.0, 303.5, 475.72, 1411, 73, 16, 9, 7], [20260817, 22.0, 459.86, 710.72, 1232, 65, 22, 10, 12], [20260818, 15.0, 318.5, 446.2, 1368, 69, 15, 10, 5], [20260819, 17.0, 408.28, 589.24, 1611, 72, 17, 9, 8], [20260820, 21.0, 429.93, 594.4, 1239, 69, 20, 11, 9], [20260821, 23.0, 589.02, 869.39, 1833, 82, 23, 14, 9], [20260822, 20.0, 510.21, 738.51, 1473, 77, 20, 10, 10], [20260823, 23.0, 559.27, 821.33, 1867, 96, 23, 14, 9], [20260824, 22.0, 455.74, 638.06, 1459, 67, 22, 18, 4], [20260825, 22.0, 418.53, 583.94, 1631, 76, 22, 13, 9], [20260826, 19.0, 465.08, 621.35, 1814, 94, 20, 16, 4]]}, "淘宝": {"万科": [[20260701, 33.0, 730.38, 895.79, 1221, 150, 33, 16, 17], [20260702, 27.0, 419.11, 502.28, 1142, 137, 27, 14, 13], [20260703, 24.0, 451.93, 549.98, 1157, 140, 24, 11, 13], [20260704, 17.0, 408.49, 433.0, 1256, 140, 17, 10, 7], [20260705, 26.0, 517.18, 640.98, 1310, 150, 25, 15, 10], [20260706, 28.0, 702.54, 784.32, 1326, 175, 27, 15, 12], [20260707, 18.0, 422.53, 528.0, 1563, 169, 17, 7, 10], [20260708, 24.0, 443.1, 559.79, 1480, 139, 24, 12, 12], [20260709, 17.0, 412.73, 505.26, 1477, 142, 17, 10, 7], [20260710, 27.0, 454.53, 533.6, 1821, 189, 26, 18, 8], [20260711, 30.0, 669.54, 824.35, 1879, 187, 30, 17, 13], [20260712, 29.0, 758.4, 887.21, 1820, 184, 27, 15, 12], [20260713, 21.0, 375.34, 502.73, 1592, 174, 22, 16, 6], [20260714, 18.0, 397.38, 412.55, 1675, 150, 17, 11, 6], [20260715, 15.0, 229.89, 311.65, 1495, 152, 15, 8, 7], [20260716, 19.0, 364.38, 405.85, 1521, 190, 18, 5, 13], [20260717, 21.0, 464.87, 572.69, 1569, 161, 21, 13, 8], [20260718, 21.0, 500.38, 553.15, 1674, 179, 21, 16, 5], [20260719, 40.0, 995.34, 1098.7, 1860, 209, 39, 25, 14], [20260720, 24.0, 427.72, 467.22, 1568, 170, 24, 16, 8], [20260721, 19.0, 377.55, 455.93, 1724, 182, 19, 12, 7], [20260722, 28.0, 617.44, 733.59, 1813, 173, 27, 15, 12], [20260723, 16.0, 421.36, 522.09, 1688, 179, 16, 8, 8], [20260724, 22.0, 548.06, 599.43, 1927, 205, 21, 10, 11], [20260725, 23.0, 522.37, 615.34, 1948, 188, 23, 11, 12], [20260726, 22.0, 531.61, 598.89, 1867, 192, 22, 11, 11], [20260727, 19.0, 357.0, 437.46, 1703, 157, 19, 13, 6], [20260728, 20.0, 553.33, 671.54, 1462, 150, 20, 12, 8], [20260729, 13.0, 278.7, 328.15, 1364, 119, 13, 10, 3], [20260730, 16.0, 358.68, 440.38, 1824, 163, 16, 8, 8], [20260731, 18.0, 441.87, 516.45, 1730, 154, 17, 11, 6], [20260801, 22.0, 492.41, 601.99, 1200, 125, 21, 11, 10], [20260802, 22.0, 499.2, 580.38, 1249, 112, 22, 12, 10], [20260803, 29.0, 659.32, 766.65, 1001, 103, 28, 17, 11], [20260804, 27.0, 516.96, 564.85, 1213, 125, 25, 14, 11], [20260805, 33.0, 583.08, 646.48, 1838, 173, 33, 20, 13], [20260806, 28.0, 574.96, 651.26, 1928, 182, 27, 16, 11], [20260807, 28.0, 678.94, 724.95, 2180, 165, 28, 19, 9], [20260808, 46.0, 1046.85, 1189.9, 2434, 199, 45, 25, 20], [20260809, 37.0, 783.01, 867.59, 2420, 206, 37, 18, 19], [20260810, 36.0, 530.17, 744.39, 2104, 178, 33, 19, 14], [20260811, 31.0, 573.35, 660.2, 1611, 153, 29, 16, 13], [20260812, 31.0, 785.96, 942.84, 1627, 157, 31, 19, 12], [20260813, 30.0, 608.15, 718.3, 1731, 145, 29, 15, 14], [20260814, 37.0, 655.93, 779.87, 1738, 169, 36, 18, 18], [20260815, 39.0, 689.66, 792.46, 1748, 174, 37, 14, 23], [20260816, 37.0, 826.42, 980.52, 1824, 188, 37, 24, 13], [20260817, 29.0, 665.07, 715.1, 1524, 156, 29, 16, 13], [20260818, 36.0, 713.51, 854.95, 1606, 158, 36, 14, 22], [20260819, 34.0, 804.06, 1030.44, 1783, 152, 33, 17, 16], [20260820, 46.0, 863.84, 1022.44, 1775, 198, 44, 26, 18], [20260821, 42.0, 860.65, 1025.71, 1862, 209, 42, 17, 25], [20260822, 30.0, 528.84, 682.9, 2194, 206, 30, 16, 14], [20260823, 47.0, 1108.04, 1216.57, 2389, 229, 48, 33, 15], [20260824, 31.0, 647.46, 782.83, 1728, 184, 31, 18, 13], [20260825, 32.0, 597.26, 727.86, 1810, 176, 32, 18, 14], [20260826, 38.0, 668.04, 804.8, 1704, 184, 37, 18, 19]], "子固路": [[20260701, 12.0, 249.51, 285.32, 1140, 99, 12, 9, 3], [20260702, 13.0, 335.52, 428.3, 1066, 100, 13, 11, 2], [20260703, 15.0, 367.28, 394.07, 941, 84, 15, 9, 6], [20260704, 15.0, 467.57, 540.86, 1175, 101, 15, 10, 5], [20260705, 15.0, 370.78, 469.6, 1092, 112, 15, 11, 4], [20260706, 12.0, 412.37, 422.8, 1177, 100, 12, 7, 5], [20260707, 6.0, 134.45, 163.6, 1232, 97, 6, 4, 2], [20260708, 10.0, 242.1, 289.9, 1102, 113, 9, 4, 5], [20260709, 10.0, 201.07, 249.59, 1130, 89, 10, 7, 3], [20260710, 9.0, 134.77, 143.0, 1243, 88, 8, 7, 1], [20260711, 13.0, 232.03, 324.8, 1350, 125, 13, 8, 5], [20260712, 15.0, 258.58, 379.75, 1274, 110, 15, 8, 7], [20260713, 19.0, 504.98, 536.42, 1107, 91, 19, 15, 4], [20260714, 8.0, 214.59, 275.0, 1128, 89, 8, 7, 1], [20260715, 13.0, 217.55, 271.44, 1194, 92, 13, 7, 6], [20260716, 15.0, 324.83, 398.7, 1260, 109, 15, 10, 5], [20260717, 17.0, 378.77, 503.8, 1318, 119, 17, 11, 6], [20260718, 16.0, 448.53, 444.24, 1417, 129, 16, 13, 3], [20260719, 25.0, 660.63, 717.79, 1637, 167, 22, 13, 9], [20260720, 16.0, 365.4, 485.74, 1257, 100, 15, 9, 6], [20260721, 21.0, 417.61, 545.14, 1259, 125, 19, 13, 6], [20260722, 15.0, 366.08, 429.34, 1378, 107, 14, 10, 4], [20260723, 20.0, 499.81, 603.34, 1428, 122, 16, 13, 3], [20260724, 16.0, 576.66, 558.2, 1492, 109, 15, 12, 3], [20260725, 22.0, 686.29, 798.24, 1761, 147, 22, 13, 9], [20260726, 11.0, 320.28, 384.54, 1887, 153, 11, 7, 4], [20260727, 21.0, 480.13, 601.49, 1873, 144, 21, 12, 9], [20260728, 13.0, 257.45, 311.59, 1682, 126, 13, 9, 4], [20260729, 14.0, 385.82, 446.07, 1539, 111, 14, 12, 2], [20260730, 19.0, 477.95, 538.95, 1772, 141, 19, 10, 9], [20260731, 19.0, 453.08, 534.35, 2130, 146, 19, 10, 9], [20260801, 17.0, 465.74, 518.58, 1340, 79, 15, 5, 10], [20260802, 19.0, 543.57, 585.64, 1176, 80, 19, 15, 4], [20260803, 14.0, 360.73, 423.3, 902, 78, 14, 5, 9], [20260804, 20.0, 357.62, 391.09, 1032, 83, 19, 11, 8], [20260805, 24.0, 613.45, 702.47, 1636, 150, 23, 15, 8], [20260806, 22.0, 427.37, 525.22, 1605, 146, 22, 17, 5], [20260807, 35.0, 671.34, 853.0, 1906, 153, 31, 18, 13], [20260808, 24.0, 709.88, 707.73, 2345, 172, 25, 17, 8], [20260809, 26.0, 650.49, 830.75, 2460, 176, 25, 11, 14], [20260810, 32.0, 614.24, 671.92, 2177, 157, 29, 19, 10], [20260811, 25.0, 731.37, 809.1, 1606, 140, 25, 15, 10], [20260812, 19.0, 503.25, 599.65, 1635, 147, 19, 14, 5], [20260813, 21.0, 469.65, 566.99, 1746, 138, 21, 13, 8], [20260814, 26.0, 687.67, 782.54, 1912, 164, 26, 16, 10], [20260815, 32.0, 643.11, 801.38, 1794, 152, 30, 16, 14], [20260816, 33.0, 662.15, 846.28, 1796, 159, 32, 21, 11], [20260817, 28.0, 680.48, 744.67, 1646, 131, 27, 12, 15], [20260818, 27.0, 693.82, 835.44, 1558, 148, 27, 19, 8], [20260819, 24.0, 649.74, 781.75, 1653, 133, 24, 17, 7], [20260820, 32.0, 636.25, 790.85, 1699, 156, 30, 17, 13], [20260821, 21.0, 358.31, 489.27, 1751, 145, 21, 10, 11], [20260822, 27.0, 545.2, 747.05, 2175, 171, 27, 19, 8], [20260823, 24.0, 601.44, 727.66, 2070, 173, 24, 16, 8], [20260824, 36.0, 780.69, 880.58, 1497, 135, 34, 24, 10], [20260825, 22.0, 432.5, 513.83, 1586, 135, 22, 12, 10], [20260826, 29.0, 504.96, 614.1, 1600, 156, 29, 17, 12]], "印象城": [[20260701, 32.0, 566.89, 741.22, 2349, 232, 31, 19, 12], [20260702, 29.0, 606.33, 720.97, 2086, 203, 28, 19, 9], [20260703, 38.0, 896.98, 1026.25, 2093, 211, 37, 25, 12], [20260704, 28.0, 667.11, 814.77, 2204, 250, 28, 17, 11], [20260705, 37.0, 876.51, 1066.23, 2384, 240, 37, 24, 13], [20260706, 32.0, 703.97, 915.8, 2220, 214, 32, 20, 12], [20260707, 34.0, 678.46, 815.96, 2288, 211, 32, 20, 12], [20260708, 35.0, 682.95, 872.39, 2449, 247, 33, 19, 14], [20260709, 40.0, 958.36, 1162.59, 2724, 252, 39, 24, 15], [20260710, 37.0, 825.86, 1048.06, 2508, 243, 37, 25, 12], [20260711, 40.0, 903.09, 1138.53, 2906, 260, 39, 21, 18], [20260712, 38.0, 855.05, 997.01, 3105, 270, 38, 28, 10], [20260713, 30.0, 537.86, 694.94, 2755, 258, 30, 24, 6], [20260714, 34.0, 733.25, 902.79, 2341, 258, 32, 19, 13], [20260715, 35.0, 632.0, 864.98, 2570, 245, 33, 25, 8], [20260716, 42.0, 679.03, 949.34, 2527, 244, 41, 26, 15], [20260717, 34.0, 672.24, 815.9, 2823, 289, 34, 18, 16], [20260718, 35.0, 920.24, 1023.16, 2791, 291, 35, 26, 9], [20260719, 45.0, 1031.85, 1180.64, 3048, 313, 45, 33, 12], [20260720, 41.0, 1023.74, 1250.04, 2578, 277, 41, 26, 15], [20260721, 39.0, 778.47, 1003.72, 2900, 271, 38, 25, 13], [20260722, 30.0, 546.93, 690.3, 2865, 272, 29, 21, 8], [20260723, 21.0, 499.6, 584.75, 2935, 246, 21, 9, 12], [20260724, 23.0, 575.04, 711.1, 2784, 225, 23, 15, 8], [20260725, 31.0, 855.77, 980.59, 3624, 287, 31, 25, 6], [20260726, 38.0, 1229.27, 1488.08, 2885, 261, 38, 23, 15], [20260727, 27.0, 641.63, 676.26, 2568, 240, 27, 18, 9], [20260728, 25.0, 605.36, 688.4, 2461, 246, 24, 18, 6], [20260729, 38.0, 1015.61, 1217.64, 2254, 194, 36, 24, 12], [20260730, 34.0, 710.45, 813.38, 2687, 233, 34, 24, 10], [20260731, 24.0, 642.42, 751.33, 2971, 223, 25, 13, 12], [20260801, 45.0, 1007.91, 1257.42, 2350, 188, 41, 29, 12], [20260802, 42.0, 1088.91, 1211.73, 2409, 198, 41, 27, 14], [20260803, 35.0, 766.54, 849.8, 2120, 145, 35, 22, 13], [20260804, 49.0, 1077.03, 1271.91, 2081, 175, 46, 29, 17], [20260805, 52.0, 1263.11, 1424.53, 2989, 246, 48, 26, 22], [20260806, 53.0, 1127.79, 1357.31, 3344, 269, 50, 36, 14], [20260807, 39.0, 919.88, 1068.76, 3873, 242, 38, 27, 11], [20260808, 60.0, 1594.3, 1789.31, 3747, 287, 59, 37, 22], [20260809, 52.0, 1240.65, 1422.16, 4146, 293, 49, 31, 18], [20260810, 48.0, 1006.15, 1287.48, 3578, 270, 46, 28, 18], [20260811, 47.0, 1263.36, 1361.33, 2851, 234, 44, 24, 20], [20260812, 39.0, 835.63, 1031.17, 2853, 225, 38, 23, 15], [20260813, 32.0, 574.78, 757.08, 2826, 241, 32, 18, 14], [20260814, 47.0, 992.08, 1204.87, 3161, 252, 47, 21, 26], [20260815, 60.0, 1390.42, 1526.06, 2562, 232, 55, 33, 22], [20260816, 44.0, 943.59, 1223.62, 2860, 236, 45, 29, 16], [20260817, 40.0, 887.59, 1005.61, 2463, 210, 38, 14, 24], [20260818, 35.0, 575.13, 743.86, 2556, 205, 35, 19, 16], [20260819, 54.0, 1131.92, 1369.81, 2678, 239, 52, 30, 22], [20260820, 37.0, 809.77, 977.68, 2508, 232, 38, 19, 19], [20260821, 61.0, 1142.06, 1386.46, 2881, 244, 59, 37, 22], [20260822, 75.0, 1389.27, 1714.31, 3261, 292, 75, 44, 31], [20260823, 67.0, 1669.93, 1988.45, 3517, 272, 65, 42, 23], [20260824, 46.0, 656.38, 1007.69, 2867, 246, 45, 24, 21], [20260825, 41.0, 724.87, 876.89, 3036, 261, 36, 20, 16], [20260826, 43.0, 923.05, 1111.54, 3111, 250, 43, 26, 17]], "科兴": [[20260701, 11.0, 171.01, 211.06, 553, 74, 11, 6, 5], [20260702, 15.0, 256.21, 322.8, 687, 113, 15, 7, 8], [20260703, 10.0, 242.79, 296.57, 769, 126, 10, 6, 4], [20260704, 18.0, 389.23, 457.07, 798, 124, 17, 12, 5], [20260705, 8.0, 187.29, 227.31, 588, 74, 8, 6, 2], [20260706, 7.0, 104.15, 154.15, 1496, 91, 7, 3, 4], [20260707, 16.0, 279.8, 357.05, 1370, 109, 16, 11, 5], [20260708, 9.0, 233.02, 290.75, 1347, 86, 9, 6, 3], [20260709, 10.0, 159.41, 205.24, 998, 77, 10, 7, 3], [20260710, 11.0, 199.01, 304.94, 1098, 90, 11, 10, 1], [20260711, 16.0, 349.74, 424.48, 1050, 86, 16, 11, 5], [20260712, 18.0, 372.43, 468.37, 1099, 79, 18, 14, 4], [20260713, 15.0, 274.77, 359.34, 1040, 94, 15, 13, 2], [20260714, 17.0, 291.25, 359.78, 1054, 92, 17, 10, 7], [20260715, 16.0, 293.33, 365.51, 1125, 100, 16, 11, 5], [20260716, 23.0, 381.25, 531.32, 1401, 95, 23, 17, 6], [20260717, 19.0, 246.83, 349.53, 1760, 114, 19, 12, 7], [20260718, 20.0, 429.91, 539.51, 1383, 106, 20, 16, 4], [20260719, 11.0, 290.61, 341.18, 1332, 105, 11, 8, 3], [20260720, 26.0, 439.26, 542.58, 1244, 91, 27, 17, 10], [20260721, 21.0, 349.14, 460.34, 1490, 93, 20, 16, 4], [20260722, 28.0, 377.62, 492.36, 1542, 125, 28, 19, 9], [20260723, 17.0, 291.23, 392.58, 1459, 104, 19, 13, 6], [20260724, 25.0, 433.67, 516.21, 1911, 124, 25, 18, 7], [20260725, 19.0, 555.49, 664.7, 1996, 115, 19, 14, 5], [20260726, 23.0, 469.2, 552.9, 1633, 114, 23, 17, 6], [20260727, 33.0, 587.51, 730.27, 1615, 112, 33, 24, 9], [20260728, 31.0, 514.52, 680.01, 1760, 133, 30, 23, 7], [20260729, 23.0, 408.38, 523.58, 2036, 144, 23, 13, 10], [20260730, 26.0, 420.5, 510.37, 2040, 118, 26, 10, 16], [20260731, 36.0, 742.55, 881.39, 1802, 127, 36, 26, 10], [20260801, 17.0, 421.71, 448.71, 749, 64, 17, 9, 8], [20260802, 21.0, 402.55, 490.21, 853, 85, 21, 11, 10], [20260803, 17.0, 314.53, 397.59, 555, 52, 17, 8, 9], [20260804, 18.0, 253.38, 318.87, 722, 68, 18, 11, 7], [20260805, 20.0, 678.44, 791.12, 2164, 115, 20, 11, 9], [20260806, 31.0, 589.68, 683.75, 1879, 127, 31, 20, 11], [20260807, 26.0, 382.68, 439.65, 1862, 109, 22, 16, 6], [20260808, 16.0, 262.74, 325.27, 1652, 93, 16, 7, 9], [20260809, 19.0, 403.89, 462.98, 1430, 108, 19, 14, 5], [20260810, 23.0, 359.18, 428.21, 1662, 112, 22, 16, 6], [20260811, 34.0, 569.0, 708.96, 1431, 109, 34, 23, 11], [20260812, 36.0, 693.91, 839.52, 1464, 107, 36, 21, 15], [20260813, 37.0, 557.98, 688.88, 1743, 129, 35, 24, 11], [20260814, 43.0, 763.1, 953.42, 1868, 158, 43, 28, 15], [20260815, 48.0, 612.89, 834.87, 2257, 172, 45, 37, 8], [20260816, 34.0, 469.01, 652.73, 2930, 203, 34, 23, 11], [20260817, 32.0, 374.32, 477.36, 3249, 189, 32, 21, 11], [20260818, 48.0, 619.12, 861.89, 3048, 187, 48, 37, 11], [20260819, 35.0, 534.44, 704.5, 3494, 168, 35, 24, 11], [20260820, 34.0, 512.14, 690.58, 3236, 179, 34, 29, 5], [20260821, 41.0, 621.96, 868.86, 2886, 163, 40, 30, 10], [20260822, 28.0, 589.94, 698.17, 2695, 145, 28, 16, 12], [20260823, 23.0, 439.73, 527.66, 2630, 140, 23, 18, 5], [20260824, 26.0, 302.31, 417.53, 2348, 132, 26, 16, 10], [20260825, 38.0, 579.22, 743.89, 1686, 144, 37, 23, 14], [20260826, 40.0, 680.68, 891.31, 2116, 162, 39, 28, 11]], "益田": [[20260701, 9.0, 184.72, 218.3, 792, 63, 9, 6, 3], [20260702, 16.0, 299.24, 339.18, 834, 76, 15, 7, 8], [20260703, 9.0, 81.29, 126.69, 867, 77, 10, 6, 4], [20260704, 11.0, 143.29, 219.08, 910, 64, 11, 7, 4], [20260705, 12.0, 171.1, 231.27, 913, 62, 12, 8, 4], [20260706, 18.0, 265.85, 358.38, 1252, 70, 18, 11, 7], [20260707, 20.0, 246.21, 352.47, 1365, 90, 20, 14, 6], [20260708, 18.0, 273.54, 380.61, 1330, 84, 18, 11, 7], [20260709, 16.0, 124.26, 209.28, 1474, 109, 16, 10, 6], [20260710, 22.0, 350.0, 463.93, 1448, 115, 20, 15, 5], [20260711, 9.0, 145.63, 197.91, 1353, 93, 9, 3, 6], [20260712, 29.0, 372.25, 501.21, 1523, 127, 30, 19, 11], [20260713, 18.0, 211.85, 300.16, 1366, 118, 18, 11, 7], [20260714, 23.0, 293.12, 430.29, 1467, 134, 23, 16, 7], [20260715, 19.0, 301.77, 404.6, 1507, 140, 19, 11, 8], [20260716, 24.0, 261.34, 389.0, 1752, 126, 22, 15, 7], [20260717, 20.0, 296.93, 417.01, 1958, 134, 20, 12, 8], [20260718, 14.0, 237.66, 321.58, 1808, 127, 14, 10, 4], [20260719, 16.0, 222.7, 290.04, 1819, 147, 15, 11, 4], [20260720, 30.0, 343.76, 491.18, 1540, 121, 30, 20, 10], [20260721, 16.0, 248.55, 334.84, 1555, 107, 16, 10, 6], [20260722, 23.0, 299.58, 398.97, 1374, 121, 23, 13, 10], [20260723, 25.0, 283.53, 395.61, 1558, 142, 24, 12, 12], [20260724, 16.0, 192.34, 283.81, 1596, 120, 16, 7, 9], [20260725, 30.0, 425.94, 544.92, 1914, 139, 30, 17, 13], [20260726, 28.0, 428.78, 529.6, 1835, 159, 28, 22, 6], [20260727, 24.0, 324.33, 462.35, 1517, 172, 24, 13, 11], [20260728, 25.0, 272.49, 407.52, 1766, 150, 25, 16, 9], [20260729, 17.0, 223.67, 278.02, 1846, 120, 17, 10, 7], [20260730, 38.0, 576.79, 753.27, 1913, 143, 36, 28, 8], [20260731, 29.0, 379.94, 521.2, 1781, 105, 29, 18, 11], [20260801, 14.0, 184.5, 261.54, 1190, 63, 14, 8, 6], [20260802, 19.0, 341.54, 429.73, 1273, 77, 19, 12, 7], [20260803, 33.0, 386.92, 502.59, 885, 79, 32, 19, 13], [20260804, 14.0, 132.22, 209.8, 970, 57, 15, 10, 5], [20260805, 15.0, 172.1, 244.42, 2100, 88, 15, 6, 9], [20260806, 28.0, 435.19, 552.25, 1533, 82, 27, 19, 8], [20260807, 25.0, 364.98, 446.62, 1599, 94, 25, 13, 12], [20260808, 24.0, 343.94, 406.71, 1527, 89, 24, 11, 13], [20260809, 20.0, 340.32, 418.58, 1466, 91, 20, 9, 11], [20260810, 16.0, 218.27, 301.81, 1334, 81, 16, 10, 6], [20260811, 27.0, 423.56, 522.75, 1143, 78, 26, 15, 11], [20260812, 19.0, 273.3, 316.13, 1084, 73, 18, 8, 10], [20260813, 21.0, 360.24, 448.98, 1128, 74, 21, 7, 14], [20260814, 49.0, 448.9, 693.66, 1258, 120, 47, 25, 22], [20260815, 40.0, 353.35, 594.75, 1735, 139, 36, 19, 17], [20260816, 28.0, 323.99, 435.45, 2246, 184, 28, 18, 10], [20260817, 42.0, 396.35, 666.1, 2870, 174, 43, 30, 13], [20260818, 31.0, 338.89, 510.33, 2872, 161, 31, 18, 13], [20260819, 36.0, 262.34, 494.47, 3100, 152, 35, 25, 10], [20260820, 34.0, 351.1, 534.83, 2640, 142, 34, 18, 16], [20260821, 33.0, 405.69, 609.93, 2217, 150, 33, 25, 8], [20260822, 34.0, 436.06, 597.94, 2622, 152, 32, 16, 16], [20260823, 31.0, 475.12, 595.2, 2669, 156, 31, 18, 13], [20260824, 40.0, 413.9, 624.35, 2500, 148, 40, 26, 14], [20260825, 21.0, 219.38, 299.64, 1425, 101, 21, 14, 7], [20260826, 40.0, 442.89, 645.31, 1388, 128, 40, 23, 17]]}, "京东": {"万科": [[20260701, 0.0, 0.0, 0.0, 108, 6, 0, 0, 0], [20260702, 1.0, 35.79, 43.69, 95, 11, 1, 0, 0], [20260703, 2.0, 54.0, 40.39, 83, 11, 2, 0, 0], [20260704, 3.0, 90.58, 108.58, 100, 18, 3, 0, 0], [20260705, 3.0, 69.21, 76.83, 128, 15, 3, 0, 0], [20260706, 1.0, 12.54, 16.8, 117, 11, 1, 0, 0], [20260707, 0.0, 0.0, 0.0, 133, 15, 0, 0, 0], [20260708, 0.0, 0.0, 0.0, 126, 9, 0, 0, 0], [20260709, 1.0, 20.06, 22.08, 135, 12, 1, 0, 0], [20260710, 1.0, 17.33, 24.6, 111, 15, 1, 0, 0], [20260711, 1.0, 28.98, 35.8, 115, 10, 1, 0, 0], [20260712, 0.0, 0.0, 0.0, 132, 11, 0, 0, 0], [20260713, 0.0, 0.0, 0.0, 84, 6, 0, 0, 0], [20260714, 0.0, 0.0, 0.0, 76, 6, 0, 0, 0], [20260715, 0.0, 0.0, 0.0, 83, 7, 0, 0, 0], [20260716, 0.0, 0.0, 0.0, 100, 8, 0, 0, 0], [20260717, 1.0, 31.21, 33.22, 106, 10, 1, 0, 0], [20260718, 4.0, 54.08, 63.2, 101, 9, 4, 0, 0], [20260719, 3.0, 15.85, 16.9, 135, 16, 3, 0, 0], [20260720, 3.0, 83.81, 99.4, 138, 13, 3, 0, 0], [20260721, 0.0, 0.0, 0.0, 124, 10, 0, 0, 0], [20260722, 3.0, 61.88, 80.3, 167, 9, 3, 0, 0], [20260723, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0], [20260724, 5.0, 58.67, 67.0, 151, 10, 5, 0, 0], [20260725, 2.0, 55.52, 74.26, 140, 16, 2, 0, 0], [20260726, 4.0, 48.14, 24.96, 137, 13, 4, 0, 0], [20260727, 26.0, 73.5, 93.45, 176, 19, 26, 0, 0], [20260728, 7.0, 34.12, 41.01, 207, 17, 7, 0, 0], [20260729, 5.0, 34.94, 46.2, 232, 18, 5, 0, 0], [20260730, 6.0, 68.89, 14.2, 210, 15, 6, 0, 0], [20260731, 3.0, -0.15, 4.5, 174, 14, 3, 0, 0], [20260801, 0.0, 0.0, 0.0, 160, 19, 0, 0, 0], [20260802, 18.0, 28.9, 44.66, 152, 23, 18, 0, 0], [20260803, 17.0, 31.35, 53.19, 180, 21, 17, 0, 0], [20260804, 3.0, 55.34, 72.0, 179, 21, 3, 0, 0], [20260805, 3.0, 15.73, 19.1, 189, 18, 3, 0, 0], [20260806, 0.0, 0.0, 0.0, 150, 15, 0, 0, 0], [20260807, 3.0, 16.75, 17.9, 134, 11, 3, 0, 0], [20260808, 0.0, 0.0, 0.0, 152, 15, 0, 0, 0], [20260809, 1.0, 61.93, 76.02, 159, 12, 1, 0, 0], [20260810, 4.0, 44.05, 56.3, 136, 16, 4, 0, 0], [20260811, 0.0, 0.0, 0.0, 122, 12, 0, 0, 0], [20260812, 1.0, 43.49, 47.88, 117, 11, 1, 0, 0], [20260813, 1.0, 13.05, 17.08, 87, 13, 1, 0, 0], [20260814, 2.0, 43.59, 56.2, 108, 13, 2, 0, 0], [20260815, 0.0, 0.0, 0.0, 139, 10, 0, 0, 0], [20260816, 0.0, 0.0, 0.0, 139, 11, 0, 0, 0], [20260817, 0.0, -0.11, 0.0, 146, 7, 0, 0, 0], [20260818, 0.0, 0.0, 0.0, 98, 6, 0, 0, 0], [20260819, 2.0, 38.57, 39.38, 117, 9, 2, 0, 0], [20260820, 0.0, 0.0, 0.0, 117, 12, 0, 0, 0], [20260821, 2.0, 43.3, 49.38, 156, 12, 2, 0, 0], [20260822, 1.0, 24.42, 25.49, 154, 10, 1, 0, 0], [20260823, 3.0, 72.9, 84.87, 157, 15, 3, 0, 0], [20260824, 3.0, 112.38, 127.38, 164, 12, 3, 0, 0], [20260825, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0], [20260826, 0.0, 0.0, 0.0, 142, 13, 0, 0, 0]], "子固路": [[20260701, 0.0, 0.0, 0.0, 48, 2, 0, 0, 0], [20260702, 0.0, 0.0, 0.0, 39, 2, 0, 0, 0], [20260703, 0.0, 0.0, 0.0, 46, 1, 0, 0, 0], [20260704, 0.0, 0.0, 0.0, 66, 2, 0, 0, 0], [20260705, 0.0, 0.0, 0.0, 44, 2, 0, 0, 0], [20260706, 0.0, 0.0, 0.0, 47, 1, 0, 0, 0], [20260707, 0.0, 0.0, 0.0, 47, 3, 0, 0, 0], [20260708, 0.0, 0.0, 0.0, 44, 3, 0, 0, 0], [20260709, 0.0, 0.0, 0.0, 35, 0, 0, 0, 0], [20260710, 0.0, 0.0, 0.0, 43, 1, 0, 0, 0], [20260711, 0.0, 0.0, 0.0, 54, 2, 0, 0, 0], [20260712, 0.0, 0.0, 0.0, 42, 2, 0, 0, 0], [20260713, 0.0, 0.0, 0.0, 46, 2, 0, 0, 0], [20260714, 0.0, 0.0, 0.0, 43, 4, 0, 0, 0], [20260715, 0.0, 0.0, 0.0, 41, 1, 0, 0, 0], [20260716, 0.0, 0.0, 0.0, 50, 6, 0, 0, 0], [20260717, 0.0, 0.0, 0.0, 46, 0, 0, 0, 0], [20260718, 0.0, 0.0, 0.0, 35, 3, 0, 0, 0], [20260719, 0.0, 0.0, 0.0, 37, 3, 0, 0, 0], [20260720, 0.0, 0.0, 0.0, 22, 2, 0, 0, 0], [20260721, 0.0, 0.0, 0.0, 25, 1, 0, 0, 0], [20260722, 0.0, 0.0, 0.0, 32, 2, 0, 0, 0], [20260723, 0.0, 0.0, 0.0, 24, 3, 0, 0, 0], [20260724, 0.0, 0.0, 0.0, 29, 0, 0, 0, 0], [20260725, 0.0, 0.0, 0.0, 37, 1, 0, 0, 0], [20260726, 0.0, 0.0, 0.0, 32, 5, 0, 0, 0], [20260727, 0.0, 0.0, 0.0, 25, 2, 0, 0, 0], [20260728, 0.0, 0.0, 0.0, 25, 1, 0, 0, 0], [20260729, 0.0, 0.0, 0.0, 30, 1, 0, 0, 0], [20260730, 0.0, -0.12, 0.0, 26, 1, 0, 0, 0], [20260731, 0.0, 0.0, 0.0, 21, 0, 0, 0, 0], [20260801, 0.0, 0.0, 0.0, 23, 0, 0, 0, 0], [20260802, 0.0, 0.0, 0.0, 31, 4, 0, 0, 0], [20260803, 0.0, 0.0, 0.0, 23, 4, 0, 0, 0], [20260804, 0.0, 0.0, 0.0, 28, 1, 0, 0, 0], [20260805, 0.0, 0.0, 0.0, 26, 0, 0, 0, 0], [20260806, 0.0, 0.0, 0.0, 14, 1, 0, 0, 0], [20260807, 0.0, 0.0, 0.0, 23, 0, 0, 0, 0], [20260808, 0.0, 0.0, 0.0, 19, 2, 0, 0, 0], [20260809, 0.0, 0.0, 0.0, 26, 4, 0, 0, 0], [20260810, 0.0, 0.0, 0.0, 22, 0, 0, 0, 0], [20260811, 0.0, 0.0, 0.0, 24, 1, 0, 0, 0], [20260812, 0.0, 0.0, 0.0, 29, 1, 0, 0, 0], [20260813, 0.0, 0.0, 0.0, 18, 0, 0, 0, 0], [20260814, 0.0, 0.0, 0.0, 27, 1, 0, 0, 0], [20260815, 0.0, 0.0, 0.0, 24, 2, 0, 0, 0], [20260816, 3.0, 15.91, 20.8, 25, 1, 3, 0, 0], [20260817, 0.0, 0.0, 0.0, 24, 1, 0, 0, 0], [20260818, 0.0, 0.0, 0.0, 60, 1, 0, 0, 0], [20260819, 1.0, 24.72, 29.38, 78, 5, 1, 0, 0], [20260820, 0.0, 0.0, 0.0, 60, 2, 0, 0, 0], [20260821, 0.0, 0.0, 0.0, 42, 1, 0, 0, 0], [20260822, 3.0, 14.41, 20.8, 35, 4, 3, 0, 0], [20260823, 0.0, 0.0, 0.0, 33, 2, 0, 0, 0], [20260824, 0.0, 0.0, 0.0, 44, 1, 0, 0, 0], [20260825, 0.0, 0.0, 0.0, 39, 2, 0, 0, 0], [20260826, 0.0, 0.0, 0.0, 54, 4, 0, 0, 0]], "印象城": [[20260701, 0.0, 0.0, 0.0, 47, 3, 0, 0, 0], [20260702, 0.0, 0.0, 0.0, 49, 1, 0, 0, 0], [20260703, 0.0, 0.0, 0.0, 34, 1, 0, 0, 0], [20260704, 0.0, 0.0, 0.0, 39, 1, 0, 0, 0], [20260705, 0.0, 0.0, 0.0, 47, 7, 0, 0, 0], [20260706, 0.0, 0.0, 0.0, 37, 4, 0, 0, 0], [20260707, 0.0, 0.0, 0.0, 32, 1, 0, 0, 0], [20260708, 0.0, 0.0, 0.0, 32, 0, 0, 0, 0], [20260709, 0.0, 0.0, 0.0, 51, 1, 0, 0, 0], [20260710, 0.0, 0.0, 0.0, 28, 3, 0, 0, 0], [20260711, 0.0, 0.0, 0.0, 47, 5, 0, 0, 0], [20260712, 0.0, 0.0, 0.0, 50, 2, 0, 0, 0], [20260713, 0.0, 0.0, 0.0, 47, 6, 0, 0, 0], [20260714, 0.0, 0.0, 0.0, 48, 6, 0, 0, 0], [20260715, 0.0, 0.92, 0.0, 41, 5, 0, 0, 0], [20260716, 0.0, 0.0, 0.0, 58, 3, 0, 0, 0], [20260717, 0.0, 0.0, 0.0, 132, 1, 0, 0, 0], [20260718, 0.0, 0.0, 0.0, 91, 3, 0, 0, 0], [20260719, 0.0, 0.0, 0.0, 90, 3, 0, 0, 0], [20260720, 0.0, 0.0, 0.0, 80, 3, 0, 0, 0], [20260721, 0.0, 0.0, 0.0, 71, 5, 0, 0, 0], [20260722, 1.0, 52.57, 65.6, 65, 5, 1, 0, 0], [20260723, 0.0, 0.0, 0.0, 83, 4, 0, 0, 0], [20260724, 0.0, 0.0, 0.0, 98, 6, 0, 0, 0], [20260725, 0.0, 0.0, 0.0, 103, 3, 0, 0, 0], [20260726, 0.0, 0.0, 0.0, 134, 5, 0, 0, 0], [20260727, 1.0, 14.61, 16.9, 186, 7, 1, 0, 0], [20260728, 0.0, 0.0, 0.0, 138, 1, 0, 0, 0], [20260729, 0.0, 0.0, 0.0, 101, 1, 0, 0, 0], [20260730, 4.0, 27.79, 32.7, 180, 7, 4, 0, 0], [20260731, 0.0, 0.0, 0.0, 90, 6, 0, 0, 0], [20260801, 1.0, 14.91, 20.0, 107, 5, 1, 0, 0], [20260802, 0.0, 0.0, 0.0, 122, 6, 0, 0, 0], [20260803, 0.0, 0.0, 0.0, 181, 2, 0, 0, 0], [20260804, 0.0, 0.0, 0.0, 139, 4, 0, 0, 0], [20260805, 0.0, 0.0, 0.0, 212, 6, 0, 0, 0], [20260806, 0.0, 0.0, 0.0, 120, 6, 0, 0, 0], [20260807, 0.0, 0.0, 0.0, 142, 5, 0, 0, 0], [20260808, 0.0, 0.0, 0.0, 189, 1, 0, 0, 0], [20260809, 0.0, 0.0, 0.0, 243, 4, 0, 0, 0], [20260810, 0.0, 0.0, 0.0, 190, 4, 0, 0, 0], [20260811, 0.0, 0.0, 0.0, 234, 8, 0, 0, 0], [20260812, 0.0, 0.0, 0.0, 109, 5, 0, 0, 0], [20260813, 0.0, 0.0, 0.0, 74, 3, 0, 0, 0], [20260814, 0.0, 0.0, 0.0, 82, 5, 0, 0, 0], [20260815, 0.0, 0.0, 0.0, 50, 3, 0, 0, 0], [20260816, 0.0, 0.0, 0.0, 48, 4, 0, 0, 0], [20260817, 0.0, 0.0, 0.0, 69, 2, 0, 0, 0], [20260818, 0.0, 0.0, 0.0, 47, 9, 0, 0, 0], [20260819, 0.0, 0.0, 0.0, 47, 1, 0, 0, 0], [20260820, 0.0, 0.0, 0.0, 52, 5, 0, 0, 0], [20260821, 0.0, 0.0, 0.0, 65, 8, 0, 0, 0], [20260822, 0.0, 0.0, 0.0, 69, 7, 0, 0, 0], [20260823, 0.0, 0.0, 0.0, 58, 6, 0, 0, 0], [20260824, 0.0, 0.0, 0.0, 60, 6, 0, 0, 0], [20260825, 0.0, 0.0, 0.0, 58, 5, 0, 0, 0], [20260826, 0.0, 0.0, 0.0, 53, 5, 0, 0, 0]], "科兴": [], "益田": []}};
+
 var STORE_NAMES = ["万科", "子固路", "印象城", "科兴", "益田"];
+
 var PLATS = ['美团','淘宝','京东'];
+
 var POS_DATA = {"万科": {"name": "万科", "7月": {"pos_sales": 48097.74, "income": 32993.61, "cost": 21643.98, "profit": 11349.63, "expense": 15104.13, "rate": 0.314}, "8月": {"pos_sales": 43557.55, "income": 34182.85, "cost": 19600.9, "profit": 14581.95, "expense": 9374.7, "rate": 0.2152}, "合计": {"pos_sales": 91655.29, "income": 67176.45999999999, "cost": 41244.88, "profit": 25931.58, "expense": 24478.83, "rate": 0.2671}}, "子固路": {"name": "子固路", "7月": {"pos_sales": 36163.64, "income": 23688.96, "cost": 16273.64, "profit": 7415.32, "expense": 12474.68, "rate": 0.345}, "8月": {"pos_sales": 34156.08, "income": 24831.42, "cost": 15370.24, "profit": 9461.18, "expense": 9324.66, "rate": 0.273}, "合计": {"pos_sales": 70319.72, "income": 48520.38, "cost": 31643.87, "profit": 16876.51, "expense": 21799.34, "rate": 0.31}}, "印象城": {"name": "印象城", "7月": {"pos_sales": 63156.24, "income": 42385.34, "cost": 28420.31, "profit": 13965.03, "expense": 20770.9, "rate": 0.3289}, "8月": {"pos_sales": 63125.91, "income": 47043.59, "cost": 28406.66, "profit": 18636.93, "expense": 16082.32, "rate": 0.2548}, "合计": {"pos_sales": 126282.15, "income": 89428.93, "cost": 56826.97, "profit": 32601.96, "expense": 36853.22, "rate": 0.2918}}, "科兴": {"name": "科兴", "7月": {"pos_sales": 47222.46, "income": 30918.42, "cost": 21250.11, "profit": 9668.31, "expense": 16304.04, "rate": 0.3453}, "8月": {"pos_sales": 42853.97, "income": 29417.59, "cost": 19284.29, "profit": 10133.3, "expense": 13436.38, "rate": 0.3135}, "合计": {"pos_sales": 90076.43, "income": 60336.009999999995, "cost": 40534.39, "profit": 19801.62, "expense": 29740.42, "rate": 0.3302}}, "益田": {"name": "益田", "7月": {"pos_sales": 45164.14, "income": 21412.9, "cost": 20323.86, "profit": 1089.04, "expense": 23751.24, "rate": 0.5259}, "8月": {"pos_sales": 31993.98, "income": 19431.5, "cost": 14397.29, "profit": 5034.21, "expense": 12562.48, "rate": 0.3927}, "合计": {"pos_sales": 77158.12, "income": 40844.4, "cost": 34721.15, "profit": 6123.25, "expense": 36313.72, "rate": 0.4706}}};
 
 
+
+
+
 function renderKpi(data) {
+
   // 5店总计 KPI（随 date-bar 动态变化）
+
   var t1 = {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0};
+
   var t2 = {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0};
+
   STORE_NAMES.forEach(function(nm) {
+
     if (CUR_STORE && nm !== CUR_STORE) return;
+
     var src = CUR_PLAT ? data[nm].plats[CUR_PLAT] : data[nm];
+
     var a1 = src.a1, a2 = src.a2;
+
     Object.keys(t1).forEach(function(k) { t1[k] += a1[k]; t2[k] += a2[k]; });
+
   });
+
   function kf(v) { return v.toLocaleString('zh-CN', {maximumFractionDigits: 0}); }
+
   function kd(v) { return v.toLocaleString('zh-CN', {maximumFractionDigits: 1}); }
+
   function kpct(a, b) {
+
     if (!a) return '<span class="muted">-</span>';
+
     var p = (b-a)/Math.abs(a)*100;
+
     var cls = p > 0 ? 'up' : (p < 0 ? 'down' : 'muted');
+
     var s = p > 0 ? '+' : '';
+
     return '<span class="' + cls + '">' + s + p.toFixed(1) + '%</span>';
+
   }
+
   var k1 = t1.交易额/t1.订单, k2 = t2.交易额/t2.订单;
+
   var el = document.getElementById('kpi-row');
+
   if (!el) return;
+
   el.innerHTML =
+
     "<div class='kpi'><div class='kpi-label'>订单</div><div class='kpi-val'>" + kf(t1.订单) + " → " + kf(t2.订单) + "</div><div class='kpi-delta'>" + kpct(t1.订单, t2.订单) + "</div></div>" +
+
     "<div class='kpi'><div class='kpi-label'>收入(元)</div><div class='kpi-val'>" + kf(t1.收入) + " → " + kf(t2.收入) + "</div><div class='kpi-delta'>" + kpct(t1.收入, t2.收入) + "</div></div>" +
+
     "<div class='kpi'><div class='kpi-label'>交易额(元)</div><div class='kpi-val'>" + kf(t1.交易额) + " → " + kf(t2.交易额) + "</div><div class='kpi-delta'>" + kpct(t1.交易额, t2.交易额) + "</div></div>" +
+
     "<div class='kpi'><div class='kpi-label'>曝光</div><div class='kpi-val'>" + kf(t1.曝光) + " → " + kf(t2.曝光) + "</div><div class='kpi-delta'>" + kpct(t1.曝光, t2.曝光) + "</div></div>" +
+
     "<div class='kpi'><div class='kpi-label'>客单价(元)</div><div class='kpi-val'>" + kd(k1) + " → " + kd(k2) + "</div></div>";
+
 }
+
+
 
 function aggRange(startM, endM, startPrev, endPrev) {
+
   // 返回每店聚合结果：a1=上期, a2=本期（含平台拆分 plats）
+
   var out = {};
+
   STORE_NAMES.forEach(function(nm) {
+
     out[nm] = {a1: {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0},
+
                  a2: {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0},
+
                  plats: {}};
+
     PLATS.forEach(function(pl) {
+
       out[nm].plats[pl] = {a1: {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0},
+
                             a2: {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0}};
+
     });
+
     PLATS.forEach(function(pl) {
+
       (DAY[pl] && DAY[pl][nm] || []).forEach(function(r) {
+
         // r = [date, 订单, 收入, 交易额, 曝光, 入店, 下单, 新客, 老客]
+
         var d = r[0];
+
         var target = null, tk = null;
+
         if (d >= startM && d <= endM) { target = out[nm].a2; tk = 'a2'; }
+
         else if (d >= startPrev && d <= endPrev) { target = out[nm].a1; tk = 'a1'; }
+
         if (!target) return;
+
         target.订单 += r[1]; target.收入 += r[2]; target.交易额 += r[3];
+
         target.曝光 += r[4]; target.入店 += r[5]; target.下单 += r[6];
+
         target.新客 += (r[7] || 0); target.老客 += (r[8] || 0);
+
         var pt = out[nm].plats[pl][tk];
+
         pt.订单 += r[1]; pt.收入 += r[2]; pt.交易额 += r[3];
+
         pt.曝光 += r[4]; pt.入店 += r[5]; pt.下单 += r[6];
+
         pt.新客 += (r[7] || 0); pt.老客 += (r[8] || 0);
+
       });
+
     });
+
     var a1 = out[nm].a1, a2 = out[nm].a2;
+
     a1.客单 = a1.订单 ? a1.交易额/a1.订单 : null;
+
     a2.客单 = a2.订单 ? a2.交易额/a2.订单 : null;
+
     PLATS.forEach(function(pl) {
+
       var p1 = out[nm].plats[pl].a1, p2 = out[nm].plats[pl].a2;
+
       p1.客单 = p1.订单 ? p1.交易额/p1.订单 : null;
+
       p2.客单 = p2.订单 ? p2.交易额/p2.订单 : null;
+
     });
+
   });
+
   return out;
+
 }
+
+
 
 function cellsHtml(a1, a2) {
+
   function fmt(v, d) {
+
     if (v === null || v === undefined) return '-';
+
     return v.toLocaleString('zh-CN', {minimumFractionDigits: d||0, maximumFractionDigits: d||0});
+
   }
+
   function arrow(v) {
+
     var cls = v > 0 ? 'up' : (v < 0 ? 'down' : 'muted');
+
     return '<span class="' + cls + '">' + (v>0?'+':'') + v.toFixed(1) + '%</span>';
+
   }
+
   function pctv(v) { return (v===null||v===undefined) ? '-' : (v*100).toFixed(1) + '%'; }
+
   function pair(k, d) {
+
     var dp = (a1[k] && a1[k] !== 0) ? ((a2[k]-a1[k])/Math.abs(a1[k])*100) : null;
+
     var s = fmt(a1[k], d) + '→' + fmt(a2[k], d);
+
     return s + (dp !== null ? '<br><span class="sub">' + arrow(dp) + '</span>' : '');
+
   }
+
   var iv1 = a1.曝光 ? a1.入店/a1.曝光 : null, iv2 = a2.曝光 ? a2.入店/a2.曝光 : null;
+
   var cv1 = a1.入店 ? a1.下单/a1.入店 : null, cv2 = a2.入店 ? a2.下单/a2.入店 : null;
+
   var r1 = a1.交易额 ? a1.收入/a1.交易额*100 : null, r2 = a2.交易额 ? a2.收入/a2.交易额*100 : null;
+
   return '<td>' + pair('订单',0) + '</td><td>' + pair('收入') + '</td><td>' + pair('交易额') + '</td>'
+
     + '<td>' + pair('曝光',0) + '</td><td>' + pair('入店',0) + '</td>'
+
     + '<td>' + pctv(iv1) + '→' + pctv(iv2) + '</td><td>' + pctv(cv1) + '→' + pctv(cv2) + '</td>'
+
     + '<td>' + pair('新客',0) + '</td><td>' + pair('老客',0) + '</td><td>' + pair('客单') + '</td>'
+
     + '<td>' + (r1===null?'-':r1.toFixed(1)+'%') + '→' + (r2===null?'-':r2.toFixed(1)+'%') + '</td>';
+
 }
+
+
 
 function renderPlatformTable(data) {
+
   var tbody = document.querySelector('#plat-table tbody');
+
   if (!tbody) return;
+
   var html = '';
+
   var t1 = {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0};
+
   var t2 = {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0};
+
   STORE_NAMES.forEach(function(nm) {
+
     if (CUR_STORE && nm !== CUR_STORE) return;
+
     var platList = CUR_PLAT ? [CUR_PLAT] : PLATS;
+
     platList.forEach(function(pl) {
+
       var a1 = data[nm].plats[pl].a1, a2 = data[nm].plats[pl].a2;
+
       if (!a1.订单 && !a2.订单) return;
+
       Object.keys(t1).forEach(function(k) { t1[k] += a1[k]; t2[k] += a2[k]; });
+
       html += '<tr data-store="' + nm + '" data-plat="' + pl + '"><td><b>' + nm + '</b></td><td><span class="tag ' + pl + '">' + pl + '</span></td>' + cellsHtml(a1, a2) + '</tr>';
+
     });
+
     if (!CUR_PLAT) {
+
     var s1 = data[nm].a1, s2 = data[nm].a2;
+
     html += '<tr class="plat-sub" data-store="' + nm + '"><td colspan="2"><b>' + nm + ' 小计</b></td>' + cellsHtml(s1, s2) + '</tr>';
+
     }
+
   });
+
   t1.客单 = t1.订单 ? t1.交易额/t1.订单 : null;
+
   t2.客单 = t2.订单 ? t2.交易额/t2.订单 : null;
+
   html += '<tr class="plat-total"><td colspan="2"><b>' + (CUR_STORE || '5店') + ' 合计</b></td>' + cellsHtml(t1, t2) + '</tr>';
+
   tbody.innerHTML = html;
+
 }
 
+
+
 function renderStoreTable(data) {
+
   var tbody = document.querySelector('#store-table tbody');
+
   var html = '';
+
   STORE_NAMES.forEach(function(nm) {
+
     if (CUR_STORE && nm !== CUR_STORE) return;
+
     var src = CUR_PLAT ? data[nm].plats[CUR_PLAT] : data[nm];
+
     var a1 = src.a1, a2 = src.a2;
+
     function pair(k, d) {
+
       var dp = (a1[k] && a1[k] !== 0) ? ((a2[k]-a1[k])/Math.abs(a1[k])*100) : null;
+
       var s = fmt(a1[k], d) + '→' + fmt(a2[k], d);
+
       return s + (dp !== null ? '<br><span class="sub">' + arrow(dp) + '</span>' : '');
+
     }
+
     function fmt(v, d) {
+
       if (v === null || v === undefined) return '-';
+
       return v.toLocaleString('zh-CN', {minimumFractionDigits: d||0, maximumFractionDigits: d||0});
+
     }
+
     function arrow(v) {
+
       var cls = v > 0 ? 'up' : (v < 0 ? 'down' : 'muted');
+
       return '<span class="' + cls + '">' + (v>0?'+':'') + v.toFixed(1) + '%</span>';
+
     }
+
     function pctv(v) { return (v===null||v===undefined) ? '-' : (v*100).toFixed(1) + '%'; }
+
     var iv1 = a1.曝光 ? a1.入店/a1.曝光 : null, iv2 = a2.曝光 ? a2.入店/a2.曝光 : null;
+
     var cv1 = a1.入店 ? a1.下单/a1.入店 : null, cv2 = a2.入店 ? a2.下单/a2.入店 : null;
+
     var r1 = a1.交易额 ? a1.收入/a1.交易额*100 : null, r2 = a2.交易额 ? a2.收入/a2.交易额*100 : null;
+
     html += '<tr data-store="' + nm + '"><td><b>' + nm + '</b></td>'
+
       + '<td>' + pair('订单',0) + '</td><td>' + pair('收入') + '</td><td>' + pair('交易额') + '</td>'
+
       + '<td>' + pair('曝光',0) + '</td><td>' + pair('入店',0) + '</td>'
+
       + '<td>' + pctv(iv1) + '→' + pctv(iv2) + '</td><td>' + pctv(cv1) + '→' + pctv(cv2) + '</td>'
+
       + '<td>' + pair('新客',0) + '</td><td>' + pair('老客',0) + '</td><td>' + pair('客单') + '</td>'
+
       + '<td>' + (r1===null?'-':r1.toFixed(1)+'%') + '→' + (r2===null?'-':r2.toFixed(1)+'%') + '</td></tr>';
+
   });
+
   tbody.innerHTML = html;
+
 }
+
+
+
 
 
 function liangjia(o, kc) {
+
   if (o === null || kc === null) return '';
+
   if (o > 0 && kc > 0) return '量价齐升';
+
   if (o > 0 && kc < 0) return '以价换量';
+
   if (o < 0 && kc > 0) return '缩量提价';
+
   if (o < 0 && kc < 0) return '量价双降';
+
   return '量价平稳';
+
 }
+
 function renderSummary(data) {
+
   var el = document.getElementById('dyn-summary-body');
+
   if (!el) return;
+
   var storeLbl = CUR_STORE || '全部门店';
+
   var platLbl = CUR_PLAT || '全部平台';
+
   var t1 = {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0};
+
   var t2 = {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0};
+
   var storeList = CUR_STORE ? [CUR_STORE] : STORE_NAMES;
+
   var platList = CUR_PLAT ? [CUR_PLAT] : PLATS;
+
   var any = false;
+
   storeList.forEach(function(nm) {
+
     if (!data[nm]) return;
+
     platList.forEach(function(pl) {
+
       if (!data[nm].plats || !data[nm].plats[pl]) return;
+
       var a1 = data[nm].plats[pl].a1, a2 = data[nm].plats[pl].a2;
+
       if (!a1.订单 && !a2.订单) return;
+
       any = true;
+
       Object.keys(t1).forEach(function(k) { t1[k] += a1[k]; t2[k] += a2[k]; });
+
     });
+
   });
+
   if (!any) { el.innerHTML = '<span class="muted">当前筛选无数据</span>'; return; }
+
   function chg(a, b) { if (!a) return null; return (b - a) / Math.abs(a) * 100; }
+
   function fmt(v) { return v === null ? '-' : (v > 0 ? '+' : '') + v.toFixed(1) + '%'; }
+
   function fmtN(v) { return v === null || v === undefined ? '-' : v.toLocaleString('zh-CN', {maximumFractionDigits: 0}); }
+
   var o = chg(t1.订单, t2.订单), inc = chg(t1.收入, t2.收入);
+
   var k1 = t1.订单 ? t1.交易额 / t1.订单 : null, k2 = t2.订单 ? t2.交易额 / t2.订单 : null;
+
   var kc = chg(k1, k2);
+
   var ex = chg(t1.曝光, t2.曝光);
+
   var iv1 = t1.曝光 ? t1.入店 / t1.曝光 : null, iv2 = t2.曝光 ? t2.入店 / t2.曝光 : null;
+
   var cv1 = t1.入店 ? t1.下单 / t1.入店 : null, cv2 = t2.入店 ? t2.下单 / t2.入店 : null;
+
   var nc = chg(t1.新客, t2.新客), oc = chg(t1.老客, t2.老客);
+
   var items = [];
+
   items.push('<li><b>量价</b>：订单 ' + fmtN(t1.订单) + '→' + fmtN(t2.订单) + '（' + fmt(o) + '），客单 ' + (k1 === null ? '-' : k1.toFixed(1)) + '→' + (k2 === null ? '-' : k2.toFixed(1)) + ' 元（' + fmt(kc) + '）——<b>' + liangjia(o, kc) + '</b></li>');
+
   items.push('<li><b>收入</b>：' + fmtN(t1.收入) + '→' + fmtN(t2.收入) + ' 元（' + fmt(inc) + '），交易额 ' + fmtN(t1.交易额) + '→' + fmtN(t2.交易额) + ' 元</li>');
+
   items.push('<li><b>流量</b>：曝光 ' + fmtN(t1.曝光) + '→' + fmtN(t2.曝光) + '（' + fmt(ex) + '），入店率 ' + (iv1 === null ? '-' : (iv1 * 100).toFixed(1)) + '%→' + (iv2 === null ? '-' : (iv2 * 100).toFixed(1)) + '%，下单转化 ' + (cv1 === null ? '-' : (cv1 * 100).toFixed(1)) + '%→' + (cv2 === null ? '-' : (cv2 * 100).toFixed(1)) + '%</li>');
+
   items.push('<li><b>用户</b>：新客 ' + fmtN(t1.新客) + '→' + fmtN(t2.新客) + '（' + fmt(nc) + '），老客 ' + fmtN(t1.老客) + '→' + fmtN(t2.老客) + '（' + fmt(oc) + '）</li>');
+
   var acts = [];
+
   if (o !== null && o < 0 && inc !== null && inc < 0) acts.push('⚠️ <b>量价双降</b>：优先排查曝光与差评，必要时加投广告止损');
+
   else if (o !== null && o > 0 && kc !== null && kc < 0) acts.push('💡 <b>以价换量</b>：促销/折扣引流见效，关注毛利与补贴ROI');
+
   else if (o !== null && o < 0 && kc !== null && kc > 0) acts.push('💡 <b>缩量提价</b>：价格敏感度高，考虑满减梯度+套餐组合');
+
   else if (o !== null && o > 0 && kc !== null && kc > 0) acts.push('✅ <b>量价齐升</b>：策略有效，可加投高ROI渠道放大');
+
   if (ex !== null && ex < -5) acts.push('📉 曝光下滑：检查广告投放/平台流量位，增加曝光入口');
+
   if (cv2 !== null && cv2 < 0.15) acts.push('🔄 下单转化偏低(<15%)：优化菜单结构/价格带/首单体验');
+
   else if (cv1 !== null && cv2 !== null && cv2 < cv1) acts.push('🔄 转化率下降：核对评价与竞对价格，优先修复差评');
+
   if (oc !== null && oc < -5) acts.push('👥 老客流失：启动复购券/会员日，召回老客');
+
   if (!acts.length) acts.push('✅ 整体平稳：维持现状，按周复盘迭代');
+
   el.innerHTML = '<div style="margin-top:4px;font-size:12px;color:#888">当前筛选：<b>' + storeLbl + '</b> × <b>' + platLbl + '</b>（上期→本期）</div><ul>' + items.join('') + '</ul>'
+
     + '<div style="margin-top:6px"><b>💡 举措建议：</b></div><ul>' + acts.map(function(a) { return '<li>' + a + '</li>'; }).join('') + '</ul>';
+
 }
+
+
 
 function renderPos() {
+
   // POS（路径6）5店经营表：销售额/成本额/毛利/费用率（月度固定，不随 date-bar）
+
   var tbody = document.querySelector('#pos-table tbody');
+
   if (!tbody) return;
+
   var rows = '';
+
   var tot = {m7:0,c7:0,p7:0,m8:0,c8:0,p8:0,sum:0};
+
   function yuan(v) { return (v===null||v===undefined) ? '-' : v.toLocaleString('zh-CN', {maximumFractionDigits: 0}); }
+
   function pct(v) { return (v===null||v===undefined) ? '-' : (v*100).toFixed(1) + '%'; }
+
   STORE_NAMES.forEach(function(nm) {
+
     if (CUR_STORE && nm !== CUR_STORE) return;
+
     var d = POS_DATA[nm];
+
     if (!d) return;
+
     var m7 = d['7月'] || {}, m8 = d['8月'] || {}, all = d['合计'] || {};
+
     tot.m7 += m7.pos_sales||0; tot.c7 += m7.cost||0; tot.p7 += m7.profit||0;
+
     tot.m8 += m8.pos_sales||0; tot.c8 += m8.cost||0; tot.p8 += m8.profit||0;
+
     tot.sum += all.pos_sales||0;
+
     rows += '<tr data-store="' + nm + '"><td><b>' + nm + '</b></td>'
+
       + '<td>' + yuan(m7.pos_sales) + '</td><td>' + yuan(m7.cost) + '</td><td>' + yuan(m7.profit) + '</td>'
+
       + '<td>' + yuan(m8.pos_sales) + '</td><td>' + yuan(m8.cost) + '</td><td>' + yuan(m8.profit) + '</td>'
+
       + '<td>' + pct(m8.rate) + '</td><td>' + yuan(all.pos_sales) + '</td></tr>';
+
   });
+
   rows += '<tr class="plat-total"><td><b>' + (CUR_STORE || '5店') + ' 合计</b></td>'
+
     + '<td>' + yuan(tot.m7) + '</td><td>' + yuan(tot.c7) + '</td><td>' + yuan(tot.p7) + '</td>'
+
     + '<td>' + yuan(tot.m8) + '</td><td>' + yuan(tot.c8) + '</td><td>' + yuan(tot.p8) + '</td>'
+
     + '<td>-</td><td>' + yuan(tot.sum) + '</td></tr>';
+
   tbody.innerHTML = rows;
+
 }
 
+
+
 function applyCustom() {
+
   var s = parseInt(document.getElementById('d-start').value) || 1;
+
   var e = parseInt(document.getElementById('d-end').value) || 23;
+
   if (s > e) { var t = s; s = e; e = t; }
+
   function mk(month, day) { return 20260000 + month*100 + day; }
+
   var startM = mk(8, s), endM = mk(8, e);
+
   var startPrev = mk(7, s), endPrev = mk(7, e);
+
   var data = aggRange(startM, endM, startPrev, endPrev);
+
   renderAll(data);
+
   document.getElementById('date-info').textContent = '当前对比：本月 ' + s + '-' + e + ' 号 vs 上月 ' + s + '-' + e + ' 号';
+
 }
+
+
+
 
 
 var CUR_STORE = '', CUR_PLAT = '';
 
 
+
+
+
 /* ===== v6 关联表重渲染：门店聚合核心指标环比格式 ===== */
+
 var REL_DATA = {"C14793":{"name":"万科","广告":{"美团":{"p1":{"命中":109,"推广消费":866.14,"曝光提升":20802.0,"访问提升":1431.0,"订单提升":129.0,"订单交易额":5431.02,"ROI派生":6.27},"p2":{"命中":38,"推广消费":478.47,"曝光提升":11561.0,"访问提升":567.0,"订单提升":45.0,"订单交易额":1695.58,"订单原价交易额":2431.63,"ROI派生":3.544,"已含增量":true}},"淘宝":{"p1":{"命中":52,"推广消费":374.79,"曝光提升":7939.0,"访问提升":517.0,"订单提升":72.0,"订单交易额":2236.36,"ROI派生":5.967},"p2":{"命中":6,"推广消费":356.25,"订单交易额":1537.17,"ROI派生":4.315,"已含增量":true}}},"活动":{"美团":{"p1":{"订单数":349,"总活动段数":1144,"订单实付":12448.63,"分类":{"减配送费":{"平台承担":1.92,"商家承担":1239.32,"活动数":348},"商品折扣/特价":{"平台承担":0.0,"商家承担":445.53,"活动数":176},"平台津贴":{"平台承担":33.6,"商家承担":0.0,"活动数":8},"店铺满减":{"平台承担":0.0,"商家承担":700.0,"活动数":72},"支付红包":{"平台承担":1969.8,"商家承担":3647.0,"活动数":325},"神券红包":{"平台承担":0.0,"商家承担":5.0,"活动数":1},"精准营销":{"平台承担":16.0,"商家承担":59.0,"活动数":30},"门店新客立减":{"平台承担":0.0,"商家承担":184.0,"活动数":184}}},"p2":{"订单数":350,"总活动段数":1120,"订单实付":14139.97,"分类":{"减配送费":{"平台承担":12.26,"商家承担":1247.88,"活动数":348},"商品折扣/特价":{"平台承担":0.0,"商家承担":444.14,"活动数":155},"平台津贴":{"平台承担":27.1,"商家承担":0.0,"活动数":8},"店铺满减":{"平台承担":0.0,"商家承担":740.0,"活动数":40},"支付红包":{"平台承担":1636.5,"商家承担":3234.0,"活动数":315},"神券红包":{"平台承担":0.0,"商家承担":23.0,"活动数":5},"精准营销":{"平台承担":38.0,"商家承担":37.0,"活动数":26},"门店新客立减":{"平台承担":0.0,"商家承担":223.0,"活动数":223}}}},"淘宝":{"p1":{"订单数":455,"总活动段数":1565,"订单实付":11501.88,"分类":{"减配送费":{"平台承担":56.9,"商家承担":1293.3,"活动数":455},"商品折扣/特价":{"平台承担":0.0,"商家承担":1347.41,"活动数":265},"店铺满减":{"平台承担":12.0,"商家承担":243.0,"活动数":48},"支付红包":{"平台承担":1979.52,"商家承担":4650.39,"活动数":450},"神券红包":{"平台承担":254.34,"商家承担":258.2,"活动数":171},"精准营销":{"平台承担":0.0,"商家承担":9.9,"活动数":19},"门店新客立减":{"平台承担":0.0,"商家承担":157.0,"活动数":157}}},"p2":{"订单数":648,"总活动段数":2597,"订单实付":15668.07,"分类":{"其它":{"平台承担":323.39,"商家承担":174.5,"活动数":245},"减配送费":{"平台承担":178.3,"商家承担":1872.2,"活动数":647},"商品折扣/特价":{"平台承担":0.0,"商家承担":1620.38,"活动数":327},"店铺满减":{"平台承担":0.0,"商家承担":410.0,"活动数":25},"支付红包":{"平台承担":3358.41,"商家承担":7281.89,"活动数":961},"神券红包":{"平台承担":101.31,"商家承担":68.0,"活动数":56},"精准营销":{"平台承担":0.0,"商家承担":1.0,"活动数":2},"门店新客立减":{"平台承担":0.0,"商家承担":334.0,"活动数":334}}}}},"评价":{"美团":{"p1":{"命中":16,"好评":14,"中评":0,"差评":2,"平均分":4.44},"p2":{"命中":19,"好评":17,"中评":1,"差评":1,"平均分":4.68}},"淘宝":{"p1":{"命中":24,"好评":22,"中评":1,"差评":1,"平均分":4.71},"p2":{"命中":33,"好评":28,"中评":0,"差评":5,"平均分":4.39}},"京东":{"p1":{"命中":0},"p2":{"命中":1,"好评":1,"中评":0,"差评":0,"平均分":5.0}}}},"C14906":{"name":"子固路","广告":{"美团":{"p1":{"命中":83,"推广消费":877.11,"曝光提升":13186.0,"访问提升":1115.0,"订单提升":143.0,"订单交易额":5372.38,"ROI派生":6.125},"p2":{"命中":33,"推广消费":589.88,"曝光提升":10110.0,"访问提升":571.0,"订单提升":56.0,"订单交易额":1722.59,"订单原价交易额":2872.76,"ROI派生":2.92,"已含增量":true}},"淘宝":{"p1":{"命中":33,"推广消费":371.76,"曝光提升":7241.0,"访问提升":507.0,"订单提升":57.0,"订单交易额":1994.86,"ROI派生":5.366},"p2":{"命中":6,"推广消费":385.59,"订单交易额":1635.51,"ROI派生":4.242,"已含增量":true}}},"活动":{"美团":{"p1":{"订单数":303,"总活动段数":1018,"订单实付":9623.88,"分类":{"减配送费":{"平台承担":27.1,"商家承担":1207.5,"活动数":303},"商品折扣/特价":{"平台承担":0.0,"商家承担":224.46,"活动数":126},"平台津贴":{"平台承担":157.1,"商家承担":0.0,"活动数":42},"店铺满减":{"平台承担":0.0,"商家承担":550.0,"活动数":31},"支付红包":{"平台承担":1720.0,"商家承担":3274.5,"活动数":294},"神券红包":{"平台承担":0.0,"商家承担":5.0,"活动数":1},"精准营销":{"平台承担":29.0,"商家承担":62.0,"活动数":38},"门店新客立减":{"平台承担":0.0,"商家承担":183.0,"活动数":183}}},"p2":{"订单数":273,"总活动段数":916,"订单实付":9249.28,"分类":{"减配送费":{"平台承担":55.4,"商家承担":1105.8,"活动数":275},"商品折扣/特价":{"平台承担":0.0,"商家承担":236.15,"活动数":119},"平台津贴":{"平台承担":124.8,"商家承担":0.0,"活动数":34},"店铺满减":{"平台承担":0.0,"商家承担":480.0,"活动数":24},"支付红包":{"平台承担":1307.0,"商家承担":2600.0,"活动数":257},"神券红包":{"平台承担":0.0,"商家承担":5.0,"活动数":1},"精准营销":{"平台承担":58.0,"商家承担":26.0,"活动数":31},"门店新客立减":{"平台承担":0.0,"商家承担":175.0,"活动数":175}}}},"淘宝":{"p1":{"订单数":258,"总活动段数":905,"订单实付":7238.98,"分类":{"减配送费":{"平台承担":54.1,"商家承担":749.3,"活动数":256},"商品折扣/特价":{"平台承担":0.0,"商家承担":898.05,"活动数":184},"店铺满减":{"平台承担":10.0,"商家承担":258.0,"活动数":20},"支付红包":{"平台承担":1242.59,"商家承担":2838.21,"活动数":250},"神券红包":{"平台承担":52.93,"商家承担":177.2,"活动数":90},"门店新客立减":{"平台承担":0.0,"商家承担":105.0,"活动数":105}}},"p2":{"订单数":496,"总活动段数":2056,"订单实付":13826.54,"分类":{"其它":{"平台承担":58.07,"商家承担":190.0,"活动数":135},"减配送费":{"平台承担":151.2,"商家承担":1506.4,"活动数":495},"商品折扣/特价":{"平台承担":0.0,"商家承担":1934.42,"活动数":344},"店铺满减":{"平台承担":0.0,"商家承担":560.0,"活动数":32},"支付红包":{"平台承担":2776.36,"商家承担":5898.13,"活动数":719},"神券红包":{"平台承担":34.57,"商家承担":52.0,"活动数":38},"门店新客立减":{"平台承担":0.0,"商家承担":293.0,"活动数":293}}}}},"评价":{"美团":{"p1":{"命中":7,"好评":7,"中评":0,"差评":0,"平均分":5.0},"p2":{"命中":18,"好评":15,"中评":0,"差评":3,"平均分":4.33}},"淘宝":{"p1":{"命中":7,"好评":7,"中评":0,"差评":0,"平均分":5.0},"p2":{"命中":18,"好评":14,"中评":2,"差评":2,"平均分":4.33}},"京东":{"p1":{"命中":0},"p2":{"命中":0}}}},"C15002":{"name":"印象城","广告":{"美团":{"p1":{"命中":37,"推广消费":714.91,"曝光提升":11969.0,"访问提升":844.0,"订单提升":108.0,"订单交易额":4276.22,"ROI派生":5.981},"p2":{"命中":16,"推广消费":540.54,"曝光提升":10634.0,"访问提升":564.0,"订单提升":52.0,"订单交易额":2244.53,"订单原价交易额":3122.89,"ROI派生":4.152,"已含增量":true}},"淘宝":{"p1":{"命中":34,"推广消费":1420.75,"曝光提升":26639.0,"访问提升":2261.0,"订单提升":367.0,"订单交易额":11492.41,"ROI派生":8.089},"p2":{"命中":6,"推广消费":420.0,"订单交易额":1425.19,"ROI派生":3.393,"已含增量":true}}},"活动":{"美团":{"p1":{"订单数":397,"总活动段数":1370,"订单实付":14961.55,"分类":{"减配送费":{"平台承担":1.16,"商家承担":1400.76,"活动数":397},"商品折扣/特价":{"平台承担":0.0,"商家承担":340.43,"活动数":264},"平台津贴":{"平台承担":18.2,"商家承担":0.0,"活动数":5},"店铺满减":{"平台承担":0.0,"商家承担":654.0,"活动数":69},"支付红包":{"平台承担":1600.0,"商家承担":3607.0,"活动数":349},"神券红包":{"平台承担":0.0,"商家承担":5.0,"活动数":1},"精准营销":{"平台承担":9.0,"商家承担":33.0,"活动数":16},"门店新客立减":{"平台承担":0.0,"商家承担":269.0,"活动数":269}}},"p2":{"订单数":435,"总活动段数":1117,"订单实付":19709.43,"分类":{"减配送费":{"平台承担":1.0,"商家承担":1534.5,"活动数":435},"商品折扣/特价":{"平台承担":0.0,"商家承担":369.39,"活动数":215},"平台津贴":{"平台承担":14.6,"商家承担":0.0,"活动数":4},"店铺满减":{"平台承担":0.0,"商家承担":1210.0,"活动数":65},"支付红包":{"平台承担":1786.0,"商家承担":4083.0,"活动数":381},"神券红包":{"平台承担":0.0,"商家承担":8.0,"活动数":2},"精准营销":{"平台承担":22.0,"商家承担":10.0,"活动数":15}}}},"淘宝":{"p1":{"订单数":675,"总活动段数":2562,"订单实付":17751.53,"分类":{"减配送费":{"平台承担":150.1,"商家承担":1976.8,"活动数":675},"商品折扣/特价":{"平台承担":0.0,"商家承担":2969.79,"活动数":588},"店铺满减":{"平台承担":17.0,"商家承担":383.0,"活动数":92},"支付红包":{"平台承担":3076.18,"商家承担":7609.62,"活动数":654},"神券红包":{"平台承担":143.98,"商家承担":495.8,"活动数":270},"精准营销":{"平台承担":0.0,"商家承担":35.2,"活动数":8},"门店新客立减":{"平台承担":0.0,"商家承担":275.0,"活动数":275}}},"p2":{"订单数":908,"总活动段数":3417,"订单实付":23907.68,"分类":{"其它":{"平台承担":104.93,"商家承担":529.8,"活动数":282},"减配送费":{"平台承担":383.7,"商家承担":2660.7,"活动数":908},"商品折扣/特价":{"平台承担":0.0,"商家承担":3853.54,"活动数":773},"店铺满减":{"平台承担":0.0,"商家承担":950.0,"活动数":59},"支付红包":{"平台承担":5300.34,"商家承担":10562.66,"活动数":1277},"神券红包":{"平台承担":63.83,"商家承担":212.8,"活动数":114},"精准营销":{"平台承担":1.4,"商家承担":17.6,"活动数":4}}}}},"评价":{"美团":{"p1":{"命中":9,"好评":8,"中评":1,"差评":0,"平均分":4.67},"p2":{"命中":5,"好评":4,"中评":0,"差评":1,"平均分":4.2}},"淘宝":{"p1":{"命中":41,"好评":39,"中评":1,"差评":1,"平均分":4.73},"p2":{"命中":32,"好评":26,"中评":3,"差评":3,"平均分":4.38}},"京东":{"p1":{"命中":0},"p2":{"命中":0}}}},"C15009":{"name":"科兴","广告":{"美团":{"p1":{"命中":61,"推广消费":2308.4,"曝光提升":27450.0,"访问提升":1048.0,"订单提升":218.0,"订单交易额":8976.58,"ROI派生":3.889},"p2":{"命中":39,"推广消费":870.8,"曝光提升":15676.0,"访问提升":647.0,"订单提升":90.0,"订单交易额":3669.98,"订单原价交易额":5288.59,"ROI派生":4.214,"已含增量":true}},"淘宝":{"p1":{"命中":14,"推广消费":484.69,"曝光提升":12463.0,"访问提升":716.0,"订单提升":89.0,"订单交易额":2554.11,"ROI派生":5.27},"p2":{"命中":6,"推广消费":201.2,"订单交易额":513.38,"ROI派生":2.552,"已含增量":true}}},"活动":{"美团":{"p1":{"订单数":456,"总活动段数":1857,"订单实付":17016.46,"分类":{"减配送费":{"平台承担":18.5,"商家承担":899.16,"活动数":459},"商品折扣/特价":{"平台承担":0.0,"商家承担":1403.89,"活动数":867},"平台津贴":{"平台承担":20.0,"商家承担":0.0,"活动数":6},"店铺满减":{"平台承担":0.0,"商家承担":508.0,"活动数":77},"支付红包":{"平台承担":2139.0,"商家承担":4207.0,"活动数":423},"神券红包":{"平台承担":0.0,"商家承担":5.0,"活动数":1},"精准营销":{"平台承担":0.0,"商家承担":48.0,"活动数":24}}},"p2":{"订单数":396,"总活动段数":1728,"订单实付":15659.3,"分类":{"减配送费":{"平台承担":62.86,"商家承担":1048.78,"活动数":398},"商品折扣/特价":{"平台承担":0.0,"商家承担":764.92,"活动数":713},"平台津贴":{"平台承担":35.4,"商家承担":0.0,"活动数":10},"店铺满减":{"平台承担":0.0,"商家承担":554.0,"活动数":85},"支付红包":{"平台承担":1974.5,"商家承担":3801.0,"活动数":368},"神券红包":{"平台承担":0.0,"商家承担":10.0,"活动数":2},"精准营销":{"平台承担":0.0,"商家承担":141.0,"活动数":36},"门店新客立减":{"平台承担":0.0,"商家承担":348.0,"活动数":116}}}},"淘宝":{"p1":{"订单数":270,"总活动段数":985,"订单实付":6565.96,"分类":{"减配送费":{"平台承担":163.1,"商家承担":841.0,"活动数":269},"商品折扣/特价":{"平台承担":0.0,"商家承担":1537.0,"活动数":390},"店铺满减":{"平台承担":2.0,"商家承担":89.0,"活动数":16},"支付红包":{"平台承担":1145.0,"商家承担":2293.5,"活动数":259},"神券红包":{"平台承担":66.44,"商家承担":103.0,"活动数":51}}},"p2":{"订单数":603,"总活动段数":2630,"订单实付":12370.38,"分类":{"其它":{"平台承担":109.33,"商家承担":105.0,"活动数":108},"减配送费":{"平台承担":517.8,"商家承担":1968.3,"活动数":603},"商品折扣/特价":{"平台承担":0.0,"商家承担":4110.23,"活动数":767},"店铺满减":{"平台承担":0.0,"商家承担":224.0,"活动数":34},"支付红包":{"平台承担":2810.58,"商家承担":4847.5,"活动数":886},"神券红包":{"平台承担":92.95,"商家承担":11.0,"活动数":25},"门店新客立减":{"平台承担":0.0,"商家承担":621.0,"活动数":207}}}}},"评价":{"美团":{"p1":{"命中":69,"好评":67,"中评":2,"差评":0,"平均分":4.9},"p2":{"命中":17,"好评":14,"中评":0,"差评":3,"平均分":4.35}},"淘宝":{"p1":{"命中":18,"好评":16,"中评":0,"差评":2,"平均分":4.61},"p2":{"命中":28,"好评":25,"中评":1,"差评":2,"平均分":4.61}},"京东":{"p1":{"命中":0},"p2":{"命中":0}}}},"C15019":{"name":"益田","广告":{"美团":{"p1":{"命中":75,"推广消费":5869.02,"曝光提升":30278.0,"访问提升":1124.0,"订单提升":442.0,"订单交易额":16497.97,"ROI派生":2.811},"p2":{"命中":28,"推广消费":708.84,"曝光提升":10152.0,"访问提升":408.0,"订单提升":75.0,"订单交易额":3203.0,"订单原价交易额":4652.67,"ROI派生":4.519,"已含增量":true}},"淘宝":{"p1":{"命中":14,"推广消费":355.31,"曝光提升":9140.0,"访问提升":526.0,"订单提升":75.0,"订单交易额":1759.3,"ROI派生":4.951},"p2":{"命中":6,"推广消费":201.4,"订单交易额":616.56,"ROI派生":3.061,"已含增量":true}}},"活动":{"美团":{"p1":{"订单数":511,"总活动段数":1905,"订单实付":17239.88,"分类":{"其它":{"平台承担":0.0,"商家承担":0.0,"活动数":6},"减配送费":{"平台承担":21.5,"商家承担":1769.08,"活动数":516},"商品折扣/特价":{"平台承担":4.0,"商家承担":1720.83,"活动数":709},"平台津贴":{"平台承担":70.7,"商家承担":0.0,"活动数":20},"店铺满减":{"平台承担":0.0,"商家承担":393.5,"活动数":110},"支付红包":{"平台承担":2781.99,"商家承担":4825.0,"活动数":493},"精准营销":{"平台承担":0.0,"商家承担":191.0,"活动数":51}}},"p2":{"订单数":268,"总活动段数":966,"订单实付":10798.94,"分类":{"减配送费":{"平台承担":118.56,"商家承担":1045.82,"活动数":270},"商品折扣/特价":{"平台承担":0.0,"商家承担":664.8,"活动数":298},"平台津贴":{"平台承担":12.0,"商家承担":0.0,"活动数":3},"店铺满减":{"平台承担":0.0,"商家承担":186.8,"活动数":50},"支付红包":{"平台承担":1232.0,"商家承担":2546.0,"活动数":247},"神券红包":{"平台承担":0.0,"商家承担":5.0,"活动数":1},"精准营销":{"平台承担":0.0,"商家承担":120.0,"活动数":29},"门店新客立减":{"平台承担":0.0,"商家承担":204.0,"活动数":68}}}},"淘宝":{"p1":{"订单数":323,"总活动段数":1077,"订单实付":6150.99,"分类":{"减配送费":{"平台承担":145.4,"商家承担":993.8,"活动数":323},"商品折扣/特价":{"平台承担":0.0,"商家承担":1977.28,"活动数":371},"店铺满减":{"平台承担":2.0,"商家承担":192.0,"活动数":27},"支付红包":{"平台承担":1064.49,"商家承担":2708.52,"活动数":320},"神券红包":{"平台承担":46.08,"商家承担":1.0,"活动数":36}}},"p2":{"订单数":532,"总活动段数":2171,"订单实付":8967.0,"分类":{"其它":{"平台承担":107.73,"商家承担":73.0,"活动数":87},"减配送费":{"平台承担":394.7,"商家承担":1752.7,"活动数":531},"商品折扣/特价":{"平台承担":0.0,"商家承担":3877.42,"活动数":622},"店铺满减":{"平台承担":0.0,"商家承担":124.0,"活动数":23},"支付红包":{"平台承担":1878.7,"商家承担":3755.0,"活动数":738},"神券红包":{"平台承担":16.57,"商家承担":8.0,"活动数":18},"门店新客立减":{"平台承担":0.0,"商家承担":456.0,"活动数":152}}}}},"评价":{"美团":{"p1":{"命中":216,"好评":4,"中评":0,"差评":0,"平均分":5.0},"p2":{"命中":16,"好评":14,"中评":1,"差评":1,"平均分":4.56}},"淘宝":{"p1":{"命中":12,"好评":10,"中评":0,"差评":2,"平均分":4.42},"p2":{"命中":20,"好评":19,"中评":0,"差评":1,"平均分":4.65}},"京东":{"p1":{"命中":0},"p2":{"命中":0}}}}};
+
 var REL_CODE = {"万科":"C14793","子固路":"C14906","印象城":"C15002","科兴":"C15009","益田":"C15019"};
+
 function __relStore(nm){ return REL_DATA[REL_CODE[nm] || nm]; }
 
+
+
 function __pair(v1, v2, d, isRate){
+
   var fmt = function(v){
+
     if (v === null || v === undefined || isNaN(v)) return '-';
+
     if (isRate) return (v*100).toFixed(1) + '%';
+
     return v.toLocaleString('zh-CN', {minimumFractionDigits: d||0, maximumFractionDigits: d||0});
+
   };
+
   var dp = (v1 && v1 !== 0) ? ((v2 - v1) / Math.abs(v1) * 100) : null;
+
   var s = fmt(v1) + '→' + fmt(v2);
+
   return s + (dp !== null ? '<br><span class="sub">' + __arrow2(dp) + '</span>' : '');
+
 }
+
 function __arrow2(v){
+
   var cls = v > 0 ? 'up' : (v < 0 ? 'down' : 'muted');
+
   return '<span class="' + cls + '">' + (v>0?'+':'') + v.toFixed(1) + '%</span>';
+
 }
+
 function __sumRows(rows){
+
   // rows: [{vals:{col:sum}, num:{col:true}}] 加权项单独处理
+
 }
+
 function __storePlats(nm){
+
   var o = __relStore(nm); if (!o) return [];
+
   return ['美团','淘宝','京东'].filter(function(pl){ return o['广告'] && o['广告'][pl] || o['活动'] && o['活动'][pl] || o['评价'] && o['评价'][pl]; });
+
 }
+
+
 
 /* ---- 广告表：行=门店×平台 ---- */
+
 function renderAggAd(){
+
   var tbody = document.querySelector('#ad-table tbody');
+
   if (!tbody) return;
+
   var html = '';
+
   var T1 = {cons:0, gmv:0, exp:0, vis:0, ord:0};
+
   var T2 = {cons:0, gmv:0, exp:0, vis:0, ord:0};
+
   STORE_NAMES.forEach(function(nm){
+
     if (CUR_STORE && nm !== CUR_STORE) return;
+
     var pls = CUR_PLAT ? [CUR_PLAT] : __storePlats(nm).filter(function(pl){ var r = REL_DATA[REL_CODE[nm]||nm]; return r['广告'] && r['广告'][pl]; });
+
     pls.forEach(function(pl){
+
       var a = REL_DATA[REL_CODE[nm]||nm]['广告'][pl];
+
       var p1 = a.p1 || {}, p2 = a.p2 || {};
+
       var c1 = p1['推广消费']||0, c2 = p2['推广消费']||0;
+
       var g1 = p1['订单交易额']||0, g2 = p2['订单交易额']||0;
+
       var r1 = c1 ? g1/c1 : null, r2 = c2 ? g2/c2 : null;
+
       var e1 = p1['曝光提升']||0, e2 = p2['曝光提升']||0;
+
       var v1 = p1['访问提升']||0, v2 = p2['访问提升']||0;
+
       var o1 = p1['订单提升']||0, o2 = p2['订单提升']||0;
+
       T1.cons += c1; T1.gmv += g1; T1.exp += e1; T1.vis += v1; T1.ord += o1;
+
       T2.cons += c2; T2.gmv += g2; T2.exp += e2; T2.vis += v2; T2.ord += o2;
+
       html += '<tr data-store="' + nm + '" data-plat="' + pl + '"><td><b>' + nm + '</b></td><td><span class="tag ' + pl + '">' + pl + '</span></td>'
+
         + '<td>' + __pair(c1, c2) + '</td>'
+
         + '<td>' + (r1===null&&r2===null ? '-' : __pair(r1, r2, 2)) + '</td>'
+
         + '<td>' + __pair(e1, e2, 0) + '</td>'
+
         + '<td>' + __pair(v1, v2, 0) + '</td>'
+
         + '<td>' + __pair(o1, o2, 0) + '</td></tr>';
+
     });
+
   });
+
   var tr1 = T1.cons ? T1.gmv/T1.cons : null, tr2 = T2.cons ? T2.gmv/T2.cons : null;
+
   var label = (CUR_PLAT || CUR_STORE || '5店') + ' 合计';
+
   html += '<tr class="plat-total"><td colspan="2"><b>' + label + '</b></td>'
+
     + '<td><b>' + __pair(T1.cons, T2.cons) + '</b></td>'
+
     + '<td><b>' + (tr1===null&&tr2===null ? '-' : __pair(tr1, tr2, 2)) + '</b></td>'
+
     + '<td><b>' + __pair(T1.exp, T2.exp) + '</b></td>'
+
     + '<td><b>' + __pair(T1.vis, T2.vis) + '</b></td>'
+
     + '<td><b>' + __pair(T1.ord, T2.ord) + '</b></td></tr>';
+
   tbody.innerHTML = html;
+
 }
+
+
 
 /* ---- 促销表：行=活动类型(跨店聚合) ---- */
+
 function renderAggAct(){
+
   var tbody = document.querySelector('#act-table tbody');
+
   if (!tbody) return;
+
   var agg = {}; // actType -> {a:{cnt,pt,st}, b:{...}}
+
   STORE_NAMES.forEach(function(nm){
+
     if (CUR_STORE && nm !== CUR_STORE) return;
+
     var o = __relStore(nm) && __relStore(nm)['活动'];
+
     if (!o) return;
+
     var pls = CUR_PLAT ? [CUR_PLAT] : Object.keys(o);
+
     pls.forEach(function(pl){
+
       var d = o[pl]; if (!d) return;
+
       var cats1 = (d.p1 && d.p1['分类']) || {};
+
       var cats2 = (d.p2 && d.p2['分类']) || {};
+
       var all = {};
+
       Object.keys(cats1).forEach(function(k){ all[k]=1; });
+
       Object.keys(cats2).forEach(function(k){ all[k]=1; });
+
       Object.keys(all).forEach(function(k){
+
         if (!agg[k]) agg[k] = {a:{cnt:0,pt:0,st:0}, b:{cnt:0,pt:0,st:0}};
+
         var c1 = cats1[k], c2 = cats2[k];
+
         if (c1) { agg[k].a.cnt += c1['活动数']||0; agg[k].a.pt += c1['平台承担']||0; agg[k].a.st += c1['商家承担']||0; }
+
         if (c2) { agg[k].b.cnt += c2['活动数']||0; agg[k].b.pt += c2['平台承担']||0; agg[k].b.st += c2['商家承担']||0; }
+
       });
+
     });
+
   });
+
   var html = '';
+
   var TA = {cnt:0, pt:0, st:0}, TB = {cnt:0, pt:0, st:0};
+
   var order = ['减配送费','商品折扣/特价','店铺满减','支付红包','神券红包','平台津贴','精准营销','门店新客立减','其它'];
+
   Object.keys(agg).sort(function(a,b){
+
     var ia = order.indexOf(a), ib = order.indexOf(b);
+
     return (ia<0?99:ia) - (ib<0?99:ib);
+
   }).forEach(function(k){
+
     var g = agg[k];
+
     var ta = g.a.cnt + g.a.pt + g.a.st, tb = g.b.cnt + g.b.pt + g.b.st;
+
     if (!ta && !tb) return;
+
     TA.cnt += g.a.cnt; TA.pt += g.a.pt; TA.st += g.a.st;
+
     TB.cnt += g.b.cnt; TB.pt += g.b.pt; TB.st += g.b.st;
+
     var unit = g.b.cnt ? g.b.pt / g.b.cnt : null;
+
     var share = (g.b.pt + g.b.st) ? g.b.st / (g.b.pt + g.b.st) : null;
+
     html += '<tr data-plat="' + (CUR_PLAT||'') + '"><td>' + (CUR_PLAT||'全平台') + '</td><td>' + k + '</td>'
+
       + '<td>' + __pair(g.a.cnt, g.b.cnt, 0) + '</td>'
+
       + '<td>' + __pair(g.a.pt, g.b.pt) + '</td>'
+
       + '<td>' + __pair(g.a.st, g.b.st) + '</td>'
+
       + '<td>' + __pair(g.a.pt+g.a.st, g.b.pt+g.b.st) + '</td>'
+
       + '<td>' + (unit===null?'-':unit.toFixed(1)) + '</td>'
+
       + '<td>' + (share===null?'-':(share*100).toFixed(1)+'%') + '</td></tr>';
+
   });
+
   var tunit = TB.cnt ? TB.pt / TB.cnt : null;
+
   var tshare = (TB.pt + TB.st) ? TB.st / (TB.pt + TB.st) : null;
+
   html += '<tr class="plat-total"><td colspan="2"><b>' + (CUR_PLAT||'全平台') + ' 合计</b></td>'
+
     + '<td><b>' + __pair(TA.cnt, TB.cnt, 0) + '</b></td>'
+
     + '<td><b>' + __pair(TA.pt, TB.pt) + '</b></td>'
+
     + '<td><b>' + __pair(TA.st, TB.st) + '</b></td>'
+
     + '<td><b>' + __pair(TA.pt+TA.st, TB.pt+TB.st) + '</b></td>'
+
     + '<td><b>' + (tunit===null?'-':tunit.toFixed(1)) + '</b></td>'
+
     + '<td><b>' + (tshare===null?'-':(tshare*100).toFixed(1)+'%') + '</b></td></tr>';
+
   tbody.innerHTML = html;
+
 }
 
+
+
 /* ---- 评价表：行=门店×平台 ---- */
+
 function renderAggRev(){
+
   var tbody = document.querySelector('#rev-table tbody');
+
   if (!tbody) return;
+
   var html = '';
+
   var TA = {n:0, g:0, m:0, b:0, s:0}, TB = {n:0, g:0, m:0, b:0, s:0};
+
   STORE_NAMES.forEach(function(nm){
+
     if (CUR_STORE && nm !== CUR_STORE) return;
+
     var o = __relStore(nm) && __relStore(nm)['评价'];
+
     if (!o) return;
+
     var pls = CUR_PLAT ? [CUR_PLAT] : Object.keys(o);
+
     pls.forEach(function(pl){
+
       var d = o[pl]; if (!d) return;
+
       var p1 = d.p1 || {}, p2 = d.p2 || {};
+
       var n1 = p1['命中']||0, n2 = p2['命中']||0;
+
       if (!n1 && !n2) return;
+
       var g1 = p1['好评']||0, g2 = p2['好评']||0;
+
       var m1 = p1['中评']||0, m2 = p2['中评']||0;
+
       var b1 = p1['差评']||0, b2 = p2['差评']||0;
+
       var s1 = p1['平均分'], s2 = p2['平均分'];
+
       TA.n += n1; TA.g += g1; TA.m += m1; TA.b += b1; if (s1!=null) TA.s += s1*n1;
+
       TB.n += n2; TB.g += g2; TB.m += m2; TB.b += b2; if (s2!=null) TB.s += s2*n2;
+
       html += '<tr data-store="' + nm + '" data-plat="' + pl + '"><td><b>' + nm + '</b></td><td><span class="tag ' + pl + '">' + pl + '</span></td>'
+
         + '<td>' + __pair(n1, n2, 0) + '</td>'
+
         + '<td>' + __pair(g1, g2, 0) + '</td>'
+
         + '<td>' + __pair(m1, m2, 0) + '</td>'
+
         + '<td>' + __pair(b1, b2, 0) + '</td>'
+
         + '<td>' + (s1==null&&s2==null ? '-' : __pair(s1, s2, 2)) + '</td></tr>';
+
     });
+
   });
+
   var sa1 = TA.n ? TA.s/TA.n : null, sa2 = TB.n ? TB.s/TB.n : null;
+
   var label = (CUR_PLAT || CUR_STORE || '5店') + ' 合计';
+
   html += '<tr class="plat-total"><td colspan="2"><b>' + label + '</b></td>'
+
     + '<td><b>' + __pair(TA.n, TB.n, 0) + '</b></td>'
+
     + '<td><b>' + __pair(TA.g, TB.g, 0) + '</b></td>'
+
     + '<td><b>' + __pair(TA.m, TB.m, 0) + '</b></td>'
+
     + '<td><b>' + __pair(TA.b, TB.b, 0) + '</b></td>'
+
     + '<td><b>' + (sa1==null&&sa2==null ? '-' : __pair(sa1, sa2, 2)) + '</b></td></tr>';
+
   tbody.innerHTML = html;
+
 }
+
+
+
 
 
 /* ---- 周报表：平台×自然周明细 + 动态合计行 ---- */
+
 var _WEEK_SRC = null;
+
 function __num(v){ var n = parseFloat(String(v).replace(/,/g,'')); return isNaN(n)?0:n; }
+
 function renderAggWeek(){
+
   var tbody = document.querySelector('#week-table tbody');
+
   if (!tbody) return;
+
   if (!_WEEK_SRC) {
+
     _WEEK_SRC = [];
+
     [].slice.call(tbody.querySelectorAll('tr')).forEach(function(r){
+
       var pl = r.getAttribute('data-plat');
+
       var tds = r.querySelectorAll('td');
+
       var cells = [];
+
       tds.forEach(function(td){ cells.push(td.innerHTML); });
+
       _WEEK_SRC.push({pl: pl, cells: cells});
+
     });
+
   }
+
   var html = '';
+
   var T = {days:0, ord:0, inc:0, gmv:0, exp:0, nw:0, old:0};
+
   _WEEK_SRC.forEach(function(w){
+
     if (CUR_PLAT && w.pl !== CUR_PLAT) return;
+
     // 列序: 0平台 1自然周 2对比时间 3天数 4订单 5日均 6收入 7交易额 8客单 9曝光 10新客 11老客 12周环比
+
     var c = w.cells;
+
     T.days += __num(c[3]); T.ord += __num(c[4]); T.inc += __num(c[6]);
+
     T.gmv += __num(c[7]); T.exp += __num(c[9]); T.nw += __num(c[10]); T.old += __num(c[11]);
+
     html += '<tr>' + c.map(function(x){ return '<td>' + x + '</td>'; }).join('') + '</tr>';
+
   });
+
   var label = (CUR_PLAT || '全平台') + ' 合计';
+
   var avg1 = T.days ? T.ord / T.days : null;
+
   var avg2 = T.ord ? T.gmv / T.ord : null;
+
   html += '<tr class="plat-total"><td colspan="3"><b>' + label + '</b></td>'
+
     + '<td><b>' + T.days.toLocaleString('zh-CN') + '</b></td>'
+
     + '<td><b>' + T.ord.toLocaleString('zh-CN') + '</b></td>'
+
     + '<td><b>' + (avg1===null?'-':avg1.toFixed(1)) + '</b></td>'
+
     + '<td><b>' + T.inc.toLocaleString('zh-CN') + '</b></td>'
+
     + '<td><b>' + T.gmv.toLocaleString('zh-CN') + '</b></td>'
+
     + '<td><b>' + (avg2===null?'-':avg2.toFixed(1)) + '</b></td>'
+
     + '<td><b>' + T.exp.toLocaleString('zh-CN') + '</b></td>'
+
     + '<td><b>' + T.nw.toLocaleString('zh-CN') + '</b></td>'
+
     + '<td><b>' + T.old.toLocaleString('zh-CN') + '</b></td>'
+
     + '<td>-</td></tr>';
+
   tbody.innerHTML = html;
+
 }
 
+
+
 function renderAggRows(){
+
   renderAggAd();
+
   renderAggAct();
+
   renderAggRev();
+
   renderAggWeek();
+
 }
+
+
+
 
 
 function renderAll(data){
+
   renderKpi(data);
+
   renderStoreTable(data);
+
   renderPlatformTable(data);
+
   renderPos();
+
   renderSummary(data);
+
   renderAggRows();
+
 }
+
 document.querySelectorAll('.flt-btn').forEach(function(b){
+
   b.onclick = function(){
+
     var st = b.getAttribute('data-store'), pl = b.getAttribute('data-plat');
+
     if (st !== null) { CUR_STORE = st; document.querySelectorAll('.flt-btn[data-store]').forEach(function(x){ x.classList.toggle('flt-on', x === b); }); }
+
     if (pl !== null) { CUR_PLAT = pl; document.querySelectorAll('.flt-btn[data-plat]').forEach(function(x){ x.classList.toggle('flt-on', x === b); }); }
+
     var selStore = document.getElementById('f-store'), selPlat = document.getElementById('f-plat');
+
     if (selStore) selStore.value = CUR_STORE;
+
     if (selPlat) selPlat.value = CUR_PLAT;
+
     applyCustom();
+
     applyFilter();
+
   };
+
 });
+
 var dim = document.getElementById('f-dim');
+
 var store = document.getElementById('f-store');
+
 var plat = document.getElementById('f-plat');
+
 var reset = document.getElementById('btn-reset');
+
 var count = document.getElementById('filter-count');
+
 var periodTables = ['store-table','plat-table','time-table','ad-table','act-table','rev-table','revp-table','revdet-table','evp-table','ev-table','pos-table','week-table'];
+
 var weekSection = document.getElementById('sec-week');
 
+
+
 function applyDim() {
+
   var isWeek = dim.value === 'week';
+
   periodTables.forEach(function(tid) {
+
     var sec = document.getElementById(tid).closest('.section');
+
     if (sec) sec.classList.toggle('hidden', isWeek);
+
   });
+
   weekSection.classList.toggle('hidden', !isWeek);
+
 }
+
+
 
 function applyFilter() {
+
   var shown = 0, total = 0;
+
   var ids = periodTables.concat(['week-table']);
+
   ids.forEach(function(tid) {
+
     var tbl = document.getElementById(tid);
+
     if (!tbl) return;
+
     var rows = tbl.querySelectorAll('tbody tr');
+
     rows.forEach(function(r) {
+
       if (r.classList.contains('ev-date-hd')) return;  // 日期分组表头行不参与筛选计数
+
       total++;
+
       var ok = true;
+
       var ds = r.getAttribute('data-store'), dp = r.getAttribute('data-plat');
+
       if (store.value && ds !== null && ds !== store.value) ok = false;
+
       if (plat.value && dp !== null && dp !== plat.value) ok = false;
+
       if (ok) shown++;
+
       r.classList.toggle('hidden', !ok);
+
     });
+
   });
+
   count.textContent = '显示 ' + shown + ' / ' + total + ' 行';
+
 }
 
+
+
 document.getElementById('btn-apply').onclick = applyCustom;
+
 document.getElementById('btn-reset2').onclick = function() {
+
   document.getElementById('d-start').value = 1;
+
   document.getElementById('d-end').value = 23;
+
   applyCustom();
+
 };
+
 dim.onchange = function() { applyDim(); applyFilter(); };
+
 store.onchange = applyFilter; plat.onchange = applyFilter;
+
 reset.onclick = function() { store.value = ''; plat.value = ''; dim.value = 'period'; applyDim(); applyFilter(); };
+
 applyCustom(); applyDim(); applyFilter();
+
 renderPos();
+
 </script>
 
+
+
 <script>
+
 /* V12优化: scrollspy 导航高亮 */
+
 (function(){
+
   var links=[].slice.call(document.querySelectorAll('.topnav a'));
+
   var secs=links.map(function(a){return document.getElementById(a.dataset.sec)}).filter(Boolean);
+
   function onScroll(){
+
     var y=window.scrollY+120, cur=null;
+
     secs.forEach(function(sec){ if(sec.offsetTop<=y) cur=sec.id; });
+
     links.forEach(function(a){ a.classList.toggle('active', a.dataset.sec===cur); });
+
   }
+
   window.addEventListener('scroll', onScroll, {passive:true});
+
   onScroll();
+
 })();
+
 </script>
+
 </body>
+
 </html>
