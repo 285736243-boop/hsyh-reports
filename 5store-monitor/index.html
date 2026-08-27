@@ -656,10 +656,55 @@ function renderAggRev(){
   tbody.innerHTML = html;
 }
 
+
+/* ---- 周报表：平台×自然周明细 + 动态合计行 ---- */
+var _WEEK_SRC = null;
+function __num(v){ var n = parseFloat(String(v).replace(/,/g,'')); return isNaN(n)?0:n; }
+function renderAggWeek(){
+  var tbody = document.querySelector('#week-table tbody');
+  if (!tbody) return;
+  if (!_WEEK_SRC) {
+    _WEEK_SRC = [];
+    [].slice.call(tbody.querySelectorAll('tr')).forEach(function(r){
+      var pl = r.getAttribute('data-plat');
+      var tds = r.querySelectorAll('td');
+      var cells = [];
+      tds.forEach(function(td){ cells.push(td.innerHTML); });
+      _WEEK_SRC.push({pl: pl, cells: cells});
+    });
+  }
+  var html = '';
+  var T = {days:0, ord:0, inc:0, gmv:0, exp:0, nw:0, old:0};
+  _WEEK_SRC.forEach(function(w){
+    if (CUR_PLAT && w.pl !== CUR_PLAT) return;
+    // 列序: 0平台 1自然周 2对比时间 3天数 4订单 5日均 6收入 7交易额 8客单 9曝光 10新客 11老客 12周环比
+    var c = w.cells;
+    T.days += __num(c[3]); T.ord += __num(c[4]); T.inc += __num(c[6]);
+    T.gmv += __num(c[7]); T.exp += __num(c[9]); T.nw += __num(c[10]); T.old += __num(c[11]);
+    html += '<tr>' + c.map(function(x){ return '<td>' + x + '</td>'; }).join('') + '</tr>';
+  });
+  var label = (CUR_PLAT || '全平台') + ' 合计';
+  var avg1 = T.days ? T.ord / T.days : null;
+  var avg2 = T.ord ? T.gmv / T.ord : null;
+  html += '<tr class="plat-total"><td colspan="3"><b>' + label + '</b></td>'
+    + '<td><b>' + T.days.toLocaleString('zh-CN') + '</b></td>'
+    + '<td><b>' + T.ord.toLocaleString('zh-CN') + '</b></td>'
+    + '<td><b>' + (avg1===null?'-':avg1.toFixed(1)) + '</b></td>'
+    + '<td><b>' + T.inc.toLocaleString('zh-CN') + '</b></td>'
+    + '<td><b>' + T.gmv.toLocaleString('zh-CN') + '</b></td>'
+    + '<td><b>' + (avg2===null?'-':avg2.toFixed(1)) + '</b></td>'
+    + '<td><b>' + T.exp.toLocaleString('zh-CN') + '</b></td>'
+    + '<td><b>' + T.nw.toLocaleString('zh-CN') + '</b></td>'
+    + '<td><b>' + T.old.toLocaleString('zh-CN') + '</b></td>'
+    + '<td>-</td></tr>';
+  tbody.innerHTML = html;
+}
+
 function renderAggRows(){
   renderAggAd();
   renderAggAct();
   renderAggRev();
+  renderAggWeek();
 }
 
 
