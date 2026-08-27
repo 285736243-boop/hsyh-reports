@@ -487,12 +487,101 @@ function applyCustom() {
 
 
 var CUR_STORE = '', CUR_PLAT = '';
+
+/* ===== 动态聚合合计行（v5：随门店/平台按钮筛选聚合） ===== */
+function __num(s){
+  s = String(s == null ? '' : s).replace(/[,，\s]/g, '');
+  var m = s.match(/^-?\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+}
+function __arrow(s){
+  var p = String(s == null ? '' : s).split('→');
+  return [__num(p[0]), __num(p[1])];
+}
+function __fmt(v){
+  if (v == null) return '-';
+  return v.toLocaleString('zh-CN', {maximumFractionDigits: 0});
+}
+var AGG_CFG = {
+  'ad-table': {cols: [{i:2,t:'num'},{i:3,t:'roi'},{i:4,t:'num'},{i:5,t:'num'},{i:6,t:'num'},{i:7,t:'skip'}]},
+  'act-table': {cols: [{i:2,t:'arrow'},{i:3,t:'arrow'},{i:4,t:'arrow'},{i:5,t:'arrow'},{i:6,t:'skip'},{i:7,t:'skip'},{i:8,t:'skip'},{i:9,t:'skip'}]},
+  'rev-table': {cols: [{i:2,t:'num'},{i:3,t:'num'},{i:4,t:'arrow'},{i:5,t:'arrow'},{i:6,t:'arrow'},{i:7,t:'skip'}]},
+  'week-table': {cols: [{i:3,t:'num'},{i:4,t:'num'},{i:5,t:'div',n:4,d:3},{i:6,t:'num'},{i:7,t:'num'},{i:8,t:'div',n:7,d:4},{i:9,t:'num'},{i:10,t:'num'},{i:11,t:'num'},{i:12,t:'skip'}]}
+};
+function renderAggRows(){
+  var st = CUR_STORE || '', pl = CUR_PLAT || '';
+  Object.keys(AGG_CFG).forEach(function(tid){
+    var tbl = document.getElementById(tid);
+    if (!tbl) return;
+    var cfg = AGG_CFG[tid];
+    var tbody = tbl.querySelector('tbody');
+    if (!tbody) return;
+    var rows = tbody.querySelectorAll('tr');
+    var agg = {}, n = 0;
+    rows.forEach(function(r){
+      if (r.classList.contains('ev-date-hd') || r.classList.contains('plat-total')) return;
+      var ds = r.getAttribute('data-store'), dp = r.getAttribute('data-plat');
+      if (st && ds && ds !== st) return;
+      if (pl && dp && dp !== pl) return;
+      n++;
+      var tds = r.querySelectorAll('td');
+      cfg.cols.forEach(function(c){
+        var td = tds[c.i]; if (!td) return;
+        var txt = td.textContent.trim();
+        if (c.t === 'num') { var v = __num(txt); if (v != null) agg[c.i] = (agg[c.i]||0) + v; }
+        else if (c.t === 'arrow') {
+          var p = __arrow(txt);
+          if (p[0] != null) agg[c.i+'_a'] = (agg[c.i+'_a']||0) + p[0];
+          if (p[1] != null) agg[c.i+'_b'] = (agg[c.i+'_b']||0) + p[1];
+        }
+        else if (c.t === 'roi') {
+          var cons = __num(tds[2].textContent), roi = __num(txt);
+          if (cons != null && roi != null) { agg.roi_cons = (agg.roi_cons||0) + cons; agg.roi_val = (agg.roi_val||0) + cons*roi; }
+        }
+        else if (c.t === 'div') {
+          var vn = __num(tds[c.n].textContent), vd = __num(tds[c.d].textContent);
+          if (vn != null) agg[c.i+'_n'] = (agg[c.i+'_n']||0) + vn;
+          if (vd != null) agg[c.i+'_d'] = (agg[c.i+'_d']||0) + vd;
+        }
+      });
+    });
+    rows.forEach(function(r){ if (r.classList.contains('plat-total') && r.getAttribute('data-agg')) r.remove(); });
+    if (!n) return;
+    var ths = tbl.querySelectorAll('thead th').length;
+    var label = (pl && st ? pl + '×' + st : (pl || st || '5店')) + ' 合计';
+    var html = '';
+    for (var i = 0; i < ths; i++){
+      if (i === 0) { html += '<td><b>' + label + '</b></td>'; continue; }
+      var c = null;
+      cfg.cols.forEach(function(x){ if (x.i === i) c = x; });
+      if (!c) { html += '<td>-</td>'; continue; }
+      else if (c.t === 'num') { html += '<td><b>' + __fmt(agg[i]) + '</b></td>'; }
+      else if (c.t === 'div') {
+        var dv = agg[i+'_d'] ? (agg[i+'_n'] / agg[i+'_d']) : null;
+        html += '<td><b>' + (dv == null ? '-' : dv.toFixed(1)) + '</b></td>';
+      }
+      else if (c.t === 'arrow') { html += '<td><b>' + __fmt(agg[i+'_a']) + '→' + __fmt(agg[i+'_b']) + '</b></td>'; }
+      else if (c.t === 'roi') {
+        var rv = agg.roi_cons ? (agg.roi_val / agg.roi_cons) : null;
+        html += '<td><b>' + (rv == null ? '-' : rv.toFixed(2)) + '</b></td>';
+      }
+      else { html += '<td>-</td>'; }
+    }
+    var tr = document.createElement('tr');
+    tr.className = 'plat-total';
+    tr.setAttribute('data-agg', '1');
+    tr.innerHTML = html;
+    tbody.appendChild(tr);
+  });
+}
+
 function renderAll(data){
   renderKpi(data);
   renderStoreTable(data);
   renderPlatformTable(data);
   renderPos();
   renderSummary(data);
+  renderAggRows();
 }
 document.querySelectorAll('.flt-btn').forEach(function(b){
   b.onclick = function(){
