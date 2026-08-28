@@ -298,9 +298,9 @@ td:empty::after{content:"无数据";color:#bbb;font-size:12px}
 
   <div class="section" id="sec-plat">
 
-    <div class="section-title">🏪 门店×平台核心指标环比<span class="hint">每店按 美团/淘宝/京东 拆开 · 指标同门店聚合表 · 含小计/总计 · 时间随上方自定义对比变化</span></div>
+    <div class="section-title">🏪 门店×平台核心指标环比<span class="hint">每店一行聚合 · 平台按钮切换筛选单平台 · 时间随上方自定义对比变化</span></div>
 
-    <div class="tbl-wrap"><table id="plat-table"><thead><tr><th>门店</th><th>平台</th><th>订单</th><th>收入</th><th>交易额</th><th>曝光</th><th>流量(入店)</th><th>入店率</th><th>转化率</th><th>新客</th><th>老客</th><th>客单价</th><th>到手率</th></tr></thead><tbody><!-- JS 渲染 --></tbody></table></div>
+    <div class="tbl-wrap"><table id="plat-table"><thead><tr><th>门店</th><th>订单</th><th>收入</th><th>交易额</th><th>曝光</th><th>流量(入店)</th><th>入店率</th><th>转化率</th><th>新客</th><th>老客</th><th>客单价</th><th>到手率</th></tr></thead><tbody><!-- JS 渲染 --></tbody></table></div>
 
     <div class="summary"><b>📝 结论：</b>平台结构剧变：<b>淘宝订单占比 64%（+52%）已超美团（34%，-19%）</b>，收入 53% vs 46%；增长完全由淘宝补贴驱动，美团基本盘收缩（仅印象城正增长）。</div>
 
@@ -655,57 +655,25 @@ function cellsHtml(a1, a2) {
 
 
 function renderPlatformTable(data) {
-
   var tbody = document.querySelector('#plat-table tbody');
-
   if (!tbody) return;
-
   var html = '';
-
   var t1 = {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0};
-
   var t2 = {订单:0,收入:0,交易额:0,曝光:0,入店:0,下单:0,新客:0,老客:0};
-
   STORE_NAMES.forEach(function(nm) {
-
     if (CUR_STORE && nm !== CUR_STORE) return;
-
-    var platList = CUR_PLAT ? [CUR_PLAT] : PLATS;
-
-    platList.forEach(function(pl) {
-
-      var a1 = data[nm].plats[pl].a1, a2 = data[nm].plats[pl].a2;
-
-      if (!a1.订单 && !a2.订单) return;
-
-      Object.keys(t1).forEach(function(k) { t1[k] += a1[k]; t2[k] += a2[k]; });
-
-      html += '<tr data-store="' + nm + '" data-plat="' + pl + '"><td><b>' + nm + '</b></td><td><span class="tag ' + pl + '">' + pl + '</span></td>' + cellsHtml(a1, a2) + '</tr>';
-
-    });
-
-    if (!CUR_PLAT) {
-
-    var s1 = data[nm].a1, s2 = data[nm].a2;
-
-    html += '<tr class="plat-sub" data-store="' + nm + '"><td colspan="2"><b>' + nm + ' 小计</b></td>' + cellsHtml(s1, s2) + '</tr>';
-
-    }
-
+    var src = CUR_PLAT ? data[nm].plats[CUR_PLAT] : data[nm];
+    var a1 = src.a1, a2 = src.a2;
+    if (!a1.订单 && !a2.订单) return;
+    Object.keys(t1).forEach(function(k) { t1[k] += a1[k]; t2[k] += a2[k]; });
+    html += '<tr data-store="' + nm + '"><td><b>' + nm + '</b></td>' + cellsHtml(a1, a2) + '</tr>';
   });
-
   t1.客单 = t1.订单 ? t1.交易额/t1.订单 : null;
-
   t2.客单 = t2.订单 ? t2.交易额/t2.订单 : null;
-
-  html += '<tr class="plat-total"><td colspan="2"><b>' + (CUR_STORE || '5店') + ' 合计</b></td>' + cellsHtml(t1, t2) + '</tr>';
-
+  var label = (CUR_PLAT || CUR_STORE || '5店') + ' 合计';
+  html += '<tr class="plat-total"><td><b>' + label + '</b></td>' + cellsHtml(t1, t2) + '</tr>';
   tbody.innerHTML = html;
-
 }
-
-
-
 function renderStoreTable(data) {
 
   var tbody = document.querySelector('#store-table tbody');
