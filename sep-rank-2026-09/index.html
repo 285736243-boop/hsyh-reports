@@ -18,6 +18,8 @@ h1{font-size:22px;margin:0 0 4px}
 .seg button.on{background:#2b6cf6;color:#fff}
 input#q{background:#161d2b;border:1px solid #26324a;color:#e8eefc;border-radius:10px;padding:8px 12px;font-size:13px;min-width:220px}
 .hint{color:#6f83a6;font-size:12px}
+.btn{background:#1b2434;border:1px solid #2b3a55;color:#cfe0ff;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:13px;margin-left:auto}
+.btn:hover{background:#243149;border-color:#3a4f73}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{padding:8px 9px;text-align:right;border-bottom:1px solid #1d2739;white-space:nowrap}
 th{position:sticky;top:0;background:#141b28;color:#9db0d0;font-weight:500;font-size:12px;z-index:2}
@@ -42,6 +44,7 @@ td.nm{max-width:280px;overflow:hidden;text-overflow:ellipsis}
   <span class="seg" id="sortby"><button data-s="o" class="on">按订单排</button><button data-s="p">按实付排</button></span>
   <input id="q" placeholder="搜门店名 / C编码 / 分公司">
   <span class="hint" id="hint"></span>
+  <button class="btn" id="exp">⬇ 导出排名 CSV</button>
 </div>
 <table><thead><tr>
 <th class="l">排名</th><th class="l">分公司</th><th class="l">加盟/直营</th><th class="l">C编码</th><th class="l">门店名称</th>
@@ -135,6 +138,29 @@ function render(){
   document.getElementById("more").textContent = arr.length > limit ? ('显示全部（共 ' + arr.length + ' 家）') : '已显示全部 ' + arr.length + ' 家';
   document.getElementById("hint").textContent = '共 ' + arr.length + ' 家门店｜TOP' + n + ' 合计 ' + fo(totO) + ' 单 / ' + fm(totP) + '｜整体环比 ' + pct(totO,totPO);
 }
+function csvCell(v){ var s = String(v === null || v === undefined ? "" : v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
+function exportCSV(){
+  var arr = calc();
+  var pname = plat === "all" ? "全部平台" : (plat === "mt" ? "美团" : (plat === "tb" ? "淘宝" : "京东"));
+  var head = ["排名","分公司","加盟/直营","C编码","门店名称","美团单","美团实付","淘宝单","淘宝实付","京东单","京东实付","总订单","总实付","订单环比","实付环比"];
+  var lines = [head.map(csvCell).join(",")];
+  var j0 = MOFF[month];
+  arr.forEach(function(r, i){
+    var c = pair(r, month, plat), q = pair(r, month-1, plat);
+    var to = 0, tp = 0;
+    ["mt","tb","jd"].forEach(function(k){ var j = MOFF[month] + POFF[k]; to += r[j]; tp += r[j+1]; });
+    lines.push([i+1, r[0], r[1] || "", r[2], r[3], r[j0], r[j0+1], r[j0+2], r[j0+3], r[j0+4], r[j0+5], to, tp, pct(c[0], q[0]), pct(c[1], q[1])].map(csvCell).join(","));
+  });
+  var blob = new Blob(["\ufeff" + lines.join("\r\n")], {type: "text/csv;charset=utf-8;"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = month + "月门店排名_" + pname + "_" + (sortKey === "o" ? "按订单" : "按实付") + ".csv";
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 500);
+  var h = document.getElementById("hint");
+  h.textContent = "已导出 " + arr.length + " 家（" + month + "月·" + pname + "）";
+}
+document.getElementById("exp").addEventListener("click", exportCSV);
 document.getElementById("month").addEventListener("click", function(e){
   var b = e.target.closest("button"); if(!b) return;
   [].forEach.call(this.children, function(x){ x.classList.remove("on"); });
